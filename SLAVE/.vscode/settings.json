@@ -1,0 +1,14 @@
+{
+  "files.associations": {
+    "gpio.h": "c",
+    "delay.h": "c",
+    "sys.h": "c",
+    "stm32f10x.h": "c",
+    "oled_font.h": "c",
+    "oled.h": "c",
+    "cstdint": "c",
+    "timer.h": "c",
+    "servo.h": "c",
+    "compare": "c"
+  }
+}

@@ -10,5 +10,7 @@
     "timer.h": "c",
     "servo.h": "c",
     "compare": "c"
-  }
+  },
+  "cortex-debug.armToolchainPath": "D:\\RM\\ARM-GNU-TOOLCHIAN\\BIN",
+  "cortex-debug.openocdPath": "D:\\DOWNLOADS\\MSYS32\\MINGW64\\BIN\\OPENOCD.EXE"
 }

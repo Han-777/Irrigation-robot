@@ -21,35 +21,29 @@ Target DLL:      CMSIS_AGDI.dll V1.21.0.0
 Dialog DLL:      TCM.DLL V1.14.4.0
  
 <h2>Project:</h2>
-D:\嵌入式\灌溉\new - 副本\USER\Template.uvprojx
-Project File Date:  05/04/2024
+D:\Github\Irrigation-robot\MAIN\USER\Template.uvprojx
+Project File Date:  05/11/2024
 
 <h2>Output:</h2>
 Build target 'Template'
-compiling bluetooth.c...
+compiling main.c...
 ..\bsp\gpio\gpio.h(44): warning:  #1295-D: Deprecated declaration Key_GPIO_Init - give arg types
   void Key_GPIO_Init();
-..\bsp\gpio\gpio.h(61): warning:  #1-D: last line of file ends without a newline
+..\bsp\gpio\gpio.h(72): warning:  #1-D: last line of file ends without a newline
         
 ..\bsp\iic\iic.h(12): warning:  #1-D: last line of file ends without a newline
       
-..\bsp\bluetooth\bluetooth.c(46): error:  #20: identifier "FILE" is undefined
-  FILE __stdout;
-..\bsp\bluetooth\bluetooth.c(53): error:  #20: identifier "FILE" is undefined
-  int fputc(int ch, FILE *f)
-..\bsp\bluetooth\bluetooth.c(159): warning:  #177-D: variable "USART_RX_STA" was declared but never referenced
-        static u16 USART_RX_STA = 0, times = 0; //??????
-..\bsp\bluetooth\bluetooth.c(159): warning:  #177-D: variable "times" was declared but never referenced
-        static u16 USART_RX_STA = 0, times = 0; //??????
-..\bsp\bluetooth\bluetooth.c: 5 warnings, 2 errors
-"..\OBJ\Template.axf" - 2 Error(s), 5 Warning(s).
+main.c: 3 warnings, 0 errors
+linking...
+Program Size: Code=35108 RO-data=8644 RW-data=116 ZI-data=1724  
+FromELF: creating hex file...
+"..\OBJ\Template.axf" - 0 Error(s), 3 Warning(s).
 
 <h2>Collection of Component include folders:</h2>
-  D:\嵌入式\灌溉\new - 副本\USER\RTE
+  D:\Github\Irrigation-robot\MAIN\USER\RTE
   D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0
 
 <h2>Collection of Component Files used:</h2>
-Target not created.
 </pre>
 </body>
 </html>

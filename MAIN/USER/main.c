@@ -3,15 +3,16 @@
 #include "oled.h"
 #include "encoder.h"
 #include "servo.h"
+#include "lcd.h"
 
 int main(void)
 {
 	delay_init(168);
-	OLED_Init();
+//	OLED_Init();
+	LCD_Init();
 	Motor_Init();
 	Encoder_TIM_Init_All();
 	TIM7_Int_Init(1000 - 1, 8400 - 1); // 84M / 8400 / 1000 = 0.1s = 100ms
-	
 	delay_ms(1000);
 //	Car_Load(40, 40);
 //	delay_ms(10000);
@@ -23,7 +24,7 @@ int main(void)
 //	delay_ms(10000);
 	Car_stop();
 	servo_Init_All();
-	gray_GPIO_Init();
+//	gray_GPIO_Init();
 //	photoelectricity_GPIO_Init();
 //	delay_ms(5000);
 //	Car_stop();
@@ -39,8 +40,10 @@ int main(void)
 	Servo_Yaw_Control(90);
 	while(1)
 	{	
-		OLED_ShowString(1, 1, "Left:");
-		OLED_ShowString(2, 1, "Right:");
+		Chinese_Show_one(200,20,45,16,0);
+		LCD_ShowString(10, 20, 40, 40, 8, (u8 *)"dddabcd");
+//		OLED_ShowString(1, 1, "Left:");
+//		OLED_ShowString(2, 1, "Right:");
 		delay_ms(100);
 	}		
 }	

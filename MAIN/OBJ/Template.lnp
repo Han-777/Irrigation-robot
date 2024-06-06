@@ -40,7 +40,6 @@
 "..\obj\stm32f4xx_wwdg.o"
 "..\obj\delay.o"
 "..\obj\sys.o"
-"..\obj\usart.o"
 "..\obj\tim.o"
 "..\obj\gpio.o"
 "..\obj\iic.o"
@@ -51,8 +50,11 @@
 "..\obj\gray.o"
 "..\obj\gyro.o"
 "..\obj\servo.o"
+"..\obj\voice.o"
+"..\obj\bluetooth.o"
+"..\obj\lcd.o"
 "..\obj\chassis.o"
---strict --scatter "..\OBJ\Template.sct"
+--library_type=microlib --strict --scatter "..\OBJ\Template.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
 --list "..\OBJ\Template.map" -o ..\OBJ\Template.axf

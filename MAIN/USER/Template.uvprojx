@@ -224,7 +224,7 @@
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>0</useUlib>
+            <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <RoSelD>3</RoSelD>
@@ -365,7 +365,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CORE;..\SYSTEM\delay;..\SYSTEM\sys;..\USER;..\FWLIB\inc;..\bsp\tim;..\bsp\gpio;..\application\chassis;..\module\motor;..\bsp\iic;..\module\oled;..\module\encoder;..\module\gray;..\bsp\usart;..\module\gyro;..\module\servo;..\bsp\bluetooth;..\module\voice;..\module\bluetooth</IncludePath>
+              <IncludePath>..\CORE;..\SYSTEM\delay;..\SYSTEM\sys;..\USER;..\FWLIB\inc;..\bsp\tim;..\bsp\gpio;..\application\chassis;..\module\motor;..\bsp\iic;..\module\oled;..\module\encoder;..\module\gray;..\bsp\usart;..\module\gyro;..\module\servo;..\bsp\bluetooth;..\module\voice;..\module\bluetooth;..\module\lcd</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -757,6 +757,21 @@
               <FileName>bluetooth.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\module\bluetooth\bluetooth.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\module\lcd\lcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\module\lcd\lcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>FONT.H</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\module\lcd\FONT.H</FilePath>
             </File>
           </Files>
         </Group>

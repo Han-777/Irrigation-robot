@@ -45,3 +45,5 @@
 ..\obj\main.o: ..\module\oled\oled.h
 ..\obj\main.o: ..\module\encoder\encoder.h
 ..\obj\main.o: ..\module\servo\servo.h
+..\obj\main.o: ..\module\lcd\lcd.h
+..\obj\main.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdlib.h

@@ -31,6 +31,11 @@
 .\objects\delay.o: .\Library\stm32f10x_wwdg.h
 .\objects\delay.o: .\Library\misc.h
 .\objects\delay.o: .\System\delay\delay.h
+.\objects\delay.o: .\System\key\key.h
 .\objects\delay.o: .\System\timer\timer.h
 .\objects\delay.o: .\System\sys\sys.h
+.\objects\delay.o: .\Module\mpu\MPU6050.h
+.\objects\delay.o: .\Module\mpu\mpuiic.h
 .\objects\delay.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\delay.o: .\Module\mpu\eMPL\inv_mpu.h
+.\objects\delay.o: .\Module\mpu\eMPL\inv_mpu_dmp_motion_driver.h

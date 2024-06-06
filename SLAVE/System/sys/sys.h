@@ -3,6 +3,7 @@
 #include "stm32f10x.h"
 //#include "gpio.h"
 #include "delay.h"
+#include "key.h"
 #include "timer.h"
 // #include "exti.h"
 // #include "usart.h"
@@ -13,6 +14,12 @@
 // #include "control.h"
 // #include "TFmini.h"
 #include "math.h"
+
+
+#include "mpu6050.h"
+#include "mpuiic.h"
+#include "inv_mpu.h"
+#include "inv_mpu_dmp_motion_driver.h"
 // #include "usart2.h"
 //////////////////////////////////////////////////////////////////////////////////	 
 //本程序只供学习使用，未经作者许可，不得用于其它任何用途

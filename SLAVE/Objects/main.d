@@ -40,5 +40,5 @@
 .\objects\main.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\main.o: .\Module\mpu\eMPL\inv_mpu.h
 .\objects\main.o: .\Module\mpu\eMPL\inv_mpu_dmp_motion_driver.h
-.\objects\main.o: .\Module\servo\servo.h
 .\objects\main.o: .\Application\balanceTank\balanceTank.h
+.\objects\main.o: .\Module\servo\servo.h

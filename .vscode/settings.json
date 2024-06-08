@@ -6,6 +6,7 @@
     "sys.h": "c",
     "usart.h": "c",
     "stdio.h": "c",
-    "mpu6050.h": "c"
+    "mpu6050.h": "c",
+    "stm32f4xx.h": "c"
   }
 }

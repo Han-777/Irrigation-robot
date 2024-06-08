@@ -1,8 +1,6 @@
-#include "stm32f10x.h"                  // Device header
+#include "stm32f10x.h" // Device header
 #include "sys.h"
-#include "servo.h"
 #include "balanceTank.h"
-#include "usart.h"
 // /*=====================public========================*/
 // extern float pitch,roll,yaw; 		//欧拉角
 // extern short aacx,aacy,aacz;		  //加速度传感器原始数据
@@ -11,20 +9,13 @@
 u8 RxData;
 int main(void)
 {
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);	 //设置NVIC中断分组2:2位抢占优先级，2位响应优先级
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2); // 设置NVIC中断分组2:2位抢占优先级，2位响应优先级
 	delay_init();
-	MPU_Init();		
-	while(mpu_dmp_init());
-	servoInit();
-
-	USART2_Init(9600);
-	TIM2_Init(999, 719); // 72M / 1000 / 720 = 100Hz = 10ms (used as timer)
-	
+	Control_Init();
 	while (1)
 	{
 
-		
-//		mpu_get();
+		//		mpu_get();
 		// servo move
 		// ServoControl(100, 100, 100, 100);
 		// for (int i = 0; i < 180; ++i)
@@ -39,11 +30,9 @@ int main(void)
 		// 	OLED_ShowNum(1, 8, i, 3);
 		// 	delay_ms(20);
 		// }
-//		if (mpu_get())
-//		{
-////			MPU_Display_Spect();
-//		}
-
-		
+		//		if (mpu_get())
+		//		{
+		////			MPU_Display_Spect();
+		//		}
 	}
 }

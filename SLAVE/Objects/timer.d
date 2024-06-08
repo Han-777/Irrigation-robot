@@ -42,3 +42,4 @@
 .\objects\timer.o: .\Module\mpu\eMPL\inv_mpu.h
 .\objects\timer.o: .\Module\mpu\eMPL\inv_mpu_dmp_motion_driver.h
 .\objects\timer.o: .\Application\balanceTank\balanceTank.h
+.\objects\timer.o: .\Module\servo\servo.h

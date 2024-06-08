@@ -2,6 +2,7 @@
 #define __BALANCETANK_H
 
 #include "sys.h"
+#include "servo.h"
 
 #define PI 3.1415926
 // 增量pid
@@ -66,8 +67,9 @@ typedef struct
 // extern short aacx,aacy,aacz;		  //加速度传感器原始数据
 // extern short gyrox,gyroy,gyroz;	//陀螺仪原始数据
 // extern float a;
-int mpu_get(void);
-void MPU_Display_Spect(void);
+int mpu_control(void);
+void Control_Init(void);
+void Control_loop(void);
 
 
 extern PidObject Pid_roll;
@@ -75,13 +77,13 @@ extern PidObject Pid_pitch;
 extern PidObject *(pidobject[]);
 extern Data_Para  Sending_data;
 
-void pid_Init(PidObject **pid,float kp,float ki,float kd,float integ_limit,float out_limit,const uint8_t len); //pid数据初始化
-void pidUpdate(PidObject* pid);                                                                            		 //PID更新
-void CascadePID(PidObject* pid_inside,PidObject* pid_outside);                                                 //串级PID
-void Pid_input_parameters(PidObject **pid);                                                                    //pid入口参数更新                   
-void Pid_Calculate(PidObject **pid);
-void Send_data(Data_Para *data);
-void PWM_Calculate(PidObject **pid);
+//void pid_Init(PidObject **pid,float kp,float ki,float kd,float integ_limit,float out_limit,const uint8_t len); //pid数据初始化
+//void pidUpdate(PidObject* pid);                                                                            		 //PID更新
+//void CascadePID(PidObject* pid_inside,PidObject* pid_outside);                                                 //串级PID
+//void Pid_input_parameters(PidObject **pid);                                                                    //pid入口参数更新                   
+//void Pid_Calculate(PidObject **pid);
+//void Send_data(Data_Para *data);
+//void PWM_Calculate(PidObject **pid);
 
 
 

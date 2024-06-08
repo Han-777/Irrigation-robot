@@ -1,7 +1,7 @@
 #include "timer.h"
 #include "balanceTank.h"
 /* calculate
-Freq = CK_PSC / (PSC + 1) / (ARR + 1) 
+Freq = CK_PSC / (PSC + 1) / (ARR + 1)
 Duty = CCR / (ARR + 1)
 Reso = 1 / (ARR + 1)
 
@@ -59,8 +59,8 @@ void TIM3_Init(u16 arr, u16 psc)
 	TIM_OC4Init(TIM3, &TIM_OCInitStruct);
 	TIM_OC4PreloadConfig(TIM3, TIM_OCPreload_Enable);
 
-	TIM_ARRPreloadConfig(TIM3, ENABLE); 
-	TIM_Cmd(TIM3, ENABLE);				
+	TIM_ARRPreloadConfig(TIM3, ENABLE);
+	TIM_Cmd(TIM3, ENABLE);
 }
 
 /**
@@ -98,20 +98,21 @@ void TIM2_Init(u16 arr, u16 psc)
 
 void TIM2_IRQHandler()
 {
-	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET) 
+	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)
 	{
-//			Send_data(&Sending_data);
-//		if(times%5==0) // 10ms
-//		{
-//			// Pid_Calculate(pidobject);
-////			PWM_Calculate(pidobject);
-//		}
-//		times++;
-		if (mpu_get())
+		//			Send_data(&Sending_data);
+		//		if(times%5==0) // 10ms
+		//		{
+		//			// Pid_Calculate(pidobject);
+		////			PWM_Calculate(pidobject);
+		//		}
+		//		times++;
+		if (mpu_control())
 		{
-//			 printf("roll:%.2f\r\n",roll);
-//			 printf("pitch:%.2f\r\n",pitch);
-//			 printf("yaw: %.2f \r\n",yaw);
+			//			 printf("roll:%.2f\r\n",roll);
+			//			 printf("pitch:%.2f\r\n",pitch);
+			//			 printf("yaw: %.2f \r\n",yaw);
+//			Control_loop();
 		}
 	}
 	TIM_ClearITPendingBit(TIM2, TIM_IT_Update);

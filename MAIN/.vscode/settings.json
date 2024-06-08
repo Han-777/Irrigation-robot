@@ -20,6 +20,8 @@
     "openmv.h": "c",
     "mp3.h": "c",
     "bluetooth.h": "c",
-    "gray.h": "c"
+    "gray.h": "c",
+    "infcollect.h": "c",
+    "chassis.h": "c"
   }
 }

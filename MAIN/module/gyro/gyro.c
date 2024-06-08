@@ -1,12 +1,15 @@
 #include <math.h>
 #include "gyro.h"
+
 IMUData_Packet_t IMUData_Packet;
 AHRSData_Packet_t AHRSData_Packet;
 u8 ttl_receive;
-u8 Fd_data[64];
-u8 Fd_rsimu[64];
-u8 Fd_rsahrs[56];
-int rs_imutype = 0;
+/*=============data receive (original data)=============*/
+u8 Fd_data[64]; // data receive buffer
+u8 Fd_rsimu[64]; // (Inertial Measurement Unit) data store buffer 
+u8 Fd_rsahrs[56]; // (Attitude and Heading Reference System) data store buffer
+
+int rs_imutype = 0; // 接收完成标志位
 int rs_ahrstype = 0;
 extern int Time_count;
 float Target_Yaw;
@@ -19,17 +22,16 @@ void UART5_IRQHandler(void)
 	static u8 rs_count = 0;
 	static u8 last_rsnum = 0;
 	u8 Usart_Receive;
-	static u8 rsimu_flag = 0;
+	static u8 rsimu_flag = 0; // 接收开始标志位
 	static u8 rsacc_flag = 0;
 	RS485_RX_RE = 0;
 	RS485_RX_DE = 0;
 	ttl_receive = 1;
 	if (USART_GetITStatus(UART5, USART_IT_RXNE) != RESET) // Check if data is received //判断是否接收到数据
 	{
-
 		Usart_Receive = USART_ReceiveData(UART5); // Read the data //读取数据
 		Fd_data[Count] = Usart_Receive;			  // 串口数据填入数组
-		if (((last_rsnum == FRAME_END) && (Usart_Receive == FRAME_HEAD)) || Count > 0)
+		if (((last_rsnum == FRAME_END) && (Usart_Receive == FRAME_HEAD)) || Count > 0) // 重新对帧
 		{
 			rs_count = 1;
 			Count++;
@@ -42,19 +44,20 @@ void UART5_IRQHandler(void)
 			Count = 0;
 		last_rsnum = Usart_Receive;
 
+		// 接收完整后进入
 		if (rsimu_flag == 1 && Count == IMU_RS) // 将本帧数据保存至Fd_rsimu数组中
 		{
 			Count = 0;
 			rsimu_flag = 0;
-			rs_imutype = 1;
+			rs_imutype = 1; // imu data available flag
 			if (Fd_data[IMU_RS - 1] == FRAME_END) // 帧尾校验
 				memcpy(Fd_rsimu, Fd_data, sizeof(Fd_data));
 		}
-		if (rsacc_flag == 1 && Count == AHRS_RS) //
+		if (rsacc_flag == 1 && Count == AHRS_RS) 
 		{
 			Count = 0;
 			rsacc_flag = 0;
-			rs_ahrstype = 1;
+			rs_ahrstype = 1; // ahrs data available flag
 			if (Fd_data[AHRS_RS - 1] == FRAME_END)
 				memcpy(Fd_rsahrs, Fd_data, sizeof(Fd_data));
 		}
@@ -160,6 +163,7 @@ u8 TTL_Hex2Dec(void)
 }
 /*************
 实现16进制的can数据转换成浮点型数据
+* brief： transfer data from hexadecimaml to floating-point values
 ****************/
 float DATA_Trans(u8 Data_1, u8 Data_2, u8 Data_3, u8 Data_4)
 {
@@ -220,6 +224,7 @@ void IMUData2PC(void)
 	//   printf("IMU:The Timestamp =  %d\r\n",IMUData_Packet.Timestamp);
 	// printf("Now the data of IMU has been sent.\r\n");
 }
+
 //void usart5_send(u8 data)
 //{
 //	UART5->DR = data;
@@ -227,78 +232,78 @@ void IMUData2PC(void)
 //		;
 //}
 
-//float Read_Yaw(void)
-//{
-//	return AHRSData_Packet.Heading * 180.0 / PI;
-//}
-//float Read_YawSpeed(void)
-//{
-//	return AHRSData_Packet.HeadingSpeed * 180 / PI;
-//}
-//float Read_Roll(void)
-//{
-//	return AHRSData_Packet.Roll * 1000;
-//}
-//float Change_Err(float bias)
-//{
-//	if (Abs(bias) <= 0.3)
-//	{
-//		bias = 0;
-//	}
-//	if (bias > 0.3 && bias <= 5)
-//	{
-//		bias = 2;
-//	}
-//	if (bias > 5 && bias <= 10)
-//	{
-//		bias = 2.4;
-//	}
-//	if (bias > 10 && bias <= 15)
-//	{
-//		bias = 2.8;
-//	}
-//	if (bias > 15 && bias <= 20)
-//	{
-//		bias = 3.2;
-//	}
-//	if (bias > 20 && bias <= 25)
-//	{
-//		bias = 3.6;
-//	}
-//	if (bias > 25 && bias <= 50)
-//	{
-//		bias = 4;
-//	}
-//	if (bias >= -5 && bias < -0.3)
-//	{
-//		bias = -2;
-//	}
-//	if (bias >= -10 && bias < -5)
-//	{
-//		bias = -2.4;
-//	}
-//	if (bias >= -15 && bias < -10)
-//	{
-//		bias = -2.8;
-//	}
-//	if (bias >= -20 && bias < -15)
-//	{
-//		bias = -3.2;
-//	}
-//	if (bias >= -25 && bias < -20)
-//	{
-//		bias = -3.6;
-//	}
-//	if (bias >= -30 && bias <= -50)
-//	{
-//		bias = -4;
-//	}
-//	if (Abs(bias) > 50)
-//	{
-//		bias = 400;
-//	}
-//	return bias;
-//}
+float Read_Yaw(void)
+{
+	return AHRSData_Packet.Heading * 180.0 / PI;
+}
+float Read_YawSpeed(void)
+{
+	return AHRSData_Packet.HeadingSpeed * 180 / PI;
+}
+float Read_Roll(void)
+{
+	return AHRSData_Packet.Roll * 1000;
+}
+float Change_Err(float bias)
+{
+	if (Abs(bias) <= 0.3)
+	{
+		bias = 0;
+	}
+	if (bias > 0.3 && bias <= 5)
+	{
+		bias = 2;
+	}
+	if (bias > 5 && bias <= 10)
+	{
+		bias = 2.4;
+	}
+	if (bias > 10 && bias <= 15)
+	{
+		bias = 2.8;
+	}
+	if (bias > 15 && bias <= 20)
+	{
+		bias = 3.2;
+	}
+	if (bias > 20 && bias <= 25)
+	{
+		bias = 3.6;
+	}
+	if (bias > 25 && bias <= 50)
+	{
+		bias = 4;
+	}
+	if (bias >= -5 && bias < -0.3)
+	{
+		bias = -2;
+	}
+	if (bias >= -10 && bias < -5)
+	{
+		bias = -2.4;
+	}
+	if (bias >= -15 && bias < -10)
+	{
+		bias = -2.8;
+	}
+	if (bias >= -20 && bias < -15)
+	{
+		bias = -3.2;
+	}
+	if (bias >= -25 && bias < -20)
+	{
+		bias = -3.6;
+	}
+	if (bias >= -30 && bias <= -50)
+	{
+		bias = -4;
+	}
+	if (Abs(bias) > 50)
+	{
+		bias = 400;
+	}
+	return bias;
+}
 
 //float target_yaw_A; // 时钟方向的对角
 //float min;

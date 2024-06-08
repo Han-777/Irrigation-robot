@@ -21,7 +21,8 @@ void TFmini_left_USART_Close(uint32_t bound);
 						   OPENMV初始化 USART3
 **************************************************************************/
 
-void OPENMV_USART_Init(u32 bound);
+void OpenMV_USART_Init(u32 bound);
+void OpenMV_USART_Close(u32 bound);
 
 /**************************************************************************
 						TFmini_Right 初始化 USART4

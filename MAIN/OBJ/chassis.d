@@ -42,3 +42,4 @@
 ..\obj\chassis.o: ..\bsp\gpio\gpio.h
 ..\obj\chassis.o: ..\bsp\iic\iic.h
 ..\obj\chassis.o: ..\bsp\usart\usart.h
+..\obj\chassis.o: ..\module\gray\gray.h

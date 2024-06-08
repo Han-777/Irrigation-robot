@@ -1,5 +1,5 @@
-..\obj\bluetooth.o: ..\bsp\bluetooth\bluetooth.c
-..\obj\bluetooth.o: ..\bsp\bluetooth\bluetooth.h
+..\obj\bluetooth.o: ..\module\bluetooth\bluetooth.c
+..\obj\bluetooth.o: ..\module\bluetooth\bluetooth.h
 ..\obj\bluetooth.o: ..\SYSTEM\sys\sys.h
 ..\obj\bluetooth.o: ..\USER\stm32f4xx.h
 ..\obj\bluetooth.o: ..\CORE\core_cm4.h

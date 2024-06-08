@@ -3,6 +3,7 @@
 #include "stm32f10x.h"
 //#include "gpio.h"
 #include "delay.h"
+#include "key.h"
 #include "timer.h"
 // #include "exti.h"
 // #include "usart.h"
@@ -13,6 +14,12 @@
 // #include "control.h"
 // #include "TFmini.h"
 #include "math.h"
+#include "usart.h"
+
+#include "mpu6050.h"
+#include "mpuiic.h"
+#include "inv_mpu.h"
+#include "inv_mpu_dmp_motion_driver.h"
 // #include "usart2.h"
 //////////////////////////////////////////////////////////////////////////////////	 
 //本程序只供学习使用，未经作者许可，不得用于其它任何用途
@@ -30,9 +37,9 @@
 //1,支持ucos
 #define SYSTEM_SUPPORT_OS		0		//定义系统文件夹是否支持UCOS
 																	    
-extern float pitch,roll,yaw; 		//欧拉角
-extern short aacx,aacy,aacz;		//加速度传感器原始数据
-extern short gyrox,gyroy,gyroz;	//陀螺仪原始数据		
+// extern float pitch,roll,yaw; 		//欧拉角
+// extern short aacx,aacy,aacz;		//加速度传感器原始数据
+// extern short gyrox,gyroy,gyroz;	//陀螺仪原始数据		
 extern const float dt;
 extern uint16_t PWM[4];
 

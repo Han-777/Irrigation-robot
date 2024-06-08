@@ -32,5 +32,12 @@
 .\objects\servo.o: .\Library\misc.h
 .\objects\servo.o: .\System\delay\delay.h
 .\objects\servo.o: .\System\sys\sys.h
+.\objects\servo.o: .\System\key\key.h
 .\objects\servo.o: .\System\timer\timer.h
+.\objects\servo.o: .\Module\mpu\MPU6050.h
+.\objects\servo.o: .\Module\mpu\mpuiic.h
 .\objects\servo.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\servo.o: .\System\usart\usart.h
+.\objects\servo.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\servo.o: .\Module\mpu\eMPL\inv_mpu.h
+.\objects\servo.o: .\Module\mpu\eMPL\inv_mpu_dmp_motion_driver.h

@@ -1,5 +1,4 @@
 #include "encoder.h"
-#include "oled.h"
 #include "gray.h"
 /*******
 œ»ºÏ≤‚±‡¬Î∆˜ABœ‡Œª÷√
@@ -46,11 +45,11 @@ void TIM7_IRQHandler(void){
 		// static int i = 0;
 		vec[0] = (u16)Read_Speed(ENCODER1_TIM);
 		vec[1] = (u16)Read_Speed(ENCODER2_TIM);
-		OLED_ShowNum(1, 9, vec[0], 5);
-		OLED_ShowNum(2, 9, vec[1], 5);
-//		OLED_ShowNum(3, 1, PE_Left, 5);
-//		OLED_ShowNum(4, 1, PE_Right, 5);
-		OLED_ShowNum(4, 1, (u16)Get_Count(), 5);
+//		OLED_ShowNum(1, 9, vec[0], 5);
+//		OLED_ShowNum(2, 9, vec[1], 5);
+////		OLED_ShowNum(3, 1, PE_Left, 5);
+////		OLED_ShowNum(4, 1, PE_Right, 5);
+//		OLED_ShowNum(4, 1, (u16)Get_Count(), 5);
 		// i++;
 	}
 	TIM_ClearITPendingBit(TIM7, TIM_IT_Update);

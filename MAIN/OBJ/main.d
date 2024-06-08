@@ -41,7 +41,8 @@
 ..\obj\main.o: ..\bsp\gpio\gpio.h
 ..\obj\main.o: ..\bsp\iic\iic.h
 ..\obj\main.o: ..\bsp\usart\usart.h
+..\obj\main.o: ..\module\lcd\lcd.h
+..\obj\main.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\obj\main.o: ..\module\motor\motor.h
-..\obj\main.o: ..\module\oled\oled.h
 ..\obj\main.o: ..\module\encoder\encoder.h
 ..\obj\main.o: ..\module\servo\servo.h

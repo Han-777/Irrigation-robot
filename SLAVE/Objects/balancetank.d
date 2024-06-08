@@ -32,5 +32,12 @@
 .\objects\balancetank.o: .\Library\misc.h
 .\objects\balancetank.o: .\System\delay\delay.h
 .\objects\balancetank.o: .\System\sys\sys.h
+.\objects\balancetank.o: .\System\key\key.h
 .\objects\balancetank.o: .\System\timer\timer.h
+.\objects\balancetank.o: .\Module\mpu\MPU6050.h
+.\objects\balancetank.o: .\Module\mpu\mpuiic.h
 .\objects\balancetank.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\balancetank.o: .\System\usart\usart.h
+.\objects\balancetank.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\balancetank.o: .\Module\mpu\eMPL\inv_mpu.h
+.\objects\balancetank.o: .\Module\mpu\eMPL\inv_mpu_dmp_motion_driver.h

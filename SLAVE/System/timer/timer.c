@@ -1,4 +1,5 @@
 #include "timer.h"
+#include "balanceTank.h"
 /* calculate
 Freq = CK_PSC / (PSC + 1) / (ARR + 1) 
 Duty = CCR / (ARR + 1)
@@ -81,35 +82,41 @@ void TIM2_Init(u16 arr, u16 psc)
 	TIM_TimeBaseStructure.TIM_Prescaler = psc;				// prescaler
 	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1; // clock division
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+	TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
 	TIM_TimeBaseInit(TIM2, &TIM_TimeBaseStructure);
 
 	TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
 
 	NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
 
 	TIM_Cmd(TIM2, ENABLE);
 }
 
-//void TIM2_IRQHandler()
-//{
-//	static char times = 0;
-//	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET) 
-//	{
-////			Send_data(&Sending_data);
-//		if(times%5==0)
+void TIM2_IRQHandler()
+{
+	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET) 
+	{
+//			Send_data(&Sending_data);
+//		if(times%5==0) // 10ms
 //		{
-//			Pid_Calculate(pidobject);
-//			PWM_Calculate(pidobject);
+//			// Pid_Calculate(pidobject);
+////			PWM_Calculate(pidobject);
 //		}
 //		times++;
-//		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);		
-//	}
-//}
-// void PWM_Init(void)
+		if (mpu_get())
+		{
+//			 printf("roll:%.2f\r\n",roll);
+//			 printf("pitch:%.2f\r\n",pitch);
+//			 printf("yaw: %.2f \r\n",yaw);
+		}
+	}
+	TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
+}
+// void PWM_Init(void)s
 // {
 // 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
 // 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);

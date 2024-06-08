@@ -1,0 +1,11 @@
+{
+  "files.associations": {
+    "inv_mpu.h": "c",
+    "balancetank.h": "c",
+    "servo.h": "c",
+    "sys.h": "c",
+    "usart.h": "c",
+    "stdio.h": "c",
+    "mpu6050.h": "c"
+  }
+}

@@ -35,10 +35,36 @@ typedef struct
 	float _angle;
 }Servos;
 
+
+// my
+typedef struct
+{
+	u8 enable_lim_sum_error	: 1;
+	u8 enable_lim_ouput		: 1;
+	
+	float kp;
+	float ki;
+	float kd;
+	
+	float kiout_lim;
+	float lim_output;
+
+	float sum_error;
+	float last_error;
+	float last_last_error;
+	
+	float kd_output;
+	float ki_output;
+	float kp_output;
+
+	float output;
+	float error;
+}  PID;
+
 /*=====================public========================*/
-extern float pitch,roll,yaw; 		//欧拉角
-extern short aacx,aacy,aacz;		  //加速度传感器原始数据
-extern short gyrox,gyroy,gyroz;	//陀螺仪原始数据
+ extern float pitch,roll,yaw; 		//欧拉角
+// extern short aacx,aacy,aacz;		  //加速度传感器原始数据
+// extern short gyrox,gyroy,gyroz;	//陀螺仪原始数据
 // extern float a;
 int mpu_get(void);
 void MPU_Display_Spect(void);

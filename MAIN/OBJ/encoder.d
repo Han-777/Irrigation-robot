@@ -42,5 +42,4 @@
 ..\obj\encoder.o: ..\bsp\gpio\gpio.h
 ..\obj\encoder.o: ..\bsp\iic\iic.h
 ..\obj\encoder.o: ..\bsp\usart\usart.h
-..\obj\encoder.o: ..\module\oled\oled.h
 ..\obj\encoder.o: ..\module\gray\gray.h

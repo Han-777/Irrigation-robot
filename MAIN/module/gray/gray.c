@@ -51,7 +51,7 @@ int Get_Count(void)
 	{
 		i++;
 	}
-	if(OUT7==1)
+	if(OUT7==1) // 1 -> 0
 	{
 		i++;
 	}

@@ -42,5 +42,5 @@
 .\objects\inv_mpu.o: .\System\key\key.h
 .\objects\inv_mpu.o: .\System\timer\timer.h
 .\objects\inv_mpu.o: .\Module\mpu\MPU6050.h
-.\objects\inv_mpu.o: .\Module\mpu\mpuiic.h
 .\objects\inv_mpu.o: .\System\usart\usart.h
+.\objects\inv_mpu.o: .\Module\mpu\mpuiic.h

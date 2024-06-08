@@ -37,5 +37,7 @@
 .\objects\key.o: .\Module\mpu\MPU6050.h
 .\objects\key.o: .\Module\mpu\mpuiic.h
 .\objects\key.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\key.o: .\System\usart\usart.h
+.\objects\key.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\key.o: .\Module\mpu\eMPL\inv_mpu.h
 .\objects\key.o: .\Module\mpu\eMPL\inv_mpu_dmp_motion_driver.h

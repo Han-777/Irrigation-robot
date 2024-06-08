@@ -1,8 +1,7 @@
 #include "usart.h"
 
-
 /**************************************************************************
-						Bluetooth 初始化 USART1 
+						Bluetooth 初始化 USART1
 **************************************************************************/
 
 void USART1_Init(u32 bound)
@@ -40,7 +39,7 @@ void USART1_Init(u32 bound)
 
 	// USART_ClearFlag(USART1, USART_FLAG_TC);
 
-// #if EN_USART1_RX
+	// #if EN_USART1_RX
 	USART_ITConfig(USART1, USART_IT_RXNE, ENABLE); //??????
 
 	// Usart1 NVIC ??
@@ -50,7 +49,7 @@ void USART1_Init(u32 bound)
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			  // IRQ????
 	NVIC_Init(&NVIC_InitStructure);							  //??????????VIC????
 
-// #endif
+	// #endif
 }
 
 void USART1_Close(u32 bound)
@@ -112,7 +111,7 @@ void TFmini_left_USART_Init(uint32_t bound)
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;		   // 上拉
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
-	USART_InitStructure.USART_BaudRate = bound;										// 波特率设置
+	USART_InitStructure.USART_BaudRate = bound;
 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;						// 字长为8位数据格式
 	USART_InitStructure.USART_StopBits = USART_StopBits_1;							// 一个停止位
 	USART_InitStructure.USART_Parity = USART_Parity_No;								// 无奇偶校验位
@@ -176,8 +175,7 @@ void TFmini_left_USART_Close(uint32_t bound)
 /**************************************************************************
 						OpenMV 初始化 USART3
 **************************************************************************/
-
-void OpenMV_GPIO_Init(u32 bound)
+void OpenMV_USART_Init(u32 bound)
 {
 	// PB10 TX    //  PB11   RX   USART3
 	GPIO_InitTypeDef GPIO_InitStructure;
@@ -205,19 +203,59 @@ void OpenMV_GPIO_Init(u32 bound)
 	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
 	USART_Init(USART3, &USART_InitStructure);
 
-	USART_Cmd(USART3, ENABLE);
-
 	USART_ClearFlag(USART3, USART_FLAG_TC);
-
-	USART_ITConfig(USART3, USART_IT_RXNE, ENABLE);
 
 	NVIC_InitStructure.NVIC_IRQChannel = USART3_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
+
+	USART_ITConfig(USART3, USART_IT_RXNE, ENABLE);
+
+	USART_Cmd(USART3, ENABLE);
 }
 
+void OpenMV_USART_Close(u32 bound)
+{
+	// PB10 TX    //  PB11   RX   USART3
+	GPIO_InitTypeDef GPIO_InitStructure;
+	USART_InitTypeDef USART_InitStructure;
+	NVIC_InitTypeDef NVIC_InitStructure;
+
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, DISABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, DISABLE);
+
+	GPIO_PinAFConfig(GPIOB, GPIO_PinSource10, GPIO_AF_USART3);
+	GPIO_PinAFConfig(GPIOB, GPIO_PinSource11, GPIO_AF_USART3);
+
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10 | GPIO_Pin_11;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+	GPIO_Init(GPIOB, &GPIO_InitStructure);
+
+	USART_InitStructure.USART_BaudRate = bound;
+	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+	USART_InitStructure.USART_StopBits = USART_StopBits_1;
+	USART_InitStructure.USART_Parity = USART_Parity_No;
+	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
+	USART_Init(USART3, &USART_InitStructure);
+
+	USART_ClearFlag(USART3, USART_FLAG_TC);
+
+	NVIC_InitStructure.NVIC_IRQChannel = USART3_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE;
+	NVIC_Init(&NVIC_InitStructure);
+
+	USART_ITConfig(USART3, USART_IT_RXNE, DISABLE);
+
+	USART_Cmd(USART3, DISABLE);
+}
 /**************************************************************************
 						TFmini_Right 初始化 USART4
 **************************************************************************/
@@ -312,11 +350,9 @@ void TFmini_right_USART_Close(uint32_t bound)
 	NVIC_Init(&NVIC_InitStructure);							  // 根据指定的参数初始化VIC寄存器
 }
 
-
 /**************************************************************************
 						   陀螺仪初始化 USART5
 **************************************************************************/
-
 void gyro_USART_Init(uint32_t bound)
 {
 	// GPIO端口设置

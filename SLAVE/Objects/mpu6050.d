@@ -37,8 +37,8 @@
 .\objects\mpu6050.o: .\System\timer\timer.h
 .\objects\mpu6050.o: .\Module\mpu\MPU6050.h
 .\objects\mpu6050.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\mpu6050.o: .\System\usart\usart.h
+.\objects\mpu6050.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\mpu6050.o: .\Module\mpu\mpuiic.h
 .\objects\mpu6050.o: .\Module\mpu\eMPL\inv_mpu.h
 .\objects\mpu6050.o: .\Module\mpu\eMPL\inv_mpu_dmp_motion_driver.h
-.\objects\mpu6050.o: .\System\usart\usart.h
-.\objects\mpu6050.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdio.h

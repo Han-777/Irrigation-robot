@@ -1,14 +1,13 @@
 #include "sys.h"
+#include "lcd.h"
 #include "motor.h"
-#include "oled.h"
 #include "encoder.h"
 #include "servo.h"
-#include "lcd.h"
 
 int main(void)
 {
 	delay_init(168);
-//	OLED_Init();
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4); // 4抢占 0响应 (数字越小优先级越高！)
 	LCD_Init();
 	Motor_Init();
 	Encoder_TIM_Init_All();
@@ -36,6 +35,8 @@ int main(void)
 //		Servo_Yaw_Control(i);
 //		delay_ms(100);
 //	}
+	POINT_COLOR = RED; // 画笔颜色：红色
+
 	Servo_Pitch_Control(90);
 	Servo_Yaw_Control(90);
 	while(1)

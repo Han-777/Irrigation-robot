@@ -365,7 +365,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>.\Start;.\Library;.\User;.\System;.\System\delay;.\System\key;.\System\led;.\System\oled;.\System\Servo;.\System\sys;.\System\timer;.\Module\servo;.\Application\balanceTank;.\System\usart;.\Module\mpu;.\Module\mpu\eMPL;.\Module\mpu\IIC</IncludePath>
+              <IncludePath>.\Start;.\Library;.\User;.\System;.\System\delay;.\System\key;.\System\led;.\System\Servo;.\System\sys;.\System\timer;.\Module\servo;.\Application\balanceTank;.\System\usart;.\Module\mpu;.\Module\mpu\eMPL;.\Module\mpu\IIC;.\System\oled</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -707,21 +707,6 @@
               <FileName>LED.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\System\led\LED.h</FilePath>
-            </File>
-            <File>
-              <FileName>OLED.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\System\oled\OLED.c</FilePath>
-            </File>
-            <File>
-              <FileName>OLED.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\System\oled\OLED.h</FilePath>
-            </File>
-            <File>
-              <FileName>OLED_Font.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\System\oled\OLED_Font.h</FilePath>
             </File>
             <File>
               <FileName>sys.c</FileName>

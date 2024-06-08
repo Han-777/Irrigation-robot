@@ -36,7 +36,8 @@
 .\objects\usart.o: .\Module\mpu\MPU6050.h
 .\objects\usart.o: .\Module\mpu\mpuiic.h
 .\objects\usart.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\usart.o: .\System\usart\usart.h
+.\objects\usart.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\usart.o: .\Module\mpu\eMPL\inv_mpu.h
 .\objects\usart.o: .\Module\mpu\eMPL\inv_mpu_dmp_motion_driver.h
-.\objects\usart.o: System\usart\usart.h
-.\objects\usart.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\usart.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdarg.h

@@ -37,5 +37,7 @@
 .\objects\delay.o: .\Module\mpu\MPU6050.h
 .\objects\delay.o: .\Module\mpu\mpuiic.h
 .\objects\delay.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\delay.o: .\System\usart\usart.h
+.\objects\delay.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\delay.o: .\Module\mpu\eMPL\inv_mpu.h
 .\objects\delay.o: .\Module\mpu\eMPL\inv_mpu_dmp_motion_driver.h

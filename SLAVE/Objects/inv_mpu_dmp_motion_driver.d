@@ -44,3 +44,4 @@
 .\objects\inv_mpu_dmp_motion_driver.o: .\System\timer\timer.h
 .\objects\inv_mpu_dmp_motion_driver.o: .\Module\mpu\MPU6050.h
 .\objects\inv_mpu_dmp_motion_driver.o: .\Module\mpu\mpuiic.h
+.\objects\inv_mpu_dmp_motion_driver.o: .\System\usart\usart.h

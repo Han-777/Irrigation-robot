@@ -28,7 +28,6 @@
 ".\objects\delay.o"
 ".\objects\key.o"
 ".\objects\led.o"
-".\objects\oled.o"
 ".\objects\sys.o"
 ".\objects\timer.o"
 ".\objects\usart.o"

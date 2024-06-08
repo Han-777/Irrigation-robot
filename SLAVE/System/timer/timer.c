@@ -1,4 +1,5 @@
 #include "timer.h"
+#include "balanceTank.h"
 /* calculate
 Freq = CK_PSC / (PSC + 1) / (ARR + 1) 
 Duty = CCR / (ARR + 1)
@@ -87,8 +88,8 @@ void TIM2_Init(u16 arr, u16 psc)
 	TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
 
 	NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
 
@@ -108,9 +109,12 @@ void TIM2_IRQHandler()
 //		times++;
 		if (mpu_get())
 		{
-			
+//			 printf("roll:%.2f\r\n",roll);
+//			 printf("pitch:%.2f\r\n",pitch);
+//			 printf("yaw: %.2f \r\n",yaw);
 		}
 	}
+	TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
 }
 // void PWM_Init(void)s
 // {

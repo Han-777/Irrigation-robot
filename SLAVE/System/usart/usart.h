@@ -32,11 +32,12 @@
 	  	
 extern u8  USART_RX_BUF[USART_REC_LEN]; //接收缓冲,最大USART_REC_LEN个字节.末字节为换行符 
 extern u16 USART_RX_STA;         		//接收状态标记	
-extern float Pitch,Roll,Yaw;
-extern float temp_Pitch,temp_Roll,temp_Yaw;
 //如果想串口中断接收，请不要注释以下宏定义
+void USART2_Init(u32 bound);
 void USART3_Init(u32 bound);
-void Serial_SendByte(uint8_t Byte);
+//void Serial_SendByte(uint8_t Byte);
+uint8_t Serial_GetRxData(void);
+uint8_t Serial_GetRxFlag(void);
 
 #endif
 

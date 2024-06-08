@@ -365,7 +365,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CORE;..\SYSTEM\delay;..\SYSTEM\sys;..\USER;..\FWLIB\inc;..\bsp\tim;..\bsp\gpio;..\application\chassis;..\module\motor;..\bsp\iic;..\module\oled;..\module\encoder;..\module\gray;..\bsp\usart;..\module\gyro;..\module\servo;..\bsp\bluetooth;..\module\voice;..\module\bluetooth;..\module\lcd</IncludePath>
+              <IncludePath>..\CORE;..\SYSTEM\delay;..\SYSTEM\sys;..\USER;..\FWLIB\inc;..\bsp\tim;..\bsp\gpio;..\application\chassis;..\module\motor;..\bsp\iic;..\module\encoder;..\module\gray;..\bsp\usart;..\module\gyro;..\module\servo;..\bsp\bluetooth;..\module\voice;..\module\bluetooth;..\module\lcd;..\module\lidar;..\module\mp3;..\module\openmv</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -699,16 +699,6 @@
               <FilePath>..\module\ENCODER\encoder.h</FilePath>
             </File>
             <File>
-              <FileName>oled.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\module\oled\oled.c</FilePath>
-            </File>
-            <File>
-              <FileName>oled.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\module\oled\oled.h</FilePath>
-            </File>
-            <File>
               <FileName>gray.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\module\gray\gray.c</FilePath>
@@ -759,6 +749,16 @@
               <FilePath>..\module\bluetooth\bluetooth.h</FilePath>
             </File>
             <File>
+              <FileName>lidar.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\module\lidar\lidar.c</FilePath>
+            </File>
+            <File>
+              <FileName>lidar.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\module\lidar\lidar.h</FilePath>
+            </File>
+            <File>
               <FileName>lcd.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\module\lcd\lcd.c</FilePath>
@@ -769,9 +769,19 @@
               <FilePath>..\module\lcd\lcd.h</FilePath>
             </File>
             <File>
-              <FileName>FONT.H</FileName>
+              <FileName>mp3.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\module\mp3\mp3.c</FilePath>
+            </File>
+            <File>
+              <FileName>openmv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\module\openmv\openmv.c</FilePath>
+            </File>
+            <File>
+              <FileName>openmv.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\module\lcd\FONT.H</FilePath>
+              <FilePath>..\module\openmv\openmv.h</FilePath>
             </File>
           </Files>
         </Group>

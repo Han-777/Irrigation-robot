@@ -37,7 +37,7 @@ typedef struct
 } Servos;
 
 // my
-typedef struct
+typedef volatile struct
 {
 	u8 enable_lim_sum_error : 1;
 	u8 enable_lim_ouput : 1;
@@ -46,21 +46,38 @@ typedef struct
 	float ki;
 	float kd;
 
-	float kiout_lim;
+	//	float sum_error_lim;
+	float lim_integral;
 	float lim_output;
 
 	float sum_error;
 	float last_error;
-	float last_last_error;
-
-	float kd_output;
-	float ki_output;
-	float kp_output;
+	// float last_last_error;
 
 	float output;
 	float error;
 } PID;
 
+/// @brief 增量式pid: 速度环
+typedef volatile struct
+{
+	u8 enable_lim_sum_error : 1;
+	u8 enable_lim_output : 1; // 1-bit 标志，是否启用输出的限制
+	float kp;				  // 比例系数
+	float ki;				  // 积分系数
+	float kd;				  // 微分系数
+
+	float lim_integral;
+	float lim_output; // 输出限制
+
+	float last_error;	   // 上一次的误差
+	float last_last_error; // 上上次的误差
+
+	float delta_output; // 本次增量输出
+	float output;		// 最终的控制输出
+	float error;		// 当前误差
+	float sum_error;	// for test
+} Increment_PID;
 /*=====================public========================*/
 extern float pitch, roll, yaw; // 欧拉角
 // extern short aacx,aacy,aacz;		  //加速度传感器原始数据
@@ -69,11 +86,6 @@ extern float pitch, roll, yaw; // 欧拉角
 int mpu_control(void);
 void Control_Init(void);
 void Control_loop(void);
-
-extern PidObject Pid_roll;
-extern PidObject Pid_pitch;
-extern PidObject *(pidobject[]);
-extern Data_Para Sending_data;
 
 // void pid_Init(PidObject **pid,float kp,float ki,float kd,float integ_limit,float out_limit,const uint8_t len); //pid数据初始化
 // void pidUpdate(PidObject* pid);                                                                            		 //PID更新

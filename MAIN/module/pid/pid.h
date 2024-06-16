@@ -2,7 +2,7 @@
 #define __PID_H
 #include "sys.h"
 
-typedef struct
+typedef volatile struct
 {
 	u8 enable_lim_sum_error : 1;
 	u8 enable_lim_ouput : 1;
@@ -24,7 +24,7 @@ typedef struct
 } PID;
 
 /// @brief 增量式pid: 速度环
-typedef struct
+typedef volatile struct
 {
 	u8 enable_lim_sum_error : 1;
 	u8 enable_lim_output : 1; // 1-bit 标志，是否启用输出的限制

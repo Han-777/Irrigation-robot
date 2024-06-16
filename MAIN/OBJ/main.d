@@ -46,4 +46,9 @@
 ..\obj\main.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\obj\main.o: ..\module\servo\servo.h
 ..\obj\main.o: ..\application\chassis\chassis.h
+..\obj\main.o: ..\module\pid\pid.h
+..\obj\main.o: ..\module\gyro\gyro.h
+..\obj\main.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\obj\main.o: ..\module\gray\gray.h
+..\obj\main.o: ..\module\motor\motor.h
+..\obj\main.o: ..\module\encoder\encoder.h

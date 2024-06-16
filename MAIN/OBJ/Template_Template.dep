@@ -1,9 +1,5 @@
 Dependencies for Project 'Template', Target 'Template': (DO NOT MODIFY !)
-<<<<<<< Updated upstream
-F (.\main.c)(0x666ED467)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\CORE -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\USER -I..\FWLIB\inc -I..\bsp\tim -I..\bsp\gpio -I..\application\chassis -I..\module\motor -I..\bsp\iic -I..\module\encoder -I..\module\gray -I..\bsp\usart -I..\module\gyro -I..\module\servo -I..\bsp\bluetooth -I..\module\voice -I..\module\bluetooth -I..\module\lcd -I..\module\lidar -I..\module\mp3 -I..\module\openmv -I..\module\pid-I D:\Github\Irrigation-robot\MAIN\USER\RTE-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0-I D:\Downloads\keil5\ARM\CMSIS\Include-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0\Device\Include-D__UVISION_VERSION="514" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\main.o --omf_browse ..\obj\main.crf --depend ..\obj\main.d)
-=======
-F (.\main.c)(0x666ECDA5)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\CORE -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\USER -I..\FWLIB\inc -I..\bsp\tim -I..\bsp\gpio -I..\application\chassis -I..\module\motor -I..\bsp\iic -I..\module\encoder -I..\module\gray -I..\bsp\usart -I..\module\gyro -I..\module\servo -I..\bsp\bluetooth -I..\module\voice -I..\module\bluetooth -I..\module\lcd -I..\module\lidar -I..\module\mp3 -I..\module\openmv -I..\module\pid-I D:\Github\Irrigation-robot\MAIN\USER\RTE-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0-I D:\Downloads\keil5\ARM\CMSIS\Include-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0\Device\Include-D__UVISION_VERSION="514" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\main.o --omf_browse ..\obj\main.crf --depend ..\obj\main.d)
->>>>>>> Stashed changes
+F (.\main.c)(0x666ED647)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\CORE -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\USER -I..\FWLIB\inc -I..\bsp\tim -I..\bsp\gpio -I..\application\chassis -I..\module\motor -I..\bsp\iic -I..\module\encoder -I..\module\gray -I..\bsp\usart -I..\module\gyro -I..\module\servo -I..\bsp\bluetooth -I..\module\voice -I..\module\bluetooth -I..\module\lcd -I..\module\lidar -I..\module\mp3 -I..\module\openmv -I..\module\pid-I D:\Github\Irrigation-robot\MAIN\USER\RTE-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0-I D:\Downloads\keil5\ARM\CMSIS\Include-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0\Device\Include-D__UVISION_VERSION="514" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\main.o --omf_browse ..\obj\main.crf --depend ..\obj\main.d)
 I (..\SYSTEM\sys\sys.h)(0x666EA9F3)
 I (..\USER\stm32f4xx.h)(0x5821A2C0)
 I (..\CORE\core_cm4.h)(0x5821A2C0)
@@ -47,15 +43,14 @@ I (..\bsp\usart\usart.h)(0x66640A8E)
 I (D:\Downloads\keil5\ARM\ARMCC\include\math.h)(0x5475F2FE)
 I (..\module\lcd\lcd.h)(0x64661110)
 I (D:\Downloads\keil5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-<<<<<<< Updated upstream
 I (..\module\servo\servo.h)(0x666EA9F3)
-I (..\application\chassis\chassis.h)(0x666ECDB3)
+I (..\application\chassis\chassis.h)(0x666ED5E3)
+I (..\module\pid\pid.h)(0x666ECE20)
+I (..\module\gyro\gyro.h)(0x666ED593)
+I (D:\Downloads\keil5\ARM\ARMCC\include\stdio.h)(0x5475F300)
 I (..\module\gray\gray.h)(0x6638D8F7)
-=======
-I (..\module\motor\motor.h)(0x666EB3EA)
-I (..\module\encoder\encoder.h)(0x666EB677)
-I (..\module\servo\servo.h)(0x666EA9F3)
->>>>>>> Stashed changes
+I (..\module\motor\motor.h)(0x666ED593)
+I (..\module\encoder\encoder.h)(0x666ED593)
 F (.\stm32f4xx_it.c)(0x5821A2C0)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\CORE -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\USER -I..\FWLIB\inc -I..\bsp\tim -I..\bsp\gpio -I..\application\chassis -I..\module\motor -I..\bsp\iic -I..\module\encoder -I..\module\gray -I..\bsp\usart -I..\module\gyro -I..\module\servo -I..\bsp\bluetooth -I..\module\voice -I..\module\bluetooth -I..\module\lcd -I..\module\lidar -I..\module\mp3 -I..\module\openmv -I..\module\pid-I D:\Github\Irrigation-robot\MAIN\USER\RTE-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0-I D:\Downloads\keil5\ARM\CMSIS\Include-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0\Device\Include-D__UVISION_VERSION="514" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\stm32f4xx_it.o --omf_browse ..\obj\stm32f4xx_it.crf --depend ..\obj\stm32f4xx_it.d)
 I (stm32f4xx_it.h)(0x5821A2C0)
 I (stm32f4xx.h)(0x5821A2C0)
@@ -1615,13 +1610,8 @@ I (..\bsp\gpio\gpio.h)(0x666EA9F3)
 I (..\bsp\iic\iic.h)(0x666EA9F3)
 I (D:\Downloads\keil5\ARM\ARMCC\include\math.h)(0x5475F2FE)
 F (..\bsp\usart\usart.h)(0x66640A8E)()
-<<<<<<< Updated upstream
-F (..\module\motor\motor.c)(0x666ECDB3)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\CORE -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\USER -I..\FWLIB\inc -I..\bsp\tim -I..\bsp\gpio -I..\application\chassis -I..\module\motor -I..\bsp\iic -I..\module\encoder -I..\module\gray -I..\bsp\usart -I..\module\gyro -I..\module\servo -I..\bsp\bluetooth -I..\module\voice -I..\module\bluetooth -I..\module\lcd -I..\module\lidar -I..\module\mp3 -I..\module\openmv -I..\module\pid-I D:\Github\Irrigation-robot\MAIN\USER\RTE-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0-I D:\Downloads\keil5\ARM\CMSIS\Include-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0\Device\Include-D__UVISION_VERSION="514" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\motor.o --omf_browse ..\obj\motor.crf --depend ..\obj\motor.d)
-I (..\module\motor\motor.h)(0x666ECDB3)
-=======
-F (..\module\motor\motor.c)(0x666EB3E6)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\CORE -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\USER -I..\FWLIB\inc -I..\bsp\tim -I..\bsp\gpio -I..\application\chassis -I..\module\motor -I..\bsp\iic -I..\module\encoder -I..\module\gray -I..\bsp\usart -I..\module\gyro -I..\module\servo -I..\bsp\bluetooth -I..\module\voice -I..\module\bluetooth -I..\module\lcd -I..\module\lidar -I..\module\mp3 -I..\module\openmv -I..\module\pid-I D:\Github\Irrigation-robot\MAIN\USER\RTE-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0-I D:\Downloads\keil5\ARM\CMSIS\Include-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0\Device\Include-D__UVISION_VERSION="514" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\motor.o --omf_browse ..\obj\motor.crf --depend ..\obj\motor.d)
-I (..\module\motor\motor.h)(0x666EB3EA)
->>>>>>> Stashed changes
+F (..\module\motor\motor.c)(0x666ED593)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\CORE -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\USER -I..\FWLIB\inc -I..\bsp\tim -I..\bsp\gpio -I..\application\chassis -I..\module\motor -I..\bsp\iic -I..\module\encoder -I..\module\gray -I..\bsp\usart -I..\module\gyro -I..\module\servo -I..\bsp\bluetooth -I..\module\voice -I..\module\bluetooth -I..\module\lcd -I..\module\lidar -I..\module\mp3 -I..\module\openmv -I..\module\pid-I D:\Github\Irrigation-robot\MAIN\USER\RTE-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0-I D:\Downloads\keil5\ARM\CMSIS\Include-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0\Device\Include-D__UVISION_VERSION="514" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\motor.o --omf_browse ..\obj\motor.crf --depend ..\obj\motor.d)
+I (..\module\motor\motor.h)(0x666ED593)
 I (..\SYSTEM\sys\sys.h)(0x666EA9F3)
 I (..\USER\stm32f4xx.h)(0x5821A2C0)
 I (..\CORE\core_cm4.h)(0x5821A2C0)
@@ -1663,15 +1653,9 @@ I (..\bsp\gpio\gpio.h)(0x666EA9F3)
 I (..\bsp\iic\iic.h)(0x666EA9F3)
 I (..\bsp\usart\usart.h)(0x66640A8E)
 I (D:\Downloads\keil5\ARM\ARMCC\include\math.h)(0x5475F2FE)
-<<<<<<< Updated upstream
-F (..\module\motor\motor.h)(0x666ECDB3)()
+F (..\module\motor\motor.h)(0x666ED593)()
 F (..\module\ENCODER\encoder.c)(0x66640A8E)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\CORE -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\USER -I..\FWLIB\inc -I..\bsp\tim -I..\bsp\gpio -I..\application\chassis -I..\module\motor -I..\bsp\iic -I..\module\encoder -I..\module\gray -I..\bsp\usart -I..\module\gyro -I..\module\servo -I..\bsp\bluetooth -I..\module\voice -I..\module\bluetooth -I..\module\lcd -I..\module\lidar -I..\module\mp3 -I..\module\openmv -I..\module\pid-I D:\Github\Irrigation-robot\MAIN\USER\RTE-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0-I D:\Downloads\keil5\ARM\CMSIS\Include-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0\Device\Include-D__UVISION_VERSION="514" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\encoder.o --omf_browse ..\obj\encoder.crf --depend ..\obj\encoder.d)
-I (..\module\ENCODER\encoder.h)(0x666ECDB3)
-=======
-F (..\module\motor\motor.h)(0x666EB3EA)()
-F (..\module\ENCODER\encoder.c)(0x66640A8E)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\CORE -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\USER -I..\FWLIB\inc -I..\bsp\tim -I..\bsp\gpio -I..\application\chassis -I..\module\motor -I..\bsp\iic -I..\module\encoder -I..\module\gray -I..\bsp\usart -I..\module\gyro -I..\module\servo -I..\bsp\bluetooth -I..\module\voice -I..\module\bluetooth -I..\module\lcd -I..\module\lidar -I..\module\mp3 -I..\module\openmv -I..\module\pid-I D:\Github\Irrigation-robot\MAIN\USER\RTE-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0-I D:\Downloads\keil5\ARM\CMSIS\Include-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0\Device\Include-D__UVISION_VERSION="514" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\encoder.o --omf_browse ..\obj\encoder.crf --depend ..\obj\encoder.d)
-I (..\module\ENCODER\encoder.h)(0x666EB677)
->>>>>>> Stashed changes
+I (..\module\ENCODER\encoder.h)(0x666ED593)
 I (..\SYSTEM\sys\sys.h)(0x666EA9F3)
 I (..\USER\stm32f4xx.h)(0x5821A2C0)
 I (..\CORE\core_cm4.h)(0x5821A2C0)
@@ -1714,11 +1698,7 @@ I (..\bsp\iic\iic.h)(0x666EA9F3)
 I (..\bsp\usart\usart.h)(0x66640A8E)
 I (D:\Downloads\keil5\ARM\ARMCC\include\math.h)(0x5475F2FE)
 I (..\module\gray\gray.h)(0x6638D8F7)
-<<<<<<< Updated upstream
-F (..\module\ENCODER\encoder.h)(0x666ECDB3)()
-=======
-F (..\module\ENCODER\encoder.h)(0x666EB677)()
->>>>>>> Stashed changes
+F (..\module\ENCODER\encoder.h)(0x666ED593)()
 F (..\module\gray\gray.c)(0x66640A8E)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\CORE -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\USER -I..\FWLIB\inc -I..\bsp\tim -I..\bsp\gpio -I..\application\chassis -I..\module\motor -I..\bsp\iic -I..\module\encoder -I..\module\gray -I..\bsp\usart -I..\module\gyro -I..\module\servo -I..\bsp\bluetooth -I..\module\voice -I..\module\bluetooth -I..\module\lcd -I..\module\lidar -I..\module\mp3 -I..\module\openmv -I..\module\pid-I D:\Github\Irrigation-robot\MAIN\USER\RTE-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0-I D:\Downloads\keil5\ARM\CMSIS\Include-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0\Device\Include-D__UVISION_VERSION="514" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\gray.o --omf_browse ..\obj\gray.crf --depend ..\obj\gray.d)
 I (..\module\gray\gray.h)(0x6638D8F7)
 I (..\SYSTEM\sys\sys.h)(0x666EA9F3)
@@ -1763,15 +1743,9 @@ I (..\bsp\iic\iic.h)(0x666EA9F3)
 I (..\bsp\usart\usart.h)(0x66640A8E)
 I (D:\Downloads\keil5\ARM\ARMCC\include\math.h)(0x5475F2FE)
 F (..\module\gray\gray.h)(0x6638D8F7)()
-<<<<<<< Updated upstream
-F (..\module\gyro\gyro.c)(0x666ECDB3)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\CORE -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\USER -I..\FWLIB\inc -I..\bsp\tim -I..\bsp\gpio -I..\application\chassis -I..\module\motor -I..\bsp\iic -I..\module\encoder -I..\module\gray -I..\bsp\usart -I..\module\gyro -I..\module\servo -I..\bsp\bluetooth -I..\module\voice -I..\module\bluetooth -I..\module\lcd -I..\module\lidar -I..\module\mp3 -I..\module\openmv -I..\module\pid-I D:\Github\Irrigation-robot\MAIN\USER\RTE-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0-I D:\Downloads\keil5\ARM\CMSIS\Include-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0\Device\Include-D__UVISION_VERSION="514" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\gyro.o --omf_browse ..\obj\gyro.crf --depend ..\obj\gyro.d)
+F (..\module\gyro\gyro.c)(0x666ED593)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\CORE -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\USER -I..\FWLIB\inc -I..\bsp\tim -I..\bsp\gpio -I..\application\chassis -I..\module\motor -I..\bsp\iic -I..\module\encoder -I..\module\gray -I..\bsp\usart -I..\module\gyro -I..\module\servo -I..\bsp\bluetooth -I..\module\voice -I..\module\bluetooth -I..\module\lcd -I..\module\lidar -I..\module\mp3 -I..\module\openmv -I..\module\pid-I D:\Github\Irrigation-robot\MAIN\USER\RTE-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0-I D:\Downloads\keil5\ARM\CMSIS\Include-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0\Device\Include-D__UVISION_VERSION="514" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\gyro.o --omf_browse ..\obj\gyro.crf --depend ..\obj\gyro.d)
 I (D:\Downloads\keil5\ARM\ARMCC\include\math.h)(0x5475F2FE)
-I (..\module\gyro\gyro.h)(0x666ECDB3)
-=======
-F (..\module\gyro\gyro.c)(0x666EC58A)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\CORE -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\USER -I..\FWLIB\inc -I..\bsp\tim -I..\bsp\gpio -I..\application\chassis -I..\module\motor -I..\bsp\iic -I..\module\encoder -I..\module\gray -I..\bsp\usart -I..\module\gyro -I..\module\servo -I..\bsp\bluetooth -I..\module\voice -I..\module\bluetooth -I..\module\lcd -I..\module\lidar -I..\module\mp3 -I..\module\openmv -I..\module\pid-I D:\Github\Irrigation-robot\MAIN\USER\RTE-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0-I D:\Downloads\keil5\ARM\CMSIS\Include-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0\Device\Include-D__UVISION_VERSION="514" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\gyro.o --omf_browse ..\obj\gyro.crf --depend ..\obj\gyro.d)
-I (D:\Downloads\keil5\ARM\ARMCC\include\math.h)(0x5475F2FE)
-I (..\module\gyro\gyro.h)(0x666EB30C)
->>>>>>> Stashed changes
+I (..\module\gyro\gyro.h)(0x666ED593)
 I (D:\Downloads\keil5\ARM\ARMCC\include\stdio.h)(0x5475F300)
 I (..\SYSTEM\sys\sys.h)(0x666EA9F3)
 I (..\USER\stm32f4xx.h)(0x5821A2C0)
@@ -1813,11 +1787,7 @@ I (..\bsp\tim\tim.h)(0x6635BCED)
 I (..\bsp\gpio\gpio.h)(0x666EA9F3)
 I (..\bsp\iic\iic.h)(0x666EA9F3)
 I (..\bsp\usart\usart.h)(0x66640A8E)
-<<<<<<< Updated upstream
-F (..\module\gyro\gyro.h)(0x666ECDB3)()
-=======
-F (..\module\gyro\gyro.h)(0x666EB30C)()
->>>>>>> Stashed changes
+F (..\module\gyro\gyro.h)(0x666ED593)()
 F (..\module\servo\servo.c)(0x666EA9F3)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\CORE -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\USER -I..\FWLIB\inc -I..\bsp\tim -I..\bsp\gpio -I..\application\chassis -I..\module\motor -I..\bsp\iic -I..\module\encoder -I..\module\gray -I..\bsp\usart -I..\module\gyro -I..\module\servo -I..\bsp\bluetooth -I..\module\voice -I..\module\bluetooth -I..\module\lcd -I..\module\lidar -I..\module\mp3 -I..\module\openmv -I..\module\pid-I D:\Github\Irrigation-robot\MAIN\USER\RTE-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0-I D:\Downloads\keil5\ARM\CMSIS\Include-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0\Device\Include-D__UVISION_VERSION="514" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\servo.o --omf_browse ..\obj\servo.crf --depend ..\obj\servo.d)
 I (..\module\servo\servo.h)(0x666EA9F3)
 I (..\SYSTEM\sys\sys.h)(0x666EA9F3)
@@ -1952,11 +1922,7 @@ I (..\bsp\iic\iic.h)(0x666EA9F3)
 I (..\bsp\usart\usart.h)(0x66640A8E)
 I (D:\Downloads\keil5\ARM\ARMCC\include\math.h)(0x5475F2FE)
 F (..\module\lidar\lidar.h)(0x66640A8E)()
-<<<<<<< Updated upstream
 F (..\module\lcd\lcd.c)(0x666ED39D)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\CORE -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\USER -I..\FWLIB\inc -I..\bsp\tim -I..\bsp\gpio -I..\application\chassis -I..\module\motor -I..\bsp\iic -I..\module\encoder -I..\module\gray -I..\bsp\usart -I..\module\gyro -I..\module\servo -I..\bsp\bluetooth -I..\module\voice -I..\module\bluetooth -I..\module\lcd -I..\module\lidar -I..\module\mp3 -I..\module\openmv -I..\module\pid-I D:\Github\Irrigation-robot\MAIN\USER\RTE-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0-I D:\Downloads\keil5\ARM\CMSIS\Include-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0\Device\Include-D__UVISION_VERSION="514" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\lcd.o --omf_browse ..\obj\lcd.crf --depend ..\obj\lcd.d)
-=======
-F (..\module\lcd\lcd.c)(0x666EA9F3)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\CORE -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\USER -I..\FWLIB\inc -I..\bsp\tim -I..\bsp\gpio -I..\application\chassis -I..\module\motor -I..\bsp\iic -I..\module\encoder -I..\module\gray -I..\bsp\usart -I..\module\gyro -I..\module\servo -I..\bsp\bluetooth -I..\module\voice -I..\module\bluetooth -I..\module\lcd -I..\module\lidar -I..\module\mp3 -I..\module\openmv -I..\module\pid-I D:\Github\Irrigation-robot\MAIN\USER\RTE-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0-I D:\Downloads\keil5\ARM\CMSIS\Include-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0\Device\Include-D__UVISION_VERSION="514" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\lcd.o --omf_browse ..\obj\lcd.crf --depend ..\obj\lcd.d)
->>>>>>> Stashed changes
 I (..\module\lcd\lcd.h)(0x64661110)
 I (..\SYSTEM\sys\sys.h)(0x666EA9F3)
 I (..\USER\stm32f4xx.h)(0x5821A2C0)
@@ -2090,11 +2056,7 @@ I (..\bsp\usart\usart.h)(0x66640A8E)
 I (D:\Downloads\keil5\ARM\ARMCC\include\math.h)(0x5475F2FE)
 F (..\module\openmv\openmv.h)(0x666EA9F3)()
 F (..\module\pid\pid.c)(0x666EA9F3)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\CORE -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\USER -I..\FWLIB\inc -I..\bsp\tim -I..\bsp\gpio -I..\application\chassis -I..\module\motor -I..\bsp\iic -I..\module\encoder -I..\module\gray -I..\bsp\usart -I..\module\gyro -I..\module\servo -I..\bsp\bluetooth -I..\module\voice -I..\module\bluetooth -I..\module\lcd -I..\module\lidar -I..\module\mp3 -I..\module\openmv -I..\module\pid-I D:\Github\Irrigation-robot\MAIN\USER\RTE-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0-I D:\Downloads\keil5\ARM\CMSIS\Include-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0\Device\Include-D__UVISION_VERSION="514" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\pid.o --omf_browse ..\obj\pid.crf --depend ..\obj\pid.d)
-<<<<<<< Updated upstream
 I (..\module\pid\pid.h)(0x666ECE20)
-=======
-I (..\module\pid\pid.h)(0x666EB743)
->>>>>>> Stashed changes
 I (..\SYSTEM\sys\sys.h)(0x666EA9F3)
 I (..\USER\stm32f4xx.h)(0x5821A2C0)
 I (..\CORE\core_cm4.h)(0x5821A2C0)
@@ -2138,15 +2100,9 @@ I (..\bsp\usart\usart.h)(0x66640A8E)
 I (D:\Downloads\keil5\ARM\ARMCC\include\math.h)(0x5475F2FE)
 I (D:\Downloads\keil5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
 I (D:\Downloads\keil5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-<<<<<<< Updated upstream
 F (..\module\pid\pid.h)(0x666ECE20)()
-F (..\application\chassis\chassis.c)(0x666ECDB3)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\CORE -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\USER -I..\FWLIB\inc -I..\bsp\tim -I..\bsp\gpio -I..\application\chassis -I..\module\motor -I..\bsp\iic -I..\module\encoder -I..\module\gray -I..\bsp\usart -I..\module\gyro -I..\module\servo -I..\bsp\bluetooth -I..\module\voice -I..\module\bluetooth -I..\module\lcd -I..\module\lidar -I..\module\mp3 -I..\module\openmv -I..\module\pid-I D:\Github\Irrigation-robot\MAIN\USER\RTE-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0-I D:\Downloads\keil5\ARM\CMSIS\Include-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0\Device\Include-D__UVISION_VERSION="514" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\chassis.o --omf_browse ..\obj\chassis.crf --depend ..\obj\chassis.d)
-I (..\application\chassis\chassis.h)(0x666ECDB3)
-=======
-F (..\module\pid\pid.h)(0x666EB743)()
-F (..\application\chassis\chassis.c)(0x666EC797)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\CORE -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\USER -I..\FWLIB\inc -I..\bsp\tim -I..\bsp\gpio -I..\application\chassis -I..\module\motor -I..\bsp\iic -I..\module\encoder -I..\module\gray -I..\bsp\usart -I..\module\gyro -I..\module\servo -I..\bsp\bluetooth -I..\module\voice -I..\module\bluetooth -I..\module\lcd -I..\module\lidar -I..\module\mp3 -I..\module\openmv -I..\module\pid-I D:\Github\Irrigation-robot\MAIN\USER\RTE-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0-I D:\Downloads\keil5\ARM\CMSIS\Include-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0\Device\Include-D__UVISION_VERSION="514" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\chassis.o --omf_browse ..\obj\chassis.crf --depend ..\obj\chassis.d)
-I (..\application\chassis\chassis.h)(0x666EB3C1)
->>>>>>> Stashed changes
+F (..\application\chassis\chassis.c)(0x666ED609)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\CORE -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\USER -I..\FWLIB\inc -I..\bsp\tim -I..\bsp\gpio -I..\application\chassis -I..\module\motor -I..\bsp\iic -I..\module\encoder -I..\module\gray -I..\bsp\usart -I..\module\gyro -I..\module\servo -I..\bsp\bluetooth -I..\module\voice -I..\module\bluetooth -I..\module\lcd -I..\module\lidar -I..\module\mp3 -I..\module\openmv -I..\module\pid-I D:\Github\Irrigation-robot\MAIN\USER\RTE-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0-I D:\Downloads\keil5\ARM\CMSIS\Include-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0\Device\Include-D__UVISION_VERSION="514" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\chassis.o --omf_browse ..\obj\chassis.crf --depend ..\obj\chassis.d)
+I (..\application\chassis\chassis.h)(0x666ED5E3)
 I (..\SYSTEM\sys\sys.h)(0x666EA9F3)
 I (..\USER\stm32f4xx.h)(0x5821A2C0)
 I (..\CORE\core_cm4.h)(0x5821A2C0)
@@ -2188,16 +2144,10 @@ I (..\bsp\gpio\gpio.h)(0x666EA9F3)
 I (..\bsp\iic\iic.h)(0x666EA9F3)
 I (..\bsp\usart\usart.h)(0x66640A8E)
 I (D:\Downloads\keil5\ARM\ARMCC\include\math.h)(0x5475F2FE)
-I (..\module\gray\gray.h)(0x6638D8F7)
-<<<<<<< Updated upstream
 I (..\module\pid\pid.h)(0x666ECE20)
-I (..\module\gyro\gyro.h)(0x666ECDB3)
-F (..\application\chassis\chassis.h)(0x666ECDB3)()
-=======
-I (..\module\pid\pid.h)(0x666EB743)
-I (..\module\gyro\gyro.h)(0x666EB30C)
+I (..\module\gyro\gyro.h)(0x666ED593)
 I (D:\Downloads\keil5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (..\module\motor\motor.h)(0x666EB3EA)
-I (..\module\encoder\encoder.h)(0x666EB677)
-F (..\application\chassis\chassis.h)(0x666EB3C1)()
->>>>>>> Stashed changes
+I (..\module\gray\gray.h)(0x6638D8F7)
+I (..\module\motor\motor.h)(0x666ED593)
+I (..\module\encoder\encoder.h)(0x666ED593)
+F (..\application\chassis\chassis.h)(0x666ED5E3)()

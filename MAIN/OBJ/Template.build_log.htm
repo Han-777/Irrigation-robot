@@ -22,30 +22,30 @@ Dialog DLL:      TCM.DLL V1.14.4.0
  
 <h2>Project:</h2>
 D:\Github\Irrigation-robot\MAIN\USER\Template.uvprojx
-Project File Date:  06/14/2024
+Project File Date:  06/16/2024
 
 <h2>Output:</h2>
 Build target 'Template'
-compiling pid.c...
+compiling main.c...
 ..\bsp\gpio\gpio.h(44): warning:  #1295-D: Deprecated declaration Key_GPIO_Init - give arg types
   void Key_GPIO_Init();
 ..\bsp\gpio\gpio.h(72): warning:  #1-D: last line of file ends without a newline
         
 ..\bsp\iic\iic.h(12): warning:  #1-D: last line of file ends without a newline
       
-..\module\pid\pid.c: 3 warnings, 0 errors
-compiling chassis.c...
-..\bsp\gpio\gpio.h(44): warning:  #1295-D: Deprecated declaration Key_GPIO_Init - give arg types
-  void Key_GPIO_Init();
-..\bsp\gpio\gpio.h(72): warning:  #1-D: last line of file ends without a newline
-        
-..\bsp\iic\iic.h(12): warning:  #1-D: last line of file ends without a newline
-      
-..\application\chassis\chassis.c: 3 warnings, 0 errors
+main.c(12): warning:  #223-D: function "Motor_Init" declared implicitly
+        Motor_Init();
+main.c(13): warning:  #223-D: function "Encoder_TIM_Init_All" declared implicitly
+        Encoder_TIM_Init_All();
+main.c(24): warning:  #223-D: function "Car_stop" declared implicitly
+        Car_stop();
+main.c(41): warning:  #177-D: variable "i" was declared but never referenced
+        int i = 0;
+main.c: 7 warnings, 0 errors
 linking...
-Program Size: Code=35988 RO-data=7124 RW-data=196 ZI-data=1980  
+Program Size: Code=35980 RO-data=7124 RW-data=196 ZI-data=1980  
 FromELF: creating hex file...
-"..\OBJ\Template.axf" - 0 Error(s), 6 Warning(s).
+"..\OBJ\Template.axf" - 0 Error(s), 7 Warning(s).
 
 <h2>Collection of Component include folders:</h2>
   D:\Github\Irrigation-robot\MAIN\USER\RTE

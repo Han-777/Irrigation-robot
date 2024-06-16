@@ -1,6 +1,8 @@
 #include "chassis.h"
 #include "pid.h"
 #include "gyro.h"
+#include "gray.h"
+#include "encoder.h"
 
 //==================== Public vars =====================:
 float speed_limit = 20, heading_speed_limit = 0.7; // speed lmit should be smaller than 0.8 m/s

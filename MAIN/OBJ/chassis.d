@@ -45,3 +45,4 @@
 ..\obj\chassis.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
 ..\obj\chassis.o: ..\module\gray\gray.h
 ..\obj\chassis.o: ..\module\pid\pid.h
+..\obj\chassis.o: ..\module\gyro\gyro.h

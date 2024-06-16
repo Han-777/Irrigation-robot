@@ -759,7 +759,7 @@ void LCD_Init(void)
             FSMC_Bank1E->BWTR[6]|=4<<8; 	//数据保存时间(DATAST)为6ns*3个HCLK=18ns
         }
 	}
- 	printf(" LCD ID:%x\r\n",lcddev.id); //打印LCD ID
+// 	printf(" LCD ID:%x\r\n",lcddev.id); //打印LCD ID
 	if(lcddev.id==0X9341)	//9341初始化
 	{	 
 		LCD_WR_REG(0xCF);  
@@ -2435,136 +2435,137 @@ void Chinese_Show_one(u8 x, u8 y, u8 num, u8 size, u8 mode)
 }
 
 /********************************/
-//void Qinwei(int flower)//	轻微干旱
-//{
-//	char S;
-//	if(N_Flag==0)
-//	{
-//		S='A';
-//	}
-//	if(N_Flag==2)
-//	{
-//		S='B';
-//	}
-//	if(N_Flag==4)
-//	{
-//		S='C';
-//	}
-//	if(N_Flag==6)
-//	{
-//		S='D';
-//	}
-//	if(S=='A')
-//	{
-//		Chinese_Show_one(0,20*(flower+1)-20,0,16,0);
-//		Chinese_Show_one(15,20*(flower+1)-20,2,16,0);
-//	}
-//	if(S=='B')
-//	{
-//		Chinese_Show_one(60,20*(flower-5)-20,0,16,0);
-//		Chinese_Show_one(75,20*(flower-5)-20,2,16,0);
-//	}
-//	if(S=='C')
-//	{
-//		Chinese_Show_one(130,20*(flower-11)-20,0,16,0);
-//		Chinese_Show_one(145,20*(flower-11)-20,2,16,0);
-//	}
-//	if(S=='D')
-//	{
-//		Chinese_Show_one(200,20*(flower-17)-20,0,16,0);
-//		Chinese_Show_one(215,20*(flower-17)-20,2,16,0);
-//	}
-//}
-//void Yiban(int flower)//一般干旱
-//{
-//	char S;
-//	if(N_Flag==0)
-//	{
-//		S='A';
-//	}
-//	if(N_Flag==2)
-//	{
-//		S='B';
-//	}
-//	if(N_Flag==4)
-//	{
-//		S='C';
-//	}
-//	if(N_Flag==6)
-//	{
-//		S='D';
-//	}
-//	if(S=='A')
-//	{
-//		Chinese_Show_one(0,20*(flower+1)-20,4,16,0);
-//		Chinese_Show_one(15,20*(flower+1)-20,6,16,0);
-//	}
-//	if(S=='B')
-//	{
-//		Chinese_Show_one(60,20*(flower-5)-20,4,16,0);
-//		Chinese_Show_one(75,20*(flower-5)-20,6,16,0);
-//	}
-//	if(S=='C')
-//	{
-//		Chinese_Show_one(130,20*(flower-11)-20,4,16,0);
-//		Chinese_Show_one(145,20*(flower-11)-20,6,16,0);
-//	}
-//	if(S=='D')
-//	{
-//		Chinese_Show_one(200,20*(flower-17)-20,4,16,0);
-//		Chinese_Show_one(215,20*(flower-17)-20,6,16,0);
-//	}
-//}
-//void Yanzhong(int flower)
-//{
-//	char S;
-//	if(N_Flag==0)
-//	{
-//		S='A';
-//	}
-//	if(N_Flag==2)
-//	{
-//		S='B';
-//	}
-//	if(N_Flag==4)
-//	{
-//		S='C';
-//	}
-//	if(N_Flag==6)
-//	{
-//		S='D';
-//	}
-//	if(S=='A')
-//	{
-//		Chinese_Show_one(0,20*(flower+1)-20,8,16,0);
-//		Chinese_Show_one(15,20*(flower+1)-20,10,16,0);
-//	}
-//	if(S=='B')
-//	{
-//		Chinese_Show_one(60,20*(flower-5)-20,8,16,0);
-//		Chinese_Show_one(75,20*(flower-5)-20,10,16,0);
-//	}
-//	if(S=='C')
-//	{
-//		Chinese_Show_one(130,20*(flower-11)-20,8,16,0);
-//		Chinese_Show_one(145,20*(flower-11)-20,10,16,0);
-//	}
-//	if(S=='D')
-//	{
-//		Chinese_Show_one(200,20*(flower-17)-20,8,16,0);
-//		Chinese_Show_one(215,20*(flower-17)-20,10,16,0);
-//	}
-//}
+int N_Flag = 0; // add for test
+void Qinwei(int flower)//	轻微干旱
+{
+	char S;
+	if(N_Flag==0)
+	{
+		S='A';
+	}
+	if(N_Flag==2)
+	{
+		S='B';
+	}
+	if(N_Flag==4)
+	{
+		S='C';
+	}
+	if(N_Flag==6)
+	{
+		S='D';
+	}
+	if(S=='A')
+	{
+		Chinese_Show_one(0,20*(flower+1)-20,0,16,0);
+		Chinese_Show_one(15,20*(flower+1)-20,2,16,0);
+	}
+	if(S=='B')
+	{
+		Chinese_Show_one(60,20*(flower-5)-20,0,16,0);
+		Chinese_Show_one(75,20*(flower-5)-20,2,16,0);
+	}
+	if(S=='C')
+	{
+		Chinese_Show_one(130,20*(flower-11)-20,0,16,0);
+		Chinese_Show_one(145,20*(flower-11)-20,2,16,0);
+	}
+	if(S=='D')
+	{
+		Chinese_Show_one(200,20*(flower-17)-20,0,16,0);
+		Chinese_Show_one(215,20*(flower-17)-20,2,16,0);
+	}
+}
+void Yiban(int flower)//一般干旱
+{
+	char S;
+	if(N_Flag==0)
+	{
+		S='A';
+	}
+	if(N_Flag==2)
+	{
+		S='B';
+	}
+	if(N_Flag==4)
+	{
+		S='C';
+	}
+	if(N_Flag==6)
+	{
+		S='D';
+	}
+	if(S=='A')
+	{
+		Chinese_Show_one(0,20*(flower+1)-20,4,16,0);
+		Chinese_Show_one(15,20*(flower+1)-20,6,16,0);
+	}
+	if(S=='B')
+	{
+		Chinese_Show_one(60,20*(flower-5)-20,4,16,0);
+		Chinese_Show_one(75,20*(flower-5)-20,6,16,0);
+	}
+	if(S=='C')
+	{
+		Chinese_Show_one(130,20*(flower-11)-20,4,16,0);
+		Chinese_Show_one(145,20*(flower-11)-20,6,16,0);
+	}
+	if(S=='D')
+	{
+		Chinese_Show_one(200,20*(flower-17)-20,4,16,0);
+		Chinese_Show_one(215,20*(flower-17)-20,6,16,0);
+	}
+}
+void Yanzhong(int flower)
+{
+	char S;
+	if(N_Flag==0)
+	{
+		S='A';
+	}
+	if(N_Flag==2)
+	{
+		S='B';
+	}
+	if(N_Flag==4)
+	{
+		S='C';
+	}
+	if(N_Flag==6)
+	{
+		S='D';
+	}
+	if(S=='A')
+	{
+		Chinese_Show_one(0,20*(flower+1)-20,8,16,0);
+		Chinese_Show_one(15,20*(flower+1)-20,10,16,0);
+	}
+	if(S=='B')
+	{
+		Chinese_Show_one(60,20*(flower-5)-20,8,16,0);
+		Chinese_Show_one(75,20*(flower-5)-20,10,16,0);
+	}
+	if(S=='C')
+	{
+		Chinese_Show_one(130,20*(flower-11)-20,8,16,0);
+		Chinese_Show_one(145,20*(flower-11)-20,10,16,0);
+	}
+	if(S=='D')
+	{
+		Chinese_Show_one(200,20*(flower-17)-20,8,16,0);
+		Chinese_Show_one(215,20*(flower-17)-20,10,16,0);
+	}
+}
 
-//void LCD_hanqing(int a,int flower)
-//{
-//	if (a==0x01)
-//		 Qinwei(flower);
-//	else if(a==0x02)
-//		Yiban(flower);
-//	else if (a==0x03)
-//		Yanzhong(flower);
-//}
+void LCD_hanqing(int a,int flower)
+{
+	if (a==0x01)
+		 Qinwei(flower);
+	else if(a==0x02)
+		Yiban(flower);
+	else if (a==0x03)
+		Yanzhong(flower);
+}
 
 
 

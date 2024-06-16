@@ -49,3 +49,5 @@
 ..\obj\chassis.o: ..\module\gray\gray.h
 ..\obj\chassis.o: ..\module\motor\motor.h
 ..\obj\chassis.o: ..\module\encoder\encoder.h
+..\obj\chassis.o: ..\module\lcd\lcd.h
+..\obj\chassis.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdlib.h

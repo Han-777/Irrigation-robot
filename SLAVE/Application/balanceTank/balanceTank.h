@@ -39,8 +39,8 @@ typedef struct
 // my
 typedef volatile struct
 {
-	u8 enable_lim_sum_error : 1;
-	u8 enable_lim_ouput : 1;
+	unsigned int enable_lim_sum_error : 1;
+	unsigned int enable_lim_ouput : 1;
 
 	float kp;
 	float ki;

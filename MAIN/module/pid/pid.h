@@ -4,8 +4,8 @@
 
 typedef volatile struct
 {
-	u8 enable_lim_sum_error : 1;
-	u8 enable_lim_ouput : 1;
+	unsigned int enable_lim_sum_error : 1;
+	unsigned int enable_lim_ouput : 1;
 
 	float kp;
 	float ki;
@@ -26,11 +26,11 @@ typedef volatile struct
 /// @brief 增量式pid: 速度环
 typedef volatile struct
 {
-	u8 enable_lim_sum_error : 1;
-	u8 enable_lim_output : 1; // 1-bit 标志，是否启用输出的限制
-	float kp;				  // 比例系数
-	float ki;				  // 积分系数
-	float kd;				  // 微分系数
+	unsigned int enable_lim_sum_error : 1;
+	unsigned int enable_lim_output : 1; // 1-bit 标志，是否启用输出的限制
+	float kp;							// 比例系数
+	float ki;							// 积分系数
+	float kd;							// 微分系数
 
 	float lim_integral;
 	float lim_output; // 输出限制
@@ -55,7 +55,7 @@ typedef enum
 
 void set_pid(PID *pid, float kp, float ki, float kd, float lim_kiout, float lim_output);
 void reset_pid(PID *pid);
-float pid_calculate(PID *pid, float target, float measure);
+int pid_calculate(PID *pid, int target, int measure);
 
 //==================== INCREMENT PID Calc related =====================:
 

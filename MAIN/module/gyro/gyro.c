@@ -197,40 +197,40 @@ long long timestamp(u8 Data_1, u8 Data_2, u8 Data_3, u8 Data_4)
 }
 void AHRSData2PC(void)
 {
-	printf("AHRS: The RollSpeed =  %f\r\n", AHRSData_Packet.RollSpeed);
-	printf("AHRS: The PitchSpeed =  %f\r\n", AHRSData_Packet.PitchSpeed);
-	printf("AHRS: The HeadingSpeed =  %f\r\n", AHRSData_Packet.HeadingSpeed);
-	printf("AHRS: The Roll =  %f\r\n", AHRSData_Packet.Roll);
-	printf("AHRS: The Pitch =  %f\r\n", AHRSData_Packet.Pitch);
-	printf("AHRS: The Heading =  %f\r\n", AHRSData_Packet.Heading);
-	printf("AHRS: The Quaternion.Qw =  %f\r\n", AHRSData_Packet.Qw);
-	printf("AHRS: The Quaternion.Qx =  %f\r\n", AHRSData_Packet.Qx);
-	printf("AHRS: The Quaternion.Qy =  %f\r\n", AHRSData_Packet.Qy);
-	printf("AHRS: The Quaternion.Qz =  %f\r\n", AHRSData_Packet.Qz);
-	printf("AHRS: The Timestamp =  %d\r\n", AHRSData_Packet.Timestamp);
+//	printf("AHRS: The RollSpeed =  %f\r\n", AHRSData_Packet.RollSpeed);
+//	printf("AHRS: The PitchSpeed =  %f\r\n", AHRSData_Packet.PitchSpeed);
+//	printf("AHRS: The HeadingSpeed =  %f\r\n", AHRSData_Packet.HeadingSpeed);
+//	printf("AHRS: The Roll =  %f\r\n", AHRSData_Packet.Roll);
+//	printf("AHRS: The Pitch =  %f\r\n", AHRSData_Packet.Pitch);
+//	printf("AHRS: The Heading =  %f\r\n", AHRSData_Packet.Heading);
+//	printf("AHRS: The Quaternion.Qw =  %f\r\n", AHRSData_Packet.Qw);
+//	printf("AHRS: The Quaternion.Qx =  %f\r\n", AHRSData_Packet.Qx);
+//	printf("AHRS: The Quaternion.Qy =  %f\r\n", AHRSData_Packet.Qy);
+//	printf("AHRS: The Quaternion.Qz =  %f\r\n", AHRSData_Packet.Qz);
+//	printf("AHRS: The Timestamp =  %d\r\n", AHRSData_Packet.Timestamp);
 }
 void IMUData2PC(void)
 {
-	printf("Now start sending IMU data.\r\n");
-	printf("IMU: The gyroscope_x =  %f\r\n", IMUData_Packet.gyroscope_x);
-	printf("IMU:The gyroscope_y =  %f\r\n", IMUData_Packet.gyroscope_y);
-	printf("IMU:The gyroscope_z =  %f\r\n", IMUData_Packet.gyroscope_z);
-	printf("IMU:The accelerometer_x =  %f\r\n", IMUData_Packet.accelerometer_x);
-	printf("IMU:The accelerometer_y =  %f\r\n", IMUData_Packet.accelerometer_y);
-	printf("IMU:The accelerometer_z =  %f\r\n", IMUData_Packet.accelerometer_z);
-	printf("IMU:The magnetometer_x =  %f\r\n", IMUData_Packet.magnetometer_x);
-	printf("IMU:The magnetometer_y =  %f\r\n", IMUData_Packet.magnetometer_y);
-	printf("IMU:The magnetometer_z =  %f\r\n", IMUData_Packet.magnetometer_z);
-	printf("IMU:The Timestamp =  %d\r\n", IMUData_Packet.Timestamp);
-	printf("Now the data of IMU has been sent.\r\n");
+//	printf("Now start sending IMU data.\r\n");
+//	printf("IMU: The gyroscope_x =  %f\r\n", IMUData_Packet.gyroscope_x);
+//	printf("IMU:The gyroscope_y =  %f\r\n", IMUData_Packet.gyroscope_y);
+//	printf("IMU:The gyroscope_z =  %f\r\n", IMUData_Packet.gyroscope_z);
+//	printf("IMU:The accelerometer_x =  %f\r\n", IMUData_Packet.accelerometer_x);
+//	printf("IMU:The accelerometer_y =  %f\r\n", IMUData_Packet.accelerometer_y);
+//	printf("IMU:The accelerometer_z =  %f\r\n", IMUData_Packet.accelerometer_z);
+//	printf("IMU:The magnetometer_x =  %f\r\n", IMUData_Packet.magnetometer_x);
+//	printf("IMU:The magnetometer_y =  %f\r\n", IMUData_Packet.magnetometer_y);
+//	printf("IMU:The magnetometer_z =  %f\r\n", IMUData_Packet.magnetometer_z);
+//	printf("IMU:The Timestamp =  %d\r\n", IMUData_Packet.Timestamp);
+//	printf("Now the data of IMU has been sent.\r\n");
 }
 
-void usart5_send(u8 data)
-{
-	UART5->DR = data;
-	while ((UART5->SR & 0x40) == 0)
-		;
-}
+//void usart5_send(u8 data)
+//{
+//	UART5->DR = data;
+//	while ((UART5->SR & 0x40) == 0)
+//		;
+//}
 
 float Read_Yaw(void)
 {

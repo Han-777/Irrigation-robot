@@ -7,10 +7,13 @@
 #include "gray.h"
 #include "motor.h"
 #include "encoder.h"
+#include "lcd.h"
+extern int vec[2];
 
 void chassis_pid_Init(void);
-int chassis_ahead(int speed);
+int chassis_ahead(int left_speed, int right_speed);
 int chassis_rotate(float heading);
 int chassis_run(int speed, float heading);
+void lcd_dis(void);
 
 #endif

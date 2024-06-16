@@ -24,7 +24,7 @@ void reset_pid(PID *pid)
 	pid->output = 0;
 }
 
-float pid_calculate(PID *pid, float target, float measure)
+int pid_calculate(PID *pid, int target, int measure)
 {
 	pid->error = target - measure;
 	pid->sum_error += pid->error;
@@ -90,12 +90,9 @@ float increment_pid_calculate(Increment_PID *pid, float target, float measure)
 	pid->error = target - measure;
 	pid->sum_error += pid->error;
 	// integral limit
-	if (pid->enable_lim_sum_error)
+	if (fabs(pid->sum_error) > pid->lim_integral)
 	{
-		if (fabs(pid->sum_error) > pid->lim_integral)
-		{
-			pid->sum_error = (pid->sum_error > 0) ? pid->lim_integral : -pid->lim_integral;
-		}
+		pid->sum_error = (pid->sum_error > 0) ? pid->lim_integral : -pid->lim_integral;
 	}
 
 	// pid output calculate
@@ -103,12 +100,9 @@ float increment_pid_calculate(Increment_PID *pid, float target, float measure)
 
 	pid->output += pid->delta_output;
 	// pid output limit
-	if (pid->enable_lim_output)
+	if (fabs(pid->output) > pid->lim_output)
 	{
-		if (fabs(pid->output) > pid->lim_output)
-		{
-			pid->output = (pid->output > 0) ? pid->lim_output : -pid->lim_output;
-		}
+		pid->output = (pid->output > 0) ? pid->lim_output : -pid->lim_output;
 	}
 
 	pid->last_last_error = pid->last_error;

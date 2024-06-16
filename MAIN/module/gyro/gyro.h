@@ -1,5 +1,5 @@
-#ifndef __USRATX_H
-#define __USRATX_H
+#ifndef __GYRO_H
+#define __GYRO_H
 
 #include "stdio.h"
 #include "sys.h"
@@ -59,7 +59,6 @@ extern u8 ttl_receive;
 extern IMUData_Packet_t IMUData_Packet;
 extern AHRSData_Packet_t AHRSData_Packet;
 
-void USART5_IRQHandler(void);
 void usart5_send(u8 data);
 
 long long timestamp(u8 Data_1, u8 Data_2, u8 Data_3, u8 Data_4);

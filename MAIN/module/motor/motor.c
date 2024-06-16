@@ -6,8 +6,7 @@ void Motor_Init(void)
 	// freq (18k ~ 60k) = 84M / arr(50) / psc(84)
 	// 最小脉冲宽度： 2us
 	TIM4_PWM_Init(100 - 1, 42 - 1); // 84M / 84 / 50 = 20k
-//	TIM4_PWM_Init(4200 - 1, 1 - 1); // 84M / 84 / 50 = 20k
-
+	//	TIM4_PWM_Init(4200 - 1, 1 - 1); // 84M / 84 / 50 = 20k
 }
 
 float Abs(float m)
@@ -86,51 +85,51 @@ void Limit(int PWM_Max, int PWM_Min, int *PWM_OUt_L, int *PWM_OUt_R)
 	//	}
 }
 
- void Car_Load(int L, int R)
- {
- 	if (L > 0)
- 	{
- 		LIN1 = 1, LIN2 = 0; // 正转
- 	}
- 	if (L <= 0)
- 	{
- 		LIN1 = 0, LIN2 = 1; // 反转
- 	}
- 	if (R > 0)
- 	{
- 		RIN1 = 1, RIN2 = 0;
- 	}
- 	if (R <= 0)
- 	{
- 		RIN1 = 0, RIN2 = 1;
- 	}
- 	// TIM_SetCompare2(TIM4,Abs(L));//左轮
- 	// TIM_SetCompare1(TIM4,Abs(R));//右轮
- 	// MOTORL_COMPARE(Abs(L));
- 	// MOTORR_COMPARE(Abs(R));
- 	PWML = Abs(L);
- 	PWMR = Abs(R);
- }
+void Car_Load(int L, int R)
+{
+	if (L > 0)
+	{
+		LIN1 = 1, LIN2 = 0; // 正转
+	}
+	if (L <= 0)
+	{
+		LIN1 = 0, LIN2 = 1; // 反转
+	}
+	if (R > 0)
+	{
+		RIN1 = 1, RIN2 = 0;
+	}
+	if (R <= 0)
+	{
+		RIN1 = 0, RIN2 = 1;
+	}
+	// TIM_SetCompare2(TIM4,Abs(L));//左轮
+	// TIM_SetCompare1(TIM4,Abs(R));//右轮
+	// MOTORL_COMPARE(Abs(L));
+	// MOTORR_COMPARE(Abs(R));
+	PWML = Abs(L);
+	PWMR = Abs(R);
+}
 
 void Car_stop(void)
 {
-	LIN1=0;
-	LIN2=0;
+	LIN1 = 0;
+	LIN2 = 0;
 	TIM_SetCompare1(TIM4, 0);
-	RIN1=0;
-	RIN2=0;
+	RIN1 = 0;
+	RIN2 = 0;
 	TIM_SetCompare2(TIM4, 0);
 }
-void Turn_Left_90_Angles(void)
-{
-	Car_Load(35, -35);
-	delay_ms(100);
-}
-void Turn_Right_90_Angles(void)
-{
-	Car_Load(-35, 35);
-	delay_ms(100);
-}
+// void Turn_Left_90_Angles(void)
+// {
+// 	Car_Load(35, -35);
+// 	delay_ms(100);
+// }
+// void Turn_Right_90_Angles(void)
+// {
+// 	Car_Load(-35, 35);
+// 	delay_ms(100);
+// }
 
 // void Protect(void)  // ?
 //{

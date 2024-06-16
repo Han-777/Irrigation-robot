@@ -5,8 +5,8 @@ IMUData_Packet_t IMUData_Packet;
 AHRSData_Packet_t AHRSData_Packet;
 u8 ttl_receive;
 /*=============data receive (original data)=============*/
-u8 Fd_data[64]; // data receive buffer
-u8 Fd_rsimu[64]; // (Inertial Measurement Unit) data store buffer 
+u8 Fd_data[64];	  // data receive buffer
+u8 Fd_rsimu[64];  // (Inertial Measurement Unit) data store buffer
 u8 Fd_rsahrs[56]; // (Attitude and Heading Reference System) data store buffer
 
 int rs_imutype = 0; // 接收完成标志位
@@ -29,8 +29,8 @@ void UART5_IRQHandler(void)
 	ttl_receive = 1;
 	if (USART_GetITStatus(UART5, USART_IT_RXNE) != RESET) // Check if data is received //判断是否接收到数据
 	{
-		Usart_Receive = USART_ReceiveData(UART5); // Read the data //读取数据
-		Fd_data[Count] = Usart_Receive;			  // 串口数据填入数组
+		Usart_Receive = USART_ReceiveData(UART5);									   // Read the data //读取数据
+		Fd_data[Count] = Usart_Receive;												   // 串口数据填入数组
 		if (((last_rsnum == FRAME_END) && (Usart_Receive == FRAME_HEAD)) || Count > 0) // 重新对帧
 		{
 			rs_count = 1;
@@ -49,11 +49,11 @@ void UART5_IRQHandler(void)
 		{
 			Count = 0;
 			rsimu_flag = 0;
-			rs_imutype = 1; // imu data available flag
+			rs_imutype = 1;						  // imu data available flag
 			if (Fd_data[IMU_RS - 1] == FRAME_END) // 帧尾校验
 				memcpy(Fd_rsimu, Fd_data, sizeof(Fd_data));
 		}
-		if (rsacc_flag == 1 && Count == AHRS_RS) 
+		if (rsacc_flag == 1 && Count == AHRS_RS)
 		{
 			Count = 0;
 			rsacc_flag = 0;
@@ -197,40 +197,40 @@ long long timestamp(u8 Data_1, u8 Data_2, u8 Data_3, u8 Data_4)
 }
 void AHRSData2PC(void)
 {
-	// 	 printf("AHRS: The RollSpeed =  %f\r\n",AHRSData_Packet.RollSpeed);
-	//	 printf("AHRS: The PitchSpeed =  %f\r\n",AHRSData_Packet.PitchSpeed);
-	//   printf("AHRS: The HeadingSpeed =  %f\r\n",AHRSData_Packet.HeadingSpeed);
-	//   printf("AHRS: The Roll =  %f\r\n",AHRSData_Packet.Roll);
-	//   printf("AHRS: The Pitch =  %f\r\n",AHRSData_Packet.Pitch);
-	//   printf("AHRS: The Heading =  %f\r\n",AHRSData_Packet.Heading);
-	//   printf("AHRS: The Quaternion.Qw =  %f\r\n",AHRSData_Packet.Qw);
-	//   printf("AHRS: The Quaternion.Qx =  %f\r\n",AHRSData_Packet.Qx);
-	//   printf("AHRS: The Quaternion.Qy =  %f\r\n",AHRSData_Packet.Qy);
-	//   printf("AHRS: The Quaternion.Qz =  %f\r\n",AHRSData_Packet.Qz);
-	//   printf("AHRS: The Timestamp =  %d\r\n",AHRSData_Packet.Timestamp);
+	printf("AHRS: The RollSpeed =  %f\r\n", AHRSData_Packet.RollSpeed);
+	printf("AHRS: The PitchSpeed =  %f\r\n", AHRSData_Packet.PitchSpeed);
+	printf("AHRS: The HeadingSpeed =  %f\r\n", AHRSData_Packet.HeadingSpeed);
+	printf("AHRS: The Roll =  %f\r\n", AHRSData_Packet.Roll);
+	printf("AHRS: The Pitch =  %f\r\n", AHRSData_Packet.Pitch);
+	printf("AHRS: The Heading =  %f\r\n", AHRSData_Packet.Heading);
+	printf("AHRS: The Quaternion.Qw =  %f\r\n", AHRSData_Packet.Qw);
+	printf("AHRS: The Quaternion.Qx =  %f\r\n", AHRSData_Packet.Qx);
+	printf("AHRS: The Quaternion.Qy =  %f\r\n", AHRSData_Packet.Qy);
+	printf("AHRS: The Quaternion.Qz =  %f\r\n", AHRSData_Packet.Qz);
+	printf("AHRS: The Timestamp =  %d\r\n", AHRSData_Packet.Timestamp);
 }
 void IMUData2PC(void)
 {
-	// printf("Now start sending IMU data.\r\n");
-	//	printf("IMU: The gyroscope_x =  %f\r\n",IMUData_Packet.gyroscope_x);
-	//	 printf("IMU:The gyroscope_y =  %f\r\n",IMUData_Packet.gyroscope_y);
-	//   printf("IMU:The gyroscope_z =  %f\r\n",IMUData_Packet.gyroscope_z);
-	//   printf("IMU:The accelerometer_x =  %f\r\n",IMUData_Packet.accelerometer_x);
-	//   printf("IMU:The accelerometer_y =  %f\r\n",IMUData_Packet.accelerometer_y);
-	//   printf("IMU:The accelerometer_z =  %f\r\n",IMUData_Packet.accelerometer_z);
-	//   printf("IMU:The magnetometer_x =  %f\r\n",IMUData_Packet.magnetometer_x);
-	//   printf("IMU:The magnetometer_y =  %f\r\n",IMUData_Packet.magnetometer_y);
-	//   printf("IMU:The magnetometer_z =  %f\r\n",IMUData_Packet.magnetometer_z);
-	//   printf("IMU:The Timestamp =  %d\r\n",IMUData_Packet.Timestamp);
-	// printf("Now the data of IMU has been sent.\r\n");
+	printf("Now start sending IMU data.\r\n");
+	printf("IMU: The gyroscope_x =  %f\r\n", IMUData_Packet.gyroscope_x);
+	printf("IMU:The gyroscope_y =  %f\r\n", IMUData_Packet.gyroscope_y);
+	printf("IMU:The gyroscope_z =  %f\r\n", IMUData_Packet.gyroscope_z);
+	printf("IMU:The accelerometer_x =  %f\r\n", IMUData_Packet.accelerometer_x);
+	printf("IMU:The accelerometer_y =  %f\r\n", IMUData_Packet.accelerometer_y);
+	printf("IMU:The accelerometer_z =  %f\r\n", IMUData_Packet.accelerometer_z);
+	printf("IMU:The magnetometer_x =  %f\r\n", IMUData_Packet.magnetometer_x);
+	printf("IMU:The magnetometer_y =  %f\r\n", IMUData_Packet.magnetometer_y);
+	printf("IMU:The magnetometer_z =  %f\r\n", IMUData_Packet.magnetometer_z);
+	printf("IMU:The Timestamp =  %d\r\n", IMUData_Packet.Timestamp);
+	printf("Now the data of IMU has been sent.\r\n");
 }
 
-//void usart5_send(u8 data)
-//{
-//	UART5->DR = data;
-//	while ((UART5->SR & 0x40) == 0)
-//		;
-//}
+void usart5_send(u8 data)
+{
+	UART5->DR = data;
+	while ((UART5->SR & 0x40) == 0)
+		;
+}
 
 float Read_Yaw(void)
 {
@@ -305,15 +305,15 @@ float Change_Err(float bias)
 	return bias;
 }
 
-//float target_yaw_A; // 时钟方向的对角
-//float min;
-//float max;
-//float New_Yaw;
-//float Set_Yaw;
-//int PWM_Turn = 0;
-//float Err_L_Angle, Err_R_Angle;
-//float Err_L_Last_Angle, Err_R_Lats_Angle;
-//void N100N_Turn_90angles(int site, float kp, float ki, float kd) // site表示转弯方向，0为左，1为右
+// float target_yaw_A; // 时钟方向的对角
+// float min;
+// float max;
+// float New_Yaw;
+// float Set_Yaw;
+// int PWM_Turn = 0;
+// float Err_L_Angle, Err_R_Angle;
+// float Err_L_Last_Angle, Err_R_Lats_Angle;
+// void N100N_Turn_90angles(int site, float kp, float ki, float kd) // site表示转弯方向，0为左，1为右
 //{
 //	//	if(site==1)
 //	//	{

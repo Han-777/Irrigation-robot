@@ -20,7 +20,11 @@ u16 USART_RX_STA = 0; //??????
 
 void USART1_IRQHandler(void) //??1??????
 {
-	static u16 USART_RX_STA = 0, times = 0; //
+	static u16 USART_RX_STA = 0, times = 0; //??????
+
+#ifdef OS_TICKS_PER_SEC //??????????,?????ucosII?.
+	OSIntEnter();
+#endif
 	u8 com_data;
 	u8 i;
 	static u8 lRxCounter1 = 0;
@@ -32,72 +36,60 @@ void USART1_IRQHandler(void) //??1??????
 		//				LED1=0;
 		USART_ClearITPendingBit(USART1, USART_IT_RXNE);
 		com_data = USART_ReceiveData(USART1);
-
 		if (lRxState == 0 && com_data == 0x2C)
 		{
 			lRxState = 1;
 			lRxBuffer1[lRxCounter1++] = com_data;
 		}
-
 		else if (lRxState == 1 && com_data == 0x12)
 		{
 			lRxState = 2;
 			lRxBuffer1[lRxCounter1++] = com_data;
 		}
-
-		else if (lRxState == 2)
+		else if (lRxState == 2) // 对完每一次帧头
 		{
 			//					LED2=0;
-
 			lRxBuffer1[lRxCounter1++] = com_data;
-
-			if (lRxCounter1 >= 10 || com_data == 0x5B) // RxBuffer1????,??????
+			if (lRxCounter1 >= 10 || com_data == 0x5B) // 到帧尾或数据太长
 			{
 				lRxState = 3;
-				lRxFlag1 = 1;
-				drought_buff[ganhan++] = lRxBuffer1[lRxCounter1 - 2];
-				//						lz=lRxBuffer1[lRxCounter1-2];
-				//						USART_SendData(USART1,lcolor);
+				lRxFlag1 = 1;										  // receive finish flag
+				drought_buff[ganhan++] = lRxBuffer1[lRxCounter1 - 2]; // -2: 正好取到干旱数据
+																	  //						lz=lRxBuffer1[lRxCounter1-2];
+																	  //						USART_SendData(USART1,lcolor);
 			}
 		}
-
-		else if (lRxState == 3) //???????????
+		else if (lRxState == 3)
 		{
-			if (lRxBuffer1[lRxCounter1 - 1] == 0x5B)
+			if (lRxBuffer1[lRxCounter1 - 1] == 0x5B) // the data is correct
 			{
-
-				USART_ITConfig(USART1, USART_IT_RXNE, DISABLE); //??DTSABLE??
+				USART_ITConfig(USART1, USART_IT_RXNE, DISABLE); // bluetooth close
 				if (lRxFlag1)
 				{
-					//									OLED_Refresh();
-					//									OLED_ShowNum(0, 0,Cx,3,16,1);
-					//									OLED_ShowNum(0,17,Cy,3,16,1);
-					//									OLED_ShowNum(0,33,Cw,3,16,1);
-					//									OLED_ShowNum(0,49,Ch,3,16,1);
+					// display color information
 				}
 				lRxFlag1 = 0;
 				lRxCounter1 = 0;
-				lRxState = 0;
+				lRxState = 0; // clear state variable for next receive
 				USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
 			}
-			else //????
+			else // error info handle
 			{
 				lRxState = 0;
 				lRxCounter1 = 0;
 				for (i = 0; i < 10; i++)
 				{
-					lRxBuffer1[i] = 0x00; //?????????
+					lRxBuffer1[i] = 0x00; // clear receive buffer
 				}
 			}
 		}
-
-		else //????
+		else
 		{
 			lRxState = 0;
 			lRxCounter1 = 0;
 			for (i = 0; i < 10; i++)
 			{
-				lRxBuffer1[i] = 0x00; //?????????
+				lRxBuffer1[i] = 0x00; // strange error: clear the buffer
 			}
 		}
 	}

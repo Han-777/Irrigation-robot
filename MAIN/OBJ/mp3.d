@@ -41,4 +41,5 @@
 ..\obj\mp3.o: ..\bsp\gpio\gpio.h
 ..\obj\mp3.o: ..\bsp\iic\iic.h
 ..\obj\mp3.o: ..\bsp\usart\usart.h
+..\obj\mp3.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
 ..\obj\mp3.o: ..\module\mp3\mp3.h

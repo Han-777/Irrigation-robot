@@ -19,6 +19,7 @@ pitch: 后正， row: 右正
 */
 PID pitch_pid, roll_pid;
 /*=====================private============================*/
+/*----------------------pid-------------------------*/
 void set_pid(PID *pid, float kp, float ki, float kd, float kiout_lim, float output_lim)
 {
     pid->kp = kp;
@@ -80,20 +81,23 @@ float pid_calculate(PID *pid, float target, float measure)
     return 0;
 }
 
+/*----------------------increment_pid-------------------------*/
+
 /*======================public======================*/
 void Control_Init(void)
 {
     // servo 初始化
     servoInit();
-	ServoControl(110, 110, 110, 110);  // 平衡
+    ServoControl(110, 110, 110, 110); // 平衡
     // mpu 初始化
     MPU_Init();
-    while (mpu_dmp_init());
-//    USART2_Init(9600);
+    while (mpu_dmp_init())
+        ;
+    //    USART2_Init(9600);
     TIM2_Init(999, 719); // 72M / 1000 / 720 = 1000Hz = 10ms (used as timer)
     // pid 初始化
-    set_pid(&pitch_pid,0.1, 0.00, 0.01, 10, 10);
-    set_pid(&roll_pid, 0.1, 0.00, 0.01, 10, 10);
+    set_pid(&pitch_pid, 0.1, 0.00, 0.1, 2, 10);
+    set_pid(&roll_pid, 0.1, 0.00, 0.1, 2, 10);
 }
 
 void Control_loop(void)
@@ -101,28 +105,26 @@ void Control_loop(void)
     pid_calculate(&pitch_pid, 0, pitch);
     pid_calculate(&roll_pid, 0, roll);
 
-//	printf("ppppppppppppppppppp-error: %.2f   output: %.2f   sum_error: %.2f \n\r", pitch_pid.error, pitch_pid.output, pitch_pid.sum_error);
-//	printf("rrrrrrrrrrrrrrrrr------error: %.2f   output: %.2f   sum_error: %.2f \n\r", roll_pid.error, roll_pid.output, roll_pid.sum_error);
+    //	printf("ppppppppppppppppppp-error: %.2f   output: %.2f   sum_error: %.2f \n\r", pitch_pid.error, pitch_pid.output, pitch_pid.sum_error);
+    //	printf("rrrrrrrrrrrrrrrrr------error: %.2f   output: %.2f   sum_error: %.2f \n\r", roll_pid.error, roll_pid.output, roll_pid.sum_error);
 
-//    printf("error: %d", (int)pitch_pid.error * 100);
-//    printf("output: %d", (int)pitch_pid.output * 100);
+    //    printf("error: %d", (int)pitch_pid.error * 100);
+    //    printf("output: %d", (int)pitch_pid.output * 100);
 
     // pid to servo
-//	ServoControl(100, 100, 130, 100);  // 平衡
-	ServoControl(110+12*pitch_pid.output, 110-12*roll_pid.output, 110-12*pitch_pid.output, 110+12*roll_pid.output);
-
+    //	ServoControl(100, 100, 130, 100);  // 平衡
+    ServoControl(110 + 20 * pitch_pid.output, 110 - 20 * roll_pid.output, 110 - 20 * pitch_pid.output, 110 + 20 * roll_pid.output);
 }
-
 
 /*=================public(mpu)===================*/
 int mpu_control(void)
 {
     if (mpu_dmp_get_data(&roll, &pitch, &yaw) == 0)
     {
-		Control_loop();
+        Control_loop();
         // MPU_Get_Accelerometer(&aacx, &aacy, &aacz); // 得到加速度传感器数据
         // MPU_Get_Gyroscope(&gyrox, &gyroy, &gyroz);  // 得到陀螺仪数据
-//        printf("pitch=%.2f     row=%.2f     yaw=%.2f \n\r", pitch, roll, yaw);
+        //        printf("pitch=%.2f     row=%.2f     yaw=%.2f \n\r", pitch, roll, yaw);
         return 1;
     }
     return 0;

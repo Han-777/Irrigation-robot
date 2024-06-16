@@ -22,6 +22,10 @@
     "bluetooth.h": "c",
     "gray.h": "c",
     "infcollect.h": "c",
-    "chassis.h": "c"
+    "chassis.h": "c",
+    "lcd.h": "c",
+    "stdlib.h": "c",
+    "control.h": "c",
+    "pid.h": "c"
   }
 }

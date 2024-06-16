@@ -2,7 +2,13 @@
 #define __SERVO_H
 
 #include "sys.h"
-	
+
+typedef enum
+{
+    pitch_servo = 0x01, // 01
+    yaw_servo = 0x02,    // 10
+} servoName;
+
 // #define sensor GPIO_ReadInputDataBit(GPIOD,GPIO_Pin_3)  //检测到目标低电平
 
 // #define Servo_ENABLE 			1		//开启扫描
@@ -13,7 +19,6 @@
 // #define Scan_angle_B 		160		//扫描角度
 // #define Scan_angle_C 		160  	//扫描角度
 // #define Scan_angle_D 		165		//扫描角度
-
 
 // #define Correct_angle    105  //终点矫正角度
 
@@ -26,10 +31,8 @@
 // //#define Water_angle_C 	128  	//浇水角度
 // //#define Water_angle_D 	125		//浇水角度
 
-
 // #define Lift_angle 			110		//抬高角度//机械臂的垂直角度 90为直角,
 // #define Balance_angle 	195		//平衡角度
-
 
 // //云台角度
 // #define Left_D					 202   //D区云台
@@ -44,7 +47,7 @@
 // //TIM_SetCompare4(TIM8,115);  //浇水angle
 
 // extern int plant;
-    
+
 // // void Rotation(int site, int direct);
 // // void Water(int site,int times);
 // // void get_N(int site);
@@ -52,8 +55,9 @@
 // // int Get_Servo_Pwm(double ANGLE);
 // // void serove_move (int num,int now_angle,int to_angle,int delaytime);
 void servo_Init_All(void);
-void ServoControl(float angel1, float angel2);
 void Servo_Pitch_Control(uint16_t Compare);
 void Servo_Yaw_Control(uint16_t Compare);
+void ServoMove(uint16_t angel1, uint16_t angel2);
+void ServoControl(servoName name, uint16_t currentAngle, uint16_t targetAngle, uint16_t delay_time);
 
 #endif

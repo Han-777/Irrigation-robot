@@ -42,4 +42,6 @@
 ..\obj\chassis.o: ..\bsp\gpio\gpio.h
 ..\obj\chassis.o: ..\bsp\iic\iic.h
 ..\obj\chassis.o: ..\bsp\usart\usart.h
+..\obj\chassis.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
 ..\obj\chassis.o: ..\module\gray\gray.h
+..\obj\chassis.o: ..\module\pid\pid.h

@@ -42,3 +42,4 @@
 ..\obj\servo.o: ..\bsp\gpio\gpio.h
 ..\obj\servo.o: ..\bsp\iic\iic.h
 ..\obj\servo.o: ..\bsp\usart\usart.h
+..\obj\servo.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h

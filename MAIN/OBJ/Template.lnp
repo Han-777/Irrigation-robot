@@ -54,6 +54,8 @@
 "..\obj\lidar.o"
 "..\obj\lcd.o"
 "..\obj\mp3.o"
+"..\obj\openmv.o"
+"..\obj\pid.o"
 "..\obj\chassis.o"
 --library_type=microlib --strict --scatter "..\OBJ\Template.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols

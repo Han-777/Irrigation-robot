@@ -42,3 +42,4 @@
 ..\obj\gray.o: ..\bsp\gpio\gpio.h
 ..\obj\gray.o: ..\bsp\iic\iic.h
 ..\obj\gray.o: ..\bsp\usart\usart.h
+..\obj\gray.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h

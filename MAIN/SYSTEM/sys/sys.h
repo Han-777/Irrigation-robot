@@ -23,8 +23,6 @@
 #include "iic.h"
 #include "usart.h"
 #include "math.h"
-#include "inv_mpu.h"
-#include "mpu6050.h"
 // #include "led.h"
 // #include "delay.h"
 // #include "timer.h"

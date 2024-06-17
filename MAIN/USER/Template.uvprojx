@@ -365,7 +365,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CORE;..\SYSTEM\delay;..\SYSTEM\sys;..\USER;..\FWLIB\inc;..\bsp\tim;..\bsp\gpio;..\application\chassis;..\module\motor;..\bsp\iic;..\module\encoder;..\module\gray;..\bsp\usart;..\module\gyro;..\module\servo;..\bsp\bluetooth;..\module\voice;..\module\bluetooth;..\module\lcd;..\module\lidar;..\module\mp3;..\module\openmv;..\module\pid</IncludePath>
+              <IncludePath>..\CORE;..\SYSTEM\delay;..\SYSTEM\sys;..\USER;..\FWLIB\inc;..\bsp\tim;..\bsp\gpio;..\application\chassis;..\module\motor;..\bsp\iic;..\module\encoder;..\module\gray;..\bsp\usart;..\module\gyro;..\module\servo;..\bsp\bluetooth;..\module\voice;..\module\bluetooth;..\module\lcd;..\module\lidar;..\module\mp3;..\module\openmv;..\module\pid;..\SYSTEM\exit;..\SYSTEM\led;..\module\key_3x3;..\module\photoelectric;..\bsp\exit</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -673,6 +673,16 @@
               <FileType>5</FileType>
               <FilePath>..\bsp\usart\usart.h</FilePath>
             </File>
+            <File>
+              <FileName>exit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\exit\exit.c</FilePath>
+            </File>
+            <File>
+              <FileName>exit.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\bsp\exit\exit.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -792,6 +802,36 @@
               <FileName>pid.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\module\pid\pid.h</FilePath>
+            </File>
+            <File>
+              <FileName>led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SYSTEM\led\led.c</FilePath>
+            </File>
+            <File>
+              <FileName>led.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\SYSTEM\led\led.h</FilePath>
+            </File>
+            <File>
+              <FileName>key.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\module\key_3x3\key.c</FilePath>
+            </File>
+            <File>
+              <FileName>key.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\module\key_3x3\key.h</FilePath>
+            </File>
+            <File>
+              <FileName>photoelectric.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\module\photoelectric\photoelectric.c</FilePath>
+            </File>
+            <File>
+              <FileName>photoelectric.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\module\photoelectric\photoelectric.h</FilePath>
             </File>
           </Files>
         </Group>

@@ -42,6 +42,7 @@
 ..\obj\main.o: ..\bsp\iic\iic.h
 ..\obj\main.o: ..\bsp\usart\usart.h
 ..\obj\main.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
+..\obj\main.o: ..\bsp\exit\exit.h
 ..\obj\main.o: ..\module\lcd\lcd.h
 ..\obj\main.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\obj\main.o: ..\module\servo\servo.h
@@ -49,6 +50,7 @@
 ..\obj\main.o: ..\module\pid\pid.h
 ..\obj\main.o: ..\module\gyro\gyro.h
 ..\obj\main.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdio.h
-..\obj\main.o: ..\module\gray\gray.h
 ..\obj\main.o: ..\module\motor\motor.h
 ..\obj\main.o: ..\module\encoder\encoder.h
+..\obj\main.o: ..\module\lidar\lidar.h
+..\obj\main.o: ..\module\gray\gray.h

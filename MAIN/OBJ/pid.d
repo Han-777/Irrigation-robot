@@ -43,5 +43,6 @@
 ..\obj\pid.o: ..\bsp\iic\iic.h
 ..\obj\pid.o: ..\bsp\usart\usart.h
 ..\obj\pid.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
+..\obj\pid.o: ..\bsp\exit\exit.h
 ..\obj\pid.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\obj\pid.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdio.h

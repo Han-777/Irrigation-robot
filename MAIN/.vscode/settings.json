@@ -26,6 +26,8 @@
     "lcd.h": "c",
     "stdlib.h": "c",
     "control.h": "c",
-    "pid.h": "c"
+    "pid.h": "c",
+    "led.h": "c",
+    "exit.h": "c"
   }
 }

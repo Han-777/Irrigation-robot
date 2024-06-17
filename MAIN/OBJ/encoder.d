@@ -43,4 +43,5 @@
 ..\obj\encoder.o: ..\bsp\iic\iic.h
 ..\obj\encoder.o: ..\bsp\usart\usart.h
 ..\obj\encoder.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
+..\obj\encoder.o: ..\bsp\exit\exit.h
 ..\obj\encoder.o: ..\module\gray\gray.h

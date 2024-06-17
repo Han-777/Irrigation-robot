@@ -43,3 +43,4 @@
 ..\obj\gpio.o: ..\bsp\iic\iic.h
 ..\obj\gpio.o: ..\bsp\usart\usart.h
 ..\obj\gpio.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
+..\obj\gpio.o: ..\bsp\exit\exit.h

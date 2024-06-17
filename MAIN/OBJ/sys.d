@@ -42,3 +42,4 @@
 ..\obj\sys.o: ..\bsp\iic\iic.h
 ..\obj\sys.o: ..\bsp\usart\usart.h
 ..\obj\sys.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
+..\obj\sys.o: ..\bsp\exit\exit.h

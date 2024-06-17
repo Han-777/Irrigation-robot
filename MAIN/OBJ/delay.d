@@ -43,3 +43,4 @@
 ..\obj\delay.o: ..\bsp\iic\iic.h
 ..\obj\delay.o: ..\bsp\usart\usart.h
 ..\obj\delay.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
+..\obj\delay.o: ..\bsp\exit\exit.h

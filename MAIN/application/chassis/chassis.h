@@ -4,10 +4,12 @@
 #include "sys.h"
 #include "pid.h"
 #include "gyro.h"
-#include "gray.h"
 #include "motor.h"
 #include "encoder.h"
 #include "lcd.h"
+#include "lidar.h"
+#include "gray.h"
+
 extern int vec[2];
 extern float current_yaw;
 

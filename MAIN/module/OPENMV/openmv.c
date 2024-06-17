@@ -4,7 +4,6 @@ u8 cx = 0, cy = 0, color = 0, z = 0;
 
 void USART3_IRQHandler(void)
 {
-
 	u8 com_data;
 	u8 i;
 	static u8 RxCounter1 = 0;

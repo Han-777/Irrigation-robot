@@ -43,5 +43,6 @@
 ..\obj\lcd.o: ..\bsp\iic\iic.h
 ..\obj\lcd.o: ..\bsp\usart\usart.h
 ..\obj\lcd.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
+..\obj\lcd.o: ..\bsp\exit\exit.h
 ..\obj\lcd.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\obj\lcd.o: ..\module\lcd\font.h

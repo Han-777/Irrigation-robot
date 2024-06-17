@@ -1,4 +1,5 @@
 #include "lidar.h"
+
 uint16_t Distance_left_max = 30;
 uint16_t Distance_left_min = 20;
 uint16_t Distance_right_max = 35;

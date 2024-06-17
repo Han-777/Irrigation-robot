@@ -43,11 +43,13 @@
 ..\obj\chassis.o: ..\bsp\iic\iic.h
 ..\obj\chassis.o: ..\bsp\usart\usart.h
 ..\obj\chassis.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
+..\obj\chassis.o: ..\bsp\exit\exit.h
 ..\obj\chassis.o: ..\module\pid\pid.h
 ..\obj\chassis.o: ..\module\gyro\gyro.h
 ..\obj\chassis.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdio.h
-..\obj\chassis.o: ..\module\gray\gray.h
 ..\obj\chassis.o: ..\module\motor\motor.h
 ..\obj\chassis.o: ..\module\encoder\encoder.h
 ..\obj\chassis.o: ..\module\lcd\lcd.h
 ..\obj\chassis.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+..\obj\chassis.o: ..\module\lidar\lidar.h
+..\obj\chassis.o: ..\module\gray\gray.h

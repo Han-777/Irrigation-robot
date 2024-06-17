@@ -36,6 +36,8 @@ void chassis_Init(void)
     Motor_Init();
     Encoder_TIM_Init_All();
     chassis_pid_Init();
+    TFmini_right_USART_Init(115200);
+    TFmini_left_USART_Init(115200);
     gyro_USART_Init(921600);
     delay_ms(100);
     ori_target_Yaw = Read_Yaw();
@@ -92,7 +94,7 @@ int chassis_run(int speed, float heading)
 
 int vec[2] = {0};
 float current_yaw = 0;
-float info[10] = {0};
+float info[20] = {0};
 void TIM7_IRQHandler(void)
 {
     if (TIM_GetFlagStatus(TIM7, TIM_FLAG_Update) == SET)
@@ -108,11 +110,14 @@ void TIM7_IRQHandler(void)
         info[5] = right_inc_PID.sum_error;
         info[6] = right_inc_PID.error;
         info[7] = heading_inc_PID.output;
-		info[8] = heading_inc_PID.error;
+        info[8] = heading_inc_PID.error;
         info[9] = heading_inc_PID.sum_error;
+        info[10] = Dist_right;
+        info[11] = Dist_left;
         TTL_Hex2Dec();
-//        chassis_ahead(20, 20);
-		chassis_rotate(ori_target_Yaw);
+        //        chassis_ahead(20, 20);
+        chassis_rotate(ori_target_Yaw);
+        Get_Count();
     }
 }
 

@@ -3,8 +3,8 @@
 
 #include "sys.h"
 
-#define LEFT_ENCODER ENCODER1_TIM
-#define RIGHT_ENCODER ENCODER2_TIM
+#define LEFT_ENCODER ENCODER2_TIM
+#define RIGHT_ENCODER ENCODER1_TIM
 // Para: ENCODER1_TIM(left) | ENCODER2_TIM(Rignt)
 void Encoder_TIM_Init_All(void);
 int Read_Speed(TIM_TypeDef *TIMx);

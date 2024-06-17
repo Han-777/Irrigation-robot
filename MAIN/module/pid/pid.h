@@ -32,7 +32,6 @@ typedef volatile struct
 	float ki;							// 积分系数
 	float kd;							// 微分系数
 
-	float lim_integral;
 	float lim_output; // 输出限制
 
 	float last_error;	   // 上一次的误差
@@ -59,7 +58,7 @@ int pid_calculate(PID *pid, int target, int measure);
 
 //==================== INCREMENT PID Calc related =====================:
 
-void set_increment_pid(Increment_PID *pid, float kp, float ki, float kd, float lim_integral, float lim_output);
+void set_increment_pid(Increment_PID *pid, float kp, float ki, float kd, float lim_output);
 void reset_increment_pid(Increment_PID *pid);
 float increment_pid_calculate(Increment_PID *pid, float target, float measure);
 

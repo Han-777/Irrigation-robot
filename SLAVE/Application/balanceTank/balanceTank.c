@@ -1,6 +1,5 @@
 #include "balanceTank.h"
 
-
 float pitch, roll, yaw;    // 欧拉角
 short aacx, aacy, aacz;    // 加速度传感器原始数据
 short gyrox, gyroy, gyroz; // 陀螺仪原始数据
@@ -14,30 +13,30 @@ target: 0 degree
 回中角度：test: 100
 pitch: 后正， row: 右正
 */
-//PID pitch_pid, roll_pid;
+// PID pitch_pid, roll_pid;
 Increment_PID pitch_inc_pid, roll_inc_pid;
 /*=====================private============================*/
 /*----------------------pid-------------------------*/
-//void set_pid(PID *pid, float kp, float ki, float kd, float lim_kiout, float lim_output)
+// void set_pid(PID *pid, float kp, float ki, float kd, float lim_kiout, float lim_output)
 //{
-//    pid->kp = kp;
-//    pid->ki = ki;
-//    pid->kd = kd;
-//    pid->lim_integral = lim_kiout;
-//    pid->lim_output = lim_output;
-//}
+//     pid->kp = kp;
+//     pid->ki = ki;
+//     pid->kd = kd;
+//     pid->lim_integral = lim_kiout;
+//     pid->lim_output = lim_output;
+// }
 
-//void reset_pid(PID *pid)
+// void reset_pid(PID *pid)
 //{
-//    pid->sum_error = 0;
-//    pid->last_error = 0;
-//    pid->output = 0;
-//}
+//     pid->sum_error = 0;
+//     pid->last_error = 0;
+//     pid->output = 0;
+// }
 
-//float pid_calculate(PID *pid, float target, float measure)
+// float pid_calculate(PID *pid, float target, float measure)
 //{
-//    pid->error = target - measure;
-//    pid->sum_error += pid->error;
+//     pid->error = target - measure;
+//     pid->sum_error += pid->error;
 
 //    // integral limit
 //    if (pid->enable_lim_sum_error)
@@ -97,26 +96,15 @@ float increment_pid_calculate(Increment_PID *pid, float target, float measure)
 {
     pid->error = target - measure;
     pid->sum_error += pid->error;
-    // integral limit
-    if (pid->enable_lim_sum_error)
-    {
-        if (fabs(pid->sum_error) > pid->lim_integral)
-        {
-            pid->sum_error = (pid->sum_error > 0) ? pid->lim_integral : -pid->lim_integral;
-        }
-    }
 
     // pid output calculate
-    pid->delta_output = pid->kp * (pid->error - pid->last_error) + pid->ki * pid->sum_error + pid->kd * (pid->error - 2 * pid->last_error + pid->last_last_error);
+    pid->delta_output = pid->kp * (pid->error - pid->last_error) + pid->ki * pid->error + pid->kd * (pid->error - 2 * pid->last_error + pid->last_last_error);
 
     pid->output += pid->delta_output;
     // pid output limit
-    if (pid->enable_lim_output)
+    if (fabs(pid->output) > pid->lim_output)
     {
-        if (fabs(pid->output) > pid->lim_output)
-        {
-            pid->output = (pid->output > 0) ? pid->lim_output : -pid->lim_output;
-        }
+        pid->output = (pid->output > 0) ? pid->lim_output : -pid->lim_output;
     }
 
     pid->last_last_error = pid->last_error;

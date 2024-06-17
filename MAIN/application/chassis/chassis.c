@@ -1,7 +1,7 @@
 #include "chassis.h"
 
 //==================== Public vars =====================:
-float speed_limit = 27, heading_speed_limit = 0.7; // speed lmit should be smaller than 0.8 m/s
+float speed_limit = 50, heading_speed_limit = 0.7; // speed lmit should be smaller than 0.8 m/s
 
 //==================== Internal vars =====================:
 // constants & PIDs
@@ -10,8 +10,8 @@ float speed_limit = 27, heading_speed_limit = 0.7; // speed lmit should be small
 Increment_PID left_inc_PID, right_inc_PID, heading_inc_PID;
 // PID head_PID;
 //  const float H = 0.188, W = 0.25, R = 0.413, PI = 3.1415926535;
-const float speed_kp = 0.2, speed_ki = 0.01, speed_kd = 0.0, speed_ki_limit = 1,
-            heading_kp = 0.1, heading_ki = 0.00, heading_kd = 0.0017, heading_ki_limit = 10;
+const float speed_kp = 0.2, speed_ki = 0.1, speed_kd = 0.0,
+            heading_kp = 0.1, heading_ki = 0.001, heading_kd = 0.0017;
 // head_kp = 0.1, head_ki = 0, head_kd = 0, head_ki_limit = 2, head_out_limit = 180;
 // motor speed unit is m/s, should start from a small value
 
@@ -48,9 +48,9 @@ void chassis_Init(void)
  */
 void chassis_pid_Init(void)
 {
-    set_increment_pid(&left_inc_PID, speed_kp, speed_ki, speed_kd, speed_ki_limit, speed_limit);
-    set_increment_pid(&right_inc_PID, speed_kp, speed_ki, speed_kd, speed_ki_limit, speed_limit);
-    set_increment_pid(&heading_inc_PID, heading_kp, heading_ki, heading_kd, heading_ki_limit, heading_speed_limit); // m/s
+    set_increment_pid(&left_inc_PID, speed_kp, speed_ki, speed_kd, speed_limit);
+    set_increment_pid(&right_inc_PID, speed_kp, speed_ki, speed_kd, speed_limit);
+    set_increment_pid(&heading_inc_PID, heading_kp, heading_ki, heading_kd, heading_speed_limit); // m/s
     // set_pid(&head_PID, head_kp, head_ki, head_kd, head_ki_limit, head_out_limit);
 }
 
@@ -62,8 +62,8 @@ void Car_stop(void);
 int chassis_ahead(int left_speed, int right_speed)
 {
     // pid calculation
-    increment_pid_calculate(&left_inc_PID, left_speed, Read_Speed(LEFT_ENCODER));
-    increment_pid_calculate(&right_inc_PID, right_speed, Read_Speed(RIGHT_ENCODER));
+    increment_pid_calculate(&left_inc_PID, left_speed, vec[0]);
+    increment_pid_calculate(&right_inc_PID, right_speed, vec[1]);
     // load motor
     Car_Load(left_inc_PID.output, right_inc_PID.output);
     return 1;
@@ -102,7 +102,7 @@ void TIM7_IRQHandler(void)
         info[5] = right_inc_PID.sum_error;
         info[6] = right_inc_PID.error;
         TTL_Hex2Dec();
-//        chassis_ahead(1, 1);
+//        chassis_ahead(20, 20);
     }
 }
 

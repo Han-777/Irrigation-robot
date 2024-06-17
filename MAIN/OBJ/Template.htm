@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\OBJ\Template.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\OBJ\Template.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Mon Jun 17 00:15:23 2024
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Mon Jun 17 11:38:46 2024
 <BR><P>
 <H3>Maximum Stack Usage =        408 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -911,7 +911,7 @@ Global Symbols
 
 <P><STRONG><a name="[162]"></a>TIM_GenerateEvent</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f4xx_tim.o(.text), UNUSED)
 
-<P><STRONG><a name="[de]"></a>TIM_GetFlagStatus</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, stm32f4xx_tim.o(.text))
+<P><STRONG><a name="[dd]"></a>TIM_GetFlagStatus</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, stm32f4xx_tim.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM7_IRQHandler
 </UL>
 
@@ -1466,9 +1466,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chassis_Init
 </UL>
 
-<P><STRONG><a name="[dc]"></a>Read_Speed</STRONG> (Thumb, 58 bytes, Stack size 0 bytes, encoder.o(.text))
+<P><STRONG><a name="[de]"></a>Read_Speed</STRONG> (Thumb, 58 bytes, Stack size 0 bytes, encoder.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM7_IRQHandler
-<LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chassis_ahead
 </UL>
 
 <P><STRONG><a name="[40]"></a>UART5_IRQHandler</STRONG> (Thumb, 258 bytes, Stack size 8 bytes, gyro.o(.text))
@@ -1530,7 +1529,7 @@ Global Symbols
 <LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
 <LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
 </UL>
-<BR>[Called By]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chassis_rotate
+<BR>[Called By]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chassis_rotate
 </UL>
 
 <P><STRONG><a name="[184]"></a>Read_YawSpeed</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, gyro.o(.text), UNUSED)
@@ -1639,22 +1638,22 @@ Global Symbols
 <LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdrcmple
 </UL>
 
-<P><STRONG><a name="[da]"></a>set_increment_pid</STRONG> (Thumb, 62 bytes, Stack size 0 bytes, pid.o(.text))
+<P><STRONG><a name="[da]"></a>set_increment_pid</STRONG> (Thumb, 58 bytes, Stack size 0 bytes, pid.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[d9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chassis_pid_Init
 </UL>
 
 <P><STRONG><a name="[188]"></a>reset_increment_pid</STRONG> (Thumb, 34 bytes, Stack size 0 bytes, pid.o(.text), UNUSED)
 
-<P><STRONG><a name="[d8]"></a>increment_pid_calculate</STRONG> (Thumb, 354 bytes, Stack size 40 bytes, pid.o(.text), UNUSED)
+<P><STRONG><a name="[d8]"></a>increment_pid_calculate</STRONG> (Thumb, 252 bytes, Stack size 40 bytes, pid.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fabs
 <LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
 <LI><a href="#[c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdrcmple
 </UL>
-<BR>[Called By]<UL><LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chassis_rotate
+<BR>[Called By]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chassis_rotate
 <LI><a href="#[db]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chassis_ahead
 </UL>
 
-<P><STRONG><a name="[d9]"></a>chassis_pid_Init</STRONG> (Thumb, 88 bytes, Stack size 8 bytes, chassis.o(.text))
+<P><STRONG><a name="[d9]"></a>chassis_pid_Init</STRONG> (Thumb, 76 bytes, Stack size 8 bytes, chassis.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = chassis_pid_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[da]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_increment_pid
@@ -1673,13 +1672,12 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[db]"></a>chassis_ahead</STRONG> (Thumb, 124 bytes, Stack size 24 bytes, chassis.o(.text), UNUSED)
+<P><STRONG><a name="[db]"></a>chassis_ahead</STRONG> (Thumb, 98 bytes, Stack size 16 bytes, chassis.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;increment_pid_calculate
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Speed
 <LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Car_Load
 </UL>
 
-<P><STRONG><a name="[dd]"></a>chassis_rotate</STRONG> (Thumb, 40 bytes, Stack size 16 bytes, chassis.o(.text), UNUSED)
+<P><STRONG><a name="[dc]"></a>chassis_rotate</STRONG> (Thumb, 40 bytes, Stack size 16 bytes, chassis.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;increment_pid_calculate
 <LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Yaw
 </UL>
@@ -1690,9 +1688,9 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 408<LI>Call Chain = TIM7_IRQHandler &rArr; TTL_Hex2Dec &rArr; DATA_Trans &rArr; __hardfp_pow &rArr; __kernel_poly &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TTL_Hex2Dec
-<LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Speed
+<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Speed
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_ClearITPendingBit
-<LI><a href="#[de]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_GetFlagStatus
+<LI><a href="#[dd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_GetFlagStatus
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f40_41xxx.o(RESET)
 </UL>

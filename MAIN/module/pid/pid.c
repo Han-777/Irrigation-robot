@@ -62,12 +62,11 @@ int pid_calculate(PID *pid, int target, int measure)
 
 //==================== INCREMENT PID Calc related =====================:
 
-void set_increment_pid(Increment_PID *pid, float kp, float ki, float kd, float lim_integral, float lim_output)
+void set_increment_pid(Increment_PID *pid, float kp, float ki, float kd, float lim_output)
 {
 	pid->kp = kp;
 	pid->ki = ki;
 	pid->kd = kd;
-	pid->lim_integral = lim_integral;
 	pid->lim_output = lim_output;
 	pid->last_error = 0;
 	pid->last_last_error = 0;
@@ -88,15 +87,15 @@ void reset_increment_pid(Increment_PID *pid)
 float increment_pid_calculate(Increment_PID *pid, float target, float measure)
 {
 	pid->error = target - measure;
-	pid->sum_error += pid->error;
+	pid->sum_error += pid->error;  // for test
 	// integral limit
-	if (fabs(pid->sum_error) > pid->lim_integral)
-	{
-		pid->sum_error = (pid->sum_error > 0) ? pid->lim_integral : -pid->lim_integral;
-	}
+	// if (fabs(pid->sum_error) > pid->lim_integral)
+	// {
+	// 	pid->sum_error = (pid->sum_error > 0) ? pid->lim_integral : -pid->lim_integral;
+	// }
 
 	// pid output calculate
-	pid->delta_output = pid->kp * (pid->error - pid->last_error) + pid->ki * pid->sum_error + pid->kd * (pid->error - 2 * pid->last_error + pid->last_last_error);
+	pid->delta_output = pid->kp * (pid->error - pid->last_error) + pid->ki * pid->error + pid->kd * (pid->error - 2 * pid->last_error + pid->last_last_error);
 
 	pid->output += pid->delta_output;
 	// pid output limit

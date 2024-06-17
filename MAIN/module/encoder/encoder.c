@@ -15,7 +15,7 @@ void Encoder_TIM_Init_All(void)
 编码器
 速度读取函数
 入口参数：定时器
-Para: ENCODER1_TIM(left) | ENCODER2_TIM(Rignt)
+Para: ENCODER1_TIM(right) | ENCODER2_TIM(left)
 **********************/
 int Read_Speed(TIM_TypeDef* TIMx)
 {

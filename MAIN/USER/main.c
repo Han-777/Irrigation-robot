@@ -8,8 +8,8 @@ int main(void)
 {
 	delay_init(168);
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4); // 4抢占 0响应 (数字越小优先级越高！)
-													//	LCD_Init();
-													//	POINT_COLOR = BLUE; // 画笔颜色
+//	LCD_Init();
+//	POINT_COLOR = BLUE; // 画笔颜色
 	delay_ms(100);
 
 	TIM7_Int_Init(1000 - 1, 840 - 1); // 84M / 4200 / 1000 = 10ms
@@ -46,8 +46,8 @@ int main(void)
 	int yaw = 0;
 	while (1)
 	{
-		//		Chinese_Show_one(10, 10, 0, 16, 0);
-		//		LCD_ShowNum(40, 40, Read_Yaw(), 5, 16);
+		Chinese_Show_one(10, 10, 0, 16, 0);
+		LCD_ShowNum(40, 40, Read_Yaw(), 5, 16);
 		//		Chinese_Show_one(64, 20, 1, 16, 0);
 		//		lcd_dis();
 

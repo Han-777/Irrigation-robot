@@ -1,5 +1,5 @@
 Dependencies for Project 'Template', Target 'Template': (DO NOT MODIFY !)
-F (.\main.c)(0x666F0959)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\CORE -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\USER -I..\FWLIB\inc -I..\bsp\tim -I..\bsp\gpio -I..\application\chassis -I..\module\motor -I..\bsp\iic -I..\module\encoder -I..\module\gray -I..\bsp\usart -I..\module\gyro -I..\module\servo -I..\bsp\bluetooth -I..\module\voice -I..\module\bluetooth -I..\module\lcd -I..\module\lidar -I..\module\mp3 -I..\module\openmv -I..\module\pid-I D:\Github\Irrigation-robot\MAIN\USER\RTE-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0-I D:\Downloads\keil5\ARM\CMSIS\Include-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0\Device\Include-D__UVISION_VERSION="514" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\main.o --omf_browse ..\obj\main.crf --depend ..\obj\main.d)
+F (.\main.c)(0x666FB050)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\CORE -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\USER -I..\FWLIB\inc -I..\bsp\tim -I..\bsp\gpio -I..\application\chassis -I..\module\motor -I..\bsp\iic -I..\module\encoder -I..\module\gray -I..\bsp\usart -I..\module\gyro -I..\module\servo -I..\bsp\bluetooth -I..\module\voice -I..\module\bluetooth -I..\module\lcd -I..\module\lidar -I..\module\mp3 -I..\module\openmv -I..\module\pid-I D:\Github\Irrigation-robot\MAIN\USER\RTE-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0-I D:\Downloads\keil5\ARM\CMSIS\Include-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0\Device\Include-D__UVISION_VERSION="514" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\main.o --omf_browse ..\obj\main.crf --depend ..\obj\main.d)
 I (..\SYSTEM\sys\sys.h)(0x666EA9F3)
 I (..\USER\stm32f4xx.h)(0x5821A2C0)
 I (..\CORE\core_cm4.h)(0x5821A2C0)
@@ -44,7 +44,7 @@ I (D:\Downloads\keil5\ARM\ARMCC\include\math.h)(0x5475F2FE)
 I (..\module\lcd\lcd.h)(0x64661110)
 I (D:\Downloads\keil5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
 I (..\module\servo\servo.h)(0x666EA9F3)
-I (..\application\chassis\chassis.h)(0x666EE02A)
+I (..\application\chassis\chassis.h)(0x666FB77C)
 I (..\module\pid\pid.h)(0x666FA4EB)
 I (..\module\gyro\gyro.h)(0x666EEB87)
 I (D:\Downloads\keil5\ARM\ARMCC\include\stdio.h)(0x5475F300)
@@ -2101,8 +2101,8 @@ I (D:\Downloads\keil5\ARM\ARMCC\include\math.h)(0x5475F2FE)
 I (D:\Downloads\keil5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
 I (D:\Downloads\keil5\ARM\ARMCC\include\stdio.h)(0x5475F300)
 F (..\module\pid\pid.h)(0x666FA4EB)()
-F (..\application\chassis\chassis.c)(0x666FAFC5)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\CORE -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\USER -I..\FWLIB\inc -I..\bsp\tim -I..\bsp\gpio -I..\application\chassis -I..\module\motor -I..\bsp\iic -I..\module\encoder -I..\module\gray -I..\bsp\usart -I..\module\gyro -I..\module\servo -I..\bsp\bluetooth -I..\module\voice -I..\module\bluetooth -I..\module\lcd -I..\module\lidar -I..\module\mp3 -I..\module\openmv -I..\module\pid-I D:\Github\Irrigation-robot\MAIN\USER\RTE-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0-I D:\Downloads\keil5\ARM\CMSIS\Include-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0\Device\Include-D__UVISION_VERSION="514" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\chassis.o --omf_browse ..\obj\chassis.crf --depend ..\obj\chassis.d)
-I (..\application\chassis\chassis.h)(0x666EE02A)
+F (..\application\chassis\chassis.c)(0x666FB9CB)(--c99 -c --cpu Cortex-M4.fp -D__MICROLIB -g -O0 --apcs=interwork -I..\CORE -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\USER -I..\FWLIB\inc -I..\bsp\tim -I..\bsp\gpio -I..\application\chassis -I..\module\motor -I..\bsp\iic -I..\module\encoder -I..\module\gray -I..\bsp\usart -I..\module\gyro -I..\module\servo -I..\bsp\bluetooth -I..\module\voice -I..\module\bluetooth -I..\module\lcd -I..\module\lidar -I..\module\mp3 -I..\module\openmv -I..\module\pid-I D:\Github\Irrigation-robot\MAIN\USER\RTE-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0-I D:\Downloads\keil5\ARM\CMSIS\Include-I D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0\Device\Include-D__UVISION_VERSION="514" -DSTM32F407xx -DSTM32F40_41xxx -DUSE_STDPERIPH_DRIVER-o ..\obj\chassis.o --omf_browse ..\obj\chassis.crf --depend ..\obj\chassis.d)
+I (..\application\chassis\chassis.h)(0x666FB77C)
 I (..\SYSTEM\sys\sys.h)(0x666EA9F3)
 I (..\USER\stm32f4xx.h)(0x5821A2C0)
 I (..\CORE\core_cm4.h)(0x5821A2C0)
@@ -2152,4 +2152,4 @@ I (..\module\motor\motor.h)(0x666ED593)
 I (..\module\encoder\encoder.h)(0x666FA8E7)
 I (..\module\lcd\lcd.h)(0x64661110)
 I (D:\Downloads\keil5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-F (..\application\chassis\chassis.h)(0x666EE02A)()
+F (..\application\chassis\chassis.h)(0x666FB77C)()

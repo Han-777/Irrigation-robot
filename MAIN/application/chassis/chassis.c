@@ -1,7 +1,8 @@
 #include "chassis.h"
 
+float ori_target_Yaw = 0;
 //==================== Public vars =====================:
-float speed_limit = 50, heading_speed_limit = 0.7; // speed lmit should be smaller than 0.8 m/s
+float speed_limit = 50, heading_speed_limit = 10; // speed lmit should be smaller than 0.8 m/s
 
 //==================== Internal vars =====================:
 // constants & PIDs
@@ -10,8 +11,8 @@ float speed_limit = 50, heading_speed_limit = 0.7; // speed lmit should be small
 Increment_PID left_inc_PID, right_inc_PID, heading_inc_PID;
 // PID head_PID;
 //  const float H = 0.188, W = 0.25, R = 0.413, PI = 3.1415926535;
-const float speed_kp = 0.2, speed_ki = 0.1, speed_kd = 0.0,
-            heading_kp = 0.1, heading_ki = 0.001, heading_kd = 0.0017;
+const float speed_kp = 0.2, speed_ki = 0.12, speed_kd = 0.00,
+            heading_kp = 0.1, heading_ki = 0.01, heading_kd = 0.001;
 // head_kp = 0.1, head_ki = 0, head_kd = 0, head_ki_limit = 2, head_out_limit = 180;
 // motor speed unit is m/s, should start from a small value
 
@@ -36,6 +37,8 @@ void chassis_Init(void)
     Encoder_TIM_Init_All();
     chassis_pid_Init();
     gyro_USART_Init(921600);
+    delay_ms(100);
+    ori_target_Yaw = Read_Yaw();
 }
 
 /**
@@ -73,20 +76,22 @@ int chassis_ahead(int left_speed, int right_speed)
 // Ë«»·pid
 int chassis_rotate(float target_yaw)
 {
-    static int cnt = 0; // cnt is for controlling the update of inner ring be 10 times of the outer ring
-    increment_pid_calculate(&heading_inc_PID, target_yaw, Read_Yaw());
-    // chassis_ahead();
-
+    increment_pid_calculate(&heading_inc_PID, target_yaw, current_yaw);
+    Car_Load(heading_inc_PID.output, -heading_inc_PID.output);
     return 1;
 }
 
 // output function
 int chassis_run(int speed, float heading)
 {
+    increment_pid_calculate(&heading_inc_PID, ori_target_Yaw, current_yaw);
+    chassis_ahead(speed + heading_inc_PID.output, speed - heading_inc_PID.output);
+    return 1;
     // if pid output satisfy some condition return 1
 }
 
 int vec[2] = {0};
+float current_yaw = 0;
 float info[10] = {0};
 void TIM7_IRQHandler(void)
 {
@@ -95,14 +100,19 @@ void TIM7_IRQHandler(void)
         TIM_ClearITPendingBit(TIM7, TIM_IT_Update);
         vec[0] = Read_Speed(LEFT_ENCODER);
         vec[1] = Read_Speed(RIGHT_ENCODER);
+        current_yaw = Read_Yaw();
         info[1] = left_inc_PID.output;
         info[2] = left_inc_PID.sum_error;
         info[3] = left_inc_PID.error;
         info[4] = right_inc_PID.output;
         info[5] = right_inc_PID.sum_error;
         info[6] = right_inc_PID.error;
+        info[7] = heading_inc_PID.output;
+		info[8] = heading_inc_PID.error;
+        info[9] = heading_inc_PID.sum_error;
         TTL_Hex2Dec();
 //        chassis_ahead(20, 20);
+		chassis_rotate(ori_target_Yaw);
     }
 }
 

@@ -21,15 +21,26 @@ Target DLL:      CMSIS_AGDI.dll V1.21.0.0
 Dialog DLL:      TCM.DLL V1.14.4.0
  
 <h2>Project:</h2>
-D:\Github\Irrigation-robot\MAIN (2)\USER\Template.uvprojx
-Project File Date:  06/17/2024
+D:\Github\Irrigation-robot\MAIN\USER\Template.uvprojx
+Project File Date:  06/18/2024
 
 <h2>Output:</h2>
 Build target 'Template'
-"..\OBJ\Template.axf" - 0 Error(s), 0 Warning(s).
+compiling chassis.c...
+..\bsp\gpio\gpio.h(43): warning:  #1295-D: Deprecated declaration Key_GPIO_Init - give arg types
+  void Key_GPIO_Init();
+..\bsp\gpio\gpio.h(75): warning:  #1-D: last line of file ends without a newline
+        
+..\bsp\iic\iic.h(12): warning:  #1-D: last line of file ends without a newline
+      
+..\application\chassis\chassis.c: 3 warnings, 0 errors
+linking...
+Program Size: Code=39372 RO-data=7124 RW-data=224 ZI-data=2192  
+FromELF: creating hex file...
+"..\OBJ\Template.axf" - 0 Error(s), 3 Warning(s).
 
 <h2>Collection of Component include folders:</h2>
-  D:\Github\Irrigation-robot\MAIN (2)\USER\RTE
+  D:\Github\Irrigation-robot\MAIN\USER\RTE
   D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0
 
 <h2>Collection of Component Files used:</h2>

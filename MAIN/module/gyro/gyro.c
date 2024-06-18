@@ -2,7 +2,7 @@
 #include "gyro.h"
 
 float ori_target_Yaw = 0, target_Yaw = 0, current_yaw = 0; // ori: fix, target_Yaw: dynamically changed
-int clockwise_rotate_flag = 0;							   // rotate flag
+int clockwise_rotate_flag = -1;							   // rotate flag
 
 IMUData_Packet_t IMUData_Packet;
 AHRSData_Packet_t AHRSData_Packet;
@@ -73,13 +73,13 @@ void UART5_IRQHandler(void)
  *
  * to ensure the difference of target and measute is always
  * < 180 degree
- *
+ * @note   this function should be called after the inilization of ori_target_+Yaw (in chassis_Init())
  * @param    None
  * @return   None
  */
 void heading_Trans(void)
 {
-	target_Yaw = target_Yaw + 90 * clockwise_rotate_flag;
+	target_Yaw = ori_target_Yaw + 90 * clockwise_rotate_flag;
 	// set the target_Yaw (0 - 360)
 	while (target_Yaw > 360)
 	{

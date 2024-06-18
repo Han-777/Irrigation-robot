@@ -20,6 +20,6 @@ void EXTI_0_Enable(void);
 void EXTI_10_11_Close(void);
 
 void EXTInterruppt_Mode(void);
-void NVIC_Configuration(void);
+void EXTI_NVIC_Configuration(void);
 void NVIC_Configuration_Close(void);
 #endif

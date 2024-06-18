@@ -31,8 +31,9 @@ void EXTInterruppt_Mode(void)
 
 	EXTI_Init(&EXTI_InitStructure);
 }
-void NVIC_Configuration(void)
+void EXTI_NVIC_Configuration(void)
 {
+	EXTInterruppt_Mode();
 	NVIC_InitTypeDef NVIC_InitStructure;
 	// ¹âµç
 	NVIC_InitStructure.NVIC_IRQChannel = EXTI15_10_IRQn;
@@ -139,8 +140,8 @@ int Flag_R = 0;
 int err = 0;
 
 // int N_Flag = 0;
-//float NEW_Target_Yaw = 0;
-//float target_Yaw = 0;
+// float NEW_Target_Yaw = 0;
+// float target_Yaw = 0;
 float Err_Set = 90;
 // int k=-1;
 int k = 0;

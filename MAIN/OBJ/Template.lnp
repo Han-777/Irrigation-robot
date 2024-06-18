@@ -44,7 +44,7 @@
 "..\obj\gpio.o"
 "..\obj\iic.o"
 "..\obj\usart.o"
-"..\obj\exit.o"
+"..\obj\exti.o"
 "..\obj\motor.o"
 "..\obj\encoder.o"
 "..\obj\gray.o"

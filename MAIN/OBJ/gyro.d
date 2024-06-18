@@ -44,4 +44,4 @@
 ..\obj\gyro.o: ..\bsp\gpio\gpio.h
 ..\obj\gyro.o: ..\bsp\iic\iic.h
 ..\obj\gyro.o: ..\bsp\usart\usart.h
-..\obj\gyro.o: ..\bsp\exit\exit.h
+..\obj\gyro.o: ..\bsp\exti\exti.h

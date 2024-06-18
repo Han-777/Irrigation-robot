@@ -43,4 +43,4 @@
 ..\obj\led.o: ..\bsp\iic\iic.h
 ..\obj\led.o: ..\bsp\usart\usart.h
 ..\obj\led.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
-..\obj\led.o: ..\bsp\exit\exit.h
+..\obj\led.o: ..\bsp\exti\exti.h

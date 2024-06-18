@@ -1,9 +1,7 @@
 #include "chassis.h"
 
-float ori_target_Yaw = 0;
 //==================== Public vars =====================:
-float speed_limit = 50, heading_speed_limit = 10; // speed lmit should be smaller than 0.8 m/s
-
+float speed_limit = 50, heading_speed_limit = 30; // speed lmit should be smaller than 0.8 m/s
 //==================== Internal vars =====================:
 // constants & PIDs
 // PID heading_PID;
@@ -12,12 +10,13 @@ Increment_PID left_inc_PID, right_inc_PID, heading_inc_PID;
 // PID head_PID;
 //  const float H = 0.188, W = 0.25, R = 0.413, PI = 3.1415926535;
 const float speed_kp = 0.2, speed_ki = 0.12, speed_kd = 0.00,
-            heading_kp = 0.1, heading_ki = 0.01, heading_kd = 0.001;
+            heading_kp = 1, heading_ki = 0, heading_kd = 0.001;
+
 // head_kp = 0.1, head_ki = 0, head_kd = 0, head_ki_limit = 2, head_out_limit = 180;
 // motor speed unit is m/s, should start from a small value
 
 // pid
-//			motor_kp = 0.01, motor_ki = 0.0018, motor_kd = 0.001, motor_ki_limit = 80,   // 睿萱参数
+//			motor_kp = 0.01, motor_ki = 0.0018, motor_kd = 0.001, motor_ki_limit = 80,   // ????????
 // motor_kp = 0.1, motor_ki = 0.002, motor_kd = 0.001, motor_ki_limit = 80,
 
 // Turning functions
@@ -40,7 +39,9 @@ void chassis_Init(void)
     TFmini_left_USART_Init(115200);
     gyro_USART_Init(921600);
     delay_ms(100);
+    TTL_Hex2Dec();
     ori_target_Yaw = Read_Yaw();
+    target_Yaw = ori_target_Yaw;
 }
 
 /**
@@ -75,11 +76,11 @@ int chassis_ahead(int left_speed, int right_speed)
 }
 
 // the function should not be stopped until reaching the target
-// 双环pid
+// ???·pid
 int chassis_rotate(float target_yaw)
 {
     increment_pid_calculate(&heading_inc_PID, target_yaw, current_yaw);
-    Car_Load(heading_inc_PID.output, -heading_inc_PID.output);
+    Car_Load(-heading_inc_PID.output, heading_inc_PID.output);
     return 1;
 }
 
@@ -92,8 +93,56 @@ int chassis_run(int speed, float heading)
     // if pid output satisfy some condition return 1
 }
 
+float Level(float target_yaw_a, float kp, float ki, float kd) // kp为>0
+{
+    heading_Trans();
+    int target_yaw_a_A = 0, PWM_N100N = 0;
+    static float Err_Yaw = 0, Err_Last_Yaw = 0;
+    // Calculate target yaw angles considering the reverse direction
+    if (target_yaw_a >= 0 && target_yaw_a <= 180)
+    {
+        target_yaw_a_A = target_yaw_a + 180;
+    }
+    else
+    {
+        target_yaw_a_A = target_yaw_a - 180;
+    }
+
+    // Determine the range for MIN and MAX
+    //    int MIN = Min(target_yaw_a, target_yaw_a_A);
+    //    int MAX = Max(target_yaw_a, target_yaw_a_A);
+    int MIN = (target_yaw_a < target_yaw_a_A) ? target_yaw_a : target_yaw_a_A;
+    int MAX = (target_yaw_a > target_yaw_a_A) ? target_yaw_a : target_yaw_a_A;
+    // Calculate yaw error based on position
+    if (current_yaw >= MIN && current_yaw <= MAX)
+    {
+        Err_Yaw = ((int)(target_yaw_a - current_yaw + 360) % 360);
+    }
+    else
+    {
+        Err_Yaw = ((int)(current_yaw - target_yaw_a + 360) % 360);
+    }
+
+    // Adjust error sign based on direction
+    if ((current_yaw > target_yaw_a && current_yaw < target_yaw_a + 180) || (current_yaw < target_yaw_a && current_yaw > target_yaw_a - 180))
+    {
+        Err_Yaw = -Err_Yaw;
+    }
+
+    // Apply error threshold
+    if (fabs(Err_Yaw) <= 0.01)
+    {
+        Err_Yaw = 0;
+    }
+
+    // Calculate the PID output
+    PWM_N100N = kp * Err_Yaw + kd * (Err_Yaw - Err_Last_Yaw);
+    Err_Last_Yaw = Err_Yaw;
+
+    return PWM_N100N;
+}
+
 int vec[2] = {0};
-float current_yaw = 0;
 float info[20] = {0};
 void TIM7_IRQHandler(void)
 {
@@ -116,7 +165,9 @@ void TIM7_IRQHandler(void)
         info[11] = Dist_left;
         TTL_Hex2Dec();
         //        chassis_ahead(20, 20);
-        chassis_rotate(ori_target_Yaw);
+        // chassis_rotate(ori_target_Yaw);
+        //        chassis_run(5, ori_target_Yaw);
+        Level(ori_target_Yaw, 12, 0, 0);
         Get_Count();
     }
 }

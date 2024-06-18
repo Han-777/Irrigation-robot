@@ -43,7 +43,7 @@
 ..\obj\chassis.o: ..\bsp\iic\iic.h
 ..\obj\chassis.o: ..\bsp\usart\usart.h
 ..\obj\chassis.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
-..\obj\chassis.o: ..\bsp\exit\exit.h
+..\obj\chassis.o: ..\bsp\exti\exti.h
 ..\obj\chassis.o: ..\module\pid\pid.h
 ..\obj\chassis.o: ..\module\gyro\gyro.h
 ..\obj\chassis.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdio.h

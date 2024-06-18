@@ -3,7 +3,13 @@
 
 #include "stdio.h"
 #include "sys.h"
+
 #define PI 3.14159265f
+
+extern float ori_target_Yaw, target_Yaw, current_yaw; // ori: fix, target_Yaw: dynamically changed
+extern int clockwise_rotate_flag;
+void heading_Trans(void);
+
 extern float Err_Set;
 float Read_Yaw(void);
 float Read_YawSpeed(void);

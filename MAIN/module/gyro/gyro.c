@@ -1,6 +1,9 @@
 #include <math.h>
 #include "gyro.h"
 
+float ori_target_Yaw = 0, target_Yaw = 0, current_yaw = 0; // ori: fix, target_Yaw: dynamically changed
+int clockwise_rotate_flag = 0;							   // rotate flag
+
 IMUData_Packet_t IMUData_Packet;
 AHRSData_Packet_t AHRSData_Packet;
 u8 ttl_receive;
@@ -64,6 +67,35 @@ void UART5_IRQHandler(void)
 		USART_ClearITPendingBit(UART5, USART_IT_RXNE);
 	}
 }
+
+/**
+ * @brief  Handling the angle for pid
+ *
+ * to ensure the difference of target and measute is always
+ * < 180 degree
+ *
+ * @param    None
+ * @return   None
+ */
+void heading_Trans(void)
+{
+	target_Yaw = target_Yaw + 90 * clockwise_rotate_flag;
+	// set the target_Yaw (0 - 360)
+	while (target_Yaw > 360)
+	{
+		target_Yaw -= 360;
+	}
+	while (target_Yaw < -360)
+	{
+		target_Yaw += 360;
+	}
+	// handling the difference
+	if (fabs(target_Yaw - current_yaw) > 180)
+	{
+		current_yaw -= 360;
+	}
+}
+
 /*******************************
 16进制转浮点型数据
 *******************************/
@@ -90,45 +122,46 @@ u8 TTL_Hex2Dec(void)
 			AHRSData_Packet.Pitch = DATA_Trans(Fd_rsahrs[23], Fd_rsahrs[24], Fd_rsahrs[25], Fd_rsahrs[26]);	  // 俯仰角
 			AHRSData_Packet.Heading = DATA_Trans(Fd_rsahrs[27], Fd_rsahrs[28], Fd_rsahrs[29], Fd_rsahrs[30]); // 偏航角
 
-			for (j = 0; j <= 3 && F == 0; j++)
-			{
-				b[j] = AHRSData_Packet.Heading * 180 / PI;
-				if (j == 3)
-				{
-					F = 1;
-				}
-				//				delay_ms(10);
-				Target_Yaw = b[2];
-			}
+			// heading_Trans();
+			// for (j = 0; j <= 3 && F == 0; j++)
+			// {
+			// 	b[j] = AHRSData_Packet.Heading * 180 / PI;
+			// 	if (j == 3)
+			// 	{
+			// 		F = 1;
+			// 	}
+			// 	//				delay_ms(10);
+			// 	Target_Yaw = b[2];
+			// }
 
-			for (j = 0; j <= 3 && C == 0; j++)
-			{
-				a[j] = AHRSData_Packet.Roll * 1000;
-				if (j == 3)
-				{
-					C = 1;
-				}
-			}
-			ROLL = a[2];
+			// for (j = 0; j <= 3 && C == 0; j++)
+			// {
+			// 	a[j] = AHRSData_Packet.Roll * 1000;
+			// 	if (j == 3)
+			// 	{
+			// 		C = 1;
+			// 	}
+			// }
+			// ROLL = a[2];
 
-			if (F_R == 1)
-			{
-				Target_Yaw = Target_Yaw + 90;
-				if (Target_Yaw >= 359.8)
-				{
-					Target_Yaw = Target_Yaw - 359.8;
-				}
-				F_R = 0;
-			}
-			if (F_L == 1)
-			{
-				Target_Yaw = Target_Yaw - 90;
-				if (Target_Yaw <= 0)
-				{
-					Target_Yaw = Target_Yaw + 359.8;
-				}
-				F_L = 0;
-			}
+			// if (F_R == 1)
+			// {
+			// 	Target_Yaw = Target_Yaw + 90;
+			// 	if (Target_Yaw >= 359.8)
+			// 	{
+			// 		Target_Yaw = Target_Yaw - 359.8;
+			// 	}
+			// 	F_R = 0;
+			// }
+			// if (F_L == 1)
+			// {
+			// 	Target_Yaw = Target_Yaw - 90;
+			// 	if (Target_Yaw <= 0)
+			// 	{
+			// 		Target_Yaw = Target_Yaw + 359.8;
+			// 	}
+			// 	F_L = 0;
+			// }
 			AHRSData_Packet.Qw = DATA_Trans(Fd_rsahrs[31], Fd_rsahrs[32], Fd_rsahrs[33], Fd_rsahrs[34]); // 四元数
 			AHRSData_Packet.Qx = DATA_Trans(Fd_rsahrs[35], Fd_rsahrs[36], Fd_rsahrs[37], Fd_rsahrs[38]);
 			AHRSData_Packet.Qy = DATA_Trans(Fd_rsahrs[39], Fd_rsahrs[40], Fd_rsahrs[41], Fd_rsahrs[42]);
@@ -161,6 +194,7 @@ u8 TTL_Hex2Dec(void)
 	}
 	return 0;
 }
+
 /*************
 实现16进制的can数据转换成浮点型数据
 * brief： transfer data from hexadecimaml to floating-point values
@@ -197,40 +231,40 @@ long long timestamp(u8 Data_1, u8 Data_2, u8 Data_3, u8 Data_4)
 }
 void AHRSData2PC(void)
 {
-//	printf("AHRS: The RollSpeed =  %f\r\n", AHRSData_Packet.RollSpeed);
-//	printf("AHRS: The PitchSpeed =  %f\r\n", AHRSData_Packet.PitchSpeed);
-//	printf("AHRS: The HeadingSpeed =  %f\r\n", AHRSData_Packet.HeadingSpeed);
-//	printf("AHRS: The Roll =  %f\r\n", AHRSData_Packet.Roll);
-//	printf("AHRS: The Pitch =  %f\r\n", AHRSData_Packet.Pitch);
-//	printf("AHRS: The Heading =  %f\r\n", AHRSData_Packet.Heading);
-//	printf("AHRS: The Quaternion.Qw =  %f\r\n", AHRSData_Packet.Qw);
-//	printf("AHRS: The Quaternion.Qx =  %f\r\n", AHRSData_Packet.Qx);
-//	printf("AHRS: The Quaternion.Qy =  %f\r\n", AHRSData_Packet.Qy);
-//	printf("AHRS: The Quaternion.Qz =  %f\r\n", AHRSData_Packet.Qz);
-//	printf("AHRS: The Timestamp =  %d\r\n", AHRSData_Packet.Timestamp);
+	//	printf("AHRS: The RollSpeed =  %f\r\n", AHRSData_Packet.RollSpeed);
+	//	printf("AHRS: The PitchSpeed =  %f\r\n", AHRSData_Packet.PitchSpeed);
+	//	printf("AHRS: The HeadingSpeed =  %f\r\n", AHRSData_Packet.HeadingSpeed);
+	//	printf("AHRS: The Roll =  %f\r\n", AHRSData_Packet.Roll);
+	//	printf("AHRS: The Pitch =  %f\r\n", AHRSData_Packet.Pitch);
+	//	printf("AHRS: The Heading =  %f\r\n", AHRSData_Packet.Heading);
+	//	printf("AHRS: The Quaternion.Qw =  %f\r\n", AHRSData_Packet.Qw);
+	//	printf("AHRS: The Quaternion.Qx =  %f\r\n", AHRSData_Packet.Qx);
+	//	printf("AHRS: The Quaternion.Qy =  %f\r\n", AHRSData_Packet.Qy);
+	//	printf("AHRS: The Quaternion.Qz =  %f\r\n", AHRSData_Packet.Qz);
+	//	printf("AHRS: The Timestamp =  %d\r\n", AHRSData_Packet.Timestamp);
 }
 void IMUData2PC(void)
 {
-//	printf("Now start sending IMU data.\r\n");
-//	printf("IMU: The gyroscope_x =  %f\r\n", IMUData_Packet.gyroscope_x);
-//	printf("IMU:The gyroscope_y =  %f\r\n", IMUData_Packet.gyroscope_y);
-//	printf("IMU:The gyroscope_z =  %f\r\n", IMUData_Packet.gyroscope_z);
-//	printf("IMU:The accelerometer_x =  %f\r\n", IMUData_Packet.accelerometer_x);
-//	printf("IMU:The accelerometer_y =  %f\r\n", IMUData_Packet.accelerometer_y);
-//	printf("IMU:The accelerometer_z =  %f\r\n", IMUData_Packet.accelerometer_z);
-//	printf("IMU:The magnetometer_x =  %f\r\n", IMUData_Packet.magnetometer_x);
-//	printf("IMU:The magnetometer_y =  %f\r\n", IMUData_Packet.magnetometer_y);
-//	printf("IMU:The magnetometer_z =  %f\r\n", IMUData_Packet.magnetometer_z);
-//	printf("IMU:The Timestamp =  %d\r\n", IMUData_Packet.Timestamp);
-//	printf("Now the data of IMU has been sent.\r\n");
+	//	printf("Now start sending IMU data.\r\n");
+	//	printf("IMU: The gyroscope_x =  %f\r\n", IMUData_Packet.gyroscope_x);
+	//	printf("IMU:The gyroscope_y =  %f\r\n", IMUData_Packet.gyroscope_y);
+	//	printf("IMU:The gyroscope_z =  %f\r\n", IMUData_Packet.gyroscope_z);
+	//	printf("IMU:The accelerometer_x =  %f\r\n", IMUData_Packet.accelerometer_x);
+	//	printf("IMU:The accelerometer_y =  %f\r\n", IMUData_Packet.accelerometer_y);
+	//	printf("IMU:The accelerometer_z =  %f\r\n", IMUData_Packet.accelerometer_z);
+	//	printf("IMU:The magnetometer_x =  %f\r\n", IMUData_Packet.magnetometer_x);
+	//	printf("IMU:The magnetometer_y =  %f\r\n", IMUData_Packet.magnetometer_y);
+	//	printf("IMU:The magnetometer_z =  %f\r\n", IMUData_Packet.magnetometer_z);
+	//	printf("IMU:The Timestamp =  %d\r\n", IMUData_Packet.Timestamp);
+	//	printf("Now the data of IMU has been sent.\r\n");
 }
 
-//void usart5_send(u8 data)
+// void usart5_send(u8 data)
 //{
 //	UART5->DR = data;
 //	while ((UART5->SR & 0x40) == 0)
 //		;
-//}
+// }
 
 float Read_Yaw(void)
 {

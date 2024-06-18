@@ -1,5 +1,5 @@
-#ifndef _EXIT__H
-#define _EXIT__H
+#ifndef _EXTI__H
+#define _EXTI__H
 
 #include "sys.h"
 // #include "photoelectric.h"
@@ -19,7 +19,7 @@ void EXTI_0_Disable(void);
 void EXTI_0_Enable(void);
 void EXTI_10_11_Close(void);
 
-// void EXTInterruppt_Mode(void);
+void EXTInterruppt_Mode(void);
 void NVIC_Configuration(void);
 void NVIC_Configuration_Close(void);
 #endif

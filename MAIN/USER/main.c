@@ -44,36 +44,10 @@ int main(void)
 	while (1)
 	{
 		//		Chinese_Show_one(10, 10, 0, 16, 0);
-		// LCD_ShowNum(10, 10, cnt, 5, 16);
+		LCD_ShowNum(10, 10, cnt, 5, 16);
 		//		Chinese_Show_one(64, 20, 1, 16, 0);
 		//		lcd_dis();
-		if (OUT1 == 0 || OUT2 == 0 || OUT3 == 0 || OUT4 == 0 || OUT5 == 0 || OUT6 == 0 || OUT7 == 1 | OUT8 == 1 || OUT9 == 1 || OUT10 == 1 || OUT11 == 1)
-		{
 
-			// 二次判断，看是否要用
-			//			if(N_Flag==3)
-			//			{
-			//				delay_ms(10);
-			//			}
-			//			if(N_Flag>=5)
-			//			{
-			//				delay_ms(40);
-			//			}
-			if (Get_Count() >= 2)
-			{
-
-				if (((Flower_Count >= 5 && Flower_Count <= 7) || (Flower_Count >= 11 && Flower_Count <= 13) || (Flower_Count >= 17 && Flower_Count <= 30)) && (FLAG == 1))
-				{
-					Car_stop();
-					TIM7_Close();
-					NVIC_Configuration_Close();
-					k++; // k反复为0，1两值
-					N_Flag++;
-					//					printf("N_FLAG:%d",N_Flag);
-					delay_ms(1000);
-				}
-			}
-		}
 		//		LCD_ShowString(30,40,200,24,24,"Hello");
 		//		LCD_ShowString(30,70,200,16,16,"Song Hao Nan tong xue");
 		//		LCD_ShowString(30,90,200,16,16,"<~~>");

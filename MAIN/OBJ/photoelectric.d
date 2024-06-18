@@ -43,4 +43,4 @@
 ..\obj\photoelectric.o: ..\bsp\iic\iic.h
 ..\obj\photoelectric.o: ..\bsp\usart\usart.h
 ..\obj\photoelectric.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
-..\obj\photoelectric.o: ..\bsp\exit\exit.h
+..\obj\photoelectric.o: ..\bsp\exti\exti.h

@@ -43,4 +43,4 @@
 ..\obj\bluetooth.o: ..\bsp\iic\iic.h
 ..\obj\bluetooth.o: ..\bsp\usart\usart.h
 ..\obj\bluetooth.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
-..\obj\bluetooth.o: ..\bsp\exit\exit.h
+..\obj\bluetooth.o: ..\bsp\exti\exti.h

@@ -365,7 +365,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CORE;..\SYSTEM\delay;..\SYSTEM\sys;..\USER;..\FWLIB\inc;..\bsp\tim;..\bsp\gpio;..\application\chassis;..\module\motor;..\bsp\iic;..\module\encoder;..\module\gray;..\bsp\usart;..\module\gyro;..\module\servo;..\bsp\bluetooth;..\module\voice;..\module\bluetooth;..\module\lcd;..\module\lidar;..\module\mp3;..\module\openmv;..\module\pid;..\SYSTEM\exit;..\SYSTEM\led;..\module\key_3x3;..\module\photoelectric;..\bsp\exit</IncludePath>
+              <IncludePath>..\CORE;..\SYSTEM\delay;..\SYSTEM\sys;..\USER;..\FWLIB\inc;..\bsp\tim;..\bsp\gpio;..\application\chassis;..\module\motor;..\bsp\iic;..\module\encoder;..\module\gray;..\bsp\usart;..\module\gyro;..\module\servo;..\bsp\bluetooth;..\module\voice;..\module\bluetooth;..\module\lcd;..\module\lidar;..\module\mp3;..\module\openmv;..\module\pid;..\SYSTEM\exit;..\SYSTEM\led;..\module\key_3x3;..\module\photoelectric;..\bsp\exti</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -674,14 +674,14 @@
               <FilePath>..\bsp\usart\usart.h</FilePath>
             </File>
             <File>
-              <FileName>exit.c</FileName>
+              <FileName>exti.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\bsp\exit\exit.c</FilePath>
+              <FilePath>..\bsp\exti\exti.c</FilePath>
             </File>
             <File>
-              <FileName>exit.h</FileName>
+              <FileName>exti.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\bsp\exit\exit.h</FilePath>
+              <FilePath>..\bsp\exti\exti.h</FilePath>
             </File>
           </Files>
         </Group>

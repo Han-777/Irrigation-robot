@@ -25,6 +25,7 @@ extern int cnt;
 #define OUT11 GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_9) //
 #define OUT12 GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_8) // 0为�?�到白线
 #define OUT13 GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_7) //
+
 int Get_Count(void);
 
 #endif

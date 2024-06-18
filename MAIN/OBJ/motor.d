@@ -43,4 +43,4 @@
 ..\obj\motor.o: ..\bsp\iic\iic.h
 ..\obj\motor.o: ..\bsp\usart\usart.h
 ..\obj\motor.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
-..\obj\motor.o: ..\bsp\exit\exit.h
+..\obj\motor.o: ..\bsp\exti\exti.h

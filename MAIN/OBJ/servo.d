@@ -43,4 +43,4 @@
 ..\obj\servo.o: ..\bsp\iic\iic.h
 ..\obj\servo.o: ..\bsp\usart\usart.h
 ..\obj\servo.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
-..\obj\servo.o: ..\bsp\exit\exit.h
+..\obj\servo.o: ..\bsp\exti\exti.h

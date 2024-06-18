@@ -28,6 +28,7 @@
     "control.h": "c",
     "pid.h": "c",
     "led.h": "c",
-    "exit.h": "c"
+    "exit.h": "c",
+    "math.h": "c"
   }
 }

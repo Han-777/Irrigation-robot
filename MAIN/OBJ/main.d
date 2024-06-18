@@ -42,7 +42,7 @@
 ..\obj\main.o: ..\bsp\iic\iic.h
 ..\obj\main.o: ..\bsp\usart\usart.h
 ..\obj\main.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
-..\obj\main.o: ..\bsp\exit\exit.h
+..\obj\main.o: ..\bsp\exti\exti.h
 ..\obj\main.o: ..\module\lcd\lcd.h
 ..\obj\main.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\obj\main.o: ..\module\servo\servo.h

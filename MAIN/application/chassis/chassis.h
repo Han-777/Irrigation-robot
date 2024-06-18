@@ -11,8 +11,6 @@
 #include "gray.h"
 
 extern int vec[2];
-extern float current_yaw;
-
 void chassis_pid_Init(void);
 int chassis_ahead(int left_speed, int right_speed);
 int chassis_rotate(float heading);

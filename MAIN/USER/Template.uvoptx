@@ -1003,8 +1003,8 @@
       <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\bsp\exit\exit.c</PathWithFileName>
-      <FilenameWithoutPath>exit.c</FilenameWithoutPath>
+      <PathWithFileName>..\bsp\exti\exti.c</PathWithFileName>
+      <FilenameWithoutPath>exti.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1016,8 +1016,8 @@
       <Focus>0</Focus>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\bsp\exit\exit.h</PathWithFileName>
-      <FilenameWithoutPath>exit.h</FilenameWithoutPath>
+      <PathWithFileName>..\bsp\exti\exti.h</PathWithFileName>
+      <FilenameWithoutPath>exti.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

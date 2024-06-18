@@ -43,6 +43,6 @@
 ..\obj\key.o: ..\bsp\iic\iic.h
 ..\obj\key.o: ..\bsp\usart\usart.h
 ..\obj\key.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
-..\obj\key.o: ..\bsp\exit\exit.h
+..\obj\key.o: ..\bsp\exti\exti.h
 ..\obj\key.o: ..\module\lcd\lcd.h
 ..\obj\key.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdlib.h

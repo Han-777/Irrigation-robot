@@ -217,12 +217,12 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>vec[0],0x0A</ItemText>
+          <ItemText>vec[0]</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>info[3]</ItemText>
+          <ItemText>vec[1]</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
@@ -237,47 +237,72 @@
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>vec[1],0x0A</ItemText>
+          <ItemText>info[3]</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>info[7]</ItemText>
+          <ItemText>info[4]</ItemText>
         </Ww>
         <Ww>
           <count>6</count>
           <WinNumber>1</WinNumber>
-          <ItemText>info[8]</ItemText>
+          <ItemText>info[5]</ItemText>
         </Ww>
         <Ww>
           <count>7</count>
           <WinNumber>1</WinNumber>
-          <ItemText>vec[2],0x0A</ItemText>
+          <ItemText>info[6]</ItemText>
         </Ww>
         <Ww>
           <count>8</count>
           <WinNumber>1</WinNumber>
-          <ItemText>ori_target_Yaw</ItemText>
+          <ItemText>info[7]</ItemText>
         </Ww>
         <Ww>
           <count>9</count>
           <WinNumber>1</WinNumber>
-          <ItemText>info[9]</ItemText>
+          <ItemText>info[8]</ItemText>
         </Ww>
         <Ww>
           <count>10</count>
           <WinNumber>1</WinNumber>
-          <ItemText>current_yaw</ItemText>
+          <ItemText>info[9]</ItemText>
         </Ww>
         <Ww>
           <count>11</count>
           <WinNumber>1</WinNumber>
-          <ItemText>cnt,0x0A</ItemText>
+          <ItemText>info[10]</ItemText>
         </Ww>
         <Ww>
           <count>12</count>
           <WinNumber>1</WinNumber>
-          <ItemText>OUT0</ItemText>
+          <ItemText>info[11]</ItemText>
+        </Ww>
+        <Ww>
+          <count>13</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>current_yaw</ItemText>
+        </Ww>
+        <Ww>
+          <count>14</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>ori_target_Yaw</ItemText>
+        </Ww>
+        <Ww>
+          <count>15</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>target_Yaw</ItemText>
+        </Ww>
+        <Ww>
+          <count>16</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>info[17]</ItemText>
+        </Ww>
+        <Ww>
+          <count>17</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>info[18]</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>

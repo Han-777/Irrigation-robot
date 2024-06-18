@@ -1,6 +1,9 @@
 #include "chassis.h"
 
 //==================== Public vars =====================:
+int vec[2] = {0};
+float info[20] = {0};
+
 float speed_limit = 50, heading_speed_limit = 40; // speed lmit should be smaller than 0.8 m/s
 //==================== Internal vars =====================:
 // constants & PIDs
@@ -10,8 +13,8 @@ Increment_PID left_inc_PID, right_inc_PID, heading_inc_PID;
 // PID head_PID;
 //  const float H = 0.188, W = 0.25, R = 0.413, PI = 3.1415926535;
 const float speed_kp = 0.2, speed_ki = 0.12, speed_kd = 0.00,
-            heading_kp = 1, heading_ki = 0.005, heading_kd = 0.001;
-
+            heading_kp = 1, heading_kd = 0.001; // for rotate
+float heading_ki = 0;
 // head_kp = 0.1, head_ki = 0, head_kd = 0, head_ki_limit = 2, head_out_limit = 180;
 // motor speed unit is m/s, should start from a small value
 
@@ -71,7 +74,7 @@ int chassis_ahead(int left_speed, int right_speed)
     increment_pid_calculate(&left_inc_PID, left_speed, vec[0]);
     increment_pid_calculate(&right_inc_PID, right_speed, vec[1]);
     // load motor
-    Car_Load(left_inc_PID.output, right_inc_PID.output);
+    //    Car_Load(left_inc_PID.output, right_inc_PID.output);
     return 1;
 }
 
@@ -79,30 +82,53 @@ int chassis_ahead(int left_speed, int right_speed)
 // ???¡¤pid
 int chassis_rotate(float target_yaw)
 {
-	heading_Trans();
+    heading_Trans();
+    heading_ki = 0.005;
+    heading_speed_limit = 50;
+    set_increment_pid(&heading_inc_PID, heading_kp, heading_ki, heading_kd, heading_speed_limit);
     increment_pid_calculate(&heading_inc_PID, target_yaw, current_yaw);
-    Car_Load(-heading_inc_PID.output, heading_inc_PID.output);
+	
+    //    Car_Load(-heading_inc_PID.output, heading_inc_PID.output);
     return 1;
 }
 
 // output function
+// int chassis_run(int speed, float target_heading)
+//{
+//	heading_Trans();
+//	heading_ki = 0.00;
+//	heading_speed_limit = 10;
+//	set_increment_pid(&heading_inc_PID, heading_kp, heading_ki, heading_kd, heading_speed_limit);
+//    increment_pid_calculate(&heading_inc_PID, target_heading, current_yaw);
+//    chassis_ahead(speed - heading_inc_PID.output, speed + heading_inc_PID.output);
+//    return 1;
+//    // if pid output satisfy some condition return 1
+//}
+
+
 int chassis_run(int speed, float target_heading)
 {
-	heading_Trans();
-    increment_pid_calculate(&heading_inc_PID, target_heading, current_yaw);
-    chassis_ahead(speed - heading_inc_PID.output, speed + heading_inc_PID.output);
+    heading_Trans();
+    heading_ki = 0.00;
+    heading_speed_limit = 10;
+    set_increment_pid(&heading_inc_PID, heading_kp, heading_ki, heading_kd, heading_speed_limit);
+    increment_pid_calculate(&heading_inc_PID, target_heading, current_yaw); // heading
+    increment_pid_calculate(&left_inc_PID, speed, vec[0]);
+    increment_pid_calculate(&right_inc_PID, speed, vec[1]);
+//    Car_Load(left_inc_PID.output - heading_inc_PID.output, right_inc_PID.output + heading_inc_PID.output);
+    // chassis_ahead(speed - heading_inc_PID.output, speed + heading_inc_PID.output);
+	info[17] = left_inc_PID.output - heading_inc_PID.output;
+	info[18] = right_inc_PID.output + heading_inc_PID.output;
     return 1;
     // if pid output satisfy some condition return 1
 }
 
-int vec[2] = {0};
-float info[20] = {0};
 void TIM7_IRQHandler(void)
 {
     if (TIM_GetFlagStatus(TIM7, TIM_FLAG_Update) == SET)
     {
         TIM_ClearITPendingBit(TIM7, TIM_IT_Update);
-		TTL_Hex2Dec();
+        TTL_Hex2Dec();
         vec[0] = Read_Speed(LEFT_ENCODER);
         vec[1] = Read_Speed(RIGHT_ENCODER);
         info[1] = left_inc_PID.output;
@@ -116,13 +142,14 @@ void TIM7_IRQHandler(void)
         info[9] = heading_inc_PID.sum_error;
         info[10] = Dist_right;
         info[11] = Dist_left;
-		current_yaw = Read_Yaw();
+		
+        current_yaw = Read_Yaw();
         //        chassis_ahead(20, 20);
         // chassis_rotate(ori_target_Yaw);
         //        chassis_run(5, ori_target_Yaw);
-//		chassis_run(0, target_Yaw);
-		chassis_rotate(target_Yaw);
-		Get_Count();
+        chassis_run(0, target_Yaw);
+        //		chassis_rotate(target_Yaw);
+        Get_Count();
     }
 }
 

@@ -11,17 +11,17 @@
     <View>
       <WinId>38003</WinId>
       <ViewName>Registers</ViewName>
-      <TableColWidths>115 100</TableColWidths>
+      <TableColWidths>115 120</TableColWidths>
     </View>
     <View>
       <WinId>346</WinId>
       <ViewName>Code Coverage</ViewName>
-      <TableColWidths>690 796</TableColWidths>
+      <TableColWidths>690 160</TableColWidths>
     </View>
     <View>
       <WinId>204</WinId>
       <ViewName>Performance Analyzer</ViewName>
-      <TableColWidths>850 127 127 382</TableColWidths>
+      <TableColWidths>850</TableColWidths>
     </View>
   </SECTreeCtrl>
 
@@ -92,8 +92,8 @@
     <MDIClientArea>
       <RegID>0</RegID>
       <MDITabState>
-        <Len>1107</Len>
-        <Data>0100000004000000010000000100000001000000010000000000000002000000000000000100000001000000000000002800000028000000010000000C00000000000000010000002B443A5C4769746875625C49727269676174696F6E2D726F626F745C4D41494E5C555345525C6D61696E2E6300000000066D61696E2E6300000000BECEA100FFFFFFFF2F443A5C4769746875625C49727269676174696F6E2D726F626F745C4D41494E5C6273705C6770696F5C6770696F2E6800000000066770696F2E6800000000F6FA7D00FFFFFFFF3D443A5C4769746875625C49727269676174696F6E2D726F626F745C4D41494E5C6170706C69636174696F6E5C636861737369735C636861737369732E630000000009636861737369732E6300000000A5C2D700FFFFFFFF2F443A5C4769746875625C49727269676174696F6E2D726F626F745C4D41494E5C6273705C657874695C657874692E680000000006657874692E6800000000D9ADC200FFFFFFFF32443A5C4769746875625C49727269676174696F6E2D726F626F745C4D41494E5C6D6F64756C655C6779726F5C6779726F2E6300000000066779726F2E6300000000F7B88600FFFFFFFF3D443A5C4769746875625C49727269676174696F6E2D726F626F745C4D41494E5C6170706C69636174696F6E5C636861737369735C636861737369732E680000000009636861737369732E68000000009CC1B600FFFFFFFF32443A5C4769746875625C49727269676174696F6E2D726F626F745C4D41494E5C6D6F64756C655C6779726F5C6779726F2E6800000000066779726F2E6800000000BCA8E100FFFFFFFF3D443A5C4769746875625C49727269676174696F6E2D726F626F745C4D41494E5C434F52455C737461727475705F73746D33326634305F34317878782E730000000018737461727475705F73746D33326634305F34317878782E7300000000F0A0A100FFFFFFFF34443A5C4769746875625C49727269676174696F6E2D726F626F745C4D41494E5C53595354454D5C64656C61795C64656C61792E63000000000764656C61792E6300000000FFDC7800FFFFFFFF34443A5C4769746875625C49727269676174696F6E2D726F626F745C4D41494E5C6D6F64756C655C6D6F746F725C6D6F746F722E6300000000076D6F746F722E6300000000B3A6BE00FFFFFFFF34443A5C4769746875625C49727269676174696F6E2D726F626F745C4D41494E5C6D6F64756C655C6D6F746F725C6D6F746F722E6800000000076D6F746F722E6800000000EAD6A300FFFFFFFF2D443A5C4769746875625C49727269676174696F6E2D726F626F745C4D41494E5C6273705C74696D5C74696D2E68000000000574696D2E6800000000B5E99D00FFFFFFFF0100000010000000C5D4F200FFDC7800BECEA100F0A0A100BCA8E1009CC1B600F7B88600D9ADC200A5C2D700B3A6BE00EAD6A300F6FA7D00B5E99D005FC3CF00C1838300CACAD500010000000000000002000000F900000066000000AB060000E2020000</Data>
+        <Len>484</Len>
+        <Data>0100000004000000010000000100000001000000010000000000000002000000000000000100000001000000000000002800000028000000010000000400000001000000010000002E443A5C4769746875625C49727269676174696F6E2D726F626F745C4D41494E5C555345525C72756E5C72756E2E63000000000572756E2E6300000000BCA8E100FFFFFFFF2B443A5C4769746875625C49727269676174696F6E2D726F626F745C4D41494E5C555345525C6D61696E2E6300000000066D61696E2E6300000000F0A0A100FFFFFFFF3D443A5C4769746875625C49727269676174696F6E2D726F626F745C4D41494E5C6170706C69636174696F6E5C636861737369735C636861737369732E630000000009636861737369732E6300000000BECEA100FFFFFFFF3D443A5C4769746875625C49727269676174696F6E2D726F626F745C4D41494E5C6170706C69636174696F6E5C636861737369735C636861737369732E680000000009636861737369732E6800000000FFDC7800FFFFFFFF0100000010000000C5D4F200FFDC7800BECEA100F0A0A100BCA8E1009CC1B600F7B88600D9ADC200A5C2D700B3A6BE00EAD6A300F6FA7D00B5E99D005FC3CF00C1838300CACAD500010000000000000002000000F900000066000000AB060000E2020000</Data>
       </MDITabState>
     </MDIClientArea>
     <ViewEx>
@@ -2585,111 +2585,39 @@
     <ActiveMDIGroup>0</ActiveMDIGroup>
     <MDIGroup>
       <Size>100</Size>
-      <ActiveTab>0</ActiveTab>
+      <ActiveTab>1</ActiveTab>
       <Doc>
-        <Name>.\main.c</Name>
-        <ColumnNumber>30</ColumnNumber>
-        <TopLine>1</TopLine>
-        <CurrentLine>18</CurrentLine>
+        <Name>.\run\run.c</Name>
+        <ColumnNumber>23</ColumnNumber>
+        <TopLine>403</TopLine>
+        <CurrentLine>422</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>
       </Doc>
       <Doc>
-        <Name>..\bsp\gpio\gpio.h</Name>
-        <ColumnNumber>37</ColumnNumber>
-        <TopLine>1</TopLine>
-        <CurrentLine>18</CurrentLine>
+        <Name>.\main.c</Name>
+        <ColumnNumber>32</ColumnNumber>
+        <TopLine>39</TopLine>
+        <CurrentLine>64</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>
       </Doc>
       <Doc>
         <Name>..\application\chassis\chassis.c</Name>
-        <ColumnNumber>30</ColumnNumber>
+        <ColumnNumber>4</ColumnNumber>
         <TopLine>1</TopLine>
-        <CurrentLine>16</CurrentLine>
-        <Folding>1</Folding>
-        <ContractedFolders></ContractedFolders>
-        <PaneID>0</PaneID>
-      </Doc>
-      <Doc>
-        <Name>..\bsp\exti\exti.h</Name>
-        <ColumnNumber>28</ColumnNumber>
-        <TopLine>1</TopLine>
-        <CurrentLine>9</CurrentLine>
-        <Folding>1</Folding>
-        <ContractedFolders></ContractedFolders>
-        <PaneID>0</PaneID>
-      </Doc>
-      <Doc>
-        <Name>..\module\gyro\gyro.c</Name>
-        <ColumnNumber>47</ColumnNumber>
-        <TopLine>641</TopLine>
-        <CurrentLine>13</CurrentLine>
+        <CurrentLine>1</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>
       </Doc>
       <Doc>
         <Name>..\application\chassis\chassis.h</Name>
-        <ColumnNumber>41</ColumnNumber>
-        <TopLine>1</TopLine>
-        <CurrentLine>15</CurrentLine>
-        <Folding>1</Folding>
-        <ContractedFolders></ContractedFolders>
-        <PaneID>0</PaneID>
-      </Doc>
-      <Doc>
-        <Name>..\module\gyro\gyro.h</Name>
         <ColumnNumber>18</ColumnNumber>
-        <TopLine>2</TopLine>
-        <CurrentLine>11</CurrentLine>
-        <Folding>1</Folding>
-        <ContractedFolders></ContractedFolders>
-        <PaneID>0</PaneID>
-      </Doc>
-      <Doc>
-        <Name>..\CORE\startup_stm32f40_41xxx.s</Name>
-        <ColumnNumber>0</ColumnNumber>
-        <TopLine>168</TopLine>
-        <CurrentLine>182</CurrentLine>
-        <Folding>1</Folding>
-        <ContractedFolders></ContractedFolders>
-        <PaneID>0</PaneID>
-      </Doc>
-      <Doc>
-        <Name>..\SYSTEM\delay\delay.c</Name>
-        <ColumnNumber>21</ColumnNumber>
-        <TopLine>19</TopLine>
-        <CurrentLine>218</CurrentLine>
-        <Folding>1</Folding>
-        <ContractedFolders></ContractedFolders>
-        <PaneID>0</PaneID>
-      </Doc>
-      <Doc>
-        <Name>..\module\motor\motor.c</Name>
-        <ColumnNumber>1</ColumnNumber>
-        <TopLine>82</TopLine>
-        <CurrentLine>89</CurrentLine>
-        <Folding>1</Folding>
-        <ContractedFolders></ContractedFolders>
-        <PaneID>0</PaneID>
-      </Doc>
-      <Doc>
-        <Name>..\module\motor\motor.h</Name>
-        <ColumnNumber>0</ColumnNumber>
         <TopLine>1</TopLine>
-        <CurrentLine>9</CurrentLine>
-        <Folding>1</Folding>
-        <ContractedFolders></ContractedFolders>
-        <PaneID>0</PaneID>
-      </Doc>
-      <Doc>
-        <Name>..\bsp\tim\tim.h</Name>
-        <ColumnNumber>28</ColumnNumber>
-        <TopLine>5</TopLine>
-        <CurrentLine>14</CurrentLine>
+        <CurrentLine>10</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>

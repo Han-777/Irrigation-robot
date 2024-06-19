@@ -44,7 +44,6 @@ void VirtualCOM_StringSend(u8 *str)
 	u8 i;
 	for(i=0;i<8;i++)                     
 		VirtualCOM_ByteSend(str[i]);
-		
 }
 
 u8 slight[8]={0x7E,0x04,0x45,0x00,0x01,0xEF,0x0D,0x0A},		//ÇáÎ¢¸Éºµ

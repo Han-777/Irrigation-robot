@@ -13,8 +13,7 @@ Increment_PID left_inc_PID, right_inc_PID, heading_inc_PID;
 // PID head_PID;
 //  const float H = 0.188, W = 0.25, R = 0.413, PI = 3.1415926535;
 const float speed_kp = 0.2, speed_ki = 0.12, speed_kd = 0.00,
-            heading_kp = 1, heading_kd = 0.001; // for rotate
-float heading_ki = 0;
+            heading_kp = 1, heading_ki = 0.005, heading_kd = 0.001; // for rotate
 // head_kp = 0.1, head_ki = 0, head_kd = 0, head_ki_limit = 2, head_out_limit = 180;
 // motor speed unit is m/s, should start from a small value
 
@@ -78,12 +77,40 @@ int chassis_ahead(int left_speed, int right_speed)
     return 1;
 }
 
+// int rotate_stable = 0;
+// void check_stable(void) // 根据位置的误差来判断稳定性
+// {
+//     static float prev_heading;
+//     if (fabs(prev_heading - current_yaw) < 0.7)
+//         rotate_stable = 1;
+//     else
+//         rotate_stable = 0;
+//     prev_heading = current_yaw;
+// }
+
+int rotate_arrive = 0, rotate_vague_arrive = 0;
+void check_arrive(void) // 到达判断
+{
+    // 精确到达判断
+    if (fabs(heading_inc_PID.error) < 1)
+        rotate_arrive = 1;
+    else
+        rotate_arrive = 0;
+
+    // 模糊到达判断
+    if (fabs(heading_inc_PID.error) < 2)
+        rotate_vague_arrive = 1;
+    else
+        rotate_vague_arrive = 0;
+}
+
 // the function should not be stopped until reaching the target
 // ???·pid
 int chassis_rotate(float target_yaw)
 {
+    check_arrive();
     heading_Trans();
-    heading_ki = 0.005;
+    // heading_ki = 0.005;
     heading_speed_limit = 50;
     set_increment_pid(&heading_inc_PID, heading_kp, heading_ki, heading_kd, heading_speed_limit);
     increment_pid_calculate(&heading_inc_PID, target_yaw, current_yaw);
@@ -97,7 +124,6 @@ int chassis_rotate(float target_yaw)
 int chassis_run(int speed, float target_heading)
 {
     heading_Trans();
-    heading_ki = 0.00;
     heading_speed_limit = 50;
     set_increment_pid(&heading_inc_PID, heading_kp, heading_ki, heading_kd, heading_speed_limit);
     increment_pid_calculate(&heading_inc_PID, target_heading, current_yaw);        // 角度外环
@@ -143,50 +169,3 @@ void TIM7_IRQHandler(void)
 //     LCD_ShowString(30, 20, 100, 16, 16, "right");
 //     LCD_ShowNum(30, 200, vec[1], 5, 16);
 // }
-
-//=================== gray control =====================:
-int region_finish_flag = 0, cross_cnt = 0, plant_cnt; // for 5-7 / 11-13 / 17-30 | cross_cnt(N_flag)
-
-/**
- * @brief  finish watering for one region (A, B, C, D)
- *
- *
- *
- * @param    None
- * @return   region_finish_flag
- */
-int region_finish(void)
-{
-    if ((plant_cnt >= 5 && plant_cnt < 7) || (plant_cnt >= 11 && plant_cnt < 13) || (plant_cnt >= 17 && plant_cnt < 20))
-    {
-        PE_EXTI_Close();        // pe close
-        region_finish_flag = 1; // 2/4/6 -> 0
-    }
-    return region_finish_flag;
-}
-
-int cross_action(void)
-{
-    cross_cnt++;
-    if (cross_cnt == 2 || cross_cnt == 4 || cross_cnt == 6)
-    {
-        // open pe
-        PE_EXTI_Init();
-    }
-    else
-    {
-        }
-}
-
-void gray_control(void)
-{
-    if (region_finish())
-    {
-        if ((OUT0 || OUT1 || OUT2 || OUT3 || OUT4 || OUT5 || OUT6 || OUT7 || OUT8 || OUT9 || OUT10 || OUT11 || OUT12 || OUT13) && (get_gray_cnt() >= 2))
-        {
-            Car_stop();
-            // change clockwise_rotate_flag to 1 or -1
-            cross_action();
-        }
-    }
-}

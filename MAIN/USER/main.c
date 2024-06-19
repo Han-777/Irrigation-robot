@@ -43,8 +43,8 @@ int main(void)
 	int yaw = 0;
 	while (1)
 	{
-		//		Chinese_Show_one(10, 10, 0, 16, 0);
-		LCD_ShowNum(10, 10, cnt, 5, 16);
+		Chinese_Show_one(10, 10, 0, 16, 0);
+//		LCD_ShowNum(10, 10, cnt, 5, 16);
 		//		Chinese_Show_one(64, 20, 1, 16, 0);
 		//		lcd_dis();
 

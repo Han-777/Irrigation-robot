@@ -2,7 +2,9 @@
 #define __RUN_H
 
 #include "stm32f4xx.h" // Device header
-
+#include "chassis.h"
+#include "openmv.h"
+#include "exti.h"
 // extern u8 color_Index;
 extern int region_finish_flag, cross_cnt, plant_cnt;
 

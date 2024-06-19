@@ -222,7 +222,7 @@
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>vec[1]</ItemText>
+          <ItemText>vec[1],0x0A</ItemText>
         </Ww>
         <Ww>
           <count>2</count>

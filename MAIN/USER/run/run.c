@@ -1,6 +1,5 @@
-#include "chassis.h"
-#include "openmv.h"
 #include "run.h"
+
 // u8 color_Index = 0; // 车上的数量
 const float slow_move_speed = 0.3;
 void qr_Run_Main(void);
@@ -13,13 +12,35 @@ void deposit2_Run_Main(void);
 void home_Run_Main(void);
 void stop_running(void);
 u8 get_Itr(void);
-
+//=================== begin checking =====================:
+int data_check(void) // 检查数据接收是否成功
+{
+    // 蓝牙标志位 + buffer 标志位（帧尾）
+    return 1;
+}
 //=================== car control =====================:
-int
+int run_process(void)
+{
+    chassis_run(30, target_Yaw);
+    if (left_water_flag || right_water_flag) // 得到浇水标志位
+    {
+        return 1;
+    }
+    return 0;
+}
 
-    //=================== gray control =====================:
-    int region_finish_flag = 0,
-        cross_cnt = 0, plant_cnt = 0; // for 5-7 / 11-13 / 17-30 | cross_cnt(N_flag)
+int _run_(void)
+{
+    if (region_finish())
+    {
+        return 1;
+    }
+    if (run_process())
+    {
+    }
+}
+//=================== gray control =====================:
+int region_finish_flag = 0, cross_cnt = 0, plant_cnt = 0; // for 5-7 / 11-13 / 17-30 | cross_cnt(N_flag)
 /**
  * @brief  finish watering for one region (A, B, C, D)
  * 在run函数里放在cross前面
@@ -447,7 +468,7 @@ int end_return_home(void)
 
 //----------- Run Excutor -----------//
 int (*operation_sequence[])(void) = {
-    region_finish, gray_control,
+    data_check, _run_, gray_control,
 
     //    obj1_1, obj1_2, obj1_3, obj1_4,
     //    obj2_1, obj2_2, obj1_3, obj1_4,

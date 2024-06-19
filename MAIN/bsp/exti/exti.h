@@ -22,4 +22,8 @@ void EXTI_10_11_Close(void);
 void EXTInterruppt_Mode(void);
 void EXTI_NVIC_Configuration(void);
 void NVIC_Configuration_Close(void);
+
+void PE_EXTI_Init(void); // for cross_cnt = 2/4/6
+void PE_EXTI_Close(void);
+
 #endif

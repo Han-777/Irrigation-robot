@@ -1,7 +1,7 @@
 #ifndef __TASK_H
 #define __TASK_H
 
-#include "sys.h" 
+#include "sys.h"
 
 void task_A(void);
 void task_B(void);

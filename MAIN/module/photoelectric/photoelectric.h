@@ -4,7 +4,7 @@
 #include "sys.h"
 void photoelectric_Control(void);
 
-#define Left GPIO_ReadInputDataBit(GPIOG, GPIO_Pin_10)
-#define Right GPIO_ReadInputDataBit(GPIOG, GPIO_Pin_11)
+#define PE_LEFT GPIO_ReadInputDataBit(GPIOG, GPIO_Pin_10)
+#define PE_RIGHT GPIO_ReadInputDataBit(GPIOG, GPIO_Pin_11)
 
 #endif

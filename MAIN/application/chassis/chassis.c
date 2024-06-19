@@ -22,9 +22,7 @@ float heading_ki = 0;
 //			motor_kp = 0.01, motor_ki = 0.0018, motor_kd = 0.001, motor_ki_limit = 80,   // ????????
 // motor_kp = 0.1, motor_ki = 0.002, motor_kd = 0.001, motor_ki_limit = 80,
 
-// Turning functions
-// int ideal_heading = 0, ideal_ring = 0; // For 90 degree turning
-
+//==================== chassis movement =====================:
 /**
  * @brief  Initialization for all chassis elements
  *
@@ -105,25 +103,7 @@ int chassis_run(int speed, float target_heading)
     increment_pid_calculate(&heading_inc_PID, target_heading, current_yaw);        // 角度外环
     chassis_ahead(speed + heading_inc_PID.output, speed - heading_inc_PID.output); // 速度内环
     return 1;
-    // if pid output satisfy some condition return 1
 }
-
-// int chassis_run(int speed, float target_heading)
-// {
-//     heading_Trans();
-//     heading_ki = 0.00;
-//     heading_speed_limit = 10;
-//     set_increment_pid(&heading_inc_PID, heading_kp, heading_ki, heading_kd, heading_speed_limit);
-//     increment_pid_calculate(&heading_inc_PID, target_heading, current_yaw); // heading
-//     increment_pid_calculate(&left_inc_PID, speed, vec[0]);
-//     increment_pid_calculate(&right_inc_PID, speed, vec[1]);
-//     Car_Load(left_inc_PID.output - heading_inc_PID.output, right_inc_PID.output + heading_inc_PID.output);
-//     // chassis_ahead(speed - heading_inc_PID.output, speed + heading_inc_PID.output);
-// 	info[17] = left_inc_PID.output - heading_inc_PID.output;
-// 	info[18] = right_inc_PID.output + heading_inc_PID.output;
-//     return 1;
-//     // if pid output satisfy some condition return 1
-// }
 
 void TIM7_IRQHandler(void)
 {
@@ -149,11 +129,10 @@ void TIM7_IRQHandler(void)
         //        chassis_ahead(20, 20);
         // chassis_rotate(ori_target_Yaw);
         //        chassis_run(5, ori_target_Yaw);
-		chassis_run(10, target_Yaw);
-//        chassis_rotate(target_Yaw);
-//		Car_Load(-10, 10);
+        //        chassis_run(10, target_Yaw);
+        //        chassis_rotate(target_Yaw);
 
-        Get_Count();
+        //        info[12] = Get_Count();
     }
 }
 
@@ -164,3 +143,50 @@ void TIM7_IRQHandler(void)
 //     LCD_ShowString(30, 20, 100, 16, 16, "right");
 //     LCD_ShowNum(30, 200, vec[1], 5, 16);
 // }
+
+//=================== gray control =====================:
+int region_finish_flag = 0, cross_cnt = 0, plant_cnt; // for 5-7 / 11-13 / 17-30 | cross_cnt(N_flag)
+
+/**
+ * @brief  finish watering for one region (A, B, C, D)
+ *
+ *
+ *
+ * @param    None
+ * @return   region_finish_flag
+ */
+int region_finish(void)
+{
+    if ((plant_cnt >= 5 && plant_cnt < 7) || (plant_cnt >= 11 && plant_cnt < 13) || (plant_cnt >= 17 && plant_cnt < 20))
+    {
+        PE_EXTI_Close();        // pe close
+        region_finish_flag = 1; // 2/4/6 -> 0
+    }
+    return region_finish_flag;
+}
+
+int cross_action(void)
+{
+    cross_cnt++;
+    if (cross_cnt == 2 || cross_cnt == 4 || cross_cnt == 6)
+    {
+        // open pe
+        PE_EXTI_Init();
+    }
+    else
+    {
+        }
+}
+
+void gray_control(void)
+{
+    if (region_finish())
+    {
+        if ((OUT0 || OUT1 || OUT2 || OUT3 || OUT4 || OUT5 || OUT6 || OUT7 || OUT8 || OUT9 || OUT10 || OUT11 || OUT12 || OUT13) && (get_gray_cnt() >= 2))
+        {
+            Car_stop();
+            // change clockwise_rotate_flag to 1 or -1
+            cross_action();
+        }
+    }
+}

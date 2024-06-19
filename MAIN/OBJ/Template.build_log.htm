@@ -33,17 +33,27 @@ compiling chassis.c...
         
 ..\bsp\iic\iic.h(12): warning:  #1-D: last line of file ends without a newline
       
-..\application\chassis\chassis.c: 3 warnings, 0 errors
-linking...
-Program Size: Code=39540 RO-data=7124 RW-data=228 ZI-data=2188  
-FromELF: creating hex file...
-"..\OBJ\Template.axf" - 0 Error(s), 3 Warning(s).
+..\application\chassis\chassis.c(151): warning:  #1-D: last line of file ends without a newline
+  }
+..\application\chassis\chassis.c(151): error:  #127: expected a statement
+  }
+..\application\chassis\chassis.c: 4 warnings, 1 error
+compiling task.c...
+..\bsp\gpio\gpio.h(43): warning:  #1295-D: Deprecated declaration Key_GPIO_Init - give arg types
+  void Key_GPIO_Init();
+..\bsp\gpio\gpio.h(75): warning:  #1-D: last line of file ends without a newline
+        
+..\bsp\iic\iic.h(12): warning:  #1-D: last line of file ends without a newline
+      
+..\application\task\task.c: 3 warnings, 0 errors
+"..\OBJ\Template.axf" - 1 Error(s), 7 Warning(s).
 
 <h2>Collection of Component include folders:</h2>
   D:\Github\Irrigation-robot\MAIN\USER\RTE
   D:\Downloads\keil5\ARM\PACK\Keil\STM32F4xx_DFP\2.16.0
 
 <h2>Collection of Component Files used:</h2>
+Target not created.
 </pre>
 </body>
 </html>

@@ -5,6 +5,7 @@
 /*****
 4月25新加
 ******/
+// for pe
 void EXTInterruppt_Mode(void)
 {
 	EXTI_InitTypeDef EXTI_InitStructure;
@@ -14,9 +15,9 @@ void EXTInterruppt_Mode(void)
 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOG, EXTI_PinSource11); // 光电
 	EXTI_DeInit();
 
-	gray_GPIO_Init();
+	// gray_GPIO_Init();
+	// photoelectric_GPIO_Init();
 
-	//	GuanDian_Init();
 	EXTI_InitStructure.EXTI_Line = EXTI_Line10;
 	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
 	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
@@ -31,6 +32,7 @@ void EXTInterruppt_Mode(void)
 
 	EXTI_Init(&EXTI_InitStructure);
 }
+
 void EXTI_NVIC_Configuration(void)
 {
 	EXTInterruppt_Mode();
@@ -78,30 +80,30 @@ void NVIC_Configuration_Close(void)
 																 // 线
 }
 //////////////////////////
-void EXTIX_Init(void)
+void PE_EXTI_Init(void) // for cross_cnt = 2/4/6
 {
 	NVIC_InitTypeDef NVIC_InitStructure;
 	EXTI_InitTypeDef EXTI_InitStructure;
 
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE); // 使能SYSCFG时钟,在用到外部中断时一定要用到
 
-	//	GuanDian_Init();
+	photoelectric_GPIO_Init();
 
 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOG, EXTI_PinSource10);
 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOG, EXTI_PinSource11);
 	EXTI_DeInit();
 
-	EXTI_InitStructure.EXTI_Line = EXTI_Line10;
+	EXTI_InitStructure.EXTI_Line = EXTI_Line10 | EXTI_Line11;
 	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
 	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
 	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
 	EXTI_Init(&EXTI_InitStructure);
 
-	EXTI_InitStructure.EXTI_Line = EXTI_Line11;
-	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
-	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
-	EXTI_Init(&EXTI_InitStructure);
+	// EXTI_InitStructure.EXTI_Line = EXTI_Line11;
+	// EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+	// EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
+	// EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+	// EXTI_Init(&EXTI_InitStructure);
 
 	NVIC_InitStructure.NVIC_IRQChannel = EXTI15_10_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x00; // 抢占优先级0
@@ -109,7 +111,8 @@ void EXTIX_Init(void)
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;				 // 使能外部中断通道
 	NVIC_Init(&NVIC_InitStructure);								 // 配置
 }
-void EXTI_10_11_Close(void)
+
+void PE_EXTI_Close(void)
 {
 	NVIC_InitTypeDef NVIC_InitStructure;
 	EXTI_InitTypeDef EXTI_InitStructure;

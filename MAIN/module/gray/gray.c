@@ -20,8 +20,8 @@
 //	Car_Load(Pwm_L,Pwm_R);
 //	delay_ms(25);//这个时间可以变
 // }
-int cnt = 0;
-int Get_Count(void)
+int gray_cnt = 0;
+int get_gray_cnt(void)
 {
 	int i = 0;
 	if (OUT0 == 0)
@@ -80,6 +80,6 @@ int Get_Count(void)
 	{
 		i++;
 	}
-	cnt = i;
+	gray_cnt = i;
 	return i;
 }

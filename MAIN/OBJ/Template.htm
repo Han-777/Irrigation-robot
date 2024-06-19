@@ -3,7 +3,7 @@
 <title>Static Call Graph - [..\OBJ\Template.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image ..\OBJ\Template.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Wed Jun 19 13:27:10 2024
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Wed Jun 19 14:46:07 2024
 <BR><P>
 <H3>Maximum Stack Usage =        400 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1501,7 +1501,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chassis_Init
 </UL>
 
-<P><STRONG><a name="[ba]"></a>Abs</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, motor.o(.text))
+<P><STRONG><a name="[ba]"></a>Abs</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, motor.o(.text), UNUSED)
 <BR><BR>[Called By]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Change_Err
 <LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Car_Load
 </UL>
@@ -1512,10 +1512,8 @@ Global Symbols
 
 <P><STRONG><a name="[1bd]"></a>Limit</STRONG> (Thumb, 40 bytes, Stack size 16 bytes, motor.o(.text), UNUSED)
 
-<P><STRONG><a name="[b9]"></a>Car_Load</STRONG> (Thumb, 130 bytes, Stack size 4 bytes, motor.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = Car_Load
-</UL>
-<BR>[Calls]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Abs
+<P><STRONG><a name="[b9]"></a>Car_Load</STRONG> (Thumb, 130 bytes, Stack size 4 bytes, motor.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[ba]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Abs
 </UL>
 <BR>[Called By]<UL><LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chassis_rotate
 <LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chassis_ahead
@@ -1561,10 +1559,8 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f40_41xxx.o(RESET)
 </UL>
-<P><STRONG><a name="[c4]"></a>heading_Trans</STRONG> (Thumb, 208 bytes, Stack size 24 bytes, gyro.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = heading_Trans &rArr; __hardfp_fabs
-</UL>
-<BR>[Calls]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
+<P><STRONG><a name="[c4]"></a>heading_Trans</STRONG> (Thumb, 208 bytes, Stack size 24 bytes, gyro.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdrcmple
 <LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fabs
 </UL>
@@ -1981,10 +1977,8 @@ Global Symbols
 
 <P><STRONG><a name="[1c5]"></a>reset_increment_pid</STRONG> (Thumb, 34 bytes, Stack size 0 bytes, pid.o(.text), UNUSED)
 
-<P><STRONG><a name="[101]"></a>increment_pid_calculate</STRONG> (Thumb, 252 bytes, Stack size 40 bytes, pid.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = increment_pid_calculate &rArr; __hardfp_fabs
-</UL>
-<BR>[Calls]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
+<P><STRONG><a name="[101]"></a>increment_pid_calculate</STRONG> (Thumb, 252 bytes, Stack size 40 bytes, pid.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
 <LI><a href="#[c7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdrcmple
 <LI><a href="#[c6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fabs
 </UL>
@@ -2017,10 +2011,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[104]"></a>chassis_ahead</STRONG> (Thumb, 142 bytes, Stack size 16 bytes, chassis.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = chassis_ahead &rArr; increment_pid_calculate &rArr; __hardfp_fabs
-</UL>
-<BR>[Calls]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;increment_pid_calculate
+<P><STRONG><a name="[104]"></a>chassis_ahead</STRONG> (Thumb, 142 bytes, Stack size 16 bytes, chassis.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;increment_pid_calculate
 <LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Car_Load
 </UL>
 <BR>[Called By]<UL><LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chassis_run
@@ -2033,18 +2025,14 @@ Global Symbols
 <LI><a href="#[b9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Car_Load
 </UL>
 
-<P><STRONG><a name="[106]"></a>chassis_run</STRONG> (Thumb, 138 bytes, Stack size 16 bytes, chassis.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = chassis_run &rArr; chassis_ahead &rArr; increment_pid_calculate &rArr; __hardfp_fabs
-</UL>
-<BR>[Calls]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;increment_pid_calculate
+<P><STRONG><a name="[106]"></a>chassis_run</STRONG> (Thumb, 138 bytes, Stack size 16 bytes, chassis.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;increment_pid_calculate
 <LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_increment_pid
 <LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;heading_Trans
 <LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chassis_ahead
 </UL>
-<BR>[Called By]<UL><LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM7_IRQHandler
-</UL>
 
-<P><STRONG><a name="[42]"></a>TIM7_IRQHandler</STRONG> (Thumb, 220 bytes, Stack size 8 bytes, chassis.o(.text))
+<P><STRONG><a name="[42]"></a>TIM7_IRQHandler</STRONG> (Thumb, 222 bytes, Stack size 8 bytes, chassis.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 392<LI>Call Chain = TIM7_IRQHandler &rArr; TTL_Hex2Dec &rArr; DATA_Trans &rArr; __hardfp_pow &rArr; __kernel_poly &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[d2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Yaw
@@ -2053,7 +2041,6 @@ Global Symbols
 <LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Read_Speed
 <LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_ClearITPendingBit
 <LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_GetFlagStatus
-<LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;chassis_run
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f40_41xxx.o(RESET)
 </UL>
@@ -2269,10 +2256,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_pow
 </UL>
 
-<P><STRONG><a name="[c6]"></a>__hardfp_fabs</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, fabs.o(i.__hardfp_fabs))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __hardfp_fabs
-</UL>
-<BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;increment_pid_calculate
+<P><STRONG><a name="[c6]"></a>__hardfp_fabs</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, fabs.o(i.__hardfp_fabs), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[101]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;increment_pid_calculate
 <LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pid_calculate
 <LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;heading_Trans
 </UL>

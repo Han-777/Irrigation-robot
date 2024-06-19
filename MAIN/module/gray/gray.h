@@ -2,7 +2,7 @@
 #define __GRAY_H__
 /*--------------------------------------------------------------*/
 #include "sys.h"
-extern int cnt;
+extern int gray_cnt;
 // OUT1 -> OUT12 from left to right
 /**************
  * left grayscale *
@@ -26,6 +26,6 @@ extern int cnt;
 #define OUT12 GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_8) // 0为�?�到白线
 #define OUT13 GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_7) //
 
-int Get_Count(void);
+int get_gray_cnt(void);
 
 #endif

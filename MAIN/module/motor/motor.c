@@ -6,7 +6,7 @@ void Motor_Init(void)
 	// freq (18k ~ 60k) = 84M / arr(50) / psc(84)
 	// ×îÐ¡Âö³å¿í¶È£º 2us
 	TIM4_PWM_Init(100 - 1, 42 - 1); // 84M / 84 / 50 = 20k
-	//	TIM4_PWM_Init(4200 - 1, 1 - 1); // 84M / 84 / 50 = 20k
+									//	TIM4_PWM_Init(4200 - 1, 1 - 1); // 84M / 84 / 50 = 20k
 }
 
 float Abs(float m)
@@ -115,10 +115,10 @@ void Car_stop(void)
 {
 	LIN1 = 0;
 	LIN2 = 0;
-	TIM_SetCompare1(TIM4, 0);
+	TIM_SetCompare2(TIM4, 0);
 	RIN1 = 0;
 	RIN2 = 0;
-	TIM_SetCompare2(TIM4, 0);
+	TIM_SetCompare1(TIM4, 0);
 }
 // void Turn_Left_90_Angles(void)
 // {

@@ -27,5 +27,6 @@ extern int gray_cnt;
 #define OUT13 GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_7) //
 
 int get_gray_cnt(void);
+int get_cross_flag(void);
 
 #endif

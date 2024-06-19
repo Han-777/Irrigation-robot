@@ -15,8 +15,7 @@ void stop_running(void);
 u8 get_Itr(void);
 
 //=================== gray control =====================:
-int region_finish_flag = 0, cross_cnt = 0, plant_cnt = 0, cross_flag; // for 5-7 / 11-13 / 17-30 | cross_cnt(N_flag)
-const int gray_threshold = 2;
+int region_finish_flag = 0, cross_cnt = 0, plant_cnt = 0; // for 5-7 / 11-13 / 17-30 | cross_cnt(N_flag)
 /**
  * @brief  finish watering for one region (A, B, C, D)
  * 在run函数里放在cross前面
@@ -51,7 +50,7 @@ void cross_action(void)
 int gray_control(void)
 {
     PE_EXTI_Close(); // pe_close
-    if ((OUT0 || OUT1 || OUT2 || OUT3 || OUT4 || OUT5 || OUT6 || OUT7 || OUT8 || OUT9 || OUT10 || OUT11 || OUT12 || OUT13) && (get_gray_cnt() >= gray_threshold) && region_finish_flag)
+    if (get_cross_flag() && region_finish_flag)
     {
         region_finish_flag = 0;
         Car_stop();

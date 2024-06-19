@@ -20,7 +20,7 @@
 //	Car_Load(Pwm_L,Pwm_R);
 //	delay_ms(25);//这个时间可以变
 // }
-int gray_cnt = 0;
+const int gray_threshold = 2;
 int get_gray_cnt(void)
 {
 	int i = 0;
@@ -30,7 +30,7 @@ int get_gray_cnt(void)
 	}
 	if (OUT1 == 0)
 	{
-		i = i++;
+		i++;
 	}
 	if (OUT2 == 0)
 	{
@@ -80,6 +80,17 @@ int get_gray_cnt(void)
 	{
 		i++;
 	}
-	gray_cnt = i;
 	return i;
+}
+
+int get_cross_flag(void)
+{
+	if ((OUT0 || OUT1 || OUT2 || OUT3 || OUT4 || OUT5 || OUT6 || OUT7 || OUT8 || OUT9 || OUT10 || OUT11 || OUT12 || OUT13))
+	{
+		if (get_gray_cnt() >= gray_threshold)
+		{
+			return 1;
+		}
+	}
+	return 0;
 }

@@ -9,7 +9,7 @@ void TIM7_Int_Init(u16 arr,u16 psc);
 void TIM7_Close(void);
 
 /**************************************************************************
-							Motor PWM TIM
+							Motor PWM TIM (左右反了)
 **************************************************************************/
 // movement macro (两组函数作用相同)
 #define PWML  TIM4->CCR1

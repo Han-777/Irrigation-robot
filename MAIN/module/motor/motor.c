@@ -89,26 +89,26 @@ void Car_Load(int L, int R)
 {
 	if (L > 0)
 	{
-		LIN1 = 1, LIN2 = 0; // 正转
+		LIN1 = 0, LIN2 = 1; // 正转
 	}
 	if (L <= 0)
 	{
-		LIN1 = 0, LIN2 = 1; // 反转
+		LIN1 = 1, LIN2 = 0; // 反转
 	}
 	if (R > 0)
 	{
-		RIN1 = 1, RIN2 = 0;
+		RIN1 = 0, RIN2 = 1;
 	}
 	if (R <= 0)
 	{
-		RIN1 = 0, RIN2 = 1;
+		RIN1 = 1, RIN2 = 0;
 	}
 	// TIM_SetCompare2(TIM4,Abs(L));//左轮
 	// TIM_SetCompare1(TIM4,Abs(R));//右轮
 	// MOTORL_COMPARE(Abs(L));
 	// MOTORR_COMPARE(Abs(R));
-	PWML = Abs(L);
-	PWMR = Abs(R);
+	PWML = Abs(R);
+	PWMR = Abs(L);
 }
 
 void Car_stop(void)

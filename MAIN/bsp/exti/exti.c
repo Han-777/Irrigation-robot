@@ -1,4 +1,5 @@
 #include "exti.h"
+#include "run.h"
 /*///////////////////////////////////////////////////////////////////////////////
 外部中断用来控制左右侧的光电传感器
 ///////////////////////////////////////////////////////////////////////////////*/
@@ -141,128 +142,134 @@ int L_l = 0;	// 用来判断在主函数里面是否要浇水，左
 int Flag_L = 0; // 用来判断是左边算左激光测试后舵机所抬角度
 int Flag_R = 0;
 int err = 0;
-
+int left_water_flag = 0, right_water_flag = 0; // water start flag
 // int N_Flag = 0;
 // float NEW_Target_Yaw = 0;
 // float target_Yaw = 0;
 float Err_Set = 90;
 // int k=-1;
 int k = 0;
-// void EXTI15_10_IRQHandler(void)
-//{
-//	Protect();
-//	if ((EXTI_GetITStatus(EXTI_Line11) == SET) || (EXTI_GetITStatus(EXTI_Line10) == SET))
-//	{
-//		if (N_Flag == 0)
-//		{
-//			if (EXTI_GetITStatus(EXTI_Line10) == SET)
-//			{
-//				delay_ms(50);
-//				TIM7_Close();
-//				Car_stop();
-//				delay_ms(50);
-//				Flag_L = 1;
-//				Flag_R = 1;
-//				EXTI_ClearITPendingBit(EXTI_Line10);
-//				EXTI_ClearITPendingBit(EXTI_Line11);
-//				EXTI_10_11_Close();
-//			}
-//		}
-//		else if (N_Flag == 2)
-//		{
-//			if (EXTI_GetITStatus(EXTI_Line11) == SET)
-//			{
-//				TIM7_Close();
-//				Car_stop();
-//				delay_ms(50);
-//				Flag_L = 1;
-//				Flag_R = 1;
-//				EXTI_ClearITPendingBit(EXTI_Line10);
-//				EXTI_ClearITPendingBit(EXTI_Line11);
-//				EXTI_10_11_Close();
-//			}
-//		}
-//		else if ((N_Flag >= 3 && N_Flag <= 7))
-//		{
 
-//			TIM7_Close();
+/**
+ * @brief  在中断里给浇水标志位
+ *
+ * A/B区两侧对称，A看左，B看右
+ * C/D区两侧不对称，两边都要看
+ * @param    None
+ * @return   None
+ */
+void EXTI15_10_IRQHandler(void)
+{
+	if ((EXTI_GetITStatus(EXTI_Line11) == SET) || (EXTI_GetITStatus(EXTI_Line10) == SET))
+	{
+		if (cross_cnt == 0)
+		{
+			if (EXTI_GetITStatus(EXTI_Line10) == SET) // left hand side
+			{
+				delay_ms(50);
+				TIM7_Close();
+				Car_stop();
+				delay_ms(50);
+				left_water_flag = 1;
+				right_water_flag = 1;
+				EXTI_ClearITPendingBit(EXTI_Line10);
+				EXTI_ClearITPendingBit(EXTI_Line11);
+//				EXTI_10_11_Close();
+			}
+		}
+		else if (cross_cnt == 2)
+		{
+			if (EXTI_GetITStatus(EXTI_Line11) == SET) // right hand side
+			{
+				TIM7_Close();
+				Car_stop();
+				delay_ms(50);
+				left_water_flag = 1;
+				right_water_flag = 1;
+				EXTI_ClearITPendingBit(EXTI_Line10);
+				EXTI_ClearITPendingBit(EXTI_Line11);
+//				EXTI_10_11_Close();
+			}
+		}
+		else if ((cross_cnt >= 3 && cross_cnt <= 7)) // C / D
+		{
+			TIM7_Close();
+			Car_stop();
+			delay_ms(200);
+			if ((EXTI_GetITStatus(EXTI_Line11) == SET) && (EXTI_GetITStatus(EXTI_Line10) == SET))
+			{
+				left_water_flag = 1;
+				right_water_flag = 1;
+				EXTI_ClearITPendingBit(EXTI_Line11);
+				EXTI_ClearITPendingBit(EXTI_Line10);
+				// EXTI_10_11_Close();
+			}
+			else if ((EXTI_GetITStatus(EXTI_Line11) == SET) && (EXTI_GetITStatus(EXTI_Line10) == RESET))
+			{
+				right_water_flag = 1;
+				EXTI_ClearITPendingBit(EXTI_Line11);
+				// EXTI_10_11_Close();
+			}
+			else if ((EXTI_GetITStatus(EXTI_Line11) == RESET) && (EXTI_GetITStatus(EXTI_Line10) == SET))
+			{
+				left_water_flag = 1;
+				EXTI_ClearITPendingBit(EXTI_Line10);
+				// EXTI_10_11_Close();
+			}
+		}
+		// else
+		// {
+		// 	EXTI_ClearITPendingBit(EXTI_Line10);
+		// 	EXTI_ClearITPendingBit(EXTI_Line11);
+		// 	//
+		// }
+		EXTI_ClearITPendingBit(EXTI_Line10);
+		EXTI_ClearITPendingBit(EXTI_Line11);
+		//			BEEP=1;
+	}
+	//	}
+	//	LED2=1;
+	//	LED1=0;
 
-//			Car_stop();
-//			delay_ms(200);
-//			if ((EXTI_GetITStatus(EXTI_Line11) == SET) && (EXTI_GetITStatus(EXTI_Line10) == SET))
-//			{
-//				Flag_R = 1;
-//				Flag_L = 1;
-//				EXTI_ClearITPendingBit(EXTI_Line11);
-//				EXTI_ClearITPendingBit(EXTI_Line10);
-//				EXTI_10_11_Close();
-//			}
-//			else if ((EXTI_GetITStatus(EXTI_Line11) == SET) && (EXTI_GetITStatus(EXTI_Line10) == RESET))
-//			{
-//				Flag_R = 1;
-//				EXTI_ClearITPendingBit(EXTI_Line11);
-//				EXTI_10_11_Close();
-//			}
-//			else if ((EXTI_GetITStatus(EXTI_Line11) == RESET) && (EXTI_GetITStatus(EXTI_Line10) == SET))
-//			{
-//				Flag_L = 1;
-//				EXTI_ClearITPendingBit(EXTI_Line10);
-//				EXTI_10_11_Close();
-//			}
-//		}
-//		else
-//		{
-//			EXTI_ClearITPendingBit(EXTI_Line10);
-//			EXTI_ClearITPendingBit(EXTI_Line11);
-//			//
-//		}
-//		EXTI_ClearITPendingBit(EXTI_Line10);
-//		EXTI_ClearITPendingBit(EXTI_Line11);
-//		//			BEEP=1;
-//	}
-//	//	}
-//	//	LED2=1;
-//	//	LED1=0;
-
-//	err++;
-//	if (err >= 200)
-//	{
-//		delay_ms(300);
-//	}
-//}
+	// err++;
+	// if (err >= 200)
+	// {
+	// 	delay_ms(300);
+	// }
+}
 
 // void EXTI9_5_IRQHandler(void)
 //{
-//	if((EXTI_GetITStatus(EXTI_Line5|EXTI_Line6|EXTI_Line7|EXTI_Line8|EXTI_Line9)==SET))
+//	if ((EXTI_GetITStatus(EXTI_Line5 | EXTI_Line6 | EXTI_Line7 | EXTI_Line8 | EXTI_Line9) == SET))
 //	{
-//		if(Flower_Count>=50)
+//		if (Flower_Count >= 50)
 //		{
-//			EXTI_ClearITPendingBit(EXTI_Line5|EXTI_Line6|EXTI_Line7|EXTI_Line8|EXTI_Line9);
+//			EXTI_ClearITPendingBit(EXTI_Line5 | EXTI_Line6 | EXTI_Line7 | EXTI_Line8 | EXTI_Line9);
 //			TIM7_Close();
 //			NVIC_Configuration_Close();
 //			Car_stop();
-//			k++;//k反复为0，1两值
+//			k++; // k反复为0，1两值
 //			N_Flag++;
 //			delay_ms(1000);
 //		}
 //		else
 //		{
-//			//会导致从刚开始到第一个花盆之间矫正不存在
-//			EXTI_ClearITPendingBit(EXTI_Line5|EXTI_Line6|EXTI_Line7|EXTI_Line8|EXTI_Line9);
-//			Car_Load(100,100);
-//			set=1;
-////			delay_ms(200);
-////			set=1;
+//			// 会导致从刚开始到第一个花盆之间矫正不存在
+//			EXTI_ClearITPendingBit(EXTI_Line5 | EXTI_Line6 | EXTI_Line7 | EXTI_Line8 | EXTI_Line9);
+//			Car_Load(100, 100);
+//			set = 1;
+//			//			delay_ms(200);
+//			//			set=1;
 //		}
 //	}
-//}
+// }
 // void EXTI9_5_IRQHandler(void)
 //{
-//	if((EXTI_GetITStatus(EXTI_Line5|EXTI_Line6|EXTI_Line7|EXTI_Line8|EXTI_Line9)==SET))
+//	if ((EXTI_GetITStatus(EXTI_Line5 | EXTI_Line6 | EXTI_Line7 | EXTI_Line8 | EXTI_Line9) == SET))
 //	{
-//		EXTI_ClearITPendingBit(EXTI_Line5|EXTI_Line6|EXTI_Line7|EXTI_Line8|EXTI_Line9);
+//		EXTI_ClearITPendingBit(EXTI_Line5 | EXTI_Line6 | EXTI_Line7 | EXTI_Line8 | EXTI_Line9);
 //	}
-//}
+// }
 /********方案一************/
 
 /*

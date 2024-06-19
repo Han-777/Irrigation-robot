@@ -1,6 +1,6 @@
 #include "chassis.h"
 #include "openmv.h"
-
+#include "run.h"
 // u8 color_Index = 0; // 车上的数量
 const float slow_move_speed = 0.3;
 void qr_Run_Main(void);
@@ -14,8 +14,12 @@ void home_Run_Main(void);
 void stop_running(void);
 u8 get_Itr(void);
 
-//=================== gray control =====================:
-int region_finish_flag = 0, cross_cnt = 0, plant_cnt = 0; // for 5-7 / 11-13 / 17-30 | cross_cnt(N_flag)
+//=================== car control =====================:
+int
+
+    //=================== gray control =====================:
+    int region_finish_flag = 0,
+        cross_cnt = 0, plant_cnt = 0; // for 5-7 / 11-13 / 17-30 | cross_cnt(N_flag)
 /**
  * @brief  finish watering for one region (A, B, C, D)
  * 在run函数里放在cross前面

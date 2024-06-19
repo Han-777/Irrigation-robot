@@ -110,9 +110,7 @@ int chassis_rotate(float target_yaw)
 {
     check_arrive();
     heading_Trans();
-    // heading_ki = 0.005;
     // heading_speed_limit = 50;
-    // set_increment_pid(&heading_inc_PID, heading_kp, heading_ki, heading_kd, heading_speed_limit);
     increment_pid_calculate(&heading_inc_PID, target_yaw, current_yaw);
     info[17] = heading_inc_PID.output;
     info[18] = -heading_inc_PID.output;
@@ -180,7 +178,7 @@ void TIM7_IRQHandler(void)
         //        chassis_ahead(20, 20);
         // chassis_rotate(ori_target_Yaw);
         //        chassis_run(5, ori_target_Yaw);
-        chassis_run(0, target_Yaw);
+        // chassis_run(0, target_Yaw);
         //        chassis_rotate(target_Yaw);
 
         //        info[12] = Get_Count();

@@ -44,3 +44,4 @@
 ..\obj\exti.o: ..\bsp\usart\usart.h
 ..\obj\exti.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
 ..\obj\exti.o: ..\bsp\exti\exti.h
+..\obj\exti.o: .\run\run.h

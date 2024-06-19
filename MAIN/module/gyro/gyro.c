@@ -93,7 +93,6 @@ void heading_Trans(void)
 	if (fabs(target_Yaw - current_yaw) > 180)
 	{
 		current_yaw += ((target_Yaw > current_yaw) ? 360 : -360);
-		// current_yaw -= 360;
 	}
 }
 

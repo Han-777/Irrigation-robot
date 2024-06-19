@@ -1,12 +1,13 @@
 #ifndef __RUN_H
 #define __RUN_H
 
-#include "stm32f4xx.h"                  // Device header
+#include "stm32f4xx.h" // Device header
 
 // extern u8 color_Index;
+extern int region_finish_flag, cross_cnt, plant_cnt;
 
-
-typedef enum{
+typedef enum
+{
 	qrcodeMode = 0,
 	objMode,
 	roughMode,
@@ -15,9 +16,10 @@ typedef enum{
 	objMode2,
 	depositMode2,
 	homeMode
-}runState;
+} runState;
 
-typedef enum{
+typedef enum
+{
 	back,
 	changeDir,
 	object_Pos,
@@ -27,16 +29,16 @@ typedef enum{
 	deposit_Up_Pos,
 	deposit_Down_Pos,
 	home_Pos
-}positionDes;
+} positionDes;
 
-typedef enum{
+typedef enum
+{
 	red = 0xA0,
 	green,
-	blue, 
+	blue,
 	yellow,
 	black // black indecate nothing
 } colorIndex;
-
 
 void Run(void);
 

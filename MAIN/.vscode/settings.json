@@ -31,6 +31,7 @@
     "exit.h": "c",
     "math.h": "c",
     "task.h": "c",
-    "lidar.h": "c"
+    "lidar.h": "c",
+    "run.h": "c"
   }
 }

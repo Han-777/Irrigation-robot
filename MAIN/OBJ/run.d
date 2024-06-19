@@ -54,3 +54,4 @@
 ..\obj\run.o: ..\module\lidar\lidar.h
 ..\obj\run.o: ..\module\gray\gray.h
 ..\obj\run.o: ..\module\openmv\openmv.h
+..\obj\run.o: run\run.h

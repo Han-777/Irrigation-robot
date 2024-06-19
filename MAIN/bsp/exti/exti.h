@@ -4,8 +4,8 @@
 #include "sys.h"
 // #include "photoelectric.h"
 // #include "gray.h"
-
-void EXTIX_Init(void); // 外部中断初始化
+extern int left_water_flag, right_water_flag; // water start flag
+void EXTIX_Init(void);                        // 外部中断初始化
 void EXTI3_IRQHandler(void);
 void EXTI_Line_Close(void);
 void EXTI_Line_Init(void);

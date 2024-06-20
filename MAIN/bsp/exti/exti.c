@@ -174,7 +174,6 @@ void EXTI15_10_IRQHandler(void)
 				right_water_flag = 1;
 				EXTI_ClearITPendingBit(EXTI_Line10);
 				EXTI_ClearITPendingBit(EXTI_Line11);
-//				EXTI_10_11_Close();
 			}
 		}
 		else if (cross_cnt == 2)
@@ -188,7 +187,6 @@ void EXTI15_10_IRQHandler(void)
 				right_water_flag = 1;
 				EXTI_ClearITPendingBit(EXTI_Line10);
 				EXTI_ClearITPendingBit(EXTI_Line11);
-//				EXTI_10_11_Close();
 			}
 		}
 		else if ((cross_cnt >= 3 && cross_cnt <= 7)) // C / D
@@ -202,19 +200,16 @@ void EXTI15_10_IRQHandler(void)
 				right_water_flag = 1;
 				EXTI_ClearITPendingBit(EXTI_Line11);
 				EXTI_ClearITPendingBit(EXTI_Line10);
-				// EXTI_10_11_Close();
 			}
 			else if ((EXTI_GetITStatus(EXTI_Line11) == SET) && (EXTI_GetITStatus(EXTI_Line10) == RESET))
 			{
 				right_water_flag = 1;
 				EXTI_ClearITPendingBit(EXTI_Line11);
-				// EXTI_10_11_Close();
 			}
 			else if ((EXTI_GetITStatus(EXTI_Line11) == RESET) && (EXTI_GetITStatus(EXTI_Line10) == SET))
 			{
 				left_water_flag = 1;
 				EXTI_ClearITPendingBit(EXTI_Line10);
-				// EXTI_10_11_Close();
 			}
 		}
 		// else

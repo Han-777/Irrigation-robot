@@ -5,6 +5,7 @@
 #include "chassis.h"
 #include "openmv.h"
 #include "exti.h"
+#include "sys.h"
 // extern u8 color_Index;
 extern int region_finish_flag, cross_cnt, plant_cnt;
 

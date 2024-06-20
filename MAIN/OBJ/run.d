@@ -1,6 +1,5 @@
 ..\obj\run.o: run\run.c
-..\obj\run.o: ..\application\chassis\chassis.h
-..\obj\run.o: ..\SYSTEM\sys\sys.h
+..\obj\run.o: run\run.h
 ..\obj\run.o: ..\USER\stm32f4xx.h
 ..\obj\run.o: ..\CORE\core_cm4.h
 ..\obj\run.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -36,6 +35,8 @@
 ..\obj\run.o: ..\FWLIB\inc\stm32f4xx_dac.h
 ..\obj\run.o: ..\FWLIB\inc\stm32f4xx_dcmi.h
 ..\obj\run.o: ..\FWLIB\inc\stm32f4xx_fsmc.h
+..\obj\run.o: ..\application\chassis\chassis.h
+..\obj\run.o: ..\SYSTEM\sys\sys.h
 ..\obj\run.o: ..\SYSTEM\delay\delay.h
 ..\obj\run.o: ..\SYSTEM\sys\sys.h
 ..\obj\run.o: ..\bsp\tim\tim.h
@@ -54,4 +55,3 @@
 ..\obj\run.o: ..\module\lidar\lidar.h
 ..\obj\run.o: ..\module\gray\gray.h
 ..\obj\run.o: ..\module\openmv\openmv.h
-..\obj\run.o: run\run.h

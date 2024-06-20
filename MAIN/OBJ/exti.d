@@ -45,3 +45,14 @@
 ..\obj\exti.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
 ..\obj\exti.o: ..\bsp\exti\exti.h
 ..\obj\exti.o: .\run\run.h
+..\obj\exti.o: ..\application\chassis\chassis.h
+..\obj\exti.o: ..\module\pid\pid.h
+..\obj\exti.o: ..\module\gyro\gyro.h
+..\obj\exti.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+..\obj\exti.o: ..\module\motor\motor.h
+..\obj\exti.o: ..\module\encoder\encoder.h
+..\obj\exti.o: ..\module\lcd\lcd.h
+..\obj\exti.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
+..\obj\exti.o: ..\module\lidar\lidar.h
+..\obj\exti.o: ..\module\gray\gray.h
+..\obj\exti.o: ..\module\openmv\openmv.h

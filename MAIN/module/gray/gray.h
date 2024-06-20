@@ -2,7 +2,8 @@
 #define __GRAY_H__
 /*--------------------------------------------------------------*/
 #include "sys.h"
-extern int gray_cnt;
+#include "gyro.h"
+extern int cross_cnt;
 // OUT1 -> OUT12 from left to right
 /**************
  * left grayscale *

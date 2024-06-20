@@ -45,3 +45,5 @@
 ..\obj\encoder.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
 ..\obj\encoder.o: ..\bsp\exti\exti.h
 ..\obj\encoder.o: ..\module\gray\gray.h
+..\obj\encoder.o: ..\module\gyro\gyro.h
+..\obj\encoder.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdio.h

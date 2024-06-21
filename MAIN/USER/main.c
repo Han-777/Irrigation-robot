@@ -2,6 +2,8 @@
 #include "lcd.h"
 #include "servo.h"
 #include "chassis.h"
+#include "servo.h"
+#include "run.h"
 
 int main(void)
 {
@@ -10,9 +12,7 @@ int main(void)
 													//	LCD_Init();
 													//	POINT_COLOR = BLUE; // »­±ÊÑÕÉ«
 	chassis_Init();
-	TIM7_Int_Init(1000 - 1, 840 - 1); // 84M / 4200 / 1000 = 10ms
-	delay_ms(1000);
-
+	PE_EXTI_Init();
 	//	Car_Load(40, 40);
 	//	delay_ms(10000);
 	//	Turn_Left_90_Angles();
@@ -37,14 +37,39 @@ int main(void)
 	//		delay_ms(100);
 	//	}
 
-	Servo_Pitch_Control(90);
+	//		Servo_Pitch_Control(110);
 	Servo_Yaw_Control(90);
+
 	int i = 0;
 	int yaw = 0;
 	while (1)
 	{
-		Chinese_Show_one(10, 10, 0, 16, 0);
-//		LCD_ShowNum(10, 10, cnt, 5, 16);
+		Run();
+//		get_gray_cnt();
+		//		Servo_Pitch_Control(50);
+		//		delay_ms(1000);
+		//		Servo_Pitch_Control(250);
+		//		delay_ms(1000);
+
+		//		Chinese_Show_one(10, 10, 0, 16, 0);
+		//		ServoControl(yaw_servo, 40, 100, 2000); // 40 - 260
+		//		ServoControl(yaw_servo, 100, 40, 2000);
+		//		ServoControl(pitch_servo, 180, 0, 2000);
+		//		Servo_Yaw_Control(20);
+		//		delay_ms(1000);
+		//		Servo_Yaw_Control(170);
+		//		delay_ms(1000);
+		//		for (; i < 170; ++i)
+		//		{
+		//			Servo_Pitch_Control(i);
+		//			delay_ms(200);
+		//		}
+		//		for (; i > 10; --i)
+		//		{
+		//			Servo_Pitch_Control(i);
+		//			delay_ms(200);
+		//		}
+		//		LCD_ShowNum(10, 10, cnt, 5, 16);
 		//		Chinese_Show_one(64, 20, 1, 16, 0);
 		//		lcd_dis();
 

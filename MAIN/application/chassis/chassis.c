@@ -4,7 +4,7 @@
 int vec[2] = {0};
 float info[20] = {0};
 
-float speed_limit = 50, heading_speed_limit = 40; // speed lmit should be smaller than 0.8 m/s
+float speed_limit = 27, heading_speed_limit = 40; // speed lmit should be smaller than 0.8 m/s
 //==================== Internal vars =====================:
 // constants & PIDs
 // PID heading_PID;
@@ -13,7 +13,7 @@ Increment_PID left_inc_PID, right_inc_PID, heading_inc_PID;
 // PID head_PID;
 //  const float H = 0.188, W = 0.25, R = 0.413, PI = 3.1415926535;
 const float speed_kp = 0.2, speed_ki = 0.12, speed_kd = 0,
-            heading_kp = 1, heading_ki = 0.002, heading_kd = 0.001; // for rotate
+            heading_kp = 1, heading_ki = 0.005, heading_kd = 0.001; // for rotate
 // head_kp = 0.1, head_ki = 0, head_kd = 0, head_ki_limit = 2, head_out_limit = 180;
 // motor speed unit is m/s, should start from a small value
 
@@ -42,6 +42,8 @@ void chassis_Init(void)
     TTL_Hex2Dec();
     ori_target_Yaw = Read_Yaw();
     target_Yaw = ori_target_Yaw;
+	delay_ms(500);
+	TIM7_Init(1000 - 1, 840 - 1); // 84M / 4200 / 1000 = 10ms
 }
 
 /**
@@ -160,6 +162,7 @@ void TIM7_IRQHandler(void)
     {
         TIM_ClearITPendingBit(TIM7, TIM_IT_Update);
         TTL_Hex2Dec();
+        current_yaw = Read_Yaw();
         vec[0] = Read_Speed(LEFT_ENCODER);
         vec[1] = Read_Speed(RIGHT_ENCODER);
         info[1] = left_inc_PID.output;
@@ -174,7 +177,6 @@ void TIM7_IRQHandler(void)
         info[10] = Dist_right;
         info[11] = Dist_left;
 
-        current_yaw = Read_Yaw();
         //        chassis_ahead(20, 20);
         // chassis_rotate(ori_target_Yaw);
         //        chassis_run(5, ori_target_Yaw);

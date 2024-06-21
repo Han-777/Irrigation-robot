@@ -55,3 +55,8 @@
 ..\obj\run.o: ..\module\lidar\lidar.h
 ..\obj\run.o: ..\module\gray\gray.h
 ..\obj\run.o: ..\module\openmv\openmv.h
+..\obj\run.o: ..\application\arm\arm.h
+..\obj\run.o: ..\module\servo\servo.h
+..\obj\run.o: .\run\run.h
+..\obj\run.o: ..\module\photoelectric\photoelectric.h
+..\obj\run.o: ..\module\bluetooth\bluetooth.h

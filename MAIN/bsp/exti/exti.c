@@ -1,88 +1,22 @@
 #include "exti.h"
 #include "run.h"
+
 /*///////////////////////////////////////////////////////////////////////////////
 外部中断用来控制左右侧的光电传感器
 ///////////////////////////////////////////////////////////////////////////////*/
 /*****
 4月25新加
 ******/
-// for pe
-void EXTInterruppt_Mode(void)
-{
-	EXTI_InitTypeDef EXTI_InitStructure;
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE); // 使能SYSCFG时钟,在用到外部中断时一定要用到
+int R_r = 0;	// 用来判断在主函数里面是否要浇水,右
+int L_l = 0;	// 用来判断在主函数里面是否要浇水，左
+int Flag_L = 0; // 用来判断是左边算左激光测试后舵机所抬角度
+int Flag_R = 0;
+int left_water_flag = 0, right_water_flag = 0; // water start flag
 
-	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOG, EXTI_PinSource10); // 光电
-	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOG, EXTI_PinSource11); // 光电
-	EXTI_DeInit();
-
-	// gray_GPIO_Init();
-	// photoelectric_GPIO_Init();
-
-	EXTI_InitStructure.EXTI_Line = EXTI_Line10;
-	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
-	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
-	EXTI_Init(&EXTI_InitStructure);
-
-	EXTI_InitStructure.EXTI_Line = EXTI_Line11;
-	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
-	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
-	EXTI_Init(&EXTI_InitStructure);
-
-	EXTI_Init(&EXTI_InitStructure);
-}
-
-void EXTI_NVIC_Configuration(void)
-{
-	EXTInterruppt_Mode();
-	NVIC_InitTypeDef NVIC_InitStructure;
-	// 光电
-	NVIC_InitStructure.NVIC_IRQChannel = EXTI15_10_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x00; // 抢占优先级0
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x00;		 // 子优先级2
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;				 // 使能外部中断通道
-	NVIC_Init(&NVIC_InitStructure);								 // 配置
-																 // 线
-}
-void NVIC_Configuration_Close(void)
-{
-	NVIC_InitTypeDef NVIC_InitStructure;
-	EXTI_InitTypeDef EXTI_InitStructure;
-
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, DISABLE); // 使能SYSCFG时钟,在用到外部中断时一定要用到
-
-	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOG, EXTI_PinSource10);
-	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOG, EXTI_PinSource11);
-	EXTI_DeInit();
-
-	//	Line_Init();
-	//	GuanDian_Init();
-
-	EXTI_InitStructure.EXTI_Line = EXTI_Line10;
-	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
-	EXTI_InitStructure.EXTI_LineCmd = DISABLE;
-	EXTI_Init(&EXTI_InitStructure);
-
-	EXTI_InitStructure.EXTI_Line = EXTI_Line11;
-	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
-	EXTI_InitStructure.EXTI_LineCmd = DISABLE;
-	EXTI_Init(&EXTI_InitStructure);
-
-	// 光电
-	NVIC_InitStructure.NVIC_IRQChannel = EXTI15_10_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x00; // 抢占优先级0
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x00;		 // 子优先级2
-	NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE;			 // 使能外部中断通道
-	NVIC_Init(&NVIC_InitStructure);								 // 配置
-																 // 线
-}
 //////////////////////////
 void PE_EXTI_Init(void) // for cross_cnt = 2/4/6
 {
+	static u8 temp_water_cnt = 0;
 	NVIC_InitTypeDef NVIC_InitStructure;
 	EXTI_InitTypeDef EXTI_InitStructure;
 
@@ -94,17 +28,42 @@ void PE_EXTI_Init(void) // for cross_cnt = 2/4/6
 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOG, EXTI_PinSource11);
 	EXTI_DeInit();
 
-	EXTI_InitStructure.EXTI_Line = EXTI_Line10 | EXTI_Line11;
-	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
-	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
-	EXTI_Init(&EXTI_InitStructure);
-
-	// EXTI_InitStructure.EXTI_Line = EXTI_Line11;
-	// EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-	// EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
-	// EXTI_InitStructure.EXTI_LineCmd = ENABLE;
-	// EXTI_Init(&EXTI_InitStructure);
+	if (water_finish()) // D区前, 浇水计数两侧后PE全开
+	{
+		temp_water_cnt = 0;
+		left_water_flag = 0;
+		right_water_flag = 0;
+		EXTI_InitStructure.EXTI_Line = EXTI_Line10 | EXTI_Line11;
+		EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+		EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
+		EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+		EXTI_Init(&EXTI_InitStructure);
+	}
+	else
+	{
+		if (water_finish_structure.right_water_finish) // 右侧浇水结束后只开左边光电
+		{
+			++temp_water_cnt;
+			right_water_flag = 0; 
+			water_finish_structure.right_water_finish = 0;
+			EXTI_InitStructure.EXTI_Line = EXTI_Line10;
+			EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+			EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
+			EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+			EXTI_Init(&EXTI_InitStructure);
+		}
+		if (water_finish_structure.left_water_finish) // 左侧浇水后开右侧光电
+		{
+			++temp_water_cnt;
+			left_water_flag = 0;
+			water_finish_structure.left_water_finish = 0;
+			EXTI_InitStructure.EXTI_Line = EXTI_Line11;
+			EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+			EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
+			EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+			EXTI_Init(&EXTI_InitStructure);
+		}
+	}
 
 	NVIC_InitStructure.NVIC_IRQChannel = EXTI15_10_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x00; // 抢占优先级0
@@ -136,20 +95,6 @@ void PE_EXTI_Close(void)
 	NVIC_Init(&NVIC_InitStructure);								 // 配置
 }
 
-// int Flower_Count=0;//计一侧花盆数
-int R_r = 0;	// 用来判断在主函数里面是否要浇水,右
-int L_l = 0;	// 用来判断在主函数里面是否要浇水，左
-int Flag_L = 0; // 用来判断是左边算左激光测试后舵机所抬角度
-int Flag_R = 0;
-int err = 0;
-int left_water_flag = 0, right_water_flag = 0; // water start flag
-// int N_Flag = 0;
-// float NEW_Target_Yaw = 0;
-// float target_Yaw = 0;
-float Err_Set = 90;
-// int k=-1;
-int k = 0;
-
 /**
  * @brief  在中断里给浇水标志位
  *
@@ -162,21 +107,22 @@ void EXTI15_10_IRQHandler(void)
 {
 	if ((EXTI_GetITStatus(EXTI_Line11) == SET) || (EXTI_GetITStatus(EXTI_Line10) == SET))
 	{
-		if (cross_cnt == 0)
+		if (cross_cnt == 0) // A
 		{
 			if (EXTI_GetITStatus(EXTI_Line10) == SET) // left hand side
 			{
-				delay_ms(50);
+//				delay_ms(50);
 				TIM7_Close();
 				Car_stop();
 				delay_ms(50);
 				left_water_flag = 1;
 				right_water_flag = 1;
-				EXTI_ClearITPendingBit(EXTI_Line10);
-				EXTI_ClearITPendingBit(EXTI_Line11);
+				// EXTI_ClearITPendingBit(EXTI_Line10);
+				// EXTI_ClearITPendingBit(EXTI_Line11);
+				PE_EXTI_Close();
 			}
 		}
-		else if (cross_cnt == 2)
+		else if (cross_cnt == 2) // B
 		{
 			if (EXTI_GetITStatus(EXTI_Line11) == SET) // right hand side
 			{
@@ -185,8 +131,9 @@ void EXTI15_10_IRQHandler(void)
 				delay_ms(50);
 				left_water_flag = 1;
 				right_water_flag = 1;
-				EXTI_ClearITPendingBit(EXTI_Line10);
-				EXTI_ClearITPendingBit(EXTI_Line11);
+				// EXTI_ClearITPendingBit(EXTI_Line10);
+				// EXTI_ClearITPendingBit(EXTI_Line11);
+				PE_EXTI_Close();
 			}
 		}
 		else if ((cross_cnt >= 3 && cross_cnt <= 7)) // C / D
@@ -198,18 +145,21 @@ void EXTI15_10_IRQHandler(void)
 			{
 				left_water_flag = 1;
 				right_water_flag = 1;
-				EXTI_ClearITPendingBit(EXTI_Line11);
-				EXTI_ClearITPendingBit(EXTI_Line10);
+				// EXTI_ClearITPendingBit(EXTI_Line11);
+				// EXTI_ClearITPendingBit(EXTI_Line10);
+				PE_EXTI_Close();
 			}
 			else if ((EXTI_GetITStatus(EXTI_Line11) == SET) && (EXTI_GetITStatus(EXTI_Line10) == RESET))
 			{
 				right_water_flag = 1;
-				EXTI_ClearITPendingBit(EXTI_Line11);
+				// EXTI_ClearITPendingBit(EXTI_Line11);
+				PE_EXTI_Close();
 			}
 			else if ((EXTI_GetITStatus(EXTI_Line11) == RESET) && (EXTI_GetITStatus(EXTI_Line10) == SET))
 			{
 				left_water_flag = 1;
-				EXTI_ClearITPendingBit(EXTI_Line10);
+				// EXTI_ClearITPendingBit(EXTI_Line10);
+				PE_EXTI_Close();
 			}
 		}
 		// else

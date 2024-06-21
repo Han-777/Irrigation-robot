@@ -56,3 +56,8 @@
 ..\obj\exti.o: ..\module\lidar\lidar.h
 ..\obj\exti.o: ..\module\gray\gray.h
 ..\obj\exti.o: ..\module\openmv\openmv.h
+..\obj\exti.o: ..\application\arm\arm.h
+..\obj\exti.o: ..\module\servo\servo.h
+..\obj\exti.o: .\run\run.h
+..\obj\exti.o: ..\module\photoelectric\photoelectric.h
+..\obj\exti.o: ..\module\bluetooth\bluetooth.h

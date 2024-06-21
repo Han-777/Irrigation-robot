@@ -1,19 +1,20 @@
 #include "run.h"
 
 // u8 color_Index = 0; // 车上的数量
-//const float slow_move_speed ;
+// const float slow_move_speed ;
 
 u8 get_Itr(void);
 //=================== begin checking =====================:
 int data_check(void) // 检查数据接收是否成功
 {
     // 蓝牙标志位 + buffer 标志位（帧尾）
+    PE_EXTI_Init();
     return 1;
 }
 
 ////--------------- TIME CONST --------------//
 const u16 GO_PREVENT_MISID_TIME = 200; // go in case of misidentification time
-const u16 GO_HOME_TIME = 500; 
+const u16 GO_HOME_TIME = 500;
 ////--------------- TEST --------------//
 //// int test1(void)
 //// {
@@ -35,7 +36,12 @@ const u16 GO_HOME_TIME = 500;
 //// }
 
 //=================== gray control =====================:
-int plant_cnt = 0; // for 5-7 / 11-13 / 17-30 | cross_cnt(N_flag)
+int plant_cnt = 0; // for 5-7 / 11-13 / 17-30 | cross_cnt   (N_flag)
+regionEnum region = home;
+int get_region(void)
+{
+    return region;
+}
 /**
  * @brief  finish watering for one region (A, B, C, D)
  * 在run函数里放在cross前面
@@ -44,8 +50,10 @@ int plant_cnt = 0; // for 5-7 / 11-13 / 17-30 | cross_cnt(N_flag)
  */
 int region_finish(void)
 {
-    if ((plant_cnt >= 5 && plant_cnt < 7) || (plant_cnt >= 11 && plant_cnt < 13) || (plant_cnt >= 17 && plant_cnt < 30)) // 21 in total
+    if (((plant_cnt >= 6 && plant_cnt < 7) && cross_cnt < 2) || (cross_cnt < 4 && (plant_cnt >= 11 && plant_cnt < 13)) || (cross_cnt < 6 && plant_cnt >= 17 && plant_cnt <= 25) || (plant_cnt == 30 && cross_cnt == 6)) // 21 in total
     {
+        plant_cnt = (cross_cnt <= 2) ? 6 : ((cross_cnt <= 4) ? 12 : 24);
+        region = (cross_cnt < 2) ? A : ((cross_cnt < 4) ? B : ((cross_cnt < 6) ? C : D));
         return 1; // 2/4/6 -> 0
     }
     return 0;
@@ -81,13 +89,29 @@ int _run_(void)
     }
     else
     {
-        if (left_water_flag || right_water_flag) // 得到浇水标志位
+        // switch (get_region())
+        // {
+        // case A:
+        // case B:
+        //     break;
+        // case C:
+        // case D:
+        //     break;
+        // case beg:
+        // case home:
+        //     break;
+        // }
+
+        if (!water_finish()) // 得到浇水标志位
         {
+//            TIM7_Close();
             // water: arm_watering(); （函数负责清楚左/右浇水标志位，如果两标志位都无则给TIM7）
+            arm_water_task();
         }
         else
         {
-            chassis_run(30, target_Yaw); // 需要一个函数区分区域
+            TIM7_Init(1000 - 1, 840 - 1);
+            chassis_run(27, target_Yaw); // 需要一个函数区分区域
         }
         return 0;
     }
@@ -106,9 +130,7 @@ int cross_to_cross(void)
     return 0;
 }
 
-
 ///*============color operation=========================*/
-
 
 int end_return_home(void)
 {
@@ -131,7 +153,7 @@ int (*operation_sequence[])(void) = {
     _run_, cross_action, cross_to_cross, cross_action, // C区
     _run_,                                             // D区
     end_return_home};                                  // D finish and go home
-u8 max_run_itr = 5;
+u8 max_run_itr = 15;
 
 // int(*operation_sequence[])(void) = {test1, test2, test3};
 // u8 max_run_itr = 3;

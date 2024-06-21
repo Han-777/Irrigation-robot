@@ -2,7 +2,7 @@
 
 void servo_Init_All()
 {
-	Servo_Pitch_PWM_Init(2000 - 1, 840 - 1);
+	Servo_Pitch_PWM_Init(2000 - 1, 840 - 1); // 2000 - 20ms
 	Servo_Yaw_PWM_Init(2000 - 1, 840 - 1);
 }
 
@@ -22,18 +22,29 @@ void ServoControl(servoName name, uint16_t currentAngle, uint16_t targetAngle, u
 {
 	if (name & pitch_servo)
 	{
-		for (int angle = currentAngle; angle < targetAngle; ++angle)
+		for (; currentAngle < targetAngle; ++currentAngle)
 		{
-			Servo_Pitch_Control(angle);
-			delay_ms(delay_time);
+			Servo_Pitch_Control(currentAngle);
+			delay_ms(delay_time / abs(targetAngle - currentAngle)); // 越远越快，越近越慢
+		}
+		for (; currentAngle > targetAngle; --currentAngle)
+		{
+			Servo_Pitch_Control(currentAngle);
+			delay_ms(delay_time / abs(targetAngle - currentAngle)); // 越远越快，越近越慢
 		}
 	}
+
 	else if (name & yaw_servo)
 	{
-		for (int angle = currentAngle; angle < targetAngle; ++angle)
+		for (; currentAngle < targetAngle; ++currentAngle)
 		{
-			Servo_Yaw_Control(angle);
-			delay_ms(delay_time);
+			Servo_Yaw_Control(currentAngle);
+			delay_ms(delay_time / abs(targetAngle - currentAngle)); // 越远越快，越近越慢
+		}
+		for (; currentAngle > targetAngle; --currentAngle)
+		{
+			Servo_Yaw_Control(currentAngle);
+			delay_ms(delay_time / abs(targetAngle - currentAngle)); // 越远越快，越近越慢
 		}
 	}
 }
@@ -42,8 +53,8 @@ void ServoControl(servoName name, uint16_t currentAngle, uint16_t targetAngle, u
 void ServoMove(uint16_t angel1, uint16_t angel2) // (in 500us - 2500us)
 {
 	// arr = 2000 ~ 20ms ==>> (0.5ms - 2.5ms)*100 = 50 - 250
-	Servo_Pitch_Control(angel1 / 180 * 200 + 50);
-	Servo_Yaw_Control(angel2 / 180 * 200 + 50);
+	Servo_Pitch_Control(angel1 / 180 * 200 + 50); // 40 - 260
+	Servo_Yaw_Control(angel2 / 180 * 200 + 50);	  // 95 - 295
 }
 
 // Servo_PWM_Init(2000,3360/2);   //20ms, 0.5ms-- -135度,1.0ms-- -67度,1.5ms-- 0度,2.0-- 67度,2.5--135度					168Mhz/1000/3360

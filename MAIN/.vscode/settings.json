@@ -32,6 +32,8 @@
     "math.h": "c",
     "task.h": "c",
     "lidar.h": "c",
-    "run.h": "c"
+    "run.h": "c",
+    "arm.h": "c",
+    "photoelectric.h": "c"
   }
 }

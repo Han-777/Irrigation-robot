@@ -365,7 +365,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CORE;..\SYSTEM\delay;..\SYSTEM\sys;..\USER;..\FWLIB\inc;..\bsp\tim;..\bsp\gpio;..\application\chassis;..\module\motor;..\bsp\iic;..\module\encoder;..\module\gray;..\bsp\usart;..\module\gyro;..\module\servo;..\bsp\bluetooth;..\module\voice;..\module\bluetooth;..\module\lcd;..\module\lidar;..\module\mp3;..\module\openmv;..\module\pid;..\SYSTEM\exit;..\SYSTEM\led;..\module\key_3x3;..\module\photoelectric;..\bsp\exti;..\application\task;.\run</IncludePath>
+              <IncludePath>..\CORE;..\SYSTEM\delay;..\SYSTEM\sys;..\USER;..\FWLIB\inc;..\bsp\tim;..\bsp\gpio;..\application\chassis;..\module\motor;..\bsp\iic;..\module\encoder;..\module\gray;..\bsp\usart;..\module\gyro;..\module\servo;..\bsp\bluetooth;..\module\voice;..\module\bluetooth;..\module\lcd;..\module\lidar;..\module\mp3;..\module\openmv;..\module\pid;..\SYSTEM\exit;..\SYSTEM\led;..\module\key_3x3;..\module\photoelectric;..\bsp\exti;..\application\task;.\run;..\application\arm</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -867,6 +867,16 @@
               <FileName>task.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\application\task\task.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\arm\arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\application\arm\arm.h</FilePath>
             </File>
           </Files>
         </Group>

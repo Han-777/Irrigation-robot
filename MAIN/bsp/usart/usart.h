@@ -1,10 +1,10 @@
 #ifndef __USRATX_H
-#define __USRATX_H 
+#define __USRATX_H
 
 #include "sys.h"
 
 /**************************************************************************
-						Bluetooth 初始化 USART1 
+						Bluetooth 初始化 USART1
 **************************************************************************/
 
 void USART1_Init(u32 bound);
@@ -22,7 +22,7 @@ void TFmini_left_USART_Close(uint32_t bound);
 **************************************************************************/
 
 void OpenMV_USART_Init(u32 bound);
-void OpenMV_USART_Close(u32 bound);
+void OpenMV_USART_Close(void);
 
 /**************************************************************************
 						TFmini_Right 初始化 USART4
@@ -30,7 +30,6 @@ void OpenMV_USART_Close(u32 bound);
 
 void TFmini_right_USART_Init(uint32_t bound);
 void TFmini_right_USART_Close(uint32_t bound);
-
 
 /**************************************************************************
 						   陀螺仪初始化 USART5
@@ -47,4 +46,3 @@ void gyro_USART_Close(void);
 // void gyro_USART_Close(void);
 
 #endif
-

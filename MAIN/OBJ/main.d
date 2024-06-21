@@ -54,3 +54,9 @@
 ..\obj\main.o: ..\module\encoder\encoder.h
 ..\obj\main.o: ..\module\lidar\lidar.h
 ..\obj\main.o: ..\module\gray\gray.h
+..\obj\main.o: .\run\run.h
+..\obj\main.o: ..\module\openmv\openmv.h
+..\obj\main.o: ..\application\arm\arm.h
+..\obj\main.o: .\run\run.h
+..\obj\main.o: ..\module\photoelectric\photoelectric.h
+..\obj\main.o: ..\module\bluetooth\bluetooth.h

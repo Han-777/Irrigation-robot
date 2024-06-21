@@ -89,21 +89,20 @@ void USART3_IRQHandler(void)
 		}
 	}
 }
+
+colorIdx water_times;
 // int linshi[6]={0x01,0x02,0x01,0x03,0x03,0x02};
-int Openmv_gain()
+int get_OpenMV(void)
 {
-	//	static int jishu1;
-	//
-	//	return linshi[jishu1++];
 	delay_init(168);
 	USART_Cmd(USART3, ENABLE);
-	if (color == 0x01)
-		return 0x03; //?? ????
-	else if (color == 0x02)
-		return 0x01; //?? ????
-	else if (color == 0x04)
-		return 0x02; //?? ????
+	if (color == MILD_DROUGHT)
+		return MILD_DROUGHT; //?? ????
+	else if (color == GENERL_DROUGHT)
+		return GENERL_DROUGHT; //?? ????
+	else if (color == SEVERE_DROUGHT)
+		return SEVERE_DROUGHT; //?? ????
 	else
-		return 0x01;
+		return MILD_DROUGHT;
 	USART_Cmd(USART3, DISABLE);
 }

@@ -6,44 +6,21 @@
 #include "openmv.h"
 #include "exti.h"
 #include "sys.h"
+#include "arm.h"
+
+typedef enum
+{
+	A,
+	B,
+	C,
+	D,
+	home
+} regionEnum;
+
 // extern u8 color_Index;
 extern int region_finish_flag, cross_cnt, plant_cnt;
-
-typedef enum
-{
-	qrcodeMode = 0,
-	objMode,
-	roughMode,
-	depositMode,
-	backObjMode,
-	objMode2,
-	depositMode2,
-	homeMode
-} runState;
-
-typedef enum
-{
-	back,
-	changeDir,
-	object_Pos,
-	corner1_Pos,
-	corner2_Pos,
-	corner3_Pos,
-	deposit_Up_Pos,
-	deposit_Down_Pos,
-	home_Pos
-} positionDes;
-
-typedef enum
-{
-	red = 0xA0,
-	green,
-	blue,
-	yellow,
-	black // black indecate nothing
-} colorIndex;
-
+extern regionEnum region;
+int get_region(void);
 void Run(void);
 
-extern colorIndex colorIdx;
 #endif

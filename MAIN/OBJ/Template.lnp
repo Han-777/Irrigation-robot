@@ -63,6 +63,7 @@
 "..\obj\photoelectric.o"
 "..\obj\chassis.o"
 "..\obj\task.o"
+"..\obj\arm.o"
 --library_type=microlib --strict --scatter "..\OBJ\Template.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

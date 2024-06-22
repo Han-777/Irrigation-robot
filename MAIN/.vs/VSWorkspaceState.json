@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\application",
+    "\\application\\chassis",
+    "\\bsp",
+    "\\bsp\\exti",
+    "\\module",
+    "\\module\\servo",
+    "\\README",
+    "\\SYSTEM",
+    "\\USER",
+    "\\USER\\run"
+  ],
+  "SelectedNode": "\\module\\servo\\servo.c",
+  "PreviewInSolutionExplorer": false
+}

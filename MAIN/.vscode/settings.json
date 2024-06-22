@@ -26,6 +26,14 @@
     "lcd.h": "c",
     "stdlib.h": "c",
     "control.h": "c",
-    "pid.h": "c"
+    "pid.h": "c",
+    "led.h": "c",
+    "exit.h": "c",
+    "math.h": "c",
+    "task.h": "c",
+    "lidar.h": "c",
+    "run.h": "c",
+    "arm.h": "c",
+    "photoelectric.h": "c"
   }
 }

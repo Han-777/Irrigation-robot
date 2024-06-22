@@ -2,6 +2,7 @@
 #define __GPIO_H
 
 #include "sys.h"
+#include "openmv.h"
 
 #define BuadRate_9600 104
 

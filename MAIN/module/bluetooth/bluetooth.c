@@ -33,7 +33,6 @@ void USART1_IRQHandler(void) //??1??????
 	static u8 lRxFlag1 = 0;
 	if (USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
 	{
-		//				LED1=0;
 		USART_ClearITPendingBit(USART1, USART_IT_RXNE);
 		com_data = USART_ReceiveData(USART1);
 		if (lRxState == 0 && com_data == 0x2C)

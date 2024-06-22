@@ -1,4 +1,4 @@
-#ifndef	__MOTOR_H__
+#ifndef __MOTOR_H__
 #define __MOTOR_H__
 
 #include "sys.h"
@@ -13,11 +13,10 @@ void Motor_Init(void);
 // float Abs(float m);
 // float Max(float m,float n);
 // float Min(float m,float n);
-void Car_Load(int L,int R);
+void Car_Load(int L, int R);
 void Car_stop(void);
-void Turn_Left_90_Angles(void);
-void Turn_Right_90_Angles(void);
-//void Protect(void);
+// void Turn_Left_90_Angles(void);
+// void Turn_Right_90_Angles(void);
+// void Protect(void);
 
 #endif
-

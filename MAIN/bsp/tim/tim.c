@@ -11,7 +11,7 @@
 
 // 定时器溢出时间计算方法:Tout=((arr+1)*(psc+1))/Ft us.
 // Ft=84M定时器工作频率,单位:Mhz
-void TIM7_Int_Init(u16 arr, u16 psc)
+void TIM7_Init(u16 arr, u16 psc)
 {
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;

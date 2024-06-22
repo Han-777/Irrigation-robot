@@ -1,7 +1,7 @@
 #include "gpio.h"
 
 /**************************************************************************
-						电机控制初始化GPIO
+						鐢垫満鎺у埗鍒濓拷?锟藉寲GPIO
 **************************************************************************/
 void MOTOR_GPIO_Init(void)
 {
@@ -28,7 +28,7 @@ void MOTOR_GPIO_Init(void)
 }
 
 /**************************************************************************
-						   光电初始化GPIO
+						   鍏夌數鍒濓拷?锟藉寲GPIO
 **************************************************************************/
 void photoelectricity_GPIO_Init(void)
 {
@@ -43,7 +43,7 @@ void photoelectricity_GPIO_Init(void)
 }
 
 /**************************************************************************
-						   灰度初始化GPIO
+						   鐏板害鍒濓拷?锟藉寲GPIO
 **************************************************************************/
 
 void gray_GPIO_Init(void)
@@ -95,32 +95,32 @@ void gray_GPIO_Init(void)
 	GPIO_Init(GPIOD, &GPIO_InitStruct); //
 }
 
-// //配置光电传感器
+// //閰嶇疆鍏夌數浼犳劅锟�?
 // GPIO_InitStructure.GPIO_Pin=GPIO_Pin_3 ;
 // GPIO_InitStructure.GPIO_Mode=GPIO_Mode_IN;
 // GPIO_InitStructure.GPIO_Speed=GPIO_Speed_100MHz;
 // GPIO_InitStructure.GPIO_OType=GPIO_OType_PP;
 // GPIO_InitStructure.GPIO_PuPd=GPIO_PuPd_UP;
 // GPIO_Init(GPIOD,&GPIO_InitStructure);
-// //配置继电器PB12
+// //閰嶇疆缁х數鍣≒B12
 // GPIO_InitStructure.GPIO_Pin=GPIO_Pin_4;
 // GPIO_InitStructure.GPIO_Mode=GPIO_Mode_OUT;
 // GPIO_InitStructure.GPIO_Speed=GPIO_Speed_100MHz;
 // GPIO_InitStructure.GPIO_OType=GPIO_OType_PP;
-// GPIO_InitStructure.GPIO_PuPd=GPIO_PuPd_DOWN;   //高电平触发
+// GPIO_InitStructure.GPIO_PuPd=GPIO_PuPd_DOWN;   //楂樼數骞宠Е锟�?
 // GPIO_Init(GPIOB,&GPIO_InitStructure);
 // GPIO_ResetBits(GPIOB, GPIO_Pin_4);
-// //配置继电器PF13
+// //閰嶇疆缁х數鍣≒F13
 // GPIO_InitStructure.GPIO_Pin=GPIO_Pin_12;
 // GPIO_InitStructure.GPIO_Mode=GPIO_Mode_OUT;
 // GPIO_InitStructure.GPIO_Speed=GPIO_Speed_100MHz;
 // GPIO_InitStructure.GPIO_OType=GPIO_OType_PP;
-// GPIO_InitStructure.GPIO_PuPd=GPIO_PuPd_DOWN;   //高电平触发
+// GPIO_InitStructure.GPIO_PuPd=GPIO_PuPd_DOWN;   //楂樼數骞宠Е锟�?
 // GPIO_Init(GPIOB,&GPIO_InitStructure);
 // GPIO_ResetBits(GPIOB, GPIO_Pin_12);
 
 /**************************************************************************
-						   Key初始化GPIO
+						   Key鍒濓拷?锟藉寲GPIO
 **************************************************************************/
 void Key_GPIO_Init()
 {
@@ -146,25 +146,81 @@ void Key_GPIO_Init()
 }
 
 /**************************************************************************
-						   语音播报 初始化GPIO
+						   锟�?闊虫挱锟�? 鍒濓拷?锟藉寲GPIO
 **************************************************************************/
 
 void voice_Config(void)
 {
-	GPIO_InitTypeDef  GPIO_InitStruct;
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD|RCC_AHB1Periph_GPIOG,ENABLE);
-	GPIO_InitStruct.GPIO_Pin=TX_PIN;
-	GPIO_InitStruct.GPIO_Mode=GPIO_Mode_OUT;
-	GPIO_InitStruct.GPIO_Speed=GPIO_Speed_100MHz;
-	GPIO_InitStruct.GPIO_OType=GPIO_OType_PP;
-	GPIO_InitStruct.GPIO_PuPd=GPIO_PuPd_UP;	
-	GPIO_Init(GPIOD,&GPIO_InitStruct);
-	GPIO_SetBits(TX_PORT, TX_PIN);	
-	
-	GPIO_InitStruct.GPIO_Pin=RX_PIN;
-	GPIO_InitStruct.GPIO_Mode=GPIO_Mode_IN;
-	GPIO_InitStruct.GPIO_Speed=GPIO_Speed_100MHz;
-	GPIO_InitStruct.GPIO_OType=GPIO_OType_PP;
-	GPIO_InitStruct.GPIO_PuPd=GPIO_PuPd_UP;	
-	GPIO_Init(GPIOG,&GPIO_InitStruct);
+	GPIO_InitTypeDef GPIO_InitStruct;
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD | RCC_AHB1Periph_GPIOG, ENABLE);
+	GPIO_InitStruct.GPIO_Pin = TX_PIN;
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
+	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
+	GPIO_Init(GPIOD, &GPIO_InitStruct);
+	GPIO_SetBits(TX_PORT, TX_PIN);
+
+	GPIO_InitStruct.GPIO_Pin = RX_PIN;
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN;
+	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
+	GPIO_Init(GPIOG, &GPIO_InitStruct);
+}
+
+/**************************************************************************
+				photoelectric 鍏夌數x3 鍒濓拷?锟藉寲GPIO
+**************************************************************************/
+
+// 鍏夌數
+void photoelectric_GPIO_Init(void)
+{
+	GPIO_InitTypeDef GPIO_InitStruct;
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD | RCC_AHB1Periph_GPIOG, ENABLE);
+
+	// GPIO_InitStruct.GPIO_Mode=GPIO_Mode_IN;
+	// GPIO_InitStruct.GPIO_OType=GPIO_OType_PP;
+	// GPIO_InitStruct.GPIO_Pin=GPIO_Pin_1;
+	// GPIO_InitStruct.GPIO_PuPd=GPIO_PuPd_UP;
+	// GPIO_InitStruct.GPIO_Speed=GPIO_Speed_100MHz;
+	// GPIO_Init(GPIOC,&GPIO_InitStruct);
+
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN;
+	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_3;
+	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
+	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+	// GPIO_InitStruct.GPIO_Mode=GPIO_Mode_IN;
+	// GPIO_InitStruct.GPIO_OType=GPIO_OType_PP;
+	// GPIO_InitStruct.GPIO_Pin=GPIO_Pin_3|GPIO_Pin_2|GPIO_Pin_5|GPIO_Pin_6;
+	// GPIO_InitStruct.GPIO_PuPd=GPIO_PuPd_UP;
+	// GPIO_InitStruct.GPIO_Speed=GPIO_Speed_100MHz;
+	// GPIO_Init(GPIOE,&GPIO_InitStruct);
+
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN;
+	GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_10 | GPIO_Pin_11;
+	GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
+	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_Init(GPIOG, &GPIO_InitStruct);
+}
+
+/**************************************************************************
+								水泵GPIO
+**************************************************************************/
+
+void pump_GPIO_Init(void)
+{
+	GPIO_InitTypeDef GPIO_InitStructure;
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_DOWN; // 楂樼數骞宠Е鍙�
+	GPIO_Init(GPIOB, &GPIO_InitStructure);
+	GPIO_ResetBits(GPIOB, GPIO_Pin_4);
 }

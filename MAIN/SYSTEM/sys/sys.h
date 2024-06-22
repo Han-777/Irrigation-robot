@@ -23,6 +23,7 @@
 #include "iic.h"
 #include "usart.h"
 #include "math.h"
+#include "exti.h"
 // #include "led.h"
 // #include "delay.h"
 // #include "timer.h"

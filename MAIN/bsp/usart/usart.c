@@ -216,7 +216,7 @@ void OpenMV_USART_Init(u32 bound)
 	USART_Cmd(USART3, ENABLE);
 }
 
-void OpenMV_USART_Close(u32 bound)
+void OpenMV_USART_Close(void)
 {
 	// PB10 TX    //  PB11   RX   USART3
 	GPIO_InitTypeDef GPIO_InitStructure;
@@ -236,7 +236,7 @@ void OpenMV_USART_Close(u32 bound)
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-	USART_InitStructure.USART_BaudRate = bound;
+	USART_InitStructure.USART_BaudRate = 0;
 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
 	USART_InitStructure.USART_StopBits = USART_StopBits_1;
 	USART_InitStructure.USART_Parity = USART_Parity_No;

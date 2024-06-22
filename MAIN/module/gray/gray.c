@@ -4,14 +4,14 @@
 /********其他情况要一一添加进去***************/
 
 ///******************/
-//int Err=0;
-//int Pwm_R=0;
-//int Pwm_L=0;
-//int Err_l=0;
-//float Line_Kp=0;
-//float Line_Kd=0;
+// int Err=0;
+// int Pwm_R=0;
+// int Pwm_L=0;
+// int Err_l=0;
+// float Line_Kp=0;
+// float Line_Kd=0;
 ///******************/
-//void Line_Revise(void)
+// void Line_Revise(void)
 //{
 //	Err=Err_Line();
 //	Pwm_R=Line_Kp*Err+Line_Kd*(Err-Err_l);
@@ -19,65 +19,91 @@
 //	Err_l=Err;
 //	Car_Load(Pwm_L,Pwm_R);
 //	delay_ms(25);//这个时间可以变
-//}
-int Get_Count(void)
+// }
+const int gray_threshold = 7;
+int cross_cnt = 0;
+int cnt = 0;
+int get_gray_cnt(void)
 {
-	int i=0;
-	if(OUT0==0)
+	int i = 0;
+	if (OUT0 == 0)
 	{
 		i++;
 	}
-	if(OUT1==0)
-	{
-		i=i+1;
-	}
-	if(OUT2==0)
+	if (OUT1 == 0)
 	{
 		i++;
 	}
-	if(OUT3==0)
+	if (OUT2 == 0)
 	{
 		i++;
 	}
-	if(OUT4==0)
+	if (OUT3 == 0)
 	{
 		i++;
 	}
-	if(OUT5==0)
+	if (OUT4 == 0)
 	{
 		i++;
 	}
-	if(OUT6==0)
+	if (OUT5 == 0)
 	{
 		i++;
 	}
-	if(OUT7==1) // 1 -> 0
+	if (OUT6 == 0)
 	{
 		i++;
 	}
-	if(OUT8==1)
+	if (OUT7 == 0) // 1 -> 0
 	{
 		i++;
 	}
-	if(OUT9==1)
+	if (OUT8 == 0)
 	{
 		i++;
 	}
-	if(OUT10==1)
+	if (OUT9 == 0)
 	{
 		i++;
 	}
-	if(OUT11==1)
+	if (OUT10 == 0)
 	{
 		i++;
 	}
-	if(OUT12==1)
+	if (OUT11 == 0)
 	{
 		i++;
 	}
-	if(OUT13==1)
+	if (OUT12 == 0)
 	{
 		i++;
 	}
+	if (OUT13 == 0)
+	{
+		i++;
+	}
+	cnt = i;
 	return i;
+}
+
+// this function should followed by next operation, IT CAN NOT BE CALLED MULTIPLE TIMES!!!
+int get_cross_flag(void)
+{
+	if ((OUT0 || OUT1 || OUT2 || OUT3 || OUT4 || OUT5 || OUT6 || OUT7 || OUT8 || OUT9 || OUT10 || OUT11 || OUT12 || OUT13))
+	{
+		if (get_gray_cnt() >= gray_threshold)
+		{
+			cross_cnt++;
+			if (cross_cnt == 2 || cross_cnt == 4 || cross_cnt == 6)
+			{
+				clockwise_rotate_flag += ((cross_cnt == 4) ? -1 : 1);
+			}
+			else if (cross_cnt == 1 || cross_cnt == 3 || cross_cnt == 5)
+			{
+				clockwise_rotate_flag += ((cross_cnt == 3) ? -1 : 1);
+			}
+			return 1;
+		}
+	}
+	return 0;
 }

@@ -1,9 +1,5 @@
 #include "balanceTank.h"
 
-PidObject Pid_roll; // 舵机x,y方向pid结构体
-PidObject Pid_pitch;
-PidObject *(pidobject[]) = {&Pid_roll, &Pid_pitch}; // 舵机结构体指针数组
-
 float pitch, roll, yaw;    // 欧拉角
 short aacx, aacy, aacz;    // 加速度传感器原始数据
 short gyrox, gyroy, gyroz; // 陀螺仪原始数据
@@ -17,72 +13,105 @@ target: 0 degree
 回中角度：test: 100
 pitch: 后正， row: 右正
 */
-PID pitch_pid, roll_pid;
+// PID pitch_pid, roll_pid;
+Increment_PID pitch_inc_pid, roll_inc_pid;
 /*=====================private============================*/
 /*----------------------pid-------------------------*/
-void set_pid(PID *pid, float kp, float ki, float kd, float kiout_lim, float output_lim)
+// void set_pid(PID *pid, float kp, float ki, float kd, float lim_kiout, float lim_output)
+//{
+//     pid->kp = kp;
+//     pid->ki = ki;
+//     pid->kd = kd;
+//     pid->lim_integral = lim_kiout;
+//     pid->lim_output = lim_output;
+// }
+
+// void reset_pid(PID *pid)
+//{
+//     pid->sum_error = 0;
+//     pid->last_error = 0;
+//     pid->output = 0;
+// }
+
+// float pid_calculate(PID *pid, float target, float measure)
+//{
+//     pid->error = target - measure;
+//     pid->sum_error += pid->error;
+
+//    // integral limit
+//    if (pid->enable_lim_sum_error)
+//    {
+//        if (fabs(pid->sum_error) > pid->lim_integral)
+//        {
+//            pid->sum_error = (pid->sum_error > 0) ? pid->lim_integral : -pid->lim_integral;
+//        }
+//    }
+
+//    pid->output = pid->kp * pid->error + pid->ki * pid->sum_error + pid->kd * (pid->error - pid->last_error);
+
+//    // output limit
+//    if (pid->enable_lim_ouput)
+//    {
+//        if (fabs(pid->output) > pid->lim_output)
+//        {
+//            pid->output = (pid->output > 0) ? pid->lim_output : -pid->lim_output;
+//        }
+//    }
+
+//    // 	filtering
+//    if ((pid->last_error > 0 && pid->error < 0) || (pid->last_error < 0 && pid->error > 0))
+//    {
+//        // remove overshoot - works pretty good!
+//        pid->sum_error = 0;
+//    }
+
+//    pid->last_error = pid->error;
+//    return 0;
+//}
+/*----------------------increment_pid-------------------------*/
+void set_increment_pid(Increment_PID *pid, float kp, float ki, float kd, float lim_integral, float lim_output)
 {
     pid->kp = kp;
     pid->ki = ki;
     pid->kd = kd;
-    pid->kiout_lim = kiout_lim;
-    pid->lim_output = output_lim;
-}
-
-void reset_pid(PID *pid)
-{
-    pid->sum_error = 0;
+    pid->lim_integral = lim_integral;
+    pid->lim_output = lim_output;
     pid->last_error = 0;
     pid->last_last_error = 0;
     pid->output = 0;
+    pid->delta_output = 0;
+
+    pid->sum_error = 0; // for test
 }
 
-float pid_calculate(PID *pid, float target, float measure)
+void reset_increment_pid(Increment_PID *pid)
+{
+    pid->last_error = 0;
+    pid->last_last_error = 0;
+    pid->output = 0;
+    pid->delta_output = 0;
+}
+
+float increment_pid_calculate(Increment_PID *pid, float target, float measure)
 {
     pid->error = target - measure;
     pid->sum_error += pid->error;
 
-    pid->kp_output = pid->kp * pid->error;
-    pid->ki_output = pid->ki * pid->sum_error;
-    pid->kd_output = pid->kd * (pid->error - pid->last_error);
+    // pid output calculate
+    pid->delta_output = pid->kp * (pid->error - pid->last_error) + pid->ki * pid->error + pid->kd * (pid->error - 2 * pid->last_error + pid->last_last_error);
 
-    // integral output limit
-    if (fabs(pid->ki_output) > pid->kiout_lim)
-    {
-        if (pid->ki_output > 0)
-        {
-            pid->ki_output = pid->kiout_lim;
-            pid->sum_error = pid->kiout_lim / pid->ki;
-        }
-        else
-        {
-            pid->ki_output = -pid->kiout_lim;
-            pid->sum_error = -pid->kiout_lim / pid->ki;
-        }
-    }
-
-    pid->output = pid->kp_output + pid->ki_output + pid->kd_output;
+    pid->output += pid->delta_output;
     // pid output limit
     if (fabs(pid->output) > pid->lim_output)
     {
-        if (pid->output >= 0)
-            pid->output = pid->lim_output;
-        else
-            pid->output = -pid->lim_output;
+        pid->output = (pid->output > 0) ? pid->lim_output : -pid->lim_output;
     }
 
-    // // 	filtering
-    // if ((pid->last_error > 0 && pid->error < 0) || (pid->last_error < 0 && pid->error > 0))
-    // {
-    // 	// remove overshoot - works pretty good!
-    // 	pid->sum_error = 0;
-    // }
+    pid->last_last_error = pid->last_error;
     pid->last_error = pid->error;
-    return 0;
+
+    return pid->output;
 }
-
-/*----------------------increment_pid-------------------------*/
-
 /*======================public======================*/
 void Control_Init(void)
 {
@@ -96,15 +125,18 @@ void Control_Init(void)
     //    USART2_Init(9600);
     TIM2_Init(999, 719); // 72M / 1000 / 720 = 1000Hz = 10ms (used as timer)
     // pid 初始化
-    set_pid(&pitch_pid, 0.1, 0.00, 0.1, 2, 10);
-    set_pid(&roll_pid, 0.1, 0.00, 0.1, 2, 10);
+    // set_pid(&pitch_pid, 0.1, 0.00, 0.1, 2, 10);
+    // set_pid(&roll_pid, 0.1, 0.00, 0.1, 2, 10);
+    set_increment_pid(&pitch_inc_pid, 0.1, 0, 0.025, 0, 10);
+    set_increment_pid(&roll_inc_pid, 0.1, 0, 0.025, 0, 10);
 }
 
 void Control_loop(void)
 {
-    pid_calculate(&pitch_pid, 0, pitch);
-    pid_calculate(&roll_pid, 0, roll);
-
+    // pid_calculate(&pitch_pid, 0, pitch);
+    // pid_calculate(&roll_pid, 0, roll);
+    increment_pid_calculate(&pitch_inc_pid, 0, pitch);
+    increment_pid_calculate(&roll_inc_pid, 0, roll);
     //	printf("ppppppppppppppppppp-error: %.2f   output: %.2f   sum_error: %.2f \n\r", pitch_pid.error, pitch_pid.output, pitch_pid.sum_error);
     //	printf("rrrrrrrrrrrrrrrrr------error: %.2f   output: %.2f   sum_error: %.2f \n\r", roll_pid.error, roll_pid.output, roll_pid.sum_error);
 
@@ -113,7 +145,9 @@ void Control_loop(void)
 
     // pid to servo
     //	ServoControl(100, 100, 130, 100);  // 平衡
-    ServoControl(110 + 20 * pitch_pid.output, 110 - 20 * roll_pid.output, 110 - 20 * pitch_pid.output, 110 + 20 * roll_pid.output);
+
+    // ServoControl(110 + 12 * pitch_pid.output, 110 - 12 * roll_pid.output, 110 - 12 * pitch_pid.output, 110 + 12 * roll_pid.output);
+    ServoControl(110 + 25 * pitch_inc_pid.output, 110 - 25 * roll_inc_pid.output, 110 - 25 * pitch_inc_pid.output, 110 + 25 * roll_inc_pid.output);
 }
 
 /*=================public(mpu)===================*/

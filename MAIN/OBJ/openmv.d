@@ -43,3 +43,4 @@
 ..\obj\openmv.o: ..\bsp\iic\iic.h
 ..\obj\openmv.o: ..\bsp\usart\usart.h
 ..\obj\openmv.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
+..\obj\openmv.o: ..\bsp\exti\exti.h

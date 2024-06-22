@@ -43,3 +43,4 @@
 ..\obj\lidar.o: ..\bsp\iic\iic.h
 ..\obj\lidar.o: ..\bsp\usart\usart.h
 ..\obj\lidar.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
+..\obj\lidar.o: ..\bsp\exti\exti.h

@@ -1,9 +1,15 @@
-#ifndef __USRATX_H
-#define __USRATX_H
+#ifndef __GYRO_H
+#define __GYRO_H
 
 #include "stdio.h"
 #include "sys.h"
+
 #define PI 3.14159265f
+
+extern float ori_target_Yaw, target_Yaw, current_yaw; // ori: fix, target_Yaw: dynamically changed
+extern int clockwise_rotate_flag;
+void heading_Trans(void);
+
 extern float Err_Set;
 float Read_Yaw(void);
 float Read_YawSpeed(void);
@@ -59,7 +65,6 @@ extern u8 ttl_receive;
 extern IMUData_Packet_t IMUData_Packet;
 extern AHRSData_Packet_t AHRSData_Packet;
 
-void USART5_IRQHandler(void);
 void usart5_send(u8 data);
 
 long long timestamp(u8 Data_1, u8 Data_2, u8 Data_3, u8 Data_4);

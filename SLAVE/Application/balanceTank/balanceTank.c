@@ -127,8 +127,8 @@ void Control_Init(void)
     // pid ≥ı ºªØ
     // set_pid(&pitch_pid, 0.1, 0.00, 0.1, 2, 10);
     // set_pid(&roll_pid, 0.1, 0.00, 0.1, 2, 10);
-    set_increment_pid(&pitch_inc_pid, 0.2, 0, 0.07, 0, 10);
-    set_increment_pid(&roll_inc_pid, 0.2, 0, 0.07, 0, 10);
+    set_increment_pid(&pitch_inc_pid, 0.1, 0, 0.025, 0, 10);
+    set_increment_pid(&roll_inc_pid, 0.1, 0, 0.025, 0, 10);
 }
 
 void Control_loop(void)
@@ -147,7 +147,7 @@ void Control_loop(void)
     //	ServoControl(100, 100, 130, 100);  // ∆Ω∫‚
 
     // ServoControl(110 + 12 * pitch_pid.output, 110 - 12 * roll_pid.output, 110 - 12 * pitch_pid.output, 110 + 12 * roll_pid.output);
-    ServoControl(110 + 17 * pitch_inc_pid.output, 110 - 17 * roll_inc_pid.output, 110 - 17 * pitch_inc_pid.output, 110 + 17 * roll_inc_pid.output);
+    ServoControl(110 + 25 * pitch_inc_pid.output, 110 - 25 * roll_inc_pid.output, 110 - 25 * pitch_inc_pid.output, 110 + 25 * roll_inc_pid.output);
 }
 
 /*=================public(mpu)===================*/

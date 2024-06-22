@@ -7,7 +7,7 @@
 #include "photoelectric.h"
 #include "openmv.h"
 #include "bluetooth.h"
-
+#include "mp3.h"
 #define plant_found !PE_NOZZLE
 
 typedef struct

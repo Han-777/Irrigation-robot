@@ -7,6 +7,10 @@ const int PITCH_TRANSFER_TIME = 500,
           OPENMV_WAIT = 1000,
           WATER_TIME = 1000;
 
+void arm_Init(void)
+{
+    servo_Init_All();
+}
 int water_finish(void)
 {
     if (!left_water_flag && !right_water_flag)
@@ -27,6 +31,7 @@ void water(colorIdx waterTimes)
             // delay_ms(WATER_TIME);
             // close_pump;
             // delay_ms(WATER_TIME);
+            MP3_broadcast(drought_buff[plant_cnt]);
         }
     }
     else
@@ -37,6 +42,7 @@ void water(colorIdx waterTimes)
             // delay_ms(WATER_TIME);
             // close_pump;
             // delay_ms(WATER_TIME);
+            MP3_broadcast(waterTimes);
         }
     }
     ++water_cnt;
@@ -75,7 +81,7 @@ void get_water_direction(void)
                     break;
                 }
             }
-			water_finish_structure.left_water_finish = 1;
+            water_finish_structure.left_water_finish = 1;
         }
         else if (right_water_flag)
         {
@@ -97,7 +103,7 @@ void get_water_direction(void)
                     break;
                 }
             }
-			water_finish_structure.right_water_finish = 1;
+            water_finish_structure.right_water_finish = 1;
         }
         angle = 0;
         for (int idx = 0; idx < buffer_idx; ++idx)
@@ -160,7 +166,6 @@ void arm_water_task(void)
         water_task();
         PE_EXTI_Init();
     }
-	
 }
 // void task_A(void)
 //{

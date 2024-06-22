@@ -12,7 +12,6 @@ int main(void)
 													//	LCD_Init();
 													//	POINT_COLOR = BLUE; // »­±ÊÑÕÉ«
 	chassis_Init();
-	PE_EXTI_Init();
 	//	Car_Load(40, 40);
 	//	delay_ms(10000);
 	//	Turn_Left_90_Angles();
@@ -23,7 +22,6 @@ int main(void)
 	//	delay_ms(10000);
 
 	Car_stop();
-	servo_Init_All();
 	//	gray_GPIO_Init();
 	//	photoelectricity_GPIO_Init();
 	//	delay_ms(5000);
@@ -38,22 +36,23 @@ int main(void)
 	//	}
 
 	//		Servo_Pitch_Control(110);
-	Servo_Yaw_Control(90);
+	//	Servo_Yaw_Control(90);
 
 	int i = 0;
 	int yaw = 0;
 	while (1)
 	{
-		Run();
-//		get_gray_cnt();
+
+		//		Run();
+		//		get_gray_cnt();
 		//		Servo_Pitch_Control(50);
 		//		delay_ms(1000);
 		//		Servo_Pitch_Control(250);
 		//		delay_ms(1000);
 
 		//		Chinese_Show_one(10, 10, 0, 16, 0);
-		//		ServoControl(yaw_servo, 40, 100, 2000); // 40 - 260
-		//		ServoControl(yaw_servo, 100, 40, 2000);
+		//				ServoControl(pitch_servo, 80, 220, 500); // 40 - 260
+		//				ServoControl(pitch_servo, 220, 80, 500);
 		//		ServoControl(pitch_servo, 180, 0, 2000);
 		//		Servo_Yaw_Control(20);
 		//		delay_ms(1000);

@@ -13,7 +13,7 @@ Increment_PID left_inc_PID, right_inc_PID, heading_inc_PID;
 // PID head_PID;
 //  const float H = 0.188, W = 0.25, R = 0.413, PI = 3.1415926535;
 const float speed_kp = 0.2, speed_ki = 0.12, speed_kd = 0,
-            heading_kp = 1, heading_ki = 0.005, heading_kd = 0.001; // for rotate
+            heading_kp = 5, heading_ki = 0.00, heading_kd = 0.01; // for rotate
 // head_kp = 0.1, head_ki = 0, head_kd = 0, head_ki_limit = 2, head_out_limit = 180;
 // motor speed unit is m/s, should start from a small value
 
@@ -177,6 +177,7 @@ void TIM7_IRQHandler(void)
         info[10] = Dist_right;
         info[11] = Dist_left;
 
+		chassis_run(0, target_Yaw);
         //        chassis_ahead(20, 20);
         // chassis_rotate(ori_target_Yaw);
         //        chassis_run(5, ori_target_Yaw);

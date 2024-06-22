@@ -4,7 +4,7 @@
 int vec[2] = {0};
 float info[20] = {0};
 
-float speed_limit = 20, heading_speed_limit = 50; // speed lmit should be smaller than 0.8 m/s
+float speed_limit = 50, heading_speed_limit = 50; // speed lmit should be smaller than 0.8 m/s
 //==================== Internal vars =====================:
 // constants & PIDs
 // PID heading_PID;
@@ -12,8 +12,9 @@ float speed_limit = 20, heading_speed_limit = 50; // speed lmit should be smalle
 Increment_PID left_inc_PID, right_inc_PID, heading_inc_PID;
 // PID head_PID;
 //  const float H = 0.188, W = 0.25, R = 0.413, PI = 3.1415926535;
-const float speed_kp = 0.2, speed_ki = 0.12, speed_kd = 0.00,
-            heading_kp = 0.17, heading_ki = 0.00, heading_kd = 0.02; // for rotate
+const float speed_kp = 0.2, speed_ki = 0.12, speed_kd = 0.00, speed_Kv = 0.2, // feed forward gain
+    heading_kp = 0.1, heading_ki = 0.00, heading_kd = 0.02;                   // for rotate
+
 // head_kp = 0.1, head_ki = 0, head_kd = 0, head_ki_limit = 2, head_out_limit = 180;
 // motor speed unit is m/s, should start from a small value
 
@@ -67,17 +68,17 @@ void Car_Load(int L, int R);
 void Car_stop(void);
 */
 
-int chassis_ahead(int left_speed, int right_speed)
-{
-    // pid calculation
-    increment_pid_calculate(&left_inc_PID, left_speed, vec[0]);
-    increment_pid_calculate(&right_inc_PID, right_speed, vec[1]);
-    // load motor
-    Car_Load(left_inc_PID.output, right_inc_PID.output);
-    info[17] = left_inc_PID.output;
-    info[18] = right_inc_PID.output;
-    return 1;
-}
+// int chassis_ahead(int left_speed, int right_speed)
+//{
+//     // pid calculation
+//     increment_pid_calculate(&left_inc_PID, left_speed, vec[0]);
+//     increment_pid_calculate(&right_inc_PID, right_speed, vec[1]);
+//     // load motor
+//     Car_Load(left_inc_PID.output, right_inc_PID.output);
+//     info[17] = left_inc_PID.output;
+//     info[18] = right_inc_PID.output;
+//     return 1;
+// }
 
 // int rotate_stable = 0;
 // void check_stable(void) // 根据位置的误差来判断稳定性
@@ -116,7 +117,7 @@ int chassis_rotate(float target_yaw)
     increment_pid_calculate(&heading_inc_PID, target_yaw, current_yaw);
     info[17] = heading_inc_PID.output;
     info[18] = -heading_inc_PID.output;
-    Car_Load(100*heading_inc_PID.output, -100*heading_inc_PID.output);
+    Car_Load(100 * heading_inc_PID.output, -100 * heading_inc_PID.output);
     return 1;
 }
 
@@ -132,7 +133,7 @@ int chassis_rotate(float target_yaw)
 // }
 
 // 串
-//int chassis_run(int speed, float target_heading)
+// int chassis_run(int speed, float target_heading)
 //{
 //    heading_Trans();
 //    // heading_speed_limit = 50;
@@ -147,12 +148,13 @@ int chassis_run(int speed, float target_heading)
     heading_Trans();
     // heading_speed_limit = 50;
     // set_increment_pid(&heading_inc_PID, heading_kp, heading_ki, heading_kd, heading_speed_limit);
-    increment_pid_calculate(&heading_inc_PID, target_heading, current_yaw);        // 角度外环
-	increment_pid_calculate(&left_inc_PID, speed, vec[0]);
+    increment_pid_calculate(&heading_inc_PID, target_heading, current_yaw); // 角度外环
+    increment_pid_calculate(&left_inc_PID, speed, vec[0]);
     increment_pid_calculate(&right_inc_PID, speed, vec[1]);
-	info[17] = left_inc_PID.output + 200*heading_inc_PID.output;
-    info[18] = right_inc_PID.output - 200*heading_inc_PID.output;
-	Car_Load(left_inc_PID.output + 200*heading_inc_PID.output, right_inc_PID.output - 200*heading_inc_PID.output);
+    int ff_speed = speed_Kv * speed;
+    info[17] = left_inc_PID.output + 200 * heading_inc_PID.output;
+    info[18] = right_inc_PID.output - 200 * heading_inc_PID.output;
+    Car_Load(left_inc_PID.output + 200 * heading_inc_PID.output + ff_speed, right_inc_PID.output - 200 * heading_inc_PID.output + ff_speed);
     return 1;
 }
 
@@ -177,8 +179,8 @@ void TIM7_IRQHandler(void)
         info[10] = Dist_right;
         info[11] = Dist_left;
 
-//		chassis_rotate(target_Yaw);
-		chassis_run(0, target_Yaw);
+//        		chassis_rotate(target_Yaw);
+  		chassis_run(10, target_Yaw);
         //        chassis_ahead(20, 20);
         // chassis_rotate(ori_target_Yaw);
         //        chassis_run(5, ori_target_Yaw);

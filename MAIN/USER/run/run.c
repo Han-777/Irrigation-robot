@@ -15,7 +15,7 @@ int data_check(void) // 检查数据接收是否成功
 ////--------------- TIME CONST --------------//
 const u16 GO_PREVENT_MISID_TIME = 200; // go in case of misidentification time
 const u16 GO_HOME_TIME = 500;
-const u16 RUN_SPEED = 10;
+const u16 RUN_SPEED = 0;
 ////--------------- TEST --------------//
 //// int test1(void)
 //// {

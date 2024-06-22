@@ -2,7 +2,7 @@
 #include "gyro.h"
 
 float ori_target_Yaw = 0, target_Yaw = 0, current_yaw = 0; // ori: fix, target_Yaw: dynamically changed
-int clockwise_rotate_flag = 1;							   // rotate flag
+int clockwise_rotate_flag = 0;							   // rotate flag
 
 IMUData_Packet_t IMUData_Packet;
 AHRSData_Packet_t AHRSData_Packet;

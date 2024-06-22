@@ -13,9 +13,10 @@ int data_check(void) // 检查数据接收是否成功
 }
 
 ////--------------- TIME CONST --------------//
-const u16 GO_PREVENT_MISID_TIME = 200; // go in case of misidentification time
-const u16 GO_HOME_TIME = 500;
-const u16 RUN_SPEED = 10;
+const u16 GO_PREVENT_MISID_TIME = 5; // go in case of misidentification time
+const u16 GO_HOME_TIME = 10;
+//const u16 RUN_SPEED = 10;
+const u16 CROSS_TIME = 1000;
 ////--------------- TEST --------------//
 //// int test1(void)
 //// {
@@ -52,8 +53,10 @@ int get_region(void)
 int region_finish(void)
 {
     region = (cross_cnt < 2) ? A : ((cross_cnt < 4) ? B : ((cross_cnt < 6) ? C : D));
-    if (((plant_cnt >= 6 && plant_cnt < 8) && region == A) || ((plant_cnt >= 12 && plant_cnt < 14) && region == B) || ((plant_cnt >= 24 && plant_cnt < 27) && region == C) || (plant_cnt >= 30 && region == D)) // 21 in total
+    if (((plant_cnt >= 6 && plant_cnt < 9) && region == A) || ((plant_cnt >= 12 && plant_cnt < 15) && region == B) || ((plant_cnt >= 24 && plant_cnt < 27) && region == C) || (plant_cnt >= 30 && region == D)) // 21 in total
     {
+        TFmini_left_USART_Close(115200);
+        TFmini_right_USART_Close(115200);
         plant_cnt = (region == A) ? 6 : ((region == B) ? 12 : 24);
         return 1; // 2/4/6 -> 0
     }
@@ -69,10 +72,16 @@ int cross_action(void)
         if (cross_cnt % 2 == 0) // even cross open
         {
             PE_EXTI_Init();
+            TFmini_left_USART_Init(115200);
+            TFmini_right_USART_Init(115200);
+            delay_ms(2);
             return 1;
         }
-        chassis_run(RUN_SPEED, target_Yaw); // in case of misidentification of the line
-        delay_ms(GO_PREVENT_MISID_TIME);
+        for (int i = 0; i < 20; ++i)
+        {
+            chassis_run(RUN_SPEED, target_Yaw); // in case of misidentification of the line
+            delay_ms(GO_PREVENT_MISID_TIME);
+        }
         return 1;
     }
     return 0;
@@ -114,6 +123,20 @@ int _run_(void)
         {
             TIM7_Init(1000 - 1, 840 - 1);
             chassis_run(RUN_SPEED, target_Yaw); // 需要一个函数区分区域
+            // if (region == A || region == B)
+            // {
+            //     PE_EXTI_Close();
+            //     delay_ms(2);
+            //     chassis_run(RUN_SPEED, target_Yaw);
+            //     PE_EXTI_Init();
+            // }
+            // else if (region == C || region == D)
+            // {
+            //     PE_EXTI_Close();
+            //     delay_ms(3);
+            //     chassis_run(RUN_SPEED, target_Yaw);
+            //     PE_EXTI_Init();
+            // }
         }
         return 0;
     }
@@ -123,9 +146,15 @@ int cross_to_cross(void)
 {
     // if (cross_cnt % 2 != 0) //
     // {
-    chassis_run(30, target_Yaw);
+    for (int i = 0; i < 50; ++i)
+    {
+        chassis_run(RUN_SPEED, target_Yaw);
+        delay_ms(2);
+    }
+    //    delay_ms(CROSS_TIME);
     if (get_cross_flag()) // cross_cnt++
     {
+        // PE_EXTI_Init(); // 不确定开了没
         return 1;
     }
     // }
@@ -136,7 +165,7 @@ int cross_to_cross(void)
 
 int end_return_home(void)
 {
-    chassis_run(10, target_Yaw);
+    chassis_run(RUN_SPEED, target_Yaw);
     delay_ms(GO_HOME_TIME);
     Car_stop();
     //    Target_Run(0, 0, 0);

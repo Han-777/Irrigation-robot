@@ -32,6 +32,7 @@ void UART5_IRQHandler(void)
 	ttl_receive = 1;
 	if (USART_GetITStatus(UART5, USART_IT_RXNE) != RESET) // Check if data is received //判断是否接收到数据
 	{
+		USART_ClearITPendingBit(UART5, USART_IT_RXNE);
 		Usart_Receive = USART_ReceiveData(UART5);									   // Read the data //读取数据
 		Fd_data[Count] = Usart_Receive;												   // 串口数据填入数组
 		if (((last_rsnum == FRAME_END) && (Usart_Receive == FRAME_HEAD)) || Count > 0) // 重新对帧
@@ -64,7 +65,6 @@ void UART5_IRQHandler(void)
 			if (Fd_data[AHRS_RS - 1] == FRAME_END)
 				memcpy(Fd_rsahrs, Fd_data, sizeof(Fd_data));
 		}
-		USART_ClearITPendingBit(UART5, USART_IT_RXNE);
 	}
 }
 

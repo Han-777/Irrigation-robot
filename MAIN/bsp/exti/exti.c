@@ -143,6 +143,8 @@ void EXTI15_10_IRQHandler(void)
 				//				delay_ms(50);
 				TIM7_Close();
 				Car_stop();
+				// gyro_USART_Close();
+
 				delay_ms(50);
 				left_water_flag = 1;
 				right_water_flag = 1;
@@ -157,6 +159,7 @@ void EXTI15_10_IRQHandler(void)
 			{
 				TIM7_Close();
 				Car_stop();
+				// gyro_USART_Close();
 				delay_ms(50);
 				left_water_flag = 1;
 				right_water_flag = 1;
@@ -169,7 +172,8 @@ void EXTI15_10_IRQHandler(void)
 		{
 			TIM7_Close();
 			Car_stop();
-			delay_ms(200);
+			// gyro_USART_Close();
+			delay_ms(50);
 			if ((EXTI_GetITStatus(EXTI_Line11) == SET) && (EXTI_GetITStatus(EXTI_Line10) == SET))
 			{
 				left_water_flag = 1;

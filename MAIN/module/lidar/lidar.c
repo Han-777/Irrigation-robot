@@ -66,7 +66,7 @@ void UART4_IRQHandler(void)
 			if (rx_data_right[8] == Res)
 			{
 				Dist = ((uint16_t)(rx_data_right[3] << 8) | rx_data_right[2]);
-				if(Dist < 0 || Dist > 100)
+				if (Dist < 0 || Dist > 100)
 				{
 					Dist = 100;
 				}

@@ -7,7 +7,7 @@
 #include "exti.h"
 #include "sys.h"
 #include "arm.h"
-
+#include "lidar.h"
 typedef enum
 {
 	A,
@@ -16,6 +16,7 @@ typedef enum
 	D,
 	home
 } regionEnum;
+#define RUN_SPEED 20
 
 // extern u8 color_Index;
 extern int region_finish_flag, cross_cnt, plant_cnt;

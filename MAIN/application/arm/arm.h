@@ -8,8 +8,9 @@
 #include "openmv.h"
 #include "bluetooth.h"
 #include "mp3.h"
+#include "lidar.h"
 #define plant_found !PE_NOZZLE
-
+#define lidar_water_dist_threshold 30
 typedef struct
 {
     u8 left_water_scan_finish;
@@ -19,8 +20,8 @@ typedef struct
 } water_finish_Structure_TypeDef;
 extern water_finish_Structure_TypeDef water_finish_structure;
 // ио╣Г╫г╤х
-#define pitch_mid 150
-#define yaw_mid 150
+#define pitch_mid 120 // 150
+#define yaw_mid 40
 
 // yaw scan angle
 #define left_scan_begin 80

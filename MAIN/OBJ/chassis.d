@@ -53,3 +53,11 @@
 ..\obj\chassis.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\obj\chassis.o: ..\module\lidar\lidar.h
 ..\obj\chassis.o: ..\module\gray\gray.h
+..\obj\chassis.o: .\run\run.h
+..\obj\chassis.o: ..\module\openmv\openmv.h
+..\obj\chassis.o: ..\application\arm\arm.h
+..\obj\chassis.o: ..\module\servo\servo.h
+..\obj\chassis.o: .\run\run.h
+..\obj\chassis.o: ..\module\photoelectric\photoelectric.h
+..\obj\chassis.o: ..\module\bluetooth\bluetooth.h
+..\obj\chassis.o: ..\module\mp3\mp3.h

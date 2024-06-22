@@ -2,24 +2,45 @@
 
 water_finish_Structure_TypeDef water_finish_structure;
 // TIME CONST
-const int PITCH_TRANSFER_TIME = 0, // 500
-    YAW_TRANSFER_TIME = 0,         // 120
-    OPENMV_WAIT = 1000,            // 1000
+const int PITCH_TRANSFER_TIME = 400, // 500
+    YAW_TRANSFER_TIME = 120,         // 120
+    OPENMV_WAIT = 1000,              // 1000
     WATER_TIME = 1000;
 
 void arm_Init(void)
 {
     servo_Init_All();
     PE_EXTI_Init();
+    Servo_Pitch_Control(pitch_mid);
+    Servo_Yaw_Control(yaw_mid);
+}
+
+int lidar_water_confirm(void)
+{
+    if (left_water_flag && Dist_left < lidar_water_dist_threshold)
+    {
+        return 1;
+    }
+    else if (right_water_flag && Dist_left < lidar_water_dist_threshold)
+    {
+        return 1;
+    }
+    else
+    {
+        left_water_flag = 0;
+        right_water_flag = 0;
+        return 0;
+    }
 }
 
 int water_finish(void)
 {
-    if (left_water_flag || right_water_flag)
+    if (!left_water_flag && !right_water_flag)
     {
-        return 0;
+        // gyro_USART_Init(921600);
+        return 1;
     }
-    return 1;
+    return 0;
 }
 
 void water(colorIdx waterTimes)
@@ -174,18 +195,20 @@ void water_task(void)
 void arm_water_task(void)
 {
     get_region();
-    while (!water_finish()) // 一次清一个标志位
+    while (lidar_water_confirm() && !water_finish()) // 一次清一个标志位
     {
         get_water_direction();
         water_task();
     }
-	if (water_finish_structure.left_water_finish && water_finish_structure.right_water_finish)
-	{
-		water_finish_structure.left_water_finish = 0;
-		water_finish_structure.right_water_finish = 0;
-		PE_EXTI_Init();
-	}
-	
+    if (water_finish_structure.left_water_finish && water_finish_structure.right_water_finish)
+    {
+        water_finish_structure.left_water_finish = 0;
+        water_finish_structure.right_water_finish = 0;
+        //        if (region == C || region == D)
+        //        {
+        PE_EXTI_Init();
+        //        }
+    }
 }
 // void task_A(void)
 //{

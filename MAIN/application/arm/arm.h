@@ -24,17 +24,17 @@ extern water_finish_Structure_TypeDef water_finish_structure;
 #define left_scan_begin 80
 #define left_scan_end 40
 
-#define right_scan_begin 80
-#define right_scan_end 40
+#define right_scan_begin 200
+#define right_scan_end 240
 
 #define left_scan_mid 150  // 左侧居中
 #define right_scan_mid 150 // 右侧居中
 
-#define left_D_angle 30
+#define left_D_angle 80
 #define right_D_angle 150
 #define pitch_D_water_angle 120
 // pitch scan angle
-#define pitch_scan_angle 100
+#define pitch_scan_angle 120
 
 #define length_A 27.50 // 浇水的机械臂长度
 #define H 32.50        // 激光底座到舵机云台的垂直  H要尽量低

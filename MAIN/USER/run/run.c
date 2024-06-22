@@ -15,6 +15,7 @@ int data_check(void) // 检查数据接收是否成功
 ////--------------- TIME CONST --------------//
 const u16 GO_PREVENT_MISID_TIME = 200; // go in case of misidentification time
 const u16 GO_HOME_TIME = 500;
+const u16 RUN_SPEED = 10;
 ////--------------- TEST --------------//
 //// int test1(void)
 //// {
@@ -70,7 +71,7 @@ int cross_action(void)
             PE_EXTI_Init();
             return 1;
         }
-        chassis_run(30, target_Yaw); // in case of misidentification of the line
+        chassis_run(RUN_SPEED, target_Yaw); // in case of misidentification of the line
         delay_ms(GO_PREVENT_MISID_TIME);
         return 1;
     }
@@ -111,7 +112,7 @@ int _run_(void)
         else
         {
             TIM7_Init(1000 - 1, 840 - 1);
-            chassis_run(27, target_Yaw); // 需要一个函数区分区域
+            chassis_run(RUN_SPEED, target_Yaw); // 需要一个函数区分区域
         }
         return 0;
     }

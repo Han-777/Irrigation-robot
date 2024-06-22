@@ -10,6 +10,7 @@ const int PITCH_TRANSFER_TIME = 500,
 void arm_Init(void)
 {
     servo_Init_All();
+	PE_EXTI_Init();
 }
 int water_finish(void)
 {

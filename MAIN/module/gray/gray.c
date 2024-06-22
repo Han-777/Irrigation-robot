@@ -20,7 +20,7 @@
 //	Car_Load(Pwm_L,Pwm_R);
 //	delay_ms(25);//这个时间可以变
 // }
-const int gray_threshold = 7;
+const int gray_threshold = 10;
 int cross_cnt = 0;
 int cnt = 0;
 int get_gray_cnt(void)

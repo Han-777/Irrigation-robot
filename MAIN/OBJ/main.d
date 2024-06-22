@@ -60,3 +60,4 @@
 ..\obj\main.o: .\run\run.h
 ..\obj\main.o: ..\module\photoelectric\photoelectric.h
 ..\obj\main.o: ..\module\bluetooth\bluetooth.h
+..\obj\main.o: ..\module\mp3\mp3.h

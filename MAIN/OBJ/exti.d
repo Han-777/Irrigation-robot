@@ -61,3 +61,4 @@
 ..\obj\exti.o: .\run\run.h
 ..\obj\exti.o: ..\module\photoelectric\photoelectric.h
 ..\obj\exti.o: ..\module\bluetooth\bluetooth.h
+..\obj\exti.o: ..\module\mp3\mp3.h

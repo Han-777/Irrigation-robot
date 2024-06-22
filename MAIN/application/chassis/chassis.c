@@ -4,7 +4,7 @@
 int vec[2] = {0};
 float info[20] = {0};
 
-float speed_limit = 27, heading_speed_limit = 40; // speed lmit should be smaller than 0.8 m/s
+float speed_limit = 80, heading_speed_limit = 100; // speed lmit should be smaller than 0.8 m/s
 //==================== Internal vars =====================:
 // constants & PIDs
 // PID heading_PID;
@@ -13,7 +13,7 @@ Increment_PID left_inc_PID, right_inc_PID, heading_inc_PID;
 // PID head_PID;
 //  const float H = 0.188, W = 0.25, R = 0.413, PI = 3.1415926535;
 const float speed_kp = 0.2, speed_ki = 0.12, speed_kd = 0,
-            heading_kp = 5, heading_ki = 0.00, heading_kd = 0.01; // for rotate
+            heading_kp = 5, heading_ki = 0.05, heading_kd = 0.1; // for rotate
 // head_kp = 0.1, head_ki = 0, head_kd = 0, head_ki_limit = 2, head_out_limit = 180;
 // motor speed unit is m/s, should start from a small value
 

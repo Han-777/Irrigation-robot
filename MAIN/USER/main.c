@@ -43,7 +43,7 @@ int main(void)
 	while (1)
 	{
 
-		//		Run();
+		Run();
 		//		get_gray_cnt();
 		//		Servo_Pitch_Control(50);
 		//		delay_ms(1000);

@@ -2,23 +2,24 @@
 
 water_finish_Structure_TypeDef water_finish_structure;
 // TIME CONST
-const int PITCH_TRANSFER_TIME = 500,
-          YAW_TRANSFER_TIME = 120,
-          OPENMV_WAIT = 1000,
-          WATER_TIME = 1000;
+const int PITCH_TRANSFER_TIME = 0, // 500
+    YAW_TRANSFER_TIME = 0,         // 120
+    OPENMV_WAIT = 1000,            // 1000
+    WATER_TIME = 1000;
 
 void arm_Init(void)
 {
     servo_Init_All();
-	PE_EXTI_Init();
+    PE_EXTI_Init();
 }
+
 int water_finish(void)
 {
-    if (!left_water_flag && !right_water_flag)
+    if (left_water_flag || right_water_flag)
     {
-        return 1;
+        return 0;
     }
-    return 0;
+    return 1;
 }
 
 void water(colorIdx waterTimes)
@@ -47,7 +48,19 @@ void water(colorIdx waterTimes)
         }
     }
     ++water_cnt;
-    if (water_cnt == 2)
+    if (water_finish_structure.left_water_scan_finish)
+    {
+        water_finish_structure.left_water_scan_finish = 0;
+        water_finish_structure.left_water_finish = 1;
+        left_water_flag = 0;
+    }
+    else if (water_finish_structure.right_water_scan_finish)
+    {
+        water_finish_structure.right_water_scan_finish = 0;
+        water_finish_structure.right_water_finish = 1;
+        right_water_flag = 0;
+    }
+    if (water_cnt == 2 && water_finish_structure.left_water_finish && water_finish_structure.right_water_finish)
     {
         water_cnt = 0;
         plant_cnt++;
@@ -82,7 +95,7 @@ void get_water_direction(void)
                     break;
                 }
             }
-            water_finish_structure.left_water_finish = 1;
+            water_finish_structure.left_water_scan_finish = 1;
         }
         else if (right_water_flag)
         {
@@ -104,7 +117,7 @@ void get_water_direction(void)
                     break;
                 }
             }
-            water_finish_structure.right_water_finish = 1;
+            water_finish_structure.right_water_scan_finish = 1;
         }
         angle = 0;
         for (int idx = 0; idx < buffer_idx; ++idx)
@@ -165,8 +178,14 @@ void arm_water_task(void)
     {
         get_water_direction();
         water_task();
-        PE_EXTI_Init();
     }
+	if (water_finish_structure.left_water_finish && water_finish_structure.right_water_finish)
+	{
+		water_finish_structure.left_water_finish = 0;
+		water_finish_structure.right_water_finish = 0;
+		PE_EXTI_Init();
+	}
+	
 }
 // void task_A(void)
 //{

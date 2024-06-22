@@ -15,7 +15,7 @@ int data_check(void) // 检查数据接收是否成功
 ////--------------- TIME CONST --------------//
 const u16 GO_PREVENT_MISID_TIME = 200; // go in case of misidentification time
 const u16 GO_HOME_TIME = 500;
-const u16 RUN_SPEED = 0;
+const u16 RUN_SPEED = 10;
 ////--------------- TEST --------------//
 //// int test1(void)
 //// {
@@ -51,10 +51,10 @@ int get_region(void)
  */
 int region_finish(void)
 {
-    if (((plant_cnt >= 6 && plant_cnt < 7) && cross_cnt < 2) || (cross_cnt < 4 && (plant_cnt >= 11 && plant_cnt < 13)) || (cross_cnt < 6 && plant_cnt >= 17 && plant_cnt <= 25) || (plant_cnt == 30 && cross_cnt == 6)) // 21 in total
+    region = (cross_cnt < 2) ? A : ((cross_cnt < 4) ? B : ((cross_cnt < 6) ? C : D));
+    if (((plant_cnt >= 6 && plant_cnt < 8) && region == A) || ((plant_cnt >= 12 && plant_cnt < 14) && region == B) || ((plant_cnt >= 24 && plant_cnt < 27) && region == C) || (plant_cnt >= 30 && region == D)) // 21 in total
     {
-        plant_cnt = (cross_cnt <= 2) ? 6 : ((cross_cnt <= 4) ? 12 : 24);
-        region = (cross_cnt < 2) ? A : ((cross_cnt < 4) ? B : ((cross_cnt < 6) ? C : D));
+        plant_cnt = (region == A) ? 6 : ((region == B) ? 12 : 24);
         return 1; // 2/4/6 -> 0
     }
     return 0;
@@ -85,6 +85,7 @@ int _run_(void)
     if (region_finish() && get_cross_flag())
     {
         Car_stop();
+        TIM7_Init(1000 - 1, 840 - 1);
         PE_EXTI_Close(); // PE close
         return 1;
     }
@@ -105,7 +106,7 @@ int _run_(void)
 
         if (!water_finish()) // 得到浇水标志位
         {
-//            TIM7_Close();
+            //            TIM7_Close();
             // water: arm_watering(); （函数负责清楚左/右浇水标志位，如果两标志位都无则给TIM7）
             arm_water_task();
         }

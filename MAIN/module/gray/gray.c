@@ -1,5 +1,4 @@
 #include "gray.h"
-
 /******低电平为接触到白线*******/
 /********其他情况要一一添加进去***************/
 
@@ -20,7 +19,7 @@
 //	Car_Load(Pwm_L,Pwm_R);
 //	delay_ms(25);//这个时间可以变
 // }
-const int gray_threshold = 10;
+const int gray_threshold = 7;
 int cross_cnt = 0;
 int cnt = 0;
 int get_gray_cnt(void)
@@ -100,6 +99,7 @@ int get_cross_flag(void)
 			}
 			else if (cross_cnt == 1 || cross_cnt == 3 || cross_cnt == 5)
 			{
+				delay_ms(200);
 				clockwise_rotate_flag += ((cross_cnt == 3) ? -1 : 1);
 			}
 			return 1;

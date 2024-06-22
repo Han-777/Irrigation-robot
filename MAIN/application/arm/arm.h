@@ -12,6 +12,8 @@
 
 typedef struct
 {
+    u8 left_water_scan_finish;
+    u8 right_water_scan_finish;
     u8 left_water_finish;
     u8 right_water_finish;
 } water_finish_Structure_TypeDef;

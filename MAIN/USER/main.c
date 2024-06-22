@@ -38,12 +38,12 @@ int main(void)
 	//		Servo_Pitch_Control(110);
 	//	Servo_Yaw_Control(90);
 
-	int i = 0;
-	int yaw = 0;
+//	int i = 0;
+//	int yaw = 0;
 	while (1)
 	{
 
-//		Run();
+		Run();
 		//		get_gray_cnt();
 		//		Servo_Pitch_Control(50);
 		//		delay_ms(1000);

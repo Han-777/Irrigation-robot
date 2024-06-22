@@ -14,9 +14,66 @@ int Flag_R = 0;
 int left_water_flag = 0, right_water_flag = 0; // water start flag
 
 //////////////////////////
+// void PE_EXTI_Init(void) // for cross_cnt = 2/4/6
+// {
+// 	static u8 temp_water_cnt = 0;
+// 	NVIC_InitTypeDef NVIC_InitStructure;
+// 	EXTI_InitTypeDef EXTI_InitStructure;
+
+// 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE); // 使能SYSCFG时钟,在用到外部中断时一定要用到
+
+// 	photoelectric_GPIO_Init();
+
+// 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOG, EXTI_PinSource10);
+// 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOG, EXTI_PinSource11);
+// 	EXTI_DeInit();
+
+// 	if (water_finish()) // D区前, 浇水计数两侧后PE全开
+// 	{
+// 		temp_water_cnt = 0;
+// 		left_water_flag = 0;
+// 		right_water_flag = 0;
+// 		EXTI_InitStructure.EXTI_Line = EXTI_Line10 | EXTI_Line11;
+// 		EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+// 		EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
+// 		EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+// 		EXTI_Init(&EXTI_InitStructure);
+// 	}
+// 	else
+// 	{
+// 		if (water_finish_structure.right_water_finish) // 右侧浇水结束后只开左边光电
+// 		{
+// 			++temp_water_cnt;
+// 			right_water_flag = 0;
+// 			water_finish_structure.right_water_finish = 0;
+// 			EXTI_InitStructure.EXTI_Line = EXTI_Line10;
+// 			EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+// 			EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
+// 			EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+// 			EXTI_Init(&EXTI_InitStructure);
+// 		}
+// 		if (water_finish_structure.left_water_finish) // 左侧浇水后开右侧光电
+// 		{
+// 			++temp_water_cnt;
+// 			left_water_flag = 0;
+// 			water_finish_structure.left_water_finish = 0;
+// 			EXTI_InitStructure.EXTI_Line = EXTI_Line11;
+// 			EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+// 			EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
+// 			EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+// 			EXTI_Init(&EXTI_InitStructure);
+// 		}
+// 	}
+
+// 	NVIC_InitStructure.NVIC_IRQChannel = EXTI15_10_IRQn;
+// 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x00; // 抢占优先级0
+// 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x00;		 // 子优先级2
+// 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;				 // 使能外部中断通道
+// 	NVIC_Init(&NVIC_InitStructure);								 // 配置
+// }
 void PE_EXTI_Init(void) // for cross_cnt = 2/4/6
 {
-	static u8 temp_water_cnt = 0;
+	// static u8 temp_water_cnt = 0;
 	NVIC_InitTypeDef NVIC_InitStructure;
 	EXTI_InitTypeDef EXTI_InitStructure;
 
@@ -28,42 +85,14 @@ void PE_EXTI_Init(void) // for cross_cnt = 2/4/6
 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOG, EXTI_PinSource11);
 	EXTI_DeInit();
 
-	if (water_finish()) // D区前, 浇水计数两侧后PE全开
-	{
-		temp_water_cnt = 0;
-		left_water_flag = 0;
-		right_water_flag = 0;
-		EXTI_InitStructure.EXTI_Line = EXTI_Line10 | EXTI_Line11;
-		EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-		EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
-		EXTI_InitStructure.EXTI_LineCmd = ENABLE;
-		EXTI_Init(&EXTI_InitStructure);
-	}
-	else
-	{
-		if (water_finish_structure.right_water_finish) // 右侧浇水结束后只开左边光电
-		{
-			++temp_water_cnt;
-			right_water_flag = 0; 
-			water_finish_structure.right_water_finish = 0;
-			EXTI_InitStructure.EXTI_Line = EXTI_Line10;
-			EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-			EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
-			EXTI_InitStructure.EXTI_LineCmd = ENABLE;
-			EXTI_Init(&EXTI_InitStructure);
-		}
-		if (water_finish_structure.left_water_finish) // 左侧浇水后开右侧光电
-		{
-			++temp_water_cnt;
-			left_water_flag = 0;
-			water_finish_structure.left_water_finish = 0;
-			EXTI_InitStructure.EXTI_Line = EXTI_Line11;
-			EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-			EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
-			EXTI_InitStructure.EXTI_LineCmd = ENABLE;
-			EXTI_Init(&EXTI_InitStructure);
-		}
-	}
+	// temp_water_cnt = 0;
+	// left_water_flag = 0;
+	// right_water_flag = 0;
+	EXTI_InitStructure.EXTI_Line = EXTI_Line10 | EXTI_Line11;
+	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
+	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+	EXTI_Init(&EXTI_InitStructure);
 
 	NVIC_InitStructure.NVIC_IRQChannel = EXTI15_10_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x00; // 抢占优先级0
@@ -107,11 +136,11 @@ void EXTI15_10_IRQHandler(void)
 {
 	if ((EXTI_GetITStatus(EXTI_Line11) == SET) || (EXTI_GetITStatus(EXTI_Line10) == SET))
 	{
-		if (cross_cnt == 0) // A
+		if (region == A) // A
 		{
 			if (EXTI_GetITStatus(EXTI_Line10) == SET) // left hand side
 			{
-//				delay_ms(50);
+				//				delay_ms(50);
 				TIM7_Close();
 				Car_stop();
 				delay_ms(50);
@@ -122,7 +151,7 @@ void EXTI15_10_IRQHandler(void)
 				PE_EXTI_Close();
 			}
 		}
-		else if (cross_cnt == 2) // B
+		else if (region == B) // B
 		{
 			if (EXTI_GetITStatus(EXTI_Line11) == SET) // right hand side
 			{
@@ -136,7 +165,7 @@ void EXTI15_10_IRQHandler(void)
 				PE_EXTI_Close();
 			}
 		}
-		else if ((cross_cnt >= 3 && cross_cnt <= 7)) // C / D
+		else if ((region == C || region == D)) // C / D
 		{
 			TIM7_Close();
 			Car_stop();

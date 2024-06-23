@@ -8,6 +8,7 @@
 #include "sys.h"
 #include "arm.h"
 #include "lidar.h"
+#include "bluetooth.h"
 typedef enum
 {
 	A,

@@ -30,7 +30,8 @@ void UART5_IRQHandler(void)
 	RS485_RX_RE = 0;
 	RS485_RX_DE = 0;
 	ttl_receive = 1;
-	if (USART_GetITStatus(UART5, USART_IT_RXNE) != RESET) // Check if data is received //判断是否接收到数据
+
+	if (USART_GetITStatus(UART5, USART_IT_RXNE) == SET) // Check if data is received //判断是否接收到数据
 	{
 		USART_ClearITPendingBit(UART5, USART_IT_RXNE);
 		Usart_Receive = USART_ReceiveData(UART5);									   // Read the data //读取数据

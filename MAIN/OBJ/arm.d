@@ -58,6 +58,6 @@
 ..\obj\arm.o: ..\module\gray\gray.h
 ..\obj\arm.o: ..\module\openmv\openmv.h
 ..\obj\arm.o: ..\application\arm\arm.h
-..\obj\arm.o: ..\module\photoelectric\photoelectric.h
 ..\obj\arm.o: ..\module\bluetooth\bluetooth.h
+..\obj\arm.o: ..\module\photoelectric\photoelectric.h
 ..\obj\arm.o: ..\module\mp3\mp3.h

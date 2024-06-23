@@ -37,15 +37,14 @@ void chassis_Init(void)
     Motor_Init();
     Encoder_TIM_Init_All();
     chassis_pid_Init();
-    TFmini_right_USART_Init(115200);
-    TFmini_left_USART_Init(115200);
     gyro_USART_Init(921600);
-    VirtualTx_Config();
-    delay_ms(100);
+    delay_ms(5000); // wait for stable(it is not necassary)
     TTL_Hex2Dec();
     ori_target_Yaw = Read_Yaw();
     target_Yaw = ori_target_Yaw;
-    delay_ms(500);
+    TFmini_right_USART_Init(115200);
+    TFmini_left_USART_Init(115200);
+    VirtualTx_Config();
     TIM7_Init(1000 - 1, 840 - 1); // 84M / 4200 / 1000 = 10ms
 }
 

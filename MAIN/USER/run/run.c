@@ -8,14 +8,21 @@ u8 get_Itr(void);
 int data_check(void) // 检查数据接收是否成功
 {
     // 蓝牙标志位 + buffer 标志位（帧尾）
-    PE_EXTI_Init();
-    return 1;
+    Bluetooth_USART_Init(115200);
+    if (bluetooth_receive_flag)
+    {
+        Bluetooth_USART_Close();
+        chassis_Init();
+        arm_Init();
+        delay_ms(3000);
+        return 1;
+    }
+    return 0;
 }
-
 ////--------------- TIME CONST --------------//
 const u16 GO_PREVENT_MISID_TIME = 5; // go in case of misidentification time
 const u16 GO_HOME_TIME = 10;
-//const u16 RUN_SPEED = 10;
+// const u16 RUN_SPEED = 10;
 const u16 CROSS_TIME = 1000;
 ////--------------- TEST --------------//
 //// int test1(void)
@@ -55,8 +62,6 @@ int region_finish(void)
     region = (cross_cnt < 2) ? A : ((cross_cnt < 4) ? B : ((cross_cnt < 6) ? C : D));
     if (((plant_cnt >= 6 && plant_cnt < 9) && region == A) || ((plant_cnt >= 12 && plant_cnt < 15) && region == B) || ((plant_cnt >= 24 && plant_cnt < 27) && region == C) || (plant_cnt >= 30 && region == D)) // 21 in total
     {
-        TFmini_left_USART_Close(115200);
-        TFmini_right_USART_Close(115200);
         plant_cnt = (region == A) ? 6 : ((region == B) ? 12 : 24);
         return 1; // 2/4/6 -> 0
     }

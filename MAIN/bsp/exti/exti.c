@@ -79,8 +79,6 @@ void PE_EXTI_Init(void) // for cross_cnt = 2/4/6
 
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE); // 使能SYSCFG时钟,在用到外部中断时一定要用到
 
-	photoelectric_GPIO_Init();
-
 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOG, EXTI_PinSource10);
 	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOG, EXTI_PinSource11);
 	EXTI_DeInit();

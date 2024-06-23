@@ -4,7 +4,7 @@
 						Bluetooth 初始化 USART1
 **************************************************************************/
 
-void USART1_Init(u32 bound)
+void Bluetooth_USART_Init(u32 bound)
 {
 	// GPIO????
 	GPIO_InitTypeDef GPIO_InitStructure;
@@ -44,15 +44,15 @@ void USART1_Init(u32 bound)
 
 	// Usart1 NVIC ??
 	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;		  //??1????
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3; //?????3
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;		  //????3
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; //?????3
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;		  //????3
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			  // IRQ????
 	NVIC_Init(&NVIC_InitStructure);							  //??????????VIC????
 
 	// #endif
 }
 
-void USART1_Close(u32 bound)
+void Bluetooth_USART_Close(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
 	USART_InitTypeDef USART_InitStructure;
@@ -71,7 +71,7 @@ void USART1_Close(u32 bound)
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;			//??
 	GPIO_Init(GPIOA, &GPIO_InitStructure);					//???PA9,PA10
 
-	USART_InitStructure.USART_BaudRate = bound;										//?????
+	// USART_InitStructure.USART_BaudRate = bound;										//?????
 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;						//???8?????
 	USART_InitStructure.USART_StopBits = USART_StopBits_1;							//?????
 	USART_InitStructure.USART_Parity = USART_Parity_No;								//??????
@@ -82,8 +82,8 @@ void USART1_Close(u32 bound)
 	USART_Cmd(USART1, DISABLE); //????1
 
 	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;		  //??1????
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3; //?????3
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;		  //????3
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; //?????3
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;		  //????3
 	NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE;		  // IRQ????
 	NVIC_Init(&NVIC_InitStructure);							  //??????????VIC????
 }
@@ -122,7 +122,7 @@ void TFmini_left_USART_Init(uint32_t bound)
 	USART_ClearFlag(USART2, USART_FLAG_RXNE);
 
 	NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;		  // 串口1中断通道
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2; // 抢占优先级3
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3; // 抢占优先级3
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;		  // 子优先级3
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			  // IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);							  // 根据指定的参数初始化VIC寄存器
@@ -132,7 +132,7 @@ void TFmini_left_USART_Init(uint32_t bound)
 	USART_Cmd(USART2, ENABLE); // 使能串口1
 }
 
-void TFmini_left_USART_Close(uint32_t bound)
+void TFmini_left_USART_Close(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
 	USART_InitTypeDef USART_InitStructure;
@@ -151,7 +151,7 @@ void TFmini_left_USART_Close(uint32_t bound)
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;		   // 上拉
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
-	USART_InitStructure.USART_BaudRate = bound;										// 波特率设置
+	// USART_InitStructure.USART_BaudRate = bound;										// 波特率设置
 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;						// 字长为8位数据格式
 	USART_InitStructure.USART_StopBits = USART_StopBits_1;							// 一个停止位
 	USART_InitStructure.USART_Parity = USART_Parity_No;								// 无奇偶校验位
@@ -162,7 +162,7 @@ void TFmini_left_USART_Close(uint32_t bound)
 	USART_ClearFlag(USART2, USART_FLAG_RXNE);
 
 	NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;		  // 串口1中断通道
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2; // 抢占优先级3
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3; // 抢占优先级3
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;		  // 子优先级3
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			  // IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);							  // 根据指定的参数初始化VIC寄存器
@@ -206,8 +206,8 @@ void OpenMV_USART_Init(u32 bound)
 	USART_ClearFlag(USART3, USART_FLAG_TC);
 
 	NVIC_InitStructure.NVIC_IRQChannel = USART3_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
 
@@ -236,7 +236,7 @@ void OpenMV_USART_Close(void)
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-	USART_InitStructure.USART_BaudRate = 0;
+	// USART_InitStructure.USART_BaudRate = 0;
 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;
 	USART_InitStructure.USART_StopBits = USART_StopBits_1;
 	USART_InitStructure.USART_Parity = USART_Parity_No;
@@ -247,8 +247,8 @@ void OpenMV_USART_Close(void)
 	USART_ClearFlag(USART3, USART_FLAG_TC);
 
 	NVIC_InitStructure.NVIC_IRQChannel = USART3_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE;
 	NVIC_Init(&NVIC_InitStructure);
 
@@ -299,13 +299,13 @@ void TFmini_right_USART_Init(uint32_t bound)
 
 	// USART3 NVIC 配置
 	NVIC_InitStructure.NVIC_IRQChannel = UART4_IRQn;		  // 串口1中断通道
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2; // 抢占优先级3
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;		  // 子优先级0
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3; // 抢占优先级3
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;		  // 子优先级0
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			  // IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);							  // 根据指定的参数初始化VIC寄存器
 }
 
-void TFmini_right_USART_Close(uint32_t bound)
+void TFmini_right_USART_Close(void)
 {
 	// GPIO端口设置
 	GPIO_InitTypeDef GPIO_InitStructure;
@@ -328,7 +328,7 @@ void TFmini_right_USART_Close(uint32_t bound)
 	GPIO_Init(GPIOC, &GPIO_InitStructure);					 // 初始化PC10，PC11
 
 	// UART4 初始化设置
-	USART_InitStructure.USART_BaudRate = bound;										// 波特率设置
+	// USART_InitStructure.USART_BaudRate = bound;										// 波特率设置
 	USART_InitStructure.USART_WordLength = USART_WordLength_8b;						// 字长为8位数据格式
 	USART_InitStructure.USART_StopBits = USART_StopBits_1;							// 一个停止位
 	USART_InitStructure.USART_Parity = USART_Parity_No;								// 无奇偶校验位
@@ -344,7 +344,7 @@ void TFmini_right_USART_Close(uint32_t bound)
 
 	// USART3 NVIC 配置
 	NVIC_InitStructure.NVIC_IRQChannel = UART4_IRQn;		  // 串口1中断通道
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2; // 抢占优先级3
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3; // 抢占优先级3
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;		  // 子优先级0
 	NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE;		  // IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);							  // 根据指定的参数初始化VIC寄存器
@@ -400,8 +400,8 @@ void gyro_USART_Init(uint32_t bound)
 
 	// USART3 NVIC 配置
 	NVIC_InitStructure.NVIC_IRQChannel = UART5_IRQn;		  // 串口1中断通
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3; // 抢占优先级3
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;		  // 子优先级0
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1; // 抢占优先级3
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;		  // 子优先级0
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			  // IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);							  // 根据指定的参数初始化VIC寄存器
 }
@@ -448,8 +448,8 @@ void gyro_USART_Close(void)
 
 	// USART3 NVIC 配置
 	NVIC_InitStructure.NVIC_IRQChannel = UART5_IRQn;		  // 串口1中断通道
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2; // 抢占优先级3
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;		  // 子优先级0
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1; // 抢占优先级3
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;		  // 子优先级0
 	NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE;		  // IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);
 }

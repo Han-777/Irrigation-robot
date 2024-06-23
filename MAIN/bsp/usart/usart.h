@@ -7,15 +7,15 @@
 						Bluetooth 初始化 USART1
 **************************************************************************/
 
-void USART1_Init(u32 bound);
-void USART1_Close(u32 bound);
+void Bluetooth_USART_Init(u32 bound);
+void Bluetooth_USART_Close(void);
 
 /**************************************************************************
 						TFmini_Left 初始化 USART2
 **************************************************************************/
 
 void TFmini_left_USART_Init(uint32_t bound);
-void TFmini_left_USART_Close(uint32_t bound);
+void TFmini_left_USART_Close(void);
 
 /**************************************************************************
 						   OPENMV初始化 USART3
@@ -29,7 +29,7 @@ void OpenMV_USART_Close(void);
 **************************************************************************/
 
 void TFmini_right_USART_Init(uint32_t bound);
-void TFmini_right_USART_Close(uint32_t bound);
+void TFmini_right_USART_Close(void);
 
 /**************************************************************************
 						   陀螺仪初始化 USART5

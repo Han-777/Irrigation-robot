@@ -10,6 +10,7 @@ const int PITCH_TRANSFER_TIME = 400, // 500
 void arm_Init(void)
 {
     servo_Init_All();
+    photoelectric_GPIO_Init();
     PE_EXTI_Init();
     Servo_Pitch_Control(pitch_mid);
     Servo_Yaw_Control(yaw_mid);

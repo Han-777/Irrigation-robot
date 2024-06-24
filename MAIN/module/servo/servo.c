@@ -71,11 +71,11 @@ void ServoMove(uint16_t angel1, uint16_t angel2) // (in 500us - 2500us)
 // 	double Angle;
 // 	if(R_r==1)
 // 	{
-// 		angle=asin(-length_A/sqrt(H*H+(D_d+R_R+Dist_right)*(D_d+R_R+Dist_right)))-atan(-(D_d+R_R+Dist_right)/H);
+// 		angle=asin(-length_A/sqrt(H*H+(D_d+R_R+lidar_right)*(D_d+R_R+lidar_right)))-atan(-(D_d+R_R+lidar_right)/H);
 // 	}
 // 	else if(L_l==1)
 // 	{
-// 		angle=asin(-length_A/sqrt(H*H+(D_d+R_R+Dist_left)*(D_d+R_R+Dist_left)))-atan(-(D_d+R_R+Dist_left)/H);
+// 		angle=asin(-length_A/sqrt(H*H+(D_d+R_R+lidar_left)*(D_d+R_R+lidar_left)))-atan(-(D_d+R_R+lidar_left)/H);
 // 	}
 // 	Angle=angle*180.0/PI;
 // 	if(Angle<=0)

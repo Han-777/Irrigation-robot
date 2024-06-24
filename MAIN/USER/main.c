@@ -4,14 +4,16 @@
 #include "chassis.h"
 #include "servo.h"
 #include "run.h"
-
+// 24 C  B 19   D 18
 int main(void)
 {
 	delay_init(168);
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4); // 4抢占 0响应 (数字越小优先级越高！)
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2); // 4抢占 0响应 (数字越小优先级越高！)
 													//	LCD_Init();
 													//	POINT_COLOR = BLUE; // 画笔颜色
-	chassis_Init();
+													//	arm_Init();
+//	chassis_Init();
+//	gray_GPIO_Init();
 	//	Car_Load(40, 40);
 	//	delay_ms(10000);
 	//	Turn_Left_90_Angles();
@@ -21,7 +23,6 @@ int main(void)
 	//	Turn_Right_90_Angles();
 	//	delay_ms(10000);
 
-	Car_stop();
 	//	gray_GPIO_Init();
 	//	photoelectricity_GPIO_Init();
 	//	delay_ms(5000);
@@ -38,21 +39,23 @@ int main(void)
 	//		Servo_Pitch_Control(110);
 	//	Servo_Yaw_Control(90);
 
-	int i = 0;
-	int yaw = 0;
+	//	int i = 0;
+	//	int yaw = 0;
 	while (1)
 	{
-
+		//		MP3_broadcast(MILD_DROUGHT);
+		Run();
+		//		set_speed(0, 0);
 		//		Run();
-		//		get_gray_cnt();
+//			get_gray_cnt();
 		//		Servo_Pitch_Control(50);
 		//		delay_ms(1000);
 		//		Servo_Pitch_Control(250);
 		//		delay_ms(1000);
 
 		//		Chinese_Show_one(10, 10, 0, 16, 0);
-		//				ServoControl(pitch_servo, 80, 220, 500); // 40 - 260
-		//				ServoControl(pitch_servo, 220, 80, 500);
+		// ServoControl(yaw_servo, 40, 260, 500); // 40 - 260
+		// ServoControl(yaw_servo, 260, 40, 500);
 		//		ServoControl(pitch_servo, 180, 0, 2000);
 		//		Servo_Yaw_Control(20);
 		//		delay_ms(1000);

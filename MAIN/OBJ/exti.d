@@ -49,6 +49,8 @@
 ..\obj\exti.o: ..\module\pid\pid.h
 ..\obj\exti.o: ..\module\gyro\gyro.h
 ..\obj\exti.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+..\obj\exti.o: ..\bsp\dma\dma.h
+..\obj\exti.o: ..\module\gyro\gyro.h
 ..\obj\exti.o: ..\module\motor\motor.h
 ..\obj\exti.o: ..\module\encoder\encoder.h
 ..\obj\exti.o: ..\module\lcd\lcd.h
@@ -61,3 +63,4 @@
 ..\obj\exti.o: .\run\run.h
 ..\obj\exti.o: ..\module\photoelectric\photoelectric.h
 ..\obj\exti.o: ..\module\bluetooth\bluetooth.h
+..\obj\exti.o: ..\module\mp3\mp3.h

@@ -50,6 +50,8 @@
 ..\obj\main.o: ..\module\pid\pid.h
 ..\obj\main.o: ..\module\gyro\gyro.h
 ..\obj\main.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+..\obj\main.o: ..\bsp\dma\dma.h
+..\obj\main.o: ..\module\gyro\gyro.h
 ..\obj\main.o: ..\module\motor\motor.h
 ..\obj\main.o: ..\module\encoder\encoder.h
 ..\obj\main.o: ..\module\lidar\lidar.h
@@ -60,3 +62,4 @@
 ..\obj\main.o: .\run\run.h
 ..\obj\main.o: ..\module\photoelectric\photoelectric.h
 ..\obj\main.o: ..\module\bluetooth\bluetooth.h
+..\obj\main.o: ..\module\mp3\mp3.h

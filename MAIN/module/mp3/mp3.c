@@ -1,6 +1,6 @@
 #include "sys.h"
 #include "mp3.h"
-
+#include "lcd.h"
 void VirtualTx_Config(void)
 {
 	GPIO_InitTypeDef GPIO_InitStruct;

@@ -199,15 +199,15 @@ void water_task(void)
 {
     if (region != D)
     {
-        ServoControl(pitch_servo, pitch_scan_angle, pitch_D_water_angle, PITCH_TRANSFER_TIME); // 浇水角度需要后面测量
-        water(INFO_DROUGHT);                                                                   // 非D特殊标志位
+        ServoControl(pitch_servo, pitch_scan_angle, left_water_flag ? left_water_angle : right_water_angle, PITCH_TRANSFER_TIME); // 浇水角度需要后面测量
+        water(INFO_DROUGHT);                                                                                                      // 非D特殊标志位
     }
     else if (region == D)
     {
         if (left_water_flag)
         {
             OpenMV_USART_Init(115200);
-            ServoControl(pitch_servo, pitch_scan_angle, pitch_D_water_angle, YAW_TRANSFER_TIME);
+            ServoControl(pitch_servo, pitch_scan_angle, pitch_D_left_water_angle, YAW_TRANSFER_TIME);
             delay_ms(OPENMV_WAIT);
             water(get_OpenMV());
             ServoControl(yaw_servo, left_D_angle, yaw_mid, YAW_TRANSFER_TIME);
@@ -215,7 +215,7 @@ void water_task(void)
         else if (right_water_flag)
         {
             OpenMV_USART_Init(115200);
-            ServoControl(pitch_servo, pitch_scan_angle, pitch_D_water_angle, YAW_TRANSFER_TIME);
+            ServoControl(pitch_servo, pitch_scan_angle, pitch_D_left_water_angle, YAW_TRANSFER_TIME);
             delay_ms(OPENMV_WAIT);
             water(get_OpenMV());
             ServoControl(yaw_servo, yaw_mid, right_D_angle, YAW_TRANSFER_TIME);

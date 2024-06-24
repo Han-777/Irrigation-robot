@@ -34,12 +34,15 @@ extern water_finish_Structure_TypeDef water_finish_structure;
 #define right_scan_begin 100 // 100
 #define right_scan_end 60    // 60
 
+#define left_water_angle (left_lidar * 0.7 + 110)
+#define right_water_angle (right_lidar * 0.7 + 110)
 // #define left_scan_mid 150  // 左侧居中
 // #define right_scan_mid 150 // 右侧居中
 
 #define left_D_angle 230
 #define right_D_angle 100
-#define pitch_D_water_angle 120
+#define pitch_D_left_water_angle (100 - 0.5 * left_lidar)
+#define pitch_D_right_water_angle (100 - 0.5 * right_lidar)
 // pitch scan angle
 
 #define length_A 27.50 // 浇水的机械臂长度

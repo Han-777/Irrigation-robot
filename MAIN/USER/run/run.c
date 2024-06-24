@@ -117,23 +117,8 @@ int _run_(void)
     }
     else
     {
-        // switch (get_region())
-        // {
-        // case A:
-        // case B:
-        //     break;
-        // case C:
-        // case D:
-        //     break;
-        // case beg:
-        // case home:
-        //     break;
-        // }
         if (!water_finish()) // 得到浇水标志位
         {
-            //            TIM7_Close();
-            //            movement_stop();
-            // water: arm_watering(); （函数负责清楚左/右浇水标志位，如果两标志位都无则给TIM7）
             arm_water_task();
         }
         else

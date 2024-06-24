@@ -44,31 +44,17 @@ int water_finish(void)
         return 1;
         // gyro_USART_Init(921600);
     }
-    else
+    set_speed(0, 0);
+    if (left_water_flag || right_water_flag) // 左侧更高优先级
     {
-        set_speed(0, 0);
-        if (left_water_flag) // 左侧更高优先级
+        lidar_Init(left_water_flag ? left_lidar : right_lidar);
+        delay_ms(10);
+        if (region == C)
         {
-            lidar_Init(left_lidar);
-            delay_ms(10);
-            if (region == C)
-            {
-                C_lidar_error = 24 - left_lidar;
-            }
-            return 0;
-        }
-        if (right_water_flag)
-        {
-            lidar_Init(right_lidar);
-            delay_ms(10);
-            if (region == C)
-            {
-                C_lidar_error = right_lidar - 24;
-            }
-            return 0;
+            C_lidar_error = left_water_flag ? 24 - left_lidar : right_lidar - 24;
         }
     }
-    // return 0;
+    return 0;
 }
 
 void water(colorIdx waterTimes)
@@ -110,7 +96,8 @@ void water(colorIdx waterTimes)
         water_finish_structure.left_water_finish = 1;
         ServoControl(yaw_servo, left_scan_begin, yaw_mid, YAW_TRANSFER_TIME);
         left_water_flag = 0;
-        TFmini_left_USART_Close();
+        //        TFmini_left_USART_Close();
+        left_lidar_state(DISABLE);
     }
     else if (water_finish_structure.right_water_scan_finish)
     {
@@ -118,7 +105,8 @@ void water(colorIdx waterTimes)
         water_finish_structure.right_water_finish = 1;
         ServoControl(yaw_servo, right_scan_begin, yaw_mid, YAW_TRANSFER_TIME);
         right_water_flag = 0;
-        TFmini_right_USART_Close();
+        //        TFmini_right_USART_Close();
+        right_lidar_state(DISABLE);
     }
     if (water_cnt == 2 && water_finish_structure.left_water_finish && water_finish_structure.right_water_finish)
     {

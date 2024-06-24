@@ -61,7 +61,7 @@ int get_region(void)
 int region_finish(void)
 {
     region = (cross_cnt < 2) ? A : ((cross_cnt < 4) ? B : ((cross_cnt < 6) ? C : D));
-    if (((plant_cnt >= 6 && plant_cnt < 9) && region == A) || ((plant_cnt >= 12 && plant_cnt < 15) && region == B) || ((plant_cnt >= 24 && plant_cnt < 27) && region == C) || (plant_cnt >= 30 && region == D)) // 21 in total
+    if (((plant_cnt >= 5 && plant_cnt < 9) && region == A) || ((plant_cnt >= 11 && plant_cnt < 15) && region == B) || ((plant_cnt >= 23 && plant_cnt < 27) && region == C) || (plant_cnt >= 30 && region == D)) // 21 in total
     {
         plant_cnt = (region == A) ? 6 : ((region == B) ? 12 : 24);
         return 1; // 2/4/6 -> 0
@@ -162,7 +162,7 @@ int _run_(void)
             // {
 
             //     // lidar_err =
-            set_speed(RUN_SPEED + lidar_err, RUN_SPEED - lidar_err);
+            // set_speed(RUN_SPEED + lidar_err, RUN_SPEED - lidar_err);
             // }
             // chassis_run(RUN_SPEED, target_Yaw); // 需要一个函数区分区域
             // if (region == A || region == B)

@@ -206,6 +206,19 @@ void lidar_Init(lidarIndexEnum lidar_idx)
 	}
 }
 
+/* only open usart interupt config
+ * state can only be ENABLE or DISABLE
+ */
+void left_lidar_state(FunctionalState state)
+{
+	USART_ITConfig(UART4, USART_IT_RXNE, state);
+}
+
+void right_lidar_state(FunctionalState state)
+{
+	USART_ITConfig(USART2, USART_IT_RXNE, state);
+}
+
 void UART4_IRQHandler(void)
 {
 	static u8 count = 0;

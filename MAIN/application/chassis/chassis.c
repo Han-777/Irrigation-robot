@@ -168,7 +168,7 @@ int chassis_rotate(float target_yaw)
 // 并级
 int chassis_run(void)
 {
-    static int left_ff_speed = 0, right_ff_speed;
+    static int left_ff_speed = 0, right_ff_speed = 0;
     heading_Trans();
     increment_pid_calculate(&heading_inc_PID, target_Yaw, current_yaw); // 角度外环
     increment_pid_calculate(&left_inc_PID, left_target_speed, vec[0]);
@@ -182,8 +182,8 @@ int chassis_run(void)
     }
     else if (region == B || region == C || region == D)
     {
-        info[17] = left_inc_PID.output + 100 * heading_inc_PID.output + left_ff_speed;
-        info[18] = right_inc_PID.output - 100 * heading_inc_PID.output + right_ff_speed;
+        info[17] = left_inc_PID.output + 200 * heading_inc_PID.output + left_ff_speed;
+        info[18] = right_inc_PID.output - 200 * heading_inc_PID.output + right_ff_speed;
     }
     Car_Load(info[17], info[18]);
     return 1;

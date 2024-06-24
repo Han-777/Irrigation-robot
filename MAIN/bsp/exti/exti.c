@@ -7,10 +7,10 @@
 /*****
 4月25新加
 ******/
-int R_r = 0;	// 用来判断在主函数里面是否要浇水,右
-int L_l = 0;	// 用来判断在主函数里面是否要浇水，左
-int Flag_L = 0; // 用来判断是左边算左激光测试后舵机所抬角度
-int Flag_R = 0;
+// int R_r = 0;	// 用来判断在主函数里面是否要浇水,右
+// int L_l = 0;	// 用来判断在主函数里面是否要浇水，左
+// int Flag_L = 0; // 用来判断是左边算左激光测试后舵机所抬角度
+// int Flag_R = 0;
 int left_water_flag = 0, right_water_flag = 0; // water start flag
 
 //////////////////////////
@@ -164,18 +164,20 @@ void EXTI15_10_IRQHandler(void)
 		}
 		else if ((region == C || region == D)) // C / D
 		{
-			movement_stop();
 			if ((EXTI_GetITStatus(EXTI_Line11) == SET) && (EXTI_GetITStatus(EXTI_Line10) == SET))
 			{
+				movement_stop();
 				left_water_flag = 1;
 				right_water_flag = 1;
 			}
 			else if ((EXTI_GetITStatus(EXTI_Line11) == SET) && (EXTI_GetITStatus(EXTI_Line10) == RESET))
 			{
+				movement_stop();
 				right_water_flag = 1;
 			}
 			else if ((EXTI_GetITStatus(EXTI_Line11) == RESET) && (EXTI_GetITStatus(EXTI_Line10) == SET))
 			{
+				movement_stop();
 				left_water_flag = 1;
 			}
 		}

@@ -22,7 +22,7 @@ Dialog DLL:      TCM.DLL V1.14.4.0
  
 <h2>Project:</h2>
 D:\Github\Irrigation-robot\MAIN\USER\Template.uvprojx
-Project File Date:  06/22/2024
+Project File Date:  06/23/2024
 
 <h2>Output:</h2>
 Build target 'Template'
@@ -31,17 +31,19 @@ compiling dma.c...
   void Key_GPIO_Init();
 ..\bsp\iic\iic.h(12): warning:  #1-D: last line of file ends without a newline
       
-..\bsp\dma\dma.h(13): warning:  #1-D: last line of file ends without a newline
+..\bsp\dma\dma.h(18): warning:  #1-D: last line of file ends without a newline
   #endif
-..\bsp\dma\dma.c(8): warning:  #177-D: variable "DMA_InitStructure" was declared but never referenced
-        DMA_InitTypeDef DMA_InitStructure;
-..\bsp\dma\dma.c(169): warning:  #1-D: last line of file ends without a newline
-  // }
-..\bsp\dma\dma.c: 5 warnings, 0 errors
+..\bsp\dma\dma.c(111): warning:  #223-D: function "memcpy" declared implicitly
+                                        memcpy(Fd_rsimu, Fd_data, sizeof(Fd_data));
+..\bsp\dma\dma.c(119): warning:  #223-D: function "memcpy" declared implicitly
+                                        memcpy(Fd_rsahrs, Fd_data, sizeof(Fd_data));
+..\bsp\dma\dma.c(203): warning:  #1-D: last line of file ends without a newline
+  }
+..\bsp\dma\dma.c: 6 warnings, 0 errors
 linking...
-Program Size: Code=26112 RO-data=568 RW-data=356 ZI-data=2180  
+Program Size: Code=27264 RO-data=568 RW-data=372 ZI-data=2692  
 FromELF: creating hex file...
-"..\OBJ\Template.axf" - 0 Error(s), 5 Warning(s).
+"..\OBJ\Template.axf" - 0 Error(s), 6 Warning(s).
 
 <h2>Collection of Component include folders:</h2>
   D:\Github\Irrigation-robot\MAIN\USER\RTE

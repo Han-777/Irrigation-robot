@@ -11,7 +11,8 @@ int main(void)
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2); // 4抢占 0响应 (数字越小优先级越高！)
 													//	LCD_Init();
 													//	POINT_COLOR = BLUE; // 画笔颜色
-
+	// arm_Init();
+	chassis_Init();
 	//	Car_Load(40, 40);
 	//	delay_ms(10000);
 	//	Turn_Left_90_Angles();
@@ -41,8 +42,8 @@ int main(void)
 	//	int yaw = 0;
 	while (1)
 	{
-
-		Run();
+//		set_speed(RUN_SPEED, RUN_SPEED);
+		//		Run();
 		//				get_gray_cnt();
 		//		Servo_Pitch_Control(50);
 		//		delay_ms(1000);
@@ -50,8 +51,8 @@ int main(void)
 		//		delay_ms(1000);
 
 		//		Chinese_Show_one(10, 10, 0, 16, 0);
-		//				ServoControl(pitch_servo, 80, 220, 500); // 40 - 260
-		//				ServoControl(pitch_servo, 220, 80, 500);
+		// ServoControl(yaw_servo, 40, 260, 500); // 40 - 260
+		// ServoControl(yaw_servo, 260, 40, 500);
 		//		ServoControl(pitch_servo, 180, 0, 2000);
 		//		Servo_Yaw_Control(20);
 		//		delay_ms(1000);

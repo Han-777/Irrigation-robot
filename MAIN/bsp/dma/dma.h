@@ -2,9 +2,14 @@
 #define __DMA_H
 
 #include "sys.h"
+#include "gyro.h"
+
+#define UART5_RX_BUFFER_SIZE 256
+
 #define GYRO_DMA_Channel DMA_Channel_4 // USART5
-#define GRYO_DMA_Buf_Size 100
+#define GRYO_DMA_Buf_Size 64
 #define GYRO_DMA_Stream DMA1_Stream0
+
 void LCD_DMA_init(DMA_Stream_TypeDef *DMA_Streamx, u32 chx, u32 par, u32 mar, u16 ndtr);
 void OPS_DMA_init(DMA_Stream_TypeDef *DMA_Streamx, u32 chx, u32 par, u32 mar, u16 ndtr);
 

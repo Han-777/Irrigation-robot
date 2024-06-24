@@ -8,6 +8,8 @@
 
 extern float ori_target_Yaw, target_Yaw, current_yaw; // ori: fix, target_Yaw: dynamically changed
 extern int clockwise_rotate_flag;
+void GYRO_Inti(void);
+
 void heading_Trans(void);
 
 extern float Err_Set;
@@ -65,6 +67,11 @@ extern u8 ttl_receive;
 extern IMUData_Packet_t IMUData_Packet;
 extern AHRSData_Packet_t AHRSData_Packet;
 
+extern int rs_imutype;
+extern int rs_ahrstype;
+extern u8 Fd_data[64];
+extern u8 Fd_rsimu[64];
+extern u8 Fd_rsahrs[56];
 void usart5_send(u8 data);
 
 long long timestamp(u8 Data_1, u8 Data_2, u8 Data_3, u8 Data_4);

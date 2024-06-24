@@ -49,6 +49,8 @@
 ..\obj\pid.o: .\run\run.h
 ..\obj\pid.o: ..\application\chassis\chassis.h
 ..\obj\pid.o: ..\module\gyro\gyro.h
+..\obj\pid.o: ..\bsp\dma\dma.h
+..\obj\pid.o: ..\module\gyro\gyro.h
 ..\obj\pid.o: ..\module\motor\motor.h
 ..\obj\pid.o: ..\module\encoder\encoder.h
 ..\obj\pid.o: ..\module\lcd\lcd.h

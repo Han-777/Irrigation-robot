@@ -1,6 +1,8 @@
 #include <math.h>
 #include "gyro.h"
 
+int gyro_init_flag = 0;
+
 float ori_target_Yaw = 0, target_Yaw = 0, current_yaw = 0; // ori: fix, target_Yaw: dynamically changed
 int clockwise_rotate_flag = 0;							   // rotate flag
 
@@ -19,6 +21,7 @@ void GYRO_Init(void)
 {
 	gyro_USART_Init(921600);
 	GYRO_DMA_Config();
+	gyro_init_flag = 1;
 }
 // float Target_Yaw;
 // float target_yaw;

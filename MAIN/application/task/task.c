@@ -52,7 +52,7 @@
 //		TTL_Hex2Dec();
 //		R_r = 1; // 用来激光判断的
 //		//		Flower_Count++;
-//		//		printf("distance_r=%d\r\n",Dist_right);//测试激光能不能正常工作
+//		//		printf("distance_r=%d\r\n",lidar_right);//测试激光能不能正常工作
 //		//		printf("Flower_Count=%d, N_Flag=%d/r/n",Flower_Count,N_Flag);
 //		delay_ms(500);
 //		if (N_Flag == 0) // 双重保险
@@ -80,7 +80,7 @@
 //		TTL_Hex2Dec();
 //		L_l = 1;
 //		//		Flower_Count++;
-//		//		printf("distance_l=%d\r\n",Dist_left);//测试激光能不能正常工作
+//		//		printf("distance_l=%d\r\n",lidar_left);//测试激光能不能正常工作
 //		//		printf("Flower_Count=%d,N_Flag=%d/r/n",Flower_Count,N_Flag);
 //		delay_ms(500);
 //		if (N_Flag == 0) // 双重保险

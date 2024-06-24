@@ -50,6 +50,8 @@
 ..\obj\arm.o: ..\module\pid\pid.h
 ..\obj\arm.o: ..\module\gyro\gyro.h
 ..\obj\arm.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+..\obj\arm.o: ..\bsp\dma\dma.h
+..\obj\arm.o: ..\module\gyro\gyro.h
 ..\obj\arm.o: ..\module\motor\motor.h
 ..\obj\arm.o: ..\module\encoder\encoder.h
 ..\obj\arm.o: ..\module\lcd\lcd.h

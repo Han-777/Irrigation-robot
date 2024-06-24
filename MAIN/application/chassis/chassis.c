@@ -4,7 +4,7 @@
 int vec[2] = {0};
 float info[20] = {0};
 
-float speed_limit = 50, heading_speed_limit = 5; // speed lmit should be smaller than 0.8 m/s
+float speed_limit = 50, heading_speed_limit = 10; // speed lmit should be smaller than 0.8 m/s
 //==================== Internal vars =====================:
 // constants & PIDs
 // PID heading_PID;
@@ -14,7 +14,7 @@ Increment_PID left_inc_PID, right_inc_PID, heading_inc_PID;
 //  const float H = 0.188, W = 0.25, R = 0.413, PI = 3.1415926535;
 const float speed_kp = 0.1, speed_ki = 0.12, speed_kd = 0.00, speed_Kv = 0.1, // feed forward gain
                                                                               //    heading_kp = 0.07, heading_ki = 0.00, heading_kd = 0.017;                   // for rotate
-    heading_kp = 0.05, heading_ki = 0.0001, heading_kd = 0.012;               // for rotate
+    heading_kp = 0.05, heading_ki = 0.0000, heading_kd = 0.01;                // for rotate
 
 float left_target_speed = 0, right_target_speed = 0;
 // head_kp = 0.1, head_ki = 0, head_kd = 0, head_ki_limit = 2, head_out_limit = 180;
@@ -25,6 +25,21 @@ float left_target_speed = 0, right_target_speed = 0;
 // motor_kp = 0.1, motor_ki = 0.002, motor_kd = 0.001, motor_ki_limit = 80,
 
 //==================== chassis movement =====================:
+/**
+ * @brief  TIM7, GYRO and pe close, stop car
+ *
+ * @param    None
+ * @return   None
+ */
+void movement_stop(void)
+{
+    TIM7_Close();
+    gyro_USART_Close();
+    gyro_init_flag = 0;
+    Car_stop();
+    PE_EXTI_Close();
+    delay_ms(20);
+}
 /**
  * @brief  Initialization for all chassis elements
  *
@@ -43,8 +58,8 @@ void chassis_Init(void)
     TTL_Hex2Dec();
     ori_target_Yaw = Read_Yaw();
     target_Yaw = ori_target_Yaw;
-    TFmini_right_USART_Init(115200);
-    TFmini_left_USART_Init(115200);
+    lidar_Init(left_lidar); //  for test
+    lidar_Init(right_lidar);
     VirtualTx_Config();
     TIM7_Init(1000 - 1, 840 - 1); // 84M / 4200 / 1000 = 20ms
 }
@@ -120,6 +135,10 @@ int chassis_rotate(float target_yaw)
     increment_pid_calculate(&heading_inc_PID, target_yaw, current_yaw);
     info[17] = 100 * heading_inc_PID.output;
     info[18] = -100 * heading_inc_PID.output;
+    info[17] = ((abs(info[17]) > 10) ? info[17] : (info[17] > 0) ? 10
+                                                                 : -10);
+    info[18] = ((abs(info[18]) > 10) ? info[18] : (info[18] > 0) ? 10
+                                                                 : -10);
     Car_Load(info[17], info[18]);
     return 1;
 }
@@ -184,8 +203,8 @@ void TIM7_IRQHandler(void)
         // info[7] = heading_inc_PID.output;
         // info[8] = heading_inc_PID.error;
         // info[9] = heading_inc_PID.sum_error;
-        // info[10] = Dist_right;
-        // info[11] = Dist_left;
+        // info[10] = lidar_right;
+        // info[11] = lidar_left;
         chassis_run();
 
         //        		chassis_rotate(target_Yaw);

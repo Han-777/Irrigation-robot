@@ -138,17 +138,9 @@ void EXTI15_10_IRQHandler(void)
 		{
 			if (EXTI_GetITStatus(EXTI_Line10) == SET) // left hand side
 			{
-				//				delay_ms(50);
-				TIM7_Close();
-				Car_stop();
-				// gyro_USART_Close();
-
-				delay_ms(50);
+				movement_stop();
 				left_water_flag = 1;
 				right_water_flag = 1;
-				// EXTI_ClearITPendingBit(EXTI_Line10);
-				// EXTI_ClearITPendingBit(EXTI_Line11);
-				PE_EXTI_Close();
 			}
 		}
 		else if (region == B) // B
@@ -157,51 +149,30 @@ void EXTI15_10_IRQHandler(void)
 			{
 				TIM7_Close();
 				Car_stop();
-				// gyro_USART_Close();
-				delay_ms(50);
+				movement_stop();
 				left_water_flag = 1;
 				right_water_flag = 1;
-				// EXTI_ClearITPendingBit(EXTI_Line10);
-				// EXTI_ClearITPendingBit(EXTI_Line11);
-				PE_EXTI_Close();
 			}
 		}
 		else if ((region == C || region == D)) // C / D
 		{
-			TIM7_Close();
-			Car_stop();
-			// gyro_USART_Close();
-			delay_ms(50);
+			movement_stop();
 			if ((EXTI_GetITStatus(EXTI_Line11) == SET) && (EXTI_GetITStatus(EXTI_Line10) == SET))
 			{
 				left_water_flag = 1;
 				right_water_flag = 1;
-				// EXTI_ClearITPendingBit(EXTI_Line11);
-				// EXTI_ClearITPendingBit(EXTI_Line10);
-				PE_EXTI_Close();
 			}
 			else if ((EXTI_GetITStatus(EXTI_Line11) == SET) && (EXTI_GetITStatus(EXTI_Line10) == RESET))
 			{
 				right_water_flag = 1;
-				// EXTI_ClearITPendingBit(EXTI_Line11);
-				PE_EXTI_Close();
 			}
 			else if ((EXTI_GetITStatus(EXTI_Line11) == RESET) && (EXTI_GetITStatus(EXTI_Line10) == SET))
 			{
 				left_water_flag = 1;
-				// EXTI_ClearITPendingBit(EXTI_Line10);
-				PE_EXTI_Close();
 			}
 		}
-		// else
-		// {
-		// 	EXTI_ClearITPendingBit(EXTI_Line10);
-		// 	EXTI_ClearITPendingBit(EXTI_Line11);
-		// 	//
-		// }
 		EXTI_ClearITPendingBit(EXTI_Line10);
 		EXTI_ClearITPendingBit(EXTI_Line11);
-		//			BEEP=1;
 	}
 	//	}
 	//	LED2=1;

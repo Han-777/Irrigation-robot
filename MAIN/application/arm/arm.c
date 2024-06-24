@@ -11,18 +11,18 @@ void arm_Init(void)
 {
     servo_Init_All();
     photoelectric_GPIO_Init();
-//    PE_EXTI_Init();
+    //    PE_EXTI_Init();
     Servo_Pitch_Control(pitch_mid);
     Servo_Yaw_Control(yaw_mid);
 }
 
 int lidar_water_confirm(void)
 {
-    if (left_water_flag && Dist_left < lidar_water_dist_threshold)
+    if (left_water_flag && lidar_left < lidar_water_dist_threshold)
     {
         return 1;
     }
-    else if (right_water_flag && Dist_left < lidar_water_dist_threshold)
+    else if (right_water_flag && lidar_left < lidar_water_dist_threshold)
     {
         return 1;
     }
@@ -263,7 +263,7 @@ void arm_water_task(void)
 //		TTL_Hex2Dec();
 //		R_r = 1; // 用来激光判断的
 //		//		Flower_Count++;
-//		//		printf("distance_r=%d\r\n",Dist_right);//测试激光能不能正常工作
+//		//		printf("distance_r=%d\r\n",lidar_right);//测试激光能不能正常工作
 //		//		printf("Flower_Count=%d, N_Flag=%d/r/n",Flower_Count,N_Flag);
 //		delay_ms(500);
 //		if (N_Flag == 0) // 双重保险
@@ -291,7 +291,7 @@ void arm_water_task(void)
 //		TTL_Hex2Dec();
 //		L_l = 1;
 //		//		Flower_Count++;
-//		//		printf("distance_l=%d\r\n",Dist_left);//测试激光能不能正常工作
+//		//		printf("distance_l=%d\r\n",lidar_left);//测试激光能不能正常工作
 //		//		printf("Flower_Count=%d,N_Flag=%d/r/n",Flower_Count,N_Flag);
 //		delay_ms(500);
 //		if (N_Flag == 0) // 双重保险

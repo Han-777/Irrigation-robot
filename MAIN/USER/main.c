@@ -42,8 +42,9 @@ int main(void)
 	//	int yaw = 0;
 	while (1)
 	{
-
-//		set_speed(RUN_SPEED, RUN_SPEED);
+//		MP3_broadcast(MILD_DROUGHT);
+//		Run();
+//		set_speed(0, 0);
 		//		Run();
 		//				get_gray_cnt();
 		//		Servo_Pitch_Control(50);

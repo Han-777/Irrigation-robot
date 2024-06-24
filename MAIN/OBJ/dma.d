@@ -46,3 +46,4 @@
 ..\obj\dma.o: ..\bsp\exti\exti.h
 ..\obj\dma.o: ..\module\gyro\gyro.h
 ..\obj\dma.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+..\obj\dma.o: ..\bsp\dma\dma.h

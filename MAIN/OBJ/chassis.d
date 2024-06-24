@@ -47,6 +47,8 @@
 ..\obj\chassis.o: ..\module\pid\pid.h
 ..\obj\chassis.o: ..\module\gyro\gyro.h
 ..\obj\chassis.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+..\obj\chassis.o: ..\bsp\dma\dma.h
+..\obj\chassis.o: ..\module\gyro\gyro.h
 ..\obj\chassis.o: ..\module\motor\motor.h
 ..\obj\chassis.o: ..\module\encoder\encoder.h
 ..\obj\chassis.o: ..\module\lcd\lcd.h

@@ -3,12 +3,14 @@
 
 #include "stdio.h"
 #include "sys.h"
-
+#include "dma.h"
 #define PI 3.14159265f
+
+extern int gyro_init_flag;
 
 extern float ori_target_Yaw, target_Yaw, current_yaw; // ori: fix, target_Yaw: dynamically changed
 extern int clockwise_rotate_flag;
-void GYRO_Inti(void);
+void GYRO_Init(void);
 
 void heading_Trans(void);
 

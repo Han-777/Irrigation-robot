@@ -153,12 +153,12 @@ int cross_to_cross(void)
 {
     // if (cross_cnt % 2 != 0) //
     // {
-    for (int i = 0; i < 500; ++i)
-    {
-        set_speed(RUN_SPEED, RUN_SPEED);
-        // chassis_run(RUN_SPEED, target_Yaw);
-        delay_ms(2);
-    }
+    // for (int i = 0; i < 500; ++i)
+    // {
+    set_speed(RUN_SPEED, RUN_SPEED);
+    // chassis_run(RUN_SPEED, target_Yaw);
+    delay_ms(1000);
+    // }
     //    delay_ms(CROSS_TIME);
     if (get_cross_flag()) // cross_cnt++
     {

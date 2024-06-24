@@ -4,7 +4,7 @@
 int vec[2] = {0};
 float info[20] = {0};
 
-float speed_limit = 50, heading_speed_limit = 50; // speed lmit should be smaller than 0.8 m/s
+float speed_limit = 50, heading_speed_limit = 5; // speed lmit should be smaller than 0.8 m/s
 //==================== Internal vars =====================:
 // constants & PIDs
 // PID heading_PID;
@@ -14,7 +14,7 @@ Increment_PID left_inc_PID, right_inc_PID, heading_inc_PID;
 //  const float H = 0.188, W = 0.25, R = 0.413, PI = 3.1415926535;
 const float speed_kp = 0.1, speed_ki = 0.12, speed_kd = 0.00, speed_Kv = 0.1, // feed forward gain
                                                                               //    heading_kp = 0.07, heading_ki = 0.00, heading_kd = 0.017;                   // for rotate
-    heading_kp = 0.05, heading_ki = 0.001, heading_kd = 0.012;                 // for rotate
+    heading_kp = 0.05, heading_ki = 0.0001, heading_kd = 0.012;               // for rotate
 
 float left_target_speed = 0, right_target_speed = 0;
 // head_kp = 0.1, head_ki = 0, head_kd = 0, head_ki_limit = 2, head_out_limit = 180;
@@ -38,7 +38,6 @@ void chassis_Init(void)
     Motor_Init();
     Encoder_TIM_Init_All();
     chassis_pid_Init();
-    // gyro_USART_Init(921600);
     GYRO_Init();
     delay_ms(5000); // wait for stable(it is not necassary)
     TTL_Hex2Dec();
@@ -114,13 +113,14 @@ void check_arrive(void) // µΩ¥Ô≈–∂œ
 // ???°§pid
 int chassis_rotate(float target_yaw)
 {
+    set_speed(0, 0);
     check_arrive();
     heading_Trans();
     // heading_speed_limit = 50;
     increment_pid_calculate(&heading_inc_PID, target_yaw, current_yaw);
-    Car_Load(100 * heading_inc_PID.output, -100 * heading_inc_PID.output);
     info[17] = 100 * heading_inc_PID.output;
     info[18] = -100 * heading_inc_PID.output;
+    Car_Load(info[17], info[18]);
     return 1;
 }
 

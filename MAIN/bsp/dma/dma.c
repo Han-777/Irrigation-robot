@@ -54,7 +54,116 @@ void GYRO_DMA_Config(void)
 	USART_DMACmd(UART5, USART_DMAReq_Rx, ENABLE);
 }
 
-void DMA1_Stream0_IRQHandler(void)
+// void DMA1_Stream0_IRQHandler(void)
+// {
+// 	static u8 Count = 0;
+// 	static u8 last_rsnum = 0;
+// 	static u8 rsimu_flag = 0; // 接收开始标志位
+// 	static u8 rsacc_flag = 0;
+// 	u8 Usart_Receive;
+
+// 	if (DMA_GetITStatus(DMA1_Stream0, DMA_IT_TCIF0) != RESET)
+// 	{
+// 		DMA_ClearITPendingBit(DMA1_Stream0, DMA_IT_TCIF0);
+
+// 		// 切换缓冲区
+// 		if (DMA_GetCurrentMemoryTarget(DMA1_Stream0) == 0)
+// 		{
+// 			processing_buffer = UART5_RX_Buffer_A;
+// 			current_buffer = UART5_RX_Buffer_B;
+// 		}
+// 		else
+// 		{
+// 			processing_buffer = UART5_RX_Buffer_B;
+// 			current_buffer = UART5_RX_Buffer_A;
+// 		}
+
+// 		RS485_RX_RE = 0;
+// 		RS485_RX_DE = 0;
+// 		ttl_receive = 1;
+
+// 		// 处理接收到的数据
+// 		for (uint16_t i = 0; i < UART5_RX_BUFFER_SIZE; i++)
+// 		{
+// 			Usart_Receive = processing_buffer[i];
+// 			Fd_data[Count] = Usart_Receive;
+
+// 			if (((last_rsnum == FRAME_END) && (Usart_Receive == FRAME_HEAD)) || Count > 0)
+// 			{
+// 				Count++;
+// 				if ((Fd_data[1] == TYPE_IMU) && (Fd_data[2] == IMU_LEN))
+// 					rsimu_flag = 1;
+// 				if ((Fd_data[1] == TYPE_AHRS) && (Fd_data[2] == AHRS_LEN))
+// 					rsacc_flag = 1;
+// 			}
+// 			else
+// 				Count = 0;
+
+// 			last_rsnum = Usart_Receive;
+
+// 			// 接收完整后进入
+// 			if (rsimu_flag == 1 && Count == IMU_RS)
+// 			{
+// 				Count = 0;
+// 				rsimu_flag = 0;
+// 				rs_imutype = 1; // imu data available flag
+// 				if (Fd_data[IMU_RS - 1] == FRAME_END)
+// 					memcpy(Fd_rsimu, Fd_data, sizeof(Fd_data));
+// 			}
+// 			if (rsacc_flag == 1 && Count == AHRS_RS)
+// 			{
+// 				Count = 0;
+// 				rsacc_flag = 0;
+// 				rs_ahrstype = 1; // ahrs data available flag
+// 				if (Fd_data[AHRS_RS - 1] == FRAME_END)
+// 					memcpy(Fd_rsahrs, Fd_data, sizeof(Fd_data));
+// 			}
+// 		}
+
+// 		// 重新启动DMA传输
+// 		DMA_SetCurrDataCounter(DMA1_Stream0, UART5_RX_BUFFER_SIZE);
+// 		DMA_Cmd(DMA1_Stream0, ENABLE);
+// 	}
+
+// 	if (DMA_GetITStatus(DMA1_Stream0, DMA_IT_HTIF0) != RESET)
+// 	{
+// 		DMA_ClearITPendingBit(DMA1_Stream0, DMA_IT_HTIF0);
+// 		// 半传输中断处理逻辑（可选）
+// 	}
+// }
+
+// void UART5_IRQHandler(void)
+// {
+// 	// 检查过载错误
+// 	if (USART_GetFlagStatus(USARTx, USART_FLAG_ORE) != RESET)
+// 	{
+// 		// 清除过载错误标志
+// 		USART_ReceiveData(USARTx); // 读取SR和DR
+// 	}
+
+// 	/*
+// 	当使用DMA接收数据时，DMA会自动将接收到的数据从USART数据寄存器传输到内存缓冲区。此时，USART的接收中断（RXNE）通常不会触发，因为数据传输是由DMA处理的。
+
+// 	为了检测一帧数据的结束，通常会启用USART的空闲中断（IDLE）。当USART接收到一帧数据并且接收线空闲时，会触发空闲中断。在空闲中断中，可以处理接收到的数据并重新启动DMA。
+
+// 	*/
+// 	if (USART_GetITStatus(UART5, USART_IT_IDLE) != RESET)
+// 	{
+// 		// 清除IDLE中断标志
+// 		USART_ClearITPendingBit(UART5, USART_IT_IDLE);
+
+// 		// 获取接收到的数据长度
+// 		uint16_t rxCount = UART5_RX_BUFFER_SIZE - DMA_GetCurrDataCounter(DMA1_Stream0);
+
+// 		// 确定当前使用的缓冲区
+// 		uint8_t *currentBuffer = (DMA_GetCurrentMemoryTarget(DMA1_Stream0) == 0) ? UART5_RX_Buffer_B : UART5_RX_Buffer_A;
+
+// 		// 处理接收到的数据
+// 		ProcessReceivedData(currentBuffer, rxCount);
+// 	}
+// }
+
+void ProcessDMAData(uint8_t *buffer, uint16_t size)
 {
 	static u8 Count = 0;
 	static u8 last_rsnum = 0;
@@ -62,6 +171,51 @@ void DMA1_Stream0_IRQHandler(void)
 	static u8 rsacc_flag = 0;
 	u8 Usart_Receive;
 
+	RS485_RX_RE = 0;
+	RS485_RX_DE = 0;
+	ttl_receive = 1;
+
+	// 处理接收到的数据
+	for (uint16_t i = 0; i < size; i++)
+	{
+		Usart_Receive = buffer[i];
+		Fd_data[Count] = Usart_Receive;
+
+		if (((last_rsnum == FRAME_END) && (Usart_Receive == FRAME_HEAD)) || Count > 0)
+		{
+			Count++;
+			if ((Fd_data[1] == TYPE_IMU) && (Fd_data[2] == IMU_LEN))
+				rsimu_flag = 1;
+			if ((Fd_data[1] == TYPE_AHRS) && (Fd_data[2] == AHRS_LEN))
+				rsacc_flag = 1;
+		}
+		else
+			Count = 0;
+
+		last_rsnum = Usart_Receive;
+
+		// 接收完整后进入
+		if (rsimu_flag == 1 && Count == IMU_RS)
+		{
+			Count = 0;
+			rsimu_flag = 0;
+			rs_imutype = 1; // imu data available flag
+			if (Fd_data[IMU_RS - 1] == FRAME_END)
+				memcpy(Fd_rsimu, Fd_data, sizeof(Fd_data));
+		}
+		if (rsacc_flag == 1 && Count == AHRS_RS)
+		{
+			Count = 0;
+			rsacc_flag = 0;
+			rs_ahrstype = 1; // ahrs data available flag
+			if (Fd_data[AHRS_RS - 1] == FRAME_END)
+				memcpy(Fd_rsahrs, Fd_data, sizeof(Fd_data));
+		}
+	}
+}
+
+void DMA1_Stream0_IRQHandler(void)
+{
 	if (DMA_GetITStatus(DMA1_Stream0, DMA_IT_TCIF0) != RESET)
 	{
 		DMA_ClearITPendingBit(DMA1_Stream0, DMA_IT_TCIF0);
@@ -78,47 +232,8 @@ void DMA1_Stream0_IRQHandler(void)
 			current_buffer = UART5_RX_Buffer_A;
 		}
 
-		RS485_RX_RE = 0;
-		RS485_RX_DE = 0;
-		ttl_receive = 1;
-
 		// 处理接收到的数据
-		for (uint16_t i = 0; i < UART5_RX_BUFFER_SIZE; i++)
-		{
-			Usart_Receive = processing_buffer[i];
-			Fd_data[Count] = Usart_Receive;
-
-			if (((last_rsnum == FRAME_END) && (Usart_Receive == FRAME_HEAD)) || Count > 0)
-			{
-				Count++;
-				if ((Fd_data[1] == TYPE_IMU) && (Fd_data[2] == IMU_LEN))
-					rsimu_flag = 1;
-				if ((Fd_data[1] == TYPE_AHRS) && (Fd_data[2] == AHRS_LEN))
-					rsacc_flag = 1;
-			}
-			else
-				Count = 0;
-
-			last_rsnum = Usart_Receive;
-
-			// 接收完整后进入
-			if (rsimu_flag == 1 && Count == IMU_RS)
-			{
-				Count = 0;
-				rsimu_flag = 0;
-				rs_imutype = 1; // imu data available flag
-				if (Fd_data[IMU_RS - 1] == FRAME_END)
-					memcpy(Fd_rsimu, Fd_data, sizeof(Fd_data));
-			}
-			if (rsacc_flag == 1 && Count == AHRS_RS)
-			{
-				Count = 0;
-				rsacc_flag = 0;
-				rs_ahrstype = 1; // ahrs data available flag
-				if (Fd_data[AHRS_RS - 1] == FRAME_END)
-					memcpy(Fd_rsahrs, Fd_data, sizeof(Fd_data));
-			}
-		}
+		ProcessDMAData(processing_buffer, UART5_RX_BUFFER_SIZE);
 
 		// 重新启动DMA传输
 		DMA_SetCurrDataCounter(DMA1_Stream0, UART5_RX_BUFFER_SIZE);
@@ -134,70 +249,35 @@ void DMA1_Stream0_IRQHandler(void)
 
 void UART5_IRQHandler(void)
 {
+
+	// 检查过载错误
+	if (USART_GetFlagStatus(UART5, USART_FLAG_ORE) != RESET)
+	{
+		// 清除过载错误标志
+		USART_ReceiveData(UART5); // 读取SR和DR
+	}
+
 	if (USART_GetITStatus(UART5, USART_IT_IDLE) != RESET)
 	{
-		// 清除IDLE中断标志
-		USART_ClearITPendingBit(UART5, USART_IT_IDLE);
+		// 清除IDLE标志
+		USART_ReceiveData(UART5);
 
 		// 停止DMA传输
 		DMA_Cmd(DMA1_Stream0, DISABLE);
 
 		// 获取接收到的数据长度
-		uint16_t rxCount = UART5_RX_BUFFER_SIZE - DMA_GetCurrDataCounter(DMA1_Stream0);
-
-		// 确定当前使用的缓冲区
-		uint8_t *currentBuffer = (DMA_GetCurrentMemoryTarget(DMA1_Stream0) == 0) ? UART5_RX_Buffer_B : UART5_RX_Buffer_A;
+		uint16_t recv_size = UART5_RX_BUFFER_SIZE - DMA_GetCurrDataCounter(GYRO_DMA_Stream);
 
 		// 处理接收到的数据
-		static u8 Count = 0;
-		static u8 last_rsnum = 0;
-		static u8 rsimu_flag = 0;
-		static u8 rsacc_flag = 0;
-		u8 Usart_Receive;
+		ProcessDMAData(current_buffer, recv_size);
 
-		for (uint16_t i = 0; i < rxCount; i++)
-		{
-			Usart_Receive = currentBuffer[i];
-			Fd_data[Count] = Usart_Receive;
+		// 清除DMA标志位
+		DMA_ClearFlag(DMA1_Stream0, DMA_FLAG_TCIF0 | DMA_FLAG_HTIF0 | DMA_FLAG_TEIF0 | DMA_FLAG_DMEIF0 | DMA_FLAG_FEIF0);
 
-			if (((last_rsnum == FRAME_END) && (Usart_Receive == FRAME_HEAD)) || Count > 0)
-			{
-				Count++;
-				if ((Fd_data[1] == TYPE_IMU) && (Fd_data[2] == IMU_LEN))
-					rsimu_flag = 1;
-				if ((Fd_data[1] == TYPE_AHRS) && (Fd_data[2] == AHRS_LEN))
-					rsacc_flag = 1;
-			}
-			else
-				Count = 0;
+		// 重新设置DMA传输数量
+		DMA_SetCurrDataCounter(GYRO_DMA_Stream, UART5_RX_BUFFER_SIZE);
 
-			last_rsnum = Usart_Receive;
-
-			// 接收完整后进入
-			if (rsimu_flag == 1 && Count == IMU_RS)
-			{
-				Count = 0;
-				rsimu_flag = 0;
-				rs_imutype = 1; // imu data available flag
-				if (Fd_data[IMU_RS - 1] == FRAME_END)
-					memcpy(Fd_rsimu, Fd_data, sizeof(Fd_data));
-			}
-			if (rsacc_flag == 1 && Count == AHRS_RS)
-			{
-				Count = 0;
-				rsacc_flag = 0;
-				rs_ahrstype = 1; // ahrs data available flag
-				if (Fd_data[AHRS_RS - 1] == FRAME_END)
-					memcpy(Fd_rsahrs, Fd_data, sizeof(Fd_data));
-			}
-		}
-
-		// 重新设置DMA传输数量并启动DMA
-		DMA_SetCurrDataCounter(DMA1_Stream0, UART5_RX_BUFFER_SIZE);
-		DMA_Cmd(DMA1_Stream0, ENABLE);
-
-		// RS485_RX_RE = 0;
-		// RS485_RX_DE = 0;
-		ttl_receive = 1;
+		// 重新启动DMA传输
+		DMA_Cmd(GYRO_DMA_Stream, ENABLE);
 	}
 }

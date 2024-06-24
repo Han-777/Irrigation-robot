@@ -14,6 +14,8 @@ void arm_Init(void)
     //    PE_EXTI_Init();
     Servo_Pitch_Control(pitch_mid);
     Servo_Yaw_Control(yaw_mid);
+    VirtualTx_Config();
+    LCD_Init();
 }
 
 int lidar_water_confirm(void)
@@ -38,8 +40,17 @@ int water_finish(void)
 {
     if (!left_water_flag && !right_water_flag)
     {
+        if (left_water_flag) // 左侧更高优先级
+        {
+            lidar_Init(left_lidar);
+            return 1;
+        }
+        if (right_water_flag)
+        {
+            lidar_Init(right_lidar);
+            return 1;
+        }
         // gyro_USART_Init(921600);
-        return 1;
     }
     return 0;
 }
@@ -56,6 +67,7 @@ void water(colorIdx waterTimes)
             // close_pump;
             // delay_ms(WATER_TIME);
             MP3_broadcast(drought_buff[plant_cnt]);
+            LCD_hanqing(drought_buff[plant_cnt], drought_buff[plant_cnt]);
         }
     }
     else
@@ -67,6 +79,7 @@ void water(colorIdx waterTimes)
             // close_pump;
             // delay_ms(WATER_TIME);
             MP3_broadcast(waterTimes);
+            LCD_hanqing(waterTimes, waterTimes);
         }
     }
     ++water_cnt;
@@ -75,12 +88,14 @@ void water(colorIdx waterTimes)
         water_finish_structure.left_water_scan_finish = 0;
         water_finish_structure.left_water_finish = 1;
         left_water_flag = 0;
+        TFmini_left_USART_Close();
     }
     else if (water_finish_structure.right_water_scan_finish)
     {
         water_finish_structure.right_water_scan_finish = 0;
         water_finish_structure.right_water_finish = 1;
         right_water_flag = 0;
+        TFmini_right_USART_Close();
     }
     if (water_cnt == 2 && water_finish_structure.left_water_finish && water_finish_structure.right_water_finish)
     {
@@ -196,7 +211,7 @@ void water_task(void)
 void arm_water_task(void)
 {
     get_region();
-    while (lidar_water_confirm() && !water_finish()) // 一次清一个标志位
+    while (!water_finish() && lidar_water_confirm()) // 一次清一个标志位
     {
         get_water_direction();
         water_task();

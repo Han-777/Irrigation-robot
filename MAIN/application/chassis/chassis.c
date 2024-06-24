@@ -60,7 +60,6 @@ void chassis_Init(void)
     target_Yaw = ori_target_Yaw;
     lidar_Init(left_lidar); //  for test
     lidar_Init(right_lidar);
-    VirtualTx_Config();
     TIM7_Init(1000 - 1, 840 - 1); // 84M / 4200 / 1000 = 20ms
 }
 

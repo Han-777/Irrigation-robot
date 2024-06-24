@@ -24,6 +24,7 @@ const u16 GO_PREVENT_MISID_TIME = 5; // go in case of misidentification time
 const u16 GO_HOME_TIME = 10;
 // const u16 RUN_SPEED = 10;
 const u16 CROSS_TIME = 1000;
+// int run_speed = 0;
 ////--------------- TEST --------------//
 //// int test1(void)
 //// {

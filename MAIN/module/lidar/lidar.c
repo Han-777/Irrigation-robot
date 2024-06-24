@@ -27,9 +27,6 @@ void lidar_Init(lidarIndexEnum lidar_idx)
 	}
 }
 
-void lidar_open(void)
-{
-}
 // void UART4_IRQHandler(void)
 // {
 // 	u8 Res;

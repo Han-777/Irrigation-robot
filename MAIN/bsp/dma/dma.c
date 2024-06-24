@@ -175,7 +175,7 @@ void UART5_IRQHandler(void)
 }
 
 /*====================USART2_DMA==========================*/
-#define USART2_RX_BUFFER_SIZE 64
+#define USART2_RX_BUFFER_SIZE 36
 uint8_t USART2_RX_Buffer[USART2_RX_BUFFER_SIZE];
 volatile uint16_t USART2_RX_Count = 0;
 
@@ -327,7 +327,7 @@ void USART2_DMA_Config(void)
 	USART_DMACmd(USART2, USART_DMAReq_Rx, ENABLE);
 }
 /*====================UART4_DMA==========================*/
-#define UART4_RX_BUFFER_SIZE 64
+#define UART4_RX_BUFFER_SIZE 36
 uint8_t UART4_RX_Buffer[UART4_RX_BUFFER_SIZE];
 volatile uint16_t UART4_RX_Count = 0;
 

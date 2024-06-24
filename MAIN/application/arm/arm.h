@@ -9,6 +9,7 @@
 #include "bluetooth.h"
 #include "mp3.h"
 #include "lidar.h"
+#include "lcd.h"
 #define plant_found !PE_NOZZLE
 #define lidar_water_dist_threshold 30
 typedef struct

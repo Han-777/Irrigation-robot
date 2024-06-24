@@ -175,252 +175,314 @@ void UART5_IRQHandler(void)
 }
 
 /*====================USART2_DMA==========================*/
-#define USART2_RX_BUFFER_SIZE 36
-uint8_t USART2_RX_Buffer[USART2_RX_BUFFER_SIZE];
-volatile uint16_t USART2_RX_Count = 0;
+//#define USART2_RX_BUFFER_SIZE 128
+//uint8_t USART2_RX_Buffer[USART2_RX_BUFFER_SIZE];
+//volatile uint16_t USART2_RX_Count = 0;
 
-u8 rx_data_right[9];
-uint16_t lidar_right = 0;
+//u8 rx_data_right[9];
+//uint16_t lidar_right = 0;
 
-void ProcessUARTData(uint8_t *rx_buffer, uint16_t rx_count, u8 *rx_data, uint16_t *dist)
-{
-	static u8 count = 0;
-	static u8 i = 0;
-	u8 j = 0;
-	uint16_t Dist = 0;
+//u8 uart_state = 0;
+//u8 uart_index = 0;
 
-	for (uint16_t k = 0; k < rx_count; k++)
-	{
-		u8 Res = rx_buffer[k];
-		switch (count)
-		{
-		case 0:
-		case 1:
-			if (Res == 0x59)
-			{
-				count++;
-				rx_data[i] = Res;
-				i++;
-			}
-			else
-			{
-				count = 0;
-				i = 0;
-			}
-			break;
-		case 2:
-			rx_data[i] = Res;
-			i++;
-			if (i == 8)
-				count++;
-			break;
-		case 3:
-			for (j = 0; j < 8; j++)
-			{
-				rx_data[8] += rx_data[j];
-			}
-			if (rx_data[8] == Res)
-			{
-				Dist = ((uint16_t)(rx_data[3] << 8) | rx_data[2]);
-				if (Dist > 100)
-				{
-					Dist = 100;
-				}
-			}
-			*dist = Dist;
-			count = 0;
-			i = 0;
-			rx_data[8] = 0;
-			break;
-		}
-	}
-}
+//// void ProcessUARTData(uint8_t *rx_buffer, uint16_t rx_count, u8 *rx_data, uint16_t *dist)
+//// {
+//// 	static u8 count = 0;
+//// 	static u8 i = 0;
+//// 	u8 j = 0;
+//// 	uint16_t Dist = 0;
 
-void DMA1_Stream5_IRQHandler(void)
-{
-	if (DMA_GetITStatus(DMA1_Stream5, DMA_IT_TEIF5) != RESET)
-	{
-		DMA_ClearITPendingBit(DMA1_Stream5, DMA_IT_TEIF5);
-		// 处理传输错误
-	}
+//// 	for (uint16_t k = 0; k < rx_count; k++)
+//// 	{
+//// 		u8 Res = rx_buffer[k];
+//// 		switch (count)
+//// 		{
+//// 		case 0:
+//// 		case 1:
+//// 			if (Res == 0x59)
+//// 			{
+//// 				count++;
+//// 				rx_data[i] = Res;
+//// 				i++;
+//// 			}
+//// 			else
+//// 			{
+//// 				count = 0;
+//// 				i = 0;
+//// 			}
+//// 			break;
+//// 		case 2:
+//// 			rx_data[i] = Res;
+//// 			i++;
+//// 			if (i == 8)
+//// 				count++;
+//// 			break;
+//// 		case 3:
+//// 			for (j = 0; j < 8; j++)
+//// 			{
+//// 				rx_data[8] += rx_data[j];
+//// 			}
+//// 			if (rx_data[8] == Res)
+//// 			{
+//// 				Dist = ((uint16_t)(rx_data[3] << 8) | rx_data[2]);
+//// 				if (Dist > 100)
+//// 				{
+//// 					Dist = 100;
+//// 				}
+//// 			}
+//// 			*dist = Dist;
+//// 			count = 0;
+//// 			i = 0;
+//// 			rx_data[8] = 0;
+//// 			break;
+//// 		}
+//// 	}
+//// }
 
-	if (DMA_GetITStatus(DMA1_Stream5, DMA_IT_TCIF5) != RESET)
-	{
-		DMA_ClearITPendingBit(DMA1_Stream5, DMA_IT_TCIF5);
+//void ProcessUARTData(uint8_t *rx_buffer, uint16_t rx_count, u8 *rx_data, uint16_t *dist, u8 *state, u8 *index)
+//{
+//	uint16_t Dist = 0;
+//	u8 checksum = 0;
 
-		// 停止DMA传输
-		DMA_Cmd(DMA1_Stream5, DISABLE);
+//	for (uint16_t k = 0; k < rx_count; k++)
+//	{
+//		u8 Res = rx_buffer[k];
 
-		// 获取接收到的数据长度
-		USART2_RX_Count = USART2_RX_BUFFER_SIZE - DMA_GetCurrDataCounter(DMA1_Stream5);
+//		switch (*state)
+//		{
+//		case 0:
+//			if (Res == 0x59)
+//			{
+//				rx_data[0] = Res;
+//				*state = 1;
+//				*index = 1;
+//			}
+//			break;
 
-		// 处理接收到的数据
-		ProcessUARTData(USART2_RX_Buffer, USART2_RX_Count, rx_data_right, &lidar_right);
+//		case 1:
+//			if (Res == 0x59)
+//			{
+//				rx_data[1] = Res;
+//				*state = 2;
+//				*index = 2;
+//			}
+//			else
+//			{
+//				*state = 0;
+//			}
+//			break;
 
-		// 重新设置DMA传输数量
-		DMA_SetCurrDataCounter(DMA1_Stream5, USART2_RX_BUFFER_SIZE);
+//		case 2:
+//			rx_data[*index] = Res;
+//			(*index)++;
+//			if (*index == 8)
+//			{
+//				*state = 3;
+//			}
+//			break;
 
-		// 重新启动DMA传输
-		DMA_Cmd(DMA1_Stream5, ENABLE);
-	}
-}
+//		case 3:
+//			checksum = rx_data[0] + rx_data[1] + rx_data[2] + rx_data[3] +
+//					   rx_data[4] + rx_data[5] + rx_data[6] + rx_data[7];
+//			if (checksum == Res)
+//			{
+//				Dist = ((uint16_t)rx_data[3] << 8) | rx_data[2];
+//				*dist = (Dist > 100) ? 100 : Dist;
+//			}
+//			*state = 0;
+//			*index = 0;
+//			break;
+//		}
+//	}
+//}
 
-void USART2_IRQHandler(void)
-{
-	if (USART_GetFlagStatus(USART2, USART_FLAG_ORE) != RESET)
-	{
-		USART_ClearFlag(USART2, USART_FLAG_ORE);
-		USART_ReceiveData(USART2);
-	}
+//void DMA1_Stream5_IRQHandler(void)
+//{
+//	if (DMA_GetITStatus(DMA1_Stream5, DMA_IT_TEIF5) != RESET)
+//	{
+//		DMA_ClearITPendingBit(DMA1_Stream5, DMA_IT_TEIF5);
+//		// 处理传输错误
+//	}
 
-	if (USART_GetITStatus(USART2, USART_IT_IDLE) != RESET)
-	{
-		USART_ReceiveData(USART2);
-	}
-}
+//	if (DMA_GetITStatus(DMA1_Stream5, DMA_IT_TCIF5) != RESET)
+//	{
+//		DMA_ClearITPendingBit(DMA1_Stream5, DMA_IT_TCIF5);
 
-void USART2_DMA_Config(void)
-{
-	DMA_InitTypeDef DMA_InitStructure;
+//		// 停止DMA传输
+//		DMA_Cmd(DMA1_Stream5, DISABLE);
 
-	// 使能DMA1时钟
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA1, ENABLE);
+//		// 获取接收到的数据长度
+//		USART2_RX_Count = USART2_RX_BUFFER_SIZE - DMA_GetCurrDataCounter(DMA1_Stream5);
 
-	// DMA通道配置
-	DMA_DeInit(DMA1_Stream5);
-	while (DMA_GetCmdStatus(DMA1_Stream5) != DISABLE)
-	{
-	}
+//		// 处理接收到的数据
 
-	DMA_InitStructure.DMA_Channel = DMA_Channel_4;							// 通道选择
-	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&USART2->DR;		// 外设地址
-	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)USART2_RX_Buffer;		// 内存地址
-	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;					// 传输方向
-	DMA_InitStructure.DMA_BufferSize = USART2_RX_BUFFER_SIZE;				// 传输大小
-	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;		// 外设地址不增加
-	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;					// 内存地址自增
-	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte; // 外设数据宽度
-	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;			// 内存数据宽度
-	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;							// 循环模式
-	DMA_InitStructure.DMA_Priority = DMA_Priority_High;						// 优先级
-	DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable;					// 禁用FIFO
-	DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_Full;
-	DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;			// 单次传输
-	DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single; // 单次传输
+//		ProcessUARTData(USART2_RX_Buffer, USART2_RX_Count, rx_data_right, &lidar_right, &uart_state, &uart_index);
 
-	DMA_Init(DMA1_Stream5, &DMA_InitStructure);
+//		// 重新设置DMA传输数量
+//		DMA_SetCurrDataCounter(DMA1_Stream5, USART2_RX_BUFFER_SIZE);
 
-	// 配置DMA中断
-	DMA_ITConfig(DMA1_Stream5, DMA_IT_TC | DMA_IT_TE, ENABLE);
+//		// 重新启动DMA传输
+//		DMA_Cmd(DMA1_Stream5, ENABLE);
+//	}
+//}
 
-	// 使能DMA
-	DMA_Cmd(DMA1_Stream5, ENABLE);
+//void USART2_IRQHandler(void)
+//{
+//	if (USART_GetFlagStatus(USART2, USART_FLAG_ORE) != RESET)
+//	{
+//		USART_ClearFlag(USART2, USART_FLAG_ORE);
+//		USART_ReceiveData(USART2);
+//	}
 
-	// 配置NVIC
-	NVIC_InitTypeDef NVIC_InitStructure;
-	NVIC_InitStructure.NVIC_IRQChannel = DMA1_Stream5_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
+//	if (USART_GetITStatus(USART2, USART_IT_IDLE) != RESET)
+//	{
+//		USART_ReceiveData(USART2);
+//	}
+//}
 
-	USART_DMACmd(USART2, USART_DMAReq_Rx, ENABLE);
-}
-/*====================UART4_DMA==========================*/
-#define UART4_RX_BUFFER_SIZE 36
-uint8_t UART4_RX_Buffer[UART4_RX_BUFFER_SIZE];
-volatile uint16_t UART4_RX_Count = 0;
+//void USART2_DMA_Config(void)
+//{
+//	DMA_InitTypeDef DMA_InitStructure;
 
-u8 rx_data_left[9];
-uint16_t lidar_left = 0;
+//	// 使能DMA1时钟
+//	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA1, ENABLE);
 
-void DMA1_Stream2_IRQHandler(void)
-{
-	if (DMA_GetITStatus(DMA1_Stream2, DMA_IT_TEIF2) != RESET)
-	{
-		DMA_ClearITPendingBit(DMA1_Stream2, DMA_IT_TEIF2);
-		// 处理传输错误
-	}
+//	// DMA通道配置
+//	DMA_DeInit(DMA1_Stream5);
+//	while (DMA_GetCmdStatus(DMA1_Stream5) != DISABLE)
+//	{
+//	}
 
-	if (DMA_GetITStatus(DMA1_Stream2, DMA_IT_TCIF2) != RESET)
-	{
-		DMA_ClearITPendingBit(DMA1_Stream2, DMA_IT_TCIF2);
+//	DMA_InitStructure.DMA_Channel = DMA_Channel_4;							// 通道选择
+//	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&USART2->DR;		// 外设地址
+//	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)USART2_RX_Buffer;		// 内存地址
+//	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;					// 传输方向
+//	DMA_InitStructure.DMA_BufferSize = USART2_RX_BUFFER_SIZE;				// 传输大小
+//	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;		// 外设地址不增加
+//	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;					// 内存地址自增
+//	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte; // 外设数据宽度
+//	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;			// 内存数据宽度
+//	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;							// 循环模式
+//	DMA_InitStructure.DMA_Priority = DMA_Priority_High;						// 优先级
+//	DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable;					// 禁用FIFO
+//	DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_Full;
+//	DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;			// 单次传输
+//	DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single; // 单次传输
 
-		// 停止DMA传输
-		DMA_Cmd(DMA1_Stream2, DISABLE);
+//	DMA_Init(DMA1_Stream5, &DMA_InitStructure);
 
-		// 获取接收到的数据长度
-		UART4_RX_Count = UART4_RX_BUFFER_SIZE - DMA_GetCurrDataCounter(DMA1_Stream2);
+//	// 配置DMA中断
+//	DMA_ITConfig(DMA1_Stream5, DMA_IT_TC | DMA_IT_TE, ENABLE);
 
-		// 处理接收到的数据
-		ProcessUARTData(UART4_RX_Buffer, UART4_RX_Count, rx_data_left, &lidar_left);
+//	// 使能DMA
+//	DMA_Cmd(DMA1_Stream5, ENABLE);
 
-		// 重新设置DMA传输数量
-		DMA_SetCurrDataCounter(DMA1_Stream2, UART4_RX_BUFFER_SIZE);
+//	// 配置NVIC
+//	NVIC_InitTypeDef NVIC_InitStructure;
+//	NVIC_InitStructure.NVIC_IRQChannel = DMA1_Stream5_IRQn;
+//	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;
+//	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
+//	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+//	NVIC_Init(&NVIC_InitStructure);
 
-		// 重新启动DMA传输
-		DMA_Cmd(DMA1_Stream2, ENABLE);
-	}
-}
+//	USART_DMACmd(USART2, USART_DMAReq_Rx, ENABLE);
+//}
+///*====================UART4_DMA==========================*/
+//#define UART4_RX_BUFFER_SIZE 128
+//uint8_t UART4_RX_Buffer[UART4_RX_BUFFER_SIZE];
+//volatile uint16_t UART4_RX_Count = 0;
 
-void UART4_IRQHandler(void)
-{
-	if (USART_GetFlagStatus(UART4, USART_FLAG_ORE) != RESET)
-	{
-		USART_ClearFlag(UART4, USART_FLAG_ORE);
-		USART_ReceiveData(UART4);
-	}
+//u8 rx_data_left[9];
+//uint16_t lidar_left = 0;
 
-	if (USART_GetITStatus(UART4, USART_IT_IDLE) != RESET)
-	{
-		USART_ReceiveData(UART4);
-	}
-}
+//void DMA1_Stream2_IRQHandler(void)
+//{
+//	if (DMA_GetITStatus(DMA1_Stream2, DMA_IT_TEIF2) != RESET)
+//	{
+//		DMA_ClearITPendingBit(DMA1_Stream2, DMA_IT_TEIF2);
+//		// 处理传输错误
+//	}
 
-void UART4_DMA_Config(void)
-{
-	DMA_InitTypeDef DMA_InitStructure;
+//	if (DMA_GetITStatus(DMA1_Stream2, DMA_IT_TCIF2) != RESET)
+//	{
+//		DMA_ClearITPendingBit(DMA1_Stream2, DMA_IT_TCIF2);
 
-	// 使能DMA1时钟
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA1, ENABLE);
+//		// 停止DMA传输
+//		DMA_Cmd(DMA1_Stream2, DISABLE);
 
-	// DMA通道配置
-	DMA_DeInit(DMA1_Stream2);
-	while (DMA_GetCmdStatus(DMA1_Stream2) != DISABLE)
-	{
-	}
+//		// 获取接收到的数据长度
+//		UART4_RX_Count = UART4_RX_BUFFER_SIZE - DMA_GetCurrDataCounter(DMA1_Stream2);
 
-	DMA_InitStructure.DMA_Channel = DMA_Channel_4;							// 通道选择
-	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&UART4->DR;		// 外设地址
-	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)UART4_RX_Buffer;		// 内存地址
-	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;					// 传输方向
-	DMA_InitStructure.DMA_BufferSize = UART4_RX_BUFFER_SIZE;				// 传输大小
-	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;		// 外设地址不增加
-	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;					// 内存地址自增
-	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte; // 外设数据宽度
-	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;			// 内存数据宽度
-	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;							// 循环模式
-	DMA_InitStructure.DMA_Priority = DMA_Priority_High;						// 优先级
-	DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable;					// 禁用FIFO
-	DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_Full;
-	DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;			// 单次传输
-	DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single; // 单次传输
+//		// 处理接收到的数据
+//		// ProcessUARTData(UART4_RX_Buffer, UART4_RX_Count, rx_data_left, &lidar_left);
+//		ProcessUARTData(UART4_RX_Buffer, UART4_RX_Count, rx_data_left, &lidar_left, &uart_state, &uart_index);
 
-	DMA_Init(DMA1_Stream2, &DMA_InitStructure);
+//		// 重新设置DMA传输数量
+//		DMA_SetCurrDataCounter(DMA1_Stream2, UART4_RX_BUFFER_SIZE);
 
-	// 配置DMA中断
-	DMA_ITConfig(DMA1_Stream2, DMA_IT_TC | DMA_IT_TE, ENABLE);
+//		// 重新启动DMA传输
+//		DMA_Cmd(DMA1_Stream2, ENABLE);
+//	}
+//}
 
-	// 使能DMA
-	DMA_Cmd(DMA1_Stream2, ENABLE);
+//void UART4_IRQHandler(void)
+//{
+//	if (USART_GetFlagStatus(UART4, USART_FLAG_ORE) != RESET)
+//	{
+//		USART_ClearFlag(UART4, USART_FLAG_ORE);
+//		USART_ReceiveData(UART4);
+//	}
 
-	// 配置NVIC
-	NVIC_InitTypeDef NVIC_InitStructure;
-	NVIC_InitStructure.NVIC_IRQChannel = DMA1_Stream2_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
+//	if (USART_GetITStatus(UART4, USART_IT_IDLE) != RESET)
+//	{
+//		USART_ReceiveData(UART4);
+//	}
+//}
 
-	USART_DMACmd(UART4, USART_DMAReq_Rx, ENABLE);
-}
+//void UART4_DMA_Config(void)
+//{
+//	DMA_InitTypeDef DMA_InitStructure;
+
+//	// 使能DMA1时钟
+//	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA1, ENABLE);
+
+//	// DMA通道配置
+//	DMA_DeInit(DMA1_Stream2);
+//	while (DMA_GetCmdStatus(DMA1_Stream2) != DISABLE)
+//	{
+//	}
+
+//	DMA_InitStructure.DMA_Channel = DMA_Channel_4;							// 通道选择
+//	DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&UART4->DR;		// 外设地址
+//	DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)UART4_RX_Buffer;		// 内存地址
+//	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;					// 传输方向
+//	DMA_InitStructure.DMA_BufferSize = UART4_RX_BUFFER_SIZE;				// 传输大小
+//	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;		// 外设地址不增加
+//	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;					// 内存地址自增
+//	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte; // 外设数据宽度
+//	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;			// 内存数据宽度
+//	DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;							// 循环模式
+//	DMA_InitStructure.DMA_Priority = DMA_Priority_High;						// 优先级
+//	DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable;					// 禁用FIFO
+//	DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_Full;
+//	DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;			// 单次传输
+//	DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single; // 单次传输
+
+//	DMA_Init(DMA1_Stream2, &DMA_InitStructure);
+
+//	// 配置DMA中断
+//	DMA_ITConfig(DMA1_Stream2, DMA_IT_TC | DMA_IT_TE, ENABLE);
+
+//	// 使能DMA
+//	DMA_Cmd(DMA1_Stream2, ENABLE);
+
+//	// 配置NVIC
+//	NVIC_InitTypeDef NVIC_InitStructure;
+//	NVIC_InitStructure.NVIC_IRQChannel = DMA1_Stream2_IRQn;
+//	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3;
+//	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
+//	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+//	NVIC_Init(&NVIC_InitStructure);
+
+//	USART_DMACmd(UART4, USART_DMAReq_Rx, ENABLE);
+//}

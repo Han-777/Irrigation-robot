@@ -71,6 +71,12 @@ int left_water_flag = 0, right_water_flag = 0; // water start flag
 // 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;				 // 使能外部中断通道
 // 	NVIC_Init(&NVIC_InitStructure);								 // 配置
 // }
+void PE_EXTI_Open(void)
+{
+	EXTI_ClearITPendingBit(EXTI_Line10);
+	EXTI_ClearITPendingBit(EXTI_Line11);
+	EXTI->IMR |= (EXTI_Line10 | EXTI_Line11); // 使能EXTI10和EXTI11中断
+}
 void PE_EXTI_Init(void) // for cross_cnt = 2/4/6
 {
 	// static u8 temp_water_cnt = 0;
@@ -101,25 +107,28 @@ void PE_EXTI_Init(void) // for cross_cnt = 2/4/6
 
 void PE_EXTI_Close(void)
 {
-	NVIC_InitTypeDef NVIC_InitStructure;
-	EXTI_InitTypeDef EXTI_InitStructure;
+	// NVIC_InitTypeDef NVIC_InitStructure;
+	// EXTI_InitTypeDef EXTI_InitStructure;
 
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, DISABLE);
-	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOG, EXTI_PinSource10);
-	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOG, EXTI_PinSource11);
-	EXTI_DeInit();
+	// RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, DISABLE);
+	// SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOG, EXTI_PinSource10);
+	// SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOG, EXTI_PinSource11);
+	// EXTI_DeInit();
 
-	EXTI_InitStructure.EXTI_Line = EXTI_Line10 | EXTI_Line11;
-	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
-	EXTI_InitStructure.EXTI_LineCmd = DISABLE;
-	EXTI_Init(&EXTI_InitStructure);
+	// EXTI_InitStructure.EXTI_Line = EXTI_Line10 | EXTI_Line11;
+	// EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+	// EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
+	// EXTI_InitStructure.EXTI_LineCmd = DISABLE;
+	// EXTI_Init(&EXTI_InitStructure);
 
-	NVIC_InitStructure.NVIC_IRQChannel = EXTI15_10_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x00; // 抢占优先级0
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x00;		 // 子优先级2
-	NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE;			 // 使能外部中断通道
-	NVIC_Init(&NVIC_InitStructure);								 // 配置
+	// NVIC_InitStructure.NVIC_IRQChannel = EXTI15_10_IRQn;
+	// NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x00; // 抢占优先级0
+	// NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x00;		 // 子优先级2
+	// NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE;			 // 使能外部中断通道
+	// NVIC_Init(&NVIC_InitStructure);								 // 配置
+	EXTI_ClearITPendingBit(EXTI_Line10);
+	EXTI_ClearITPendingBit(EXTI_Line11);
+	EXTI->IMR &= ~(EXTI_Line10 | EXTI_Line11); // 失能EXTI10和EXTI11中断
 }
 
 /**
@@ -147,8 +156,7 @@ void EXTI15_10_IRQHandler(void)
 		{
 			if (EXTI_GetITStatus(EXTI_Line11) == SET) // right hand side
 			{
-				TIM7_Close();
-				Car_stop();
+				// TIM7_Close();
 				movement_stop();
 				left_water_flag = 1;
 				right_water_flag = 1;

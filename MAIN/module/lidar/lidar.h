@@ -20,8 +20,8 @@ typedef enum
     right_lidar
 } lidarIndexEnum;
 /*===============public===================*/
-// extern uint16_t lidar_right;
-// extern uint16_t lidar_left;
+extern uint16_t lidar_right;
+extern uint16_t lidar_left;
 void lidar_Init(lidarIndexEnum lidar_idx);
 // void Inf_Init(u32 bound);
 // void TIM10_Int_Init(u16 arr,u16 psc);

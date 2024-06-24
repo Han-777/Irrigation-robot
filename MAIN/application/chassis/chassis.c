@@ -4,7 +4,7 @@
 int vec[2] = {0};
 float info[20] = {0};
 
-float speed_limit = 50, heading_speed_limit = 10; // speed lmit should be smaller than 0.8 m/s
+float speed_limit = 50, heading_speed_limit = 20; // speed lmit should be smaller than 0.8 m/s
 //==================== Internal vars =====================:
 // constants & PIDs
 // PID heading_PID;
@@ -33,10 +33,11 @@ float left_target_speed = 0, right_target_speed = 0;
  */
 void movement_stop(void)
 {
+    Car_stop();
     TIM7_Close();
     gyro_USART_Close();
     gyro_init_flag = 0;
-    Car_stop();
+    delay_ms(20);
     PE_EXTI_Close();
     delay_ms(20);
 }
@@ -45,21 +46,22 @@ void movement_stop(void)
  *
  * Including motors, encoders, gyro and increment pid parameters.
  *
- * @param    None
+ * @param    Nones
  * @return   None
  */
 void chassis_Init(void)
 {
     Motor_Init();
     Encoder_TIM_Init_All();
+    gray_GPIO_Init();
     chassis_pid_Init();
     GYRO_Init();
     delay_ms(5000); // wait for stable(it is not necassary)
     TTL_Hex2Dec();
     ori_target_Yaw = Read_Yaw();
     target_Yaw = ori_target_Yaw;
-    lidar_Init(left_lidar); //  for test
-    lidar_Init(right_lidar);
+    //     lidar_Init(left_lidar); //  for test
+    //    lidar_Init(right_lidar);
     TIM7_Init(1000 - 1, 840 - 1); // 84M / 4200 / 1000 = 20ms
 }
 
@@ -134,10 +136,10 @@ int chassis_rotate(float target_yaw)
     increment_pid_calculate(&heading_inc_PID, target_yaw, current_yaw);
     info[17] = 100 * heading_inc_PID.output;
     info[18] = -100 * heading_inc_PID.output;
-    info[17] = ((abs(info[17]) > 10) ? info[17] : (info[17] > 0) ? 10
-                                                                 : -10);
-    info[18] = ((abs(info[18]) > 10) ? info[18] : (info[18] > 0) ? 10
-                                                                 : -10);
+    // info[17] = ((abs(info[17]) > 10) ? info[17] : (info[17] > 0) ? 10
+    //                                                              : -10);
+    // info[18] = ((abs(info[18]) > 10) ? info[18] : (info[18] > 0) ? 10
+    //                                                              : -10);
     Car_Load(info[17], info[18]);
     return 1;
 }
@@ -173,8 +175,16 @@ int chassis_run(void)
     increment_pid_calculate(&right_inc_PID, right_target_speed, vec[1]);
     left_ff_speed = speed_Kv * left_target_speed;
     right_ff_speed = speed_Kv * right_target_speed;
-    info[17] = left_inc_PID.output + 200 * heading_inc_PID.output + left_ff_speed;
-    info[18] = right_inc_PID.output - 200 * heading_inc_PID.output + right_ff_speed;
+    if (region == A)
+    {
+        info[17] = left_inc_PID.output + 200 * heading_inc_PID.output + left_ff_speed;
+        info[18] = right_inc_PID.output - 200 * heading_inc_PID.output + right_ff_speed;
+    }
+    else if (region == B || region == C || region == D)
+    {
+        info[17] = left_inc_PID.output + 100 * heading_inc_PID.output + left_ff_speed;
+        info[18] = right_inc_PID.output - 100 * heading_inc_PID.output + right_ff_speed;
+    }
     Car_Load(info[17], info[18]);
     return 1;
 }

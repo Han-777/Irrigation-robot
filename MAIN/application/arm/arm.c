@@ -1,9 +1,10 @@
 #include "arm.h"
 
 water_finish_Structure_TypeDef water_finish_structure;
+
 // TIME CONST
 const int PITCH_TRANSFER_TIME = 400, // 500
-    YAW_TRANSFER_TIME = 120,         // 120
+    YAW_TRANSFER_TIME = 150,         // 120
     OPENMV_WAIT = 1000,              // 1000
     WATER_TIME = 1000;
 
@@ -11,7 +12,7 @@ void arm_Init(void)
 {
     servo_Init_All();
     photoelectric_GPIO_Init();
-    //    PE_EXTI_Init();
+    PE_EXTI_Init();
     Servo_Pitch_Control(pitch_mid);
     Servo_Yaw_Control(yaw_mid);
     VirtualTx_Config();
@@ -40,19 +41,34 @@ int water_finish(void)
 {
     if (!left_water_flag && !right_water_flag)
     {
+        return 1;
+        // gyro_USART_Init(921600);
+    }
+    else
+    {
+        set_speed(0, 0);
         if (left_water_flag) // 左侧更高优先级
         {
             lidar_Init(left_lidar);
-            return 1;
+            delay_ms(10);
+            if (region == C)
+            {
+                C_lidar_error = 24 - left_lidar;
+            }
+            return 0;
         }
         if (right_water_flag)
         {
             lidar_Init(right_lidar);
-            return 1;
+            delay_ms(10);
+            if (region == C)
+            {
+                C_lidar_error = right_lidar - 24;
+            }
+            return 0;
         }
-        // gyro_USART_Init(921600);
     }
-    return 0;
+    // return 0;
 }
 
 void water(colorIdx waterTimes)
@@ -67,7 +83,7 @@ void water(colorIdx waterTimes)
             // close_pump;
             // delay_ms(WATER_TIME);
             MP3_broadcast(drought_buff[plant_cnt]);
-            LCD_hanqing(drought_buff[plant_cnt], drought_buff[plant_cnt]);
+            LCD_hanqing(drought_buff[plant_cnt], plant_cnt);
         }
     }
     else
@@ -79,14 +95,20 @@ void water(colorIdx waterTimes)
             // close_pump;
             // delay_ms(WATER_TIME);
             MP3_broadcast(waterTimes);
-            LCD_hanqing(waterTimes, waterTimes);
+            LCD_hanqing(waterTimes, plant_cnt);
         }
     }
     ++water_cnt;
+    // if (water_cnt == 1)
+    // {
+
+    // ServoControl(yaw_servo, , yaw_mid);
+    // }
     if (water_finish_structure.left_water_scan_finish)
     {
         water_finish_structure.left_water_scan_finish = 0;
         water_finish_structure.left_water_finish = 1;
+        ServoControl(yaw_servo, left_scan_begin, yaw_mid, YAW_TRANSFER_TIME);
         left_water_flag = 0;
         TFmini_left_USART_Close();
     }
@@ -94,6 +116,7 @@ void water(colorIdx waterTimes)
     {
         water_finish_structure.right_water_scan_finish = 0;
         water_finish_structure.right_water_finish = 1;
+        ServoControl(yaw_servo, right_scan_begin, yaw_mid, YAW_TRANSFER_TIME);
         right_water_flag = 0;
         TFmini_right_USART_Close();
     }
@@ -101,6 +124,7 @@ void water(colorIdx waterTimes)
     {
         water_cnt = 0;
         plant_cnt++;
+        // PE_EXTI_Init();
     }
 }
 
@@ -109,19 +133,22 @@ void get_water_direction(void)
 {
     int last_last_found = 0, last_found = 0, current_found = 0, buffer_idx = 0, angle = 0; // plant found flag
     int angle_buffer[200];
-    ServoControl(pitch_servo, pitch_lift_angle, pitch_scan_angle, PITCH_TRANSFER_TIME);
+    Servo_Pitch_Control(pitch_scan_angle);
+
+    // ServoControl(pitch_servo, pitch_lift_angle, pitch_scan_angle, PITCH_TRANSFER_TIME);
     if (region != D)
     {
         if (left_water_flag)
         {
             angle = left_scan_begin;
+            ServoControl(yaw_servo, yaw_mid, angle, YAW_TRANSFER_TIME);
             for (; angle < left_scan_end; ++angle)
             {
                 last_last_found = last_found;
                 last_found = current_found;
                 Servo_Yaw_Control(angle);
                 delay_ms(YAW_TRANSFER_TIME); // delay for servo movement
-                if (plant_found)
+                if (PE_NOZZLE == 0)
                 {
                     angle_buffer[buffer_idx] = angle;
                     ++buffer_idx;
@@ -137,13 +164,14 @@ void get_water_direction(void)
         else if (right_water_flag)
         {
             angle = right_scan_begin;
-            for (; angle < right_scan_end; ++angle)
+            ServoControl(yaw_servo, yaw_mid, angle, YAW_TRANSFER_TIME);
+            for (; angle > right_scan_end; --angle)
             {
                 last_last_found = last_found;
                 last_found = current_found;
                 Servo_Yaw_Control(angle);
                 delay_ms(YAW_TRANSFER_TIME); // delay for servo movement
-                if (plant_found)
+                if (PE_NOZZLE == 0)
                 {
                     angle_buffer[buffer_idx] = angle;
                     ++buffer_idx;
@@ -159,7 +187,7 @@ void get_water_direction(void)
         angle = 0;
         for (int idx = 0; idx < buffer_idx; ++idx)
         {
-            angle += angle_buffer[buffer_idx];
+            angle += angle_buffer[idx];
         }
         angle /= buffer_idx;
         Servo_Yaw_Control(angle);
@@ -183,8 +211,8 @@ void water_task(void)
 {
     if (region != D)
     {
-        ServoControl(pitch_servo, pitch_scan_angle, pitch_lift_angle, PITCH_TRANSFER_TIME); // 浇水角度需要后面测量
-        water(INFO_DROUGHT);                                                                // 非D特殊标志位
+        ServoControl(pitch_servo, pitch_scan_angle, pitch_D_water_angle, PITCH_TRANSFER_TIME); // 浇水角度需要后面测量
+        water(INFO_DROUGHT);                                                                   // 非D特殊标志位
     }
     else if (region == D)
     {
@@ -221,8 +249,9 @@ void arm_water_task(void)
         water_finish_structure.left_water_finish = 0;
         water_finish_structure.right_water_finish = 0;
         //        if (region == C || region == D)
-        //        {
-        PE_EXTI_Init();
+        //        {q
+        PE_EXTI_Open();
+        // delay_ms(10);
         //        }
     }
 }

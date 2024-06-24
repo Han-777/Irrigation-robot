@@ -1,10 +1,13 @@
 #include "bluetooth.h"
 
-u8 drought_buff[40] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-   receive_flag;
+u8 drought_buff[40] = {1, 3, 2, 1, 3, 1, // A
+					   2, 3, 2, 1, 3, 2, // B
+					   1, 3, 3, 2, 2, 1, // C
+					   2, 2, 3, 1};		 // D
+u8 receive_flag = 1;
 u8 lcx, lcy, lcolor, lz;
 u8 ganhan;
-u8 bluetooth_receive_flag = 0;
+u8 bluetooth_receive_flag = 1;
 #if EN_USART1_RX //???????
 //??1??????
 //??,??USARTx->SR??????????

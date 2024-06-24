@@ -13,6 +13,13 @@
 // Ft=84M定时器工作频率,单位:Mhz
 void TIM7_Init(u16 arr, u16 psc)
 {
+	// gyro init
+	if (!gyro_init_flag)
+	{
+		GYRO_Init();
+		// PE_EXTI_Init();
+	}
+
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;
 
@@ -32,12 +39,6 @@ void TIM7_Init(u16 arr, u16 psc)
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x01;		 // 子优先级3
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
-
-	// gyro init
-	if (!gyro_init_flag)
-	{
-		GYRO_Init();
-	}
 }
 
 void TIM7_Close(void)

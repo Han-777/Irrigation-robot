@@ -46,6 +46,7 @@
 "..\obj\iic.o"
 "..\obj\usart.o"
 "..\obj\exti.o"
+"..\obj\dma.o"
 "..\obj\motor.o"
 "..\obj\encoder.o"
 "..\obj\gray.o"

@@ -44,3 +44,7 @@
 ..\obj\tim.o: ..\bsp\usart\usart.h
 ..\obj\tim.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\math.h
 ..\obj\tim.o: ..\bsp\exti\exti.h
+..\obj\tim.o: ..\module\gyro\gyro.h
+..\obj\tim.o: D:\Downloads\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+..\obj\tim.o: ..\bsp\dma\dma.h
+..\obj\tim.o: ..\module\gyro\gyro.h

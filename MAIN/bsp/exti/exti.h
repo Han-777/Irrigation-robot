@@ -25,5 +25,6 @@ void NVIC_Configuration_Close(void);
 
 void PE_EXTI_Init(void); // for cross_cnt = 2/4/6
 void PE_EXTI_Close(void);
+void PE_EXTI_Open(void);
 
 #endif

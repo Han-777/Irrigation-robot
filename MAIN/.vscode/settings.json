@@ -34,6 +34,10 @@
     "lidar.h": "c",
     "run.h": "c",
     "arm.h": "c",
-    "photoelectric.h": "c"
+    "photoelectric.h": "c",
+    "dma.h": "c",
+    "cmath": "c",
+    "limits": "c",
+    "type_traits": "c"
   }
 }

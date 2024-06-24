@@ -45,3 +45,5 @@
 ..\obj\gyro.o: ..\bsp\iic\iic.h
 ..\obj\gyro.o: ..\bsp\usart\usart.h
 ..\obj\gyro.o: ..\bsp\exti\exti.h
+..\obj\gyro.o: ..\bsp\dma\dma.h
+..\obj\gyro.o: ..\module\gyro\gyro.h

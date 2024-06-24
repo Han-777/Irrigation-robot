@@ -22,11 +22,88 @@ Dialog DLL:      TCM.DLL V1.14.4.0
  
 <h2>Project:</h2>
 D:\Github\Irrigation-robot\MAIN\USER\Template.uvprojx
-Project File Date:  06/22/2024
+Project File Date:  06/23/2024
 
 <h2>Output:</h2>
 Build target 'Template'
-"..\OBJ\Template.axf" - 0 Error(s), 0 Warning(s).
+compiling main.c...
+..\bsp\gpio\gpio.h(43): warning:  #1295-D: Deprecated declaration Key_GPIO_Init - give arg types
+  void Key_GPIO_Init();
+..\bsp\iic\iic.h(12): warning:  #1-D: last line of file ends without a newline
+      
+..\bsp\dma\dma.h(25): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\module\openmv\openmv.h(16): warning:  #1-D: last line of file ends without a newline
+  #endif
+main.c: 4 warnings, 0 errors
+compiling run.c...
+..\bsp\gpio\gpio.h(43): warning:  #1295-D: Deprecated declaration Key_GPIO_Init - give arg types
+  void Key_GPIO_Init();
+..\bsp\iic\iic.h(12): warning:  #1-D: last line of file ends without a newline
+      
+..\bsp\dma\dma.h(25): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\module\openmv\openmv.h(16): warning:  #1-D: last line of file ends without a newline
+  #endif
+run\run.c(16): warning:  #223-D: function "arm_Init" declared implicitly
+          arm_Init();
+run\run.c(220): warning:  #940-D: missing return statement at end of non-void function "end_return_home"
+  }
+run\run.c: 6 warnings, 0 errors
+compiling exti.c...
+..\bsp\gpio\gpio.h(43): warning:  #1295-D: Deprecated declaration Key_GPIO_Init - give arg types
+  void Key_GPIO_Init();
+..\bsp\iic\iic.h(12): warning:  #1-D: last line of file ends without a newline
+      
+..\bsp\dma\dma.h(25): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\module\openmv\openmv.h(16): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\bsp\exti\exti.c(6): warning:  #9-D: nested comment is not allowed
+  ///////////////////////////////////////////////////////////////////////////////*/
+..\bsp\exti\exti.c: 5 warnings, 0 errors
+compiling pid.c...
+..\bsp\gpio\gpio.h(43): warning:  #1295-D: Deprecated declaration Key_GPIO_Init - give arg types
+  void Key_GPIO_Init();
+..\bsp\iic\iic.h(12): warning:  #1-D: last line of file ends without a newline
+      
+..\bsp\dma\dma.h(25): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\module\openmv\openmv.h(16): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\module\pid\pid.c: 4 warnings, 0 errors
+compiling chassis.c...
+..\bsp\gpio\gpio.h(43): warning:  #1295-D: Deprecated declaration Key_GPIO_Init - give arg types
+  void Key_GPIO_Init();
+..\bsp\iic\iic.h(12): warning:  #1-D: last line of file ends without a newline
+      
+..\bsp\dma\dma.h(25): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\module\openmv\openmv.h(16): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\application\chassis\chassis.c: 4 warnings, 0 errors
+compiling arm.c...
+..\bsp\gpio\gpio.h(43): warning:  #1295-D: Deprecated declaration Key_GPIO_Init - give arg types
+  void Key_GPIO_Init();
+..\bsp\iic\iic.h(12): warning:  #1-D: last line of file ends without a newline
+      
+..\bsp\dma\dma.h(25): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\module\openmv\openmv.h(16): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\application\arm\arm.c(72): warning:  #940-D: missing return statement at end of non-void function "water_finish"
+  }
+..\application\arm\arm.c(85): warning:  #188-D: enumerated type mixed with another type
+              MP3_broadcast(drought_buff[plant_cnt]);
+..\application\arm\arm.c(224): warning:  #188-D: enumerated type mixed with another type
+              water(get_OpenMV());
+..\application\arm\arm.c(232): warning:  #188-D: enumerated type mixed with another type
+              water(get_OpenMV());
+..\application\arm\arm.c: 8 warnings, 0 errors
+linking...
+Program Size: Code=43508 RO-data=7124 RW-data=392 ZI-data=2704  
+FromELF: creating hex file...
+"..\OBJ\Template.axf" - 0 Error(s), 31 Warning(s).
 
 <h2>Collection of Component include folders:</h2>
   D:\Github\Irrigation-robot\MAIN\USER\RTE

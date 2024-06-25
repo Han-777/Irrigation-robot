@@ -10,17 +10,18 @@ int data_check(void) // 检查数据接收是否成功
     {
         // Bluetooth_USART_Close();
         chassis_Init();
+        delay_ms(1000);
         arm_Init();
-        // delay_ms(2000);
+        delay_ms(1000);
         return 1;
     }
     return 0;
 }
 ////--------------- TIME CONST --------------//
-const u16 GO_PREVENT_MISID_TIME = 4000; // go in case of misidentification time
-const u16 GO_HOME_TIME = 10;
+const u16 GO_PREVENT_MISID_TIME = 200; // go in case of misidentification time
+const u16 GO_HOME_TIME = 1000;
 // const u16 RUN_SPEED = 10;
-const u16 CROSS_TIME = 1000;
+const u16 CROSS_TIME = 2000;
 // int run_speed = 0;
 ////--------------- TEST --------------//
 //// int test1(void)
@@ -78,14 +79,18 @@ int cross_action(void)
             PE_EXTI_Open();
             // TFmini_left_USART_Init(115200);
             // TFmini_right_USART_Init(115200);
-            //            delay_ms(2);
+            delay_ms(2);
             return 1;
         }
         // for (int i = 0; i < 20; ++i)
         // {
+        // for (int i = 0; i < 20; ++i)
+        // {
         set_speed(RUN_SPEED, RUN_SPEED);
+        chassis_run();
         // chassis_run(RUN_SPEED, target_Yaw); // in case of misidentification of the line
         delay_ms(GO_PREVENT_MISID_TIME);
+        // }
         // }
         return 1;
     }
@@ -95,9 +100,9 @@ int cross_action(void)
 //=================== car control =====================:
 // 24 C  B 19   D 18
 
-#define B_error_coefficient 0.4
-#define C_error_coefficient 0.6
-#define D_error_coefficient 0.6
+#define B_error_coefficient 0.3
+#define C_error_coefficient 0.45
+#define D_error_coefficient 0.4
 int lidar_err = 0, C_lidar_error = 0;
 const int B_lidar_err_dis = 19;
 const int C_lidar_err_dis = 24;
@@ -109,8 +114,10 @@ int _run_(void)
     {
         Car_stop();
         // set_speed(0, 0);
-        TIM7_Init(1000 - 1, 840 - 1);
-        PE_EXTI_Close(); // PE close
+        PE_EXTI_Close();
+        // set_speed(0, 0);
+        // TIM7_Init(1000 - 1, 840 - 1);
+        // TIMM7_Open();
         return 1;
     }
     else
@@ -121,20 +128,33 @@ int _run_(void)
         }
         else
         {
+            TIMM7_Open();
+            // set_speed(RUN_SPEED, RUN_SPEED);
+            // chassis_run();
             // TIM7_Init(1000 - 1, 840 - 1);
             // set_speed(RUN_SPEED, RUN_SPEED);
-            if (region == A)
-            {
-                set_speed(RUN_SPEED, RUN_SPEED);
-            }
-            else if (region == B || region == D)
+            // if (region == A)
+            // {
+            //     set_speed(RUN_SPEED, RUN_SPEED);
+            //     chassis_run();
+            // }
+            set_speed(RUN_SPEED, RUN_SPEED);
+            chassis_run();
+            if ((region == B && plant_cnt >= 7) || (region == D && plant_cnt >= 25))
             {
                 lidar_err = B_error_coefficient * (lidar_right - lidar_left);
                 set_speed(RUN_SPEED + lidar_err, RUN_SPEED - lidar_err);
+                chassis_run();
             }
-            else if (region == C)
+            else if (region == C && plant_cnt >= 13)
             {
                 set_speed(RUN_SPEED + C_error_coefficient * C_lidar_error, RUN_SPEED - C_error_coefficient * C_lidar_error);
+                chassis_run();
+            }
+            else
+            {
+                set_speed(RUN_SPEED, RUN_SPEED);
+                chassis_run();
             }
             // else if (region == D)
             // {
@@ -170,20 +190,32 @@ int _run_(void)
         return 0;
     }
 }
-
+int temp_flag = 0;
 int cross_to_cross(void)
 {
+    if (!temp_flag)
+    {
+        temp_flag = 1;
+        set_speed(RUN_SPEED + 10, RUN_SPEED + 10);
+        chassis_run();
+        delay_ms(CROSS_TIME);
+    }
     // if (cross_cnt % 2 != 0) //
     // {
     // for (int i = 0; i < 500; ++i)
     // {
-    set_speed(RUN_SPEED, RUN_SPEED);
+
     // chassis_run(RUN_SPEED, target_Yaw);
     // }
-    delay_ms(CROSS_TIME);
+
+    // for (int i = 0; i < 15; ++i)
+    // {
+    // delay_ms(CROSS_TIME);
+    // }
     if (get_cross_flag()) // cross_cnt++
     {
-        // PE_EXTI_Init(); // 不确定开了没
+        temp_flag = 0;
+        PE_EXTI_Init(); // 不确定开了没
         return 1;
     }
     // }
@@ -195,9 +227,15 @@ int cross_to_cross(void)
 int end_return_home(void)
 {
     // chassis_run(RUN_SPEED, target_Yaw);
-    set_speed(RUN_SPEED, RUN_SPEED);
-    delay_ms(GO_HOME_TIME);
-    Car_stop();
+
+    for (int i = 0; i < 20; ++i)
+    {
+        set_speed(RUN_SPEED, RUN_SPEED);
+        chassis_run();
+        delay_ms(GO_HOME_TIME);
+    }
+    movement_stop();
+    return 1;
     //    Target_Run(0, 0, 0);
     //    // speed_limit = 0.08;
     //    servoMove(calibObj, 100);
@@ -207,14 +245,26 @@ int end_return_home(void)
 }
 
 //----------- Run Excutor -----------//
+// int (*operation_sequence[])(void) = {
+//     data_check,
+//     _run_,
+//     cross_action, cross_to_cross, cross_action, // A区
+//     _run_, cross_action, cross_to_cross,
+//     // cross_action, // B区
+//     //  _run_, cross_action, cross_to_cross, cross_action, // C区
+//     //  _run_,                                             // D区
+//     end_return_home}; // D finish and go home
+// u8 max_run_itr = 8;
+
 int (*operation_sequence[])(void) = {
     data_check,
     _run_, cross_action, cross_to_cross, cross_action, // A区
-    _run_, cross_action, cross_to_cross, cross_action, // B区
-    _run_, cross_action, cross_to_cross, cross_action, // C区
-    _run_,                                             // D区
-    end_return_home};                                  // D finish and go home
-u8 max_run_itr = 15;
+    _run_, cross_action, cross_to_cross,
+    // cross_action, // B区
+    //  _run_, cross_action, cross_to_cross, cross_action, // C区
+    //  _run_,                                             // D区
+    end_return_home}; // D finish and go home
+u8 max_run_itr = 9;
 
 // int(*operation_sequence[])(void) = {test1, test2, test3};
 // u8 max_run_itr = 3;

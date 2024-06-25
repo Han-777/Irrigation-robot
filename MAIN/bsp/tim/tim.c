@@ -13,12 +13,12 @@
 // Ft=84M定时器工作频率,单位:Mhz
 void TIM7_Init(u16 arr, u16 psc)
 {
-//	// gyro init
-//	if (!gyro_init_flag)
-//	{
-//		GYRO_Init();
-//		// PE_EXTI_Init();
-//	}
+	//	// gyro init
+	//	if (!gyro_init_flag)
+	//	{
+	//		GYRO_Init();
+	//		// PE_EXTI_Init();
+	//	}
 
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;
@@ -41,21 +41,26 @@ void TIM7_Init(u16 arr, u16 psc)
 	NVIC_Init(&NVIC_InitStructure);
 }
 
+void TIMM7_Open(void)
+{
+	TIM_ITConfig(TIM7, TIM_IT_Update, ENABLE);
+	TIM_Cmd(TIM7, ENABLE);
+}
 void TIM7_Close(void)
 {
-	TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
-	NVIC_InitTypeDef NVIC_InitStructure;
+	// TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
+	// NVIC_InitTypeDef NVIC_InitStructure;
 
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM7, DISABLE);
+	// RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM7, DISABLE);
 
 	TIM_ITConfig(TIM7, TIM_IT_Update, DISABLE);
 	TIM_Cmd(TIM7, DISABLE);
 
-	NVIC_InitStructure.NVIC_IRQChannel = TIM7_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x01; // 抢占优先级1
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x01;		 // 子优先级3
-	NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE;
-	NVIC_Init(&NVIC_InitStructure);
+	// NVIC_InitStructure.NVIC_IRQChannel = TIM7_IRQn;
+	// NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x00; // 抢占优先级1
+	// NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x01;		 // 子优先级3
+	// NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE;
+	// NVIC_Init(&NVIC_InitStructure);
 }
 
 // void TIM7_IRQHandler(void)

@@ -11,6 +11,7 @@ extern int gyro_init_flag;
 extern float ori_target_Yaw, target_Yaw, current_yaw; // ori: fix, target_Yaw: dynamically changed
 extern int clockwise_rotate_flag;
 void GYRO_Init(void);
+void TIMM7_Open(void);
 
 void heading_Trans(void);
 

@@ -44,6 +44,8 @@ int main(void)
 	while (1)
 	{
 		//		MP3_broadcast(MILD_DROUGHT);
+		// plant_cnt = 6;
+		// region = A;
 		Run();
 		// chassis_rotate(target_Yaw);
 		//		set_speed(0, 0);

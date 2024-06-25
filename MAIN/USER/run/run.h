@@ -17,7 +17,7 @@ typedef enum
 	D,
 	home
 } regionEnum;
-#define RUN_SPEED 27
+#define RUN_SPEED 30
 // typedef struct
 // {
 // };

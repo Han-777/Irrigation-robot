@@ -5,7 +5,7 @@ int vec[2] = {0};
 float info[20] = {0};
 chassis_mode_Enum chassis_mode = ahead_mode;
 
-float speed_limit = 50, heading_speed_limit = 20; // speed lmit should be smaller than 0.8 m/s
+float speed_limit = 30, heading_speed_limit = 20; // speed lmit should be smaller than 0.8 m/s
 //==================== Internal vars =====================:
 // constants & PIDs
 // PID heading_PID;
@@ -42,7 +42,7 @@ void movement_stop(void)
     gyro_init_flag = 0;
     Car_stop();
     PE_EXTI_Close();
-    delay_ms(20);
+    // delay_ms(20);
 }
 /**
  * @brief  Initialization for all chassis elements
@@ -59,7 +59,7 @@ void chassis_Init(void)
     Encoder_TIM_Init_All();
     gray_GPIO_Init();
     GYRO_Init();
-    delay_ms(2000); // wait for stable(it is not necassary)
+    delay_ms(4000); // wait for stable(it is not necassary)
     TTL_Hex2Dec();
     ori_target_Yaw = Read_Yaw();
     target_Yaw = ori_target_Yaw;
@@ -137,13 +137,13 @@ int chassis_rotate(float target_yaw)
     heading_Trans();
     // heading_speed_limit = 50;
     increment_pid_calculate(&heading_inc_PID, target_yaw, current_yaw);
-    info[17] = 100 * heading_inc_PID.output;
-    info[18] = -100 * heading_inc_PID.output;
+    // info[17] = 100 * heading_inc_PID.output;
+    // info[18] = -100 * heading_inc_PID.output;
     // info[17] = ((abs(info[17]) > 10) ? info[17] : (info[17] > 0) ? 10
     //                                                              : -10);
     // info[18] = ((abs(info[18]) > 10) ? info[18] : (info[18] > 0) ? 10
     //                                                              : -10);
-    Car_Load(info[17], info[18]);
+    Car_Load(100 * heading_inc_PID.output, -100 * heading_inc_PID.output);
     return 1;
 }
 
@@ -178,25 +178,34 @@ int chassis_run(void)
     increment_pid_calculate(&right_inc_PID, right_target_speed, vec[1]);
     left_ff_speed = speed_Kv * left_target_speed;
     right_ff_speed = speed_Kv * right_target_speed;
+    //    if (region == A)
+    //    {
+    //        info[17] = left_inc_PID.output + 200 * heading_inc_PID.output + left_ff_speed;
+    //        info[18] = right_inc_PID.output - 200 * heading_inc_PID.output + right_ff_speed;
+    //    }
+    //    else if (region == B || region == C || region == D)
+    //    {
+    //        info[17] = left_inc_PID.output + left_ff_speed;
+    //        info[18] = right_inc_PID.output + right_ff_speed;
+    //    }
     if (region == A)
     {
-        info[17] = left_inc_PID.output + 200 * heading_inc_PID.output + left_ff_speed;
-        info[18] = right_inc_PID.output - 200 * heading_inc_PID.output + right_ff_speed;
+        Car_Load(left_inc_PID.output + 200 * heading_inc_PID.output + left_ff_speed, right_inc_PID.output - 200 * heading_inc_PID.output + right_ff_speed);
     }
     else if (region == B || region == C || region == D)
     {
-        info[17] = left_inc_PID.output + left_ff_speed;
-        info[18] = right_inc_PID.output + right_ff_speed;
+        Car_Load(left_inc_PID.output + 50 * heading_inc_PID.output + left_ff_speed, right_inc_PID.output - 50 * heading_inc_PID.output + right_ff_speed);
+        // info[17] = left_inc_PID.output + left_ff_speed;
+        // info[18] = right_inc_PID.output + right_ff_speed;
     }
     // info[17] = left_inc_PID.output + 200 * heading_inc_PID.output + left_ff_speed;
     // info[18] = right_inc_PID.output - 200 * heading_inc_PID.output + right_ff_speed;
-    Car_Load(info[17], info[18]);
     return 1;
 }
 
 void set_speed(int left_speed, int right_speed) // the speed should be an integer
 {
-    chassis_mode = ahead_mode;
+    // chassis_mode = ahead_mode;
     left_target_speed = left_speed;
     right_target_speed = right_speed;
 }

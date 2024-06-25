@@ -24,7 +24,7 @@ void chassis_pid_Init(void);
 int chassis_rotate(float heading);
 void set_speed(int left_speed, int right_speed); // the speed should be an integer
 // int chassis_run(int speed, float target_heading);
-// int chassis_run(void); // internal
+int chassis_run(void); // internal
 // void lcd_dis(void);
 
 void movement_stop(void);

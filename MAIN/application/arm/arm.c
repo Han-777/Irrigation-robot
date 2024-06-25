@@ -4,7 +4,7 @@ water_finish_Structure_TypeDef water_finish_structure;
 
 // TIME CONST
 const int PITCH_TRANSFER_TIME = 400, // 400
-    YAW_TRANSFER_TIME = 120,         // 120
+    YAW_TRANSFER_TIME = 150,         // 120
     OPENMV_WAIT = 1000,              // 1000
     WATER_TIME = 2000;
 
@@ -66,26 +66,26 @@ void water(colorIdx waterTimes)
     static int water_cnt = 0;
     if (waterTimes == INFO_DROUGHT)
     {
+        MP3_broadcast(drought_buff[plant_cnt]);
+        LCD_hanqing(drought_buff[plant_cnt], plant_cnt);
         for (int times = 0; times < drought_buff[plant_cnt]; ++times) // 后面加上if buff = 0
         {
             open_pump;
             delay_ms(WATER_TIME);
             close_pump;
             delay_ms(WATER_TIME);
-            MP3_broadcast(drought_buff[plant_cnt]);
-            LCD_hanqing(drought_buff[plant_cnt], plant_cnt);
         }
     }
     else
     {
+        MP3_broadcast(waterTimes);
+        LCD_hanqing(waterTimes, plant_cnt);
         for (int times = 0; times < waterTimes; ++times)
         {
             open_pump;
             delay_ms(WATER_TIME);
             close_pump;
             delay_ms(WATER_TIME);
-            MP3_broadcast(waterTimes);
-            LCD_hanqing(waterTimes, plant_cnt);
         }
     }
     ++water_cnt;
@@ -142,7 +142,7 @@ void get_water_direction(void)
                 delay_ms(YAW_TRANSFER_TIME); // delay for servo movement
                 if (PE_NOZZLE == 0)
                 {
-                    angle_buffer[buffer_idx] = angle;
+                    angle_buffer[buffer_idx] = angle + 5;
                     ++buffer_idx;
                     current_found = 1;
                 }
@@ -165,7 +165,7 @@ void get_water_direction(void)
                 delay_ms(YAW_TRANSFER_TIME); // delay for servo movement
                 if (PE_NOZZLE == 0)
                 {
-                    angle_buffer[buffer_idx] = angle;
+                    angle_buffer[buffer_idx] = angle + 5;
                     ++buffer_idx;
                     current_found = 1;
                 }
@@ -242,10 +242,10 @@ void arm_water_task(void)
         water_finish_structure.right_water_finish = 0;
         //        if (region == C || region == D)
         //        {q
-        PE_EXTI_Open();
         GYRO_Init();
+
+        PE_EXTI_Open();
         // delay_ms(10);
-        TIM7_Init(1000 - 1, 840 - 1);
         // delay_ms(10);
         //        }
     }

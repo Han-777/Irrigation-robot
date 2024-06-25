@@ -38,6 +38,7 @@
     "dma.h": "c",
     "cmath": "c",
     "limits": "c",
-    "type_traits": "c"
+    "type_traits": "c",
+    "oled_font.h": "c"
   }
 }

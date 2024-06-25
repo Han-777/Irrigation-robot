@@ -192,18 +192,11 @@ uint16_t lidar_right;
 char rx_data_left[9];
 uint16_t lidar_left;
 
-void lidar_Init(lidarIndexEnum lidar_idx)
+void lidar_Init(FunctionalState state)
 {
-	if (lidar_idx == left_lidar)
-	{
-		TFmini_left_USART_Init(115200);
-		// UART4_DMA_Config();
-	}
-	else if (lidar_idx == right_lidar)
-	{
-		TFmini_right_USART_Init(115200);
-		// USART2_DMA_Config();
-	}
+	TFmini_left_USART_Init(115200, state);
+	TFmini_right_USART_Init(115200, state);
+
 }
 
 /* only open usart interupt config

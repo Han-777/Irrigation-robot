@@ -1,20 +1,17 @@
 #include "run.h"
 
-// u8 color_Index = 0; // 车上的数量
-// const float slow_move_speed ;
-
 u8 get_Itr(void);
 //=================== begin checking =====================:
 int data_check(void) // 检查数据接收是否成功
 {
     // 蓝牙标志位 + buffer 标志位（帧尾）
-    Bluetooth_USART_Init(115200);
+    // Bluetooth_USART_Init(115200);
     if (bluetooth_receive_flag)
     {
-        Bluetooth_USART_Close();
+        // Bluetooth_USART_Close();
         chassis_Init();
         arm_Init();
-        delay_ms(2000);
+        // delay_ms(2000);
         return 1;
     }
     return 0;
@@ -61,7 +58,7 @@ int get_region(void)
 int region_finish(void)
 {
     region = (cross_cnt < 2) ? A : ((cross_cnt < 4) ? B : ((cross_cnt < 6) ? C : D));
-    if (((plant_cnt >= 5 && plant_cnt < 9) && region == A) || ((plant_cnt >= 11 && plant_cnt < 15) && region == B) || ((plant_cnt >= 23 && plant_cnt < 27) && region == C) || (plant_cnt >= 30 && region == D)) // 21 in total
+    if (((plant_cnt >= 6 && plant_cnt < 9) && region == A) || ((plant_cnt >= 12 && plant_cnt < 15) && region == B) || ((plant_cnt >= 24 && plant_cnt < 27) && region == C) || (plant_cnt >= 30 && region == D)) // 21 in total
     {
         plant_cnt = (region == A) ? 6 : ((region == B) ? 12 : 24);
         return 1; // 2/4/6 -> 0
@@ -72,6 +69,7 @@ int region_finish(void)
 // 只改角度，在外面旋转(inner function)
 int cross_action(void)
 {
+    // chassis_mode = rotate_mode;
     chassis_rotate(target_Yaw);
     if (rotate_arrive)
     {
@@ -80,7 +78,7 @@ int cross_action(void)
             PE_EXTI_Open();
             // TFmini_left_USART_Init(115200);
             // TFmini_right_USART_Init(115200);
-            delay_ms(2);
+            //            delay_ms(2);
             return 1;
         }
         // for (int i = 0; i < 20; ++i)
@@ -97,9 +95,9 @@ int cross_action(void)
 //=================== car control =====================:
 // 24 C  B 19   D 18
 
-#define B_error_coefficient 3
-#define C_error_coefficient 7
-#define D_error_coefficient 3
+#define B_error_coefficient 0.4
+#define C_error_coefficient 0.6
+#define D_error_coefficient 0.6
 int lidar_err = 0, C_lidar_error = 0;
 const int B_lidar_err_dis = 19;
 const int C_lidar_err_dis = 24;
@@ -123,22 +121,26 @@ int _run_(void)
         }
         else
         {
-            TIM7_Init(1000 - 1, 840 - 1);
-            set_speed(RUN_SPEED, RUN_SPEED);
-            if (region == B)
+            // TIM7_Init(1000 - 1, 840 - 1);
+            // set_speed(RUN_SPEED, RUN_SPEED);
+            if (region == A)
             {
-                lidar_err = B_error_coefficient * (right_lidar - left_lidar);
+                set_speed(RUN_SPEED, RUN_SPEED);
+            }
+            else if (region == B || region == D)
+            {
+                lidar_err = B_error_coefficient * (lidar_right - lidar_left);
                 set_speed(RUN_SPEED + lidar_err, RUN_SPEED - lidar_err);
             }
             else if (region == C)
             {
                 set_speed(RUN_SPEED + C_error_coefficient * C_lidar_error, RUN_SPEED - C_error_coefficient * C_lidar_error);
             }
-            else if (region == D)
-            {
-                lidar_err = D_error_coefficient * (right_lidar - left_lidar);
-                set_speed(RUN_SPEED + lidar_err, RUN_SPEED - lidar_err);
-            }
+            // else if (region == D)
+            // {
+            //     lidar_err = D_error_coefficient * (lidar_right - lidar_left);
+            //     set_speed(RUN_SPEED + lidar_err, RUN_SPEED - lidar_err);
+            // }
             // if (region == B)
             // {
 
@@ -178,7 +180,7 @@ int cross_to_cross(void)
     set_speed(RUN_SPEED, RUN_SPEED);
     // chassis_run(RUN_SPEED, target_Yaw);
     // }
-    //    delay_ms(CROSS_TIME);
+    delay_ms(CROSS_TIME);
     if (get_cross_flag()) // cross_cnt++
     {
         // PE_EXTI_Init(); // 不确定开了没

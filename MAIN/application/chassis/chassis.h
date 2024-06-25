@@ -10,6 +10,12 @@
 #include "lidar.h"
 #include "gray.h"
 
+typedef enum
+{
+    rotate_mode,
+    ahead_mode
+} chassis_mode_Enum;
+extern chassis_mode_Enum chassis_mode;
 extern int vec[2];
 extern int rotate_arrive, rotate_vague_arrive;
 void chassis_Init(void);

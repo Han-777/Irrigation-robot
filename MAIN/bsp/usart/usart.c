@@ -93,7 +93,7 @@ void Bluetooth_USART_Close(void)
 						TFmini_Left 初始化 USART2
 **************************************************************************/
 
-void TFmini_right_USART_Init(uint32_t bound)
+void TFmini_right_USART_Init(uint32_t bound, FunctionalState state)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
 	USART_InitTypeDef USART_InitStructure;
@@ -128,7 +128,7 @@ void TFmini_right_USART_Init(uint32_t bound)
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			  // IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);							  // 根据指定的参数初始化VIC寄存器
 
-	USART_ITConfig(USART2, USART_IT_RXNE, ENABLE); // 开启相关中断
+	USART_ITConfig(USART2, USART_IT_RXNE, state); // 开启相关中断
 
 	USART_Cmd(USART2, ENABLE); // 使能串口1
 }
@@ -261,7 +261,7 @@ void OpenMV_USART_Close(void)
 						TFmini_Right 初始化 USART4
 **************************************************************************/
 
-void TFmini_left_USART_Init(uint32_t bound)
+void TFmini_left_USART_Init(uint32_t bound, FunctionalState state)
 {
 	// GPIO端口设置
 	GPIO_InitTypeDef GPIO_InitStructure;
@@ -296,7 +296,7 @@ void TFmini_left_USART_Init(uint32_t bound)
 
 	USART_ClearFlag(UART4, USART_FLAG_TC);
 
-	USART_ITConfig(UART4, USART_IT_RXNE, ENABLE); // 开启相关中断
+	USART_ITConfig(UART4, USART_IT_RXNE, state); // 开启相关中断
 
 	// USART3 NVIC 配置
 	NVIC_InitStructure.NVIC_IRQChannel = UART4_IRQn;		  // 串口1中断通道

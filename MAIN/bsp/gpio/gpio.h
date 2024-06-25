@@ -74,6 +74,6 @@ void photoelectric_GPIO_Init(void);
 								Ë®±ÃGPIO
 **************************************************************************/
 void pump_GPIO_Init(void);
-#define close_pump GPIO_ResetBits(GPIOB, GPIO_Pin_4)
-#define open_pump GPIO_SetBits(GPIOB, GPIO_Pin_4)
+#define close_pump GPIO_ResetBits(GPIOA, GPIO_Pin_12)
+#define open_pump GPIO_SetBits(GPIOA, GPIO_Pin_12)
 #endif

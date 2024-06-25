@@ -22,7 +22,7 @@ typedef enum
 /*===============public===================*/
 extern uint16_t lidar_right;
 extern uint16_t lidar_left;
-void lidar_Init(lidarIndexEnum lidar_idx);
+void lidar_Init(FunctionalState state);
 void left_lidar_state(FunctionalState state);
 void right_lidar_state(FunctionalState state);
 

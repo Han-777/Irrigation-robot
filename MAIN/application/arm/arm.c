@@ -3,20 +3,22 @@
 water_finish_Structure_TypeDef water_finish_structure;
 
 // TIME CONST
-const int PITCH_TRANSFER_TIME = 400, // 500
-    YAW_TRANSFER_TIME = 150,         // 120
+const int PITCH_TRANSFER_TIME = 400, // 400
+    YAW_TRANSFER_TIME = 120,         // 120
     OPENMV_WAIT = 1000,              // 1000
-    WATER_TIME = 1000;
+    WATER_TIME = 2000;
 
 void arm_Init(void)
 {
     servo_Init_All();
     photoelectric_GPIO_Init();
+    pump_GPIO_Init();
     PE_EXTI_Init();
     Servo_Pitch_Control(pitch_mid);
     Servo_Yaw_Control(yaw_mid);
     VirtualTx_Config();
     LCD_Init();
+    lidar_Init(DISABLE);
 }
 
 int lidar_water_confirm(void)
@@ -47,7 +49,9 @@ int water_finish(void)
     set_speed(0, 0);
     if (left_water_flag || right_water_flag) // 左侧更高优先级
     {
-        lidar_Init(left_water_flag ? left_lidar : right_lidar);
+        // lidar_Init(left_water_flag ? left_lidar : right_lidar);
+        left_lidar_state(left_water_flag ? ENABLE : DISABLE);
+        right_lidar_state(left_water_flag ? DISABLE : ENABLE);
         delay_ms(10);
         if (region == C)
         {
@@ -64,10 +68,10 @@ void water(colorIdx waterTimes)
     {
         for (int times = 0; times < drought_buff[plant_cnt]; ++times) // 后面加上if buff = 0
         {
-            // open_pump;
-            // delay_ms(WATER_TIME);
-            // close_pump;
-            // delay_ms(WATER_TIME);
+            open_pump;
+            delay_ms(WATER_TIME);
+            close_pump;
+            delay_ms(WATER_TIME);
             MP3_broadcast(drought_buff[plant_cnt]);
             LCD_hanqing(drought_buff[plant_cnt], plant_cnt);
         }
@@ -76,10 +80,10 @@ void water(colorIdx waterTimes)
     {
         for (int times = 0; times < waterTimes; ++times)
         {
-            // open_pump;
-            // delay_ms(WATER_TIME);
-            // close_pump;
-            // delay_ms(WATER_TIME);
+            open_pump;
+            delay_ms(WATER_TIME);
+            close_pump;
+            delay_ms(WATER_TIME);
             MP3_broadcast(waterTimes);
             LCD_hanqing(waterTimes, plant_cnt);
         }
@@ -199,8 +203,8 @@ void water_task(void)
 {
     if (region != D)
     {
-        ServoControl(pitch_servo, pitch_scan_angle, left_water_flag ? left_water_angle : right_water_angle, PITCH_TRANSFER_TIME); // 浇水角度需要后面测量
-        water(INFO_DROUGHT);                                                                                                      // 非D特殊标志位
+        ServoControl(pitch_servo, pitch_scan_angle, left_water_flag ? (lidar_left * 0.7 + 110) : (lidar_right * 0.7 + 110), PITCH_TRANSFER_TIME); // 浇水角度需要后面测量
+        water(INFO_DROUGHT);                                                                                                                      // 非D特殊标志位
     }
     else if (region == D)
     {
@@ -239,6 +243,9 @@ void arm_water_task(void)
         //        if (region == C || region == D)
         //        {q
         PE_EXTI_Open();
+        GYRO_Init();
+        // delay_ms(10);
+        TIM7_Init(1000 - 1, 840 - 1);
         // delay_ms(10);
         //        }
     }

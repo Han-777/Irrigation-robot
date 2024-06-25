@@ -3,6 +3,7 @@
 //==================== Public vars =====================:
 int vec[2] = {0};
 float info[20] = {0};
+chassis_mode_Enum chassis_mode = ahead_mode;
 
 float speed_limit = 50, heading_speed_limit = 20; // speed lmit should be smaller than 0.8 m/s
 //==================== Internal vars =====================:
@@ -12,10 +13,13 @@ float speed_limit = 50, heading_speed_limit = 20; // speed lmit should be smalle
 Increment_PID left_inc_PID, right_inc_PID, heading_inc_PID;
 // PID head_PID;
 //  const float H = 0.188, W = 0.25, R = 0.413, PI = 3.1415926535;
-const float speed_kp = 0.1, speed_ki = 0.12, speed_kd = 0.00, speed_Kv = 0.1, // feed forward gain
-                                                                              //    heading_kp = 0.07, heading_ki = 0.00, heading_kd = 0.017;                   // for rotate
-    heading_kp = 0.05, heading_ki = 0.0000, heading_kd = 0.01;                // for rotate
+const float speed_kp = 0.1, speed_ki = 0.12, speed_kd = 0.00, speed_Kv = 0.1,
+            heading_kp = 0.05, heading_ki = 0.0, heading_kd = 0.01; // feed forward gain
+                                                                    // heading_kp = 0.05, heading_ki = 0.0000, heading_kd = 0.01;                // for rotate
 
+// #define heading_kp 0.05f
+// #define heading_ki 0.0
+// #define heading_kd 0.01f
 float left_target_speed = 0, right_target_speed = 0;
 // head_kp = 0.1, head_ki = 0, head_kd = 0, head_ki_limit = 2, head_out_limit = 180;
 // motor speed unit is m/s, should start from a small value
@@ -33,11 +37,10 @@ float left_target_speed = 0, right_target_speed = 0;
  */
 void movement_stop(void)
 {
-    Car_stop();
     TIM7_Close();
     gyro_USART_Close();
     gyro_init_flag = 0;
-    delay_ms(20);
+    Car_stop();
     PE_EXTI_Close();
     delay_ms(20);
 }
@@ -52,11 +55,11 @@ void movement_stop(void)
 void chassis_Init(void)
 {
     Motor_Init();
+    chassis_pid_Init();
     Encoder_TIM_Init_All();
     gray_GPIO_Init();
-    chassis_pid_Init();
     GYRO_Init();
-    delay_ms(5000); // wait for stable(it is not necassary)
+    delay_ms(2000); // wait for stable(it is not necassary)
     TTL_Hex2Dec();
     ori_target_Yaw = Read_Yaw();
     target_Yaw = ori_target_Yaw;
@@ -77,7 +80,7 @@ void chassis_pid_Init(void)
 {
     set_increment_pid(&left_inc_PID, speed_kp, speed_ki, speed_kd, speed_limit);
     set_increment_pid(&right_inc_PID, speed_kp, speed_ki, speed_kd, speed_limit);
-    set_increment_pid(&heading_inc_PID, heading_kp, heading_ki, heading_kd, heading_speed_limit); // m/s
+    set_increment_pid(&heading_inc_PID, 0.05, 0, 0.01, 50); // m/s
     // set_pid(&head_PID, head_kp, head_ki, head_kd, head_ki_limit, head_out_limit);
 }
 
@@ -182,15 +185,18 @@ int chassis_run(void)
     }
     else if (region == B || region == C || region == D)
     {
-        info[17] = left_inc_PID.output + 200 * heading_inc_PID.output + left_ff_speed;
-        info[18] = right_inc_PID.output - 200 * heading_inc_PID.output + right_ff_speed;
+        info[17] = left_inc_PID.output + left_ff_speed;
+        info[18] = right_inc_PID.output + right_ff_speed;
     }
+    // info[17] = left_inc_PID.output + 200 * heading_inc_PID.output + left_ff_speed;
+    // info[18] = right_inc_PID.output - 200 * heading_inc_PID.output + right_ff_speed;
     Car_Load(info[17], info[18]);
     return 1;
 }
 
 void set_speed(int left_speed, int right_speed) // the speed should be an integer
 {
+    chassis_mode = ahead_mode;
     left_target_speed = left_speed;
     right_target_speed = right_speed;
 }
@@ -214,24 +220,8 @@ void TIM7_IRQHandler(void)
         // info[9] = heading_inc_PID.sum_error;
         // info[10] = lidar_right;
         // info[11] = lidar_left;
+        // if (chassis_mode == ahead_mode)
+        // {
         chassis_run();
-
-        //        		chassis_rotate(target_Yaw);
-        //  		chassis_run(10, target_Yaw);
-        //        chassis_ahead(20, 20);
-        // chassis_rotate(ori_target_Yaw);
-        //        chassis_run(5, ori_target_Yaw);
-        // chassis_run(0, target_Yaw);
-        //        chassis_rotate(target_Yaw);
-
-        //        info[12] = Get_Count();
     }
 }
-
-// void lcd_dis(void)
-// {
-//     LCD_ShowString(10, 20, 100, 16, 16, "left");
-//     LCD_ShowNum(10, 200, vec[0], 5, 16);
-//     LCD_ShowString(30, 20, 100, 16, 16, "right");
-//     LCD_ShowNum(30, 200, vec[1], 5, 16);
-// }

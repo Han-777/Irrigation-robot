@@ -12,17 +12,17 @@ int main(void)
 													//	LCD_Init();
 													//	POINT_COLOR = BLUE; // »­±ÊÑÕÉ«
 													//	arm_Init();
-//	chassis_Init();
-//	gray_GPIO_Init();
-	//	Car_Load(40, 40);
-	//	delay_ms(10000);
-	//	Turn_Left_90_Angles();
-	//	delay_ms(10000);
-	//	Car_stop();
-	//	delay_ms(5000);
-	//	Turn_Right_90_Angles();
-	//	delay_ms(10000);
-
+													//	chassis_Init();
+													//	gray_GPIO_Init();
+													//	Car_Load(40, 40);
+													//	delay_ms(10000);
+													//	Turn_Left_90_Angles();
+													//	delay_ms(10000);
+													//	Car_stop();
+													//	delay_ms(5000);
+													//	Turn_Right_90_Angles();
+													//	delay_ms(10000);
+	// chassis_Init();
 	//	gray_GPIO_Init();
 	//	photoelectricity_GPIO_Init();
 	//	delay_ms(5000);
@@ -45,9 +45,10 @@ int main(void)
 	{
 		//		MP3_broadcast(MILD_DROUGHT);
 		Run();
+		// chassis_rotate(target_Yaw);
 		//		set_speed(0, 0);
 		//		Run();
-//			get_gray_cnt();
+		//		get_gray_cnt();
 		//		Servo_Pitch_Control(50);
 		//		delay_ms(1000);
 		//		Servo_Pitch_Control(250);

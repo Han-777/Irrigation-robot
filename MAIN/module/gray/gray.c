@@ -19,7 +19,7 @@
 //	Car_Load(Pwm_L,Pwm_R);
 //	delay_ms(25);//这个时间可以变
 // }
-const int gray_threshold = 2;
+const int gray_threshold = 3;
 int cross_cnt = 0;
 int cnt = 0;
 int get_gray_cnt(void)
@@ -93,13 +93,21 @@ int get_cross_flag(void)
 		if (get_gray_cnt() > gray_threshold)
 		{
 			cross_cnt++;
-			if (cross_cnt == 2 || cross_cnt == 4 || cross_cnt == 6)
+			// if (cross_cnt == 2 || cross_cnt == 4 || cross_cnt == 6)
+			// {
+			// 	clockwise_rotate_flag += ((cross_cnt == 4) ? -1 : 1);
+			// }
+			// else if (cross_cnt == 1 || cross_cnt == 3 || cross_cnt == 5)
+			// {
+			// 	clockwise_rotate_flag += ((cross_cnt == 3) ? -1 : 1);
+			// }
+			if (cross_cnt == 1 || cross_cnt == 2 || cross_cnt == 5 || cross_cnt == 6)
 			{
-				clockwise_rotate_flag += ((cross_cnt == 4) ? -1 : 1);
+				clockwise_rotate_flag += 1;
 			}
-			else if (cross_cnt == 1 || cross_cnt == 3 || cross_cnt == 5)
+			else if (cross_cnt == 3 || cross_cnt == 4)
 			{
-				clockwise_rotate_flag += ((cross_cnt == 3) ? -1 : 1);
+				clockwise_rotate_flag -= 1;
 			}
 			return 1;
 		}

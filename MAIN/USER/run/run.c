@@ -10,18 +10,19 @@ int data_check(void) // 检查数据接收是否成功
     {
         // Bluetooth_USART_Close();
         chassis_Init();
-        delay_ms(1000);
+        delay_ms(2000);
         arm_Init();
-        delay_ms(1000);
+        delay_ms(2000);
         return 1;
     }
     return 0;
 }
 ////--------------- TIME CONST --------------//
-const u16 GO_PREVENT_MISID_TIME = 200; // go in case of misidentification time
+const u16 GO_PREVENT_MISID_TIME =
+    200; // go in case of misidentification time
 const u16 GO_HOME_TIME = 1000;
 // const u16 RUN_SPEED = 10;
-const u16 CROSS_TIME = 2000;
+const u16 CROSS_TIME = 1000;
 // int run_speed = 0;
 ////--------------- TEST --------------//
 //// int test1(void)
@@ -59,9 +60,10 @@ int get_region(void)
 int region_finish(void)
 {
     region = (cross_cnt < 2) ? A : ((cross_cnt < 4) ? B : ((cross_cnt < 6) ? C : D));
-    if (((plant_cnt >= 6 && plant_cnt < 9) && region == A) || ((plant_cnt >= 12 && plant_cnt < 15) && region == B) || ((plant_cnt >= 24 && plant_cnt < 27) && region == C) || (plant_cnt >= 30 && region == D)) // 21 in total
+    if (((plant_cnt >= 5 && plant_cnt < 9) && region == A) || ((plant_cnt > 10 && plant_cnt < 17) && region == B) || ((plant_cnt > 20 && plant_cnt < 29) && region == C) || (plant_cnt >= 28 && region == D)) // 21 in total
     {
         plant_cnt = (region == A) ? 6 : ((region == B) ? 12 : 24);
+        TIMM7_Open();
         return 1; // 2/4/6 -> 0
     }
     return 0;
@@ -71,25 +73,33 @@ int region_finish(void)
 int cross_action(void)
 {
     // chassis_mode = rotate_mode;
+    // rotate_arrive = 0;
+    // get_cross_flag();
     chassis_rotate(target_Yaw);
-    if (rotate_arrive)
+    if (rotate_arrive && abs(target_Yaw - current_yaw) < 1)
     {
+        //        MP3_broadcast(1);
+        //        delay_ms(5000);
         if (cross_cnt % 2 == 0) // even cross open
         {
             PE_EXTI_Open();
             // TFmini_left_USART_Init(115200);
             // TFmini_right_USART_Init(115200);
             delay_ms(2);
+            // PE_EXTI_Open();
             return 1;
         }
         // for (int i = 0; i < 20; ++i)
         // {
         // for (int i = 0; i < 20; ++i)
         // {
-        set_speed(RUN_SPEED, RUN_SPEED);
-        chassis_run();
-        // chassis_run(RUN_SPEED, target_Yaw); // in case of misidentification of the line
-        delay_ms(GO_PREVENT_MISID_TIME);
+        for (int i = 0; i < 10; ++i)
+        {
+            set_speed(RUN_SPEED, RUN_SPEED);
+            chassis_run();
+            // chassis_run(RUN_SPEED, target_Yaw); // in case of misidentification of the line
+            delay_ms(GO_PREVENT_MISID_TIME);
+        }
         // }
         // }
         return 1;
@@ -100,7 +110,7 @@ int cross_action(void)
 //=================== car control =====================:
 // 24 C  B 19   D 18
 
-#define B_error_coefficient 0.3
+#define B_error_coefficient 0.4
 #define C_error_coefficient 0.45
 #define D_error_coefficient 0.4
 int lidar_err = 0, C_lidar_error = 0;
@@ -117,14 +127,19 @@ int _run_(void)
         PE_EXTI_Close();
         // set_speed(0, 0);
         // TIM7_Init(1000 - 1, 840 - 1);
-        // TIMM7_Open();
+        TIMM7_Open();
+        delay_ms(10);
+        //        delay_ms(10);
+        //        TIMM7_Open();
         return 1;
     }
     else
     {
         if (!water_finish()) // 得到浇水标志位
         {
+            Car_stop();
             arm_water_task();
+            PE_EXTI_Open();
         }
         else
         {
@@ -138,22 +153,44 @@ int _run_(void)
             //     set_speed(RUN_SPEED, RUN_SPEED);
             //     chassis_run();
             // }
-            set_speed(RUN_SPEED, RUN_SPEED);
-            chassis_run();
-            if ((region == B && plant_cnt >= 7) || (region == D && plant_cnt >= 25))
+            // set_speed(RUN_SPEED, RUN_SPEED);
+            // chassis_run();
+            lidar_err = 0;
+            if ((region == B && plant_cnt >= 7))
             {
-                lidar_err = B_error_coefficient * (lidar_right - lidar_left);
+                if (lidar_right)
+                {
+                    lidar_err = B_error_coefficient * (lidar_right - B_lidar_err_dis);
+                }
+                if (abs(lidar_err) > 12)
+                {
+                    lidar_err = (lidar_err > 0) ? 12 : -12;
+                }
                 set_speed(RUN_SPEED + lidar_err, RUN_SPEED - lidar_err);
                 chassis_run();
             }
-            else if (region == C && plant_cnt >= 13)
+            else if (region == C && plant_cnt >= 12)
             {
+                if (abs(C_lidar_error) > 12)
+                {
+                    C_lidar_error = (C_lidar_error > 0) ? 12 : -12;
+                }
                 set_speed(RUN_SPEED + C_error_coefficient * C_lidar_error, RUN_SPEED - C_error_coefficient * C_lidar_error);
+                chassis_run();
+            }
+            else if ((region == D && plant_cnt >= 25))
+            {
+                lidar_err = D_error_coefficient * (lidar_right - lidar_left);
+                if (abs(lidar_err) > 12)
+                {
+                    lidar_err = (lidar_err > 0) ? 12 : -12;
+                }
+                set_speed(RUN_SPEED + lidar_err, RUN_SPEED - lidar_err);
                 chassis_run();
             }
             else
             {
-                set_speed(RUN_SPEED, RUN_SPEED);
+                set_speed(RUN_SPEED, RUN_SPEED); // A
                 chassis_run();
             }
             // else if (region == D)
@@ -190,16 +227,19 @@ int _run_(void)
         return 0;
     }
 }
-int temp_flag = 0;
+// int temp_flag = 0;
 int cross_to_cross(void)
 {
-    if (!temp_flag)
-    {
-        temp_flag = 1;
-        set_speed(RUN_SPEED + 10, RUN_SPEED + 10);
-        chassis_run();
-        delay_ms(CROSS_TIME);
-    }
+    //    if (!temp_flag)
+    //    {
+    //        temp_flag = 1;
+    //        for (int i = 0; i < 3; ++i)
+    //        {
+    // set_speed(RUN_SPEED, RUN_SPEED);
+    chassis_run();
+    //            delay_ms(CROSS_TIME);
+    //        }
+    //    }
     // if (cross_cnt % 2 != 0) //
     // {
     // for (int i = 0; i < 500; ++i)
@@ -214,8 +254,10 @@ int cross_to_cross(void)
     // }
     if (get_cross_flag()) // cross_cnt++
     {
-        temp_flag = 0;
-        PE_EXTI_Init(); // 不确定开了没
+        // delay_ms(5000);
+        TIMM7_Open();
+        //        temp_flag = 0;
+        //        PE_EXTI_Init(); // 不确定开了没
         return 1;
     }
     // }
@@ -228,7 +270,7 @@ int end_return_home(void)
 {
     // chassis_run(RUN_SPEED, target_Yaw);
 
-    for (int i = 0; i < 20; ++i)
+    for (int i = 0; i < 3; ++i)
     {
         set_speed(RUN_SPEED, RUN_SPEED);
         chassis_run();
@@ -259,14 +301,13 @@ int end_return_home(void)
 int (*operation_sequence[])(void) = {
     data_check,
     _run_, cross_action, cross_to_cross, cross_action, // A区
-    _run_, cross_action, cross_to_cross,
-    // cross_action, // B区
-    //  _run_, cross_action, cross_to_cross, cross_action, // C区
-    //  _run_,                                             // D区
-    end_return_home}; // D finish and go home
-u8 max_run_itr = 9;
+    _run_, cross_action, cross_to_cross, cross_action, // B区
+    _run_, cross_action, cross_to_cross, cross_action, // C区
+    _run_,                                             // D区
+    end_return_home};                                  // D finish and go home
+u8 max_run_itr = 15;
 
-// int(*operation_sequence[])(void) = {test1, test2, test3};
+// int (*operation_sequence[])(void) = {test1, test2, test3};
 // u8 max_run_itr = 3;
 
 u8 itr = 0;

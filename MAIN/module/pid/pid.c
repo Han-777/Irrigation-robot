@@ -87,7 +87,7 @@ void reset_increment_pid(Increment_PID *pid)
 float increment_pid_calculate(Increment_PID *pid, float target, float measure)
 {
 	pid->error = target - measure;
-	pid->sum_error += pid->error;  // for test
+	pid->sum_error += pid->error; // for test
 	// integral limit
 	// if (fabs(pid->sum_error) > pid->lim_integral)
 	// {
@@ -95,7 +95,14 @@ float increment_pid_calculate(Increment_PID *pid, float target, float measure)
 	// }
 
 	// pid output calculate
-	pid->delta_output = pid->kp * (pid->error - pid->last_error) + pid->ki * pid->error + pid->kd * (pid->error - 2 * pid->last_error + pid->last_last_error);
+	if (chassis_mode == rotate_mode)
+	{
+		pid->delta_output = pid->kp * (pid->error - pid->last_error) + pid->kd * (pid->error - 2 * pid->last_error + pid->last_last_error);
+	}
+	else
+	{
+		pid->delta_output = pid->kp * (pid->error - pid->last_error) + pid->ki * pid->error + pid->kd * (pid->error - 2 * pid->last_error + pid->last_last_error);
+	}
 
 	pid->output += pid->delta_output;
 	// pid output limit

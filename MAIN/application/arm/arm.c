@@ -37,6 +37,7 @@ int lidar_water_confirm(void)
         right_water_flag = 0;
         return 0;
     }
+    return 1;
 }
 
 int water_finish(void)
@@ -49,13 +50,13 @@ int water_finish(void)
     set_speed(0, 0);
     if (left_water_flag || right_water_flag) // 左侧更高优先级
     {
-        // lidar_Init(left_water_flag ? left_lidar : right_lidar);
         left_lidar_state(left_water_flag ? ENABLE : DISABLE);
-        right_lidar_state(left_water_flag ? DISABLE : ENABLE);
-        delay_ms(10);
+        right_lidar_state(left_water_flag && right_water_flag ? DISABLE : ENABLE);
+        delay_ms(50);
         if (region == C)
         {
             C_lidar_error = left_water_flag ? 24 - left_lidar : right_lidar - 24;
+            // C_lidar_error = right_lidar - 24;
         }
     }
     return 0;
@@ -66,15 +67,15 @@ void water(colorIdx waterTimes)
     static int water_cnt = 0;
     if (waterTimes == INFO_DROUGHT)
     {
-        MP3_broadcast(drought_buff[plant_cnt]);
-        LCD_hanqing(drought_buff[plant_cnt], plant_cnt);
         for (int times = 0; times < drought_buff[plant_cnt]; ++times) // 后面加上if buff = 0
         {
             open_pump;
             delay_ms(WATER_TIME);
             close_pump;
             delay_ms(WATER_TIME);
+            LCD_hanqing(drought_buff[plant_cnt], plant_cnt);
         }
+        MP3_broadcast(drought_buff[plant_cnt]);
     }
     else
     {
@@ -86,7 +87,9 @@ void water(colorIdx waterTimes)
             delay_ms(WATER_TIME);
             close_pump;
             delay_ms(WATER_TIME);
+            LCD_hanqing(drought_buff[plant_cnt], plant_cnt);
         }
+        MP3_broadcast(drought_buff[plant_cnt]);
     }
     ++water_cnt;
     // if (water_cnt == 1)
@@ -228,6 +231,7 @@ void water_task(void)
     }
 }
 
+int B_add = 0;
 void arm_water_task(void)
 {
     get_region();
@@ -243,7 +247,26 @@ void arm_water_task(void)
         //        if (region == C || region == D)
         //        {q
         GYRO_Init();
-
+        if (abs(target_roll - current_roll) > 70 && region == B)
+        {
+            B_add = 2 * (lidar_right - 19);
+            if (abs(B_add) > 7)
+            {
+                B_add = (B_add > 0) ? 7 : -7;
+            }
+            Car_Load(25 + B_add, 25 - B_add);
+            delay_ms(1000);
+            Car_stop();
+        }
+        // else if (region == C)
+        // {
+        // }
+        // else if (region == B && plant_cnt > 9 || plant_cnt < 14)
+        // {
+        //     Car_Load(20, 20);
+        //     delay_ms(100);
+        //     Car_stop();
+        // }
         PE_EXTI_Open();
         // delay_ms(10);
         // delay_ms(10);

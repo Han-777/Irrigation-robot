@@ -3,8 +3,8 @@
 
 int gyro_init_flag = 0;
 
-float ori_target_Yaw = 0, target_Yaw = 0, current_yaw = 0; // ori: fix, target_Yaw: dynamically changed
-int clockwise_rotate_flag = 0;							   // rotate flag
+float ori_target_Yaw = 0, target_Yaw = 0, current_yaw = 0, target_roll, current_roll = 0; // ori: fix, target_Yaw: dynamically changed
+int clockwise_rotate_flag = 0;															  // rotate flag
 
 IMUData_Packet_t IMUData_Packet;
 AHRSData_Packet_t AHRSData_Packet;

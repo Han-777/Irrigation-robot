@@ -41,11 +41,12 @@ int main(void)
 
 	//	int i = 0;
 	//	int yaw = 0;
+	// plant_cnt = 12;
+	// region = C;
+	// cross_cnt = 2;
+	// cross_cnt = 1;
 	while (1)
 	{
-		//		MP3_broadcast(MILD_DROUGHT);
-		// plant_cnt = 6;
-		// region = A;
 		Run();
 		// chassis_rotate(target_Yaw);
 		//		set_speed(0, 0);
@@ -95,7 +96,6 @@ int main(void)
 		// LCD_ShowString(10, 20, 40, 40, 8, (u8 *)"dddabcd");
 		//		OLED_ShowString(1, 1, "Left:");
 		//		OLED_ShowString(2, 1, "Right:");
-
-		delay_ms(100);
+		delay_ms(10);
 	}
 }

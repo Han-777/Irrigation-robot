@@ -43,8 +43,8 @@ void Bluetooth_USART_Init(u32 bound)
 
 	// Usart1 NVIC ??
 	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;		  //??1????
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; //?????3
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;		  //????3
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3; //?????3
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;		  //????3
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			  // IRQ????
 	NVIC_Init(&NVIC_InitStructure);							  //??????????VIC????
 
@@ -123,7 +123,7 @@ void TFmini_right_USART_Init(uint32_t bound, FunctionalState state)
 	USART_ClearFlag(USART2, USART_FLAG_RXNE);
 
 	NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;		  // 串口1中断通道
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3; // 抢占优先级3
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2; // 抢占优先级3
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;		  // 子优先级3
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			  // IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);							  // 根据指定的参数初始化VIC寄存器
@@ -207,8 +207,8 @@ void OpenMV_USART_Init(u32 bound)
 	USART_ClearFlag(USART3, USART_FLAG_TC);
 
 	NVIC_InitStructure.NVIC_IRQChannel = USART3_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
 
@@ -300,7 +300,7 @@ void TFmini_left_USART_Init(uint32_t bound, FunctionalState state)
 
 	// USART3 NVIC 配置
 	NVIC_InitStructure.NVIC_IRQChannel = UART4_IRQn;		  // 串口1中断通道
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 3; // 抢占优先级3
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2; // 抢占优先级3
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;		  // 子优先级0
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			  // IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);							  // 根据指定的参数初始化VIC寄存器
@@ -401,7 +401,7 @@ void gyro_USART_Init(uint32_t bound)
 
 	// USART3 NVIC 配置
 	NVIC_InitStructure.NVIC_IRQChannel = UART5_IRQn;		  // 串口1中断通
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1; // 抢占优先级3
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2; // 抢占优先级3
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;		  // 子优先级0
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			  // IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);							  // 根据指定的参数初始化VIC寄存器

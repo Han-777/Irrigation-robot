@@ -5,7 +5,7 @@ int vec[2] = {0};
 float info[20] = {0};
 chassis_mode_Enum chassis_mode = ahead_mode;
 
-float speed_limit = 30, heading_speed_limit = 20; // speed lmit should be smaller than 0.8 m/s
+float speed_limit = 50, heading_speed_limit = 100; // speed lmit should be smaller than 0.8 m/s
 //==================== Internal vars =====================:
 // constants & PIDs
 // PID heading_PID;
@@ -14,8 +14,8 @@ Increment_PID left_inc_PID, right_inc_PID, heading_inc_PID;
 // PID head_PID;
 //  const float H = 0.188, W = 0.25, R = 0.413, PI = 3.1415926535;
 const float speed_kp = 0.1, speed_ki = 0.12, speed_kd = 0.00, speed_Kv = 0.1,
-            heading_kp = 0.05, heading_ki = 0.0, heading_kd = 0.01; // feed forward gain
-                                                                    // heading_kp = 0.05, heading_ki = 0.0000, heading_kd = 0.01;                // for rotate
+            heading_kp = 0.05, heading_ki = 0.001, heading_kd = 0.01; // feed forward gain
+                                                                      // heading_kp = 0.05, heading_ki = 0.0000, heading_kd = 0.01;                // for rotate
 
 // #define heading_kp 0.05f
 // #define heading_ki 0.0
@@ -37,10 +37,10 @@ float left_target_speed = 0, right_target_speed = 0;
  */
 void movement_stop(void)
 {
+    Car_stop();
     TIM7_Close();
     gyro_USART_Close();
     gyro_init_flag = 0;
-    Car_stop();
     PE_EXTI_Close();
     // delay_ms(20);
 }
@@ -63,6 +63,7 @@ void chassis_Init(void)
     TTL_Hex2Dec();
     ori_target_Yaw = Read_Yaw();
     target_Yaw = ori_target_Yaw;
+    target_roll = Read_Roll();
     //     lidar_Init(left_lidar); //  for test
     //    lidar_Init(right_lidar);
     TIM7_Init(1000 - 1, 840 - 1); // 84M / 4200 / 1000 = 20ms
@@ -80,7 +81,7 @@ void chassis_pid_Init(void)
 {
     set_increment_pid(&left_inc_PID, speed_kp, speed_ki, speed_kd, speed_limit);
     set_increment_pid(&right_inc_PID, speed_kp, speed_ki, speed_kd, speed_limit);
-    set_increment_pid(&heading_inc_PID, 0.05, 0, 0.01, 50); // m/s
+    set_increment_pid(&heading_inc_PID, 0.05, 0, 0.01, heading_speed_limit); // m/s
     // set_pid(&head_PID, head_kp, head_ki, head_kd, head_ki_limit, head_out_limit);
 }
 
@@ -133,17 +134,23 @@ void check_arrive(void) // µ½´ïÅÐ¶Ï
 int chassis_rotate(float target_yaw)
 {
     set_speed(0, 0);
+    chassis_mode = rotate_mode;
+
     check_arrive();
     heading_Trans();
     // heading_speed_limit = 50;
     increment_pid_calculate(&heading_inc_PID, target_yaw, current_yaw);
-    // info[17] = 100 * heading_inc_PID.output;
-    // info[18] = -100 * heading_inc_PID.output;
-    // info[17] = ((abs(info[17]) > 10) ? info[17] : (info[17] > 0) ? 10
-    //                                                              : -10);
-    // info[18] = ((abs(info[18]) > 10) ? info[18] : (info[18] > 0) ? 10
-    //                                                              : -10);
-    Car_Load(100 * heading_inc_PID.output, -100 * heading_inc_PID.output);
+    info[17] = 100 * heading_inc_PID.output;
+    info[18] = -100 * heading_inc_PID.output;
+    if (abs(info[17]) > speed_limit)
+    {
+        info[17] = info[17] > 0 ? speed_limit : -speed_limit;
+    }
+    // if (abs(info[18]) > speed_limit)
+    // {
+    //     info[18] = info[18] > 0 ? speed_limit : -speed_limit;
+    // }
+    Car_Load(info[17], -info[17]);
     return 1;
 }
 
@@ -188,16 +195,37 @@ int chassis_run(void)
     //        info[17] = left_inc_PID.output + left_ff_speed;
     //        info[18] = right_inc_PID.output + right_ff_speed;
     //    }
-    if (region == A)
+    info[17] = left_inc_PID.output + 60 * heading_inc_PID.output + left_ff_speed;
+    info[18] = right_inc_PID.output - 60 * heading_inc_PID.output + right_ff_speed;
+    if (abs(info[17]) > speed_limit)
     {
-        Car_Load(left_inc_PID.output + 200 * heading_inc_PID.output + left_ff_speed, right_inc_PID.output - 200 * heading_inc_PID.output + right_ff_speed);
+        info[17] = info[17] > 0 ? speed_limit : -speed_limit;
     }
-    else if (region == B || region == C || region == D)
+    if (abs(info[18]) > speed_limit)
     {
-        Car_Load(left_inc_PID.output + 50 * heading_inc_PID.output + left_ff_speed, right_inc_PID.output - 50 * heading_inc_PID.output + right_ff_speed);
-        // info[17] = left_inc_PID.output + left_ff_speed;
-        // info[18] = right_inc_PID.output + right_ff_speed;
+        info[18] = info[18] > 0 ? speed_limit : -speed_limit;
     }
+    Car_Load(info[17], info[18]);
+    // if (region == A)
+    // {
+    //     info[17] = left_inc_PID.output + 100 * heading_inc_PID.output + left_ff_speed;
+    //     info[18] = right_inc_PID.output - 100 * heading_inc_PID.output + right_ff_speed;
+    //     if (abs(info[17]) > speed_limit)
+    //     {
+    //         info[17] = info[17] > 0 ? speed_limit : -speed_limit;
+    //     }
+    //     if (abs(info[18]) > speed_limit)
+    //     {
+    //         info[18] = info[18] > 0 ? speed_limit : -speed_limit;
+    //     }
+    //     Car_Load(info[17], info[18]);
+    // }
+    // else if (region == B || region == C || region == D)
+    // {
+    //     Car_Load(left_inc_PID.output + 100 * heading_inc_PID.output + left_ff_speed, right_inc_PID.output - 100 * heading_inc_PID.output + right_ff_speed);
+    //     // info[17] = left_inc_PID.output + left_ff_speed;
+    //     // info[18] = right_inc_PID.output + right_ff_speed;
+    // }
     // info[17] = left_inc_PID.output + 200 * heading_inc_PID.output + left_ff_speed;
     // info[18] = right_inc_PID.output - 200 * heading_inc_PID.output + right_ff_speed;
     return 1;
@@ -205,7 +233,7 @@ int chassis_run(void)
 
 void set_speed(int left_speed, int right_speed) // the speed should be an integer
 {
-    // chassis_mode = ahead_mode;
+    chassis_mode = ahead_mode;
     left_target_speed = left_speed;
     right_target_speed = right_speed;
 }
@@ -216,6 +244,8 @@ void TIM7_IRQHandler(void)
         TIM_ClearITPendingBit(TIM7, TIM_IT_Update);
         TTL_Hex2Dec();
         current_yaw = Read_Yaw();
+        current_roll = Read_Roll();
+        heading_Trans();
         vec[0] = Read_Speed(LEFT_ENCODER);
         vec[1] = Read_Speed(RIGHT_ENCODER);
         // info[1] = left_inc_PID.output;
@@ -231,6 +261,6 @@ void TIM7_IRQHandler(void)
         // info[11] = lidar_left;
         // if (chassis_mode == ahead_mode)
         // {
-        chassis_run();
+        // chassis_run();
     }
 }

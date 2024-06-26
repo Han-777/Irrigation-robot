@@ -22,26 +22,36 @@ Dialog DLL:      TCM.DLL V1.14.4.0
  
 <h2>Project:</h2>
 D:\Github\Irrigation-robot\MAIN\USER\Template.uvprojx
-Project File Date:  06/23/2024
+Project File Date:  06/26/2024
 
 <h2>Output:</h2>
 Build target 'Template'
-compiling bluetooth.c...
+compiling main.c...
 ..\bsp\gpio\gpio.h(43): warning:  #1295-D: Deprecated declaration Key_GPIO_Init - give arg types
   void Key_GPIO_Init();
 ..\bsp\iic\iic.h(12): warning:  #1-D: last line of file ends without a newline
       
-..\module\bluetooth\bluetooth.c(26): warning:  #177-D: variable "USART_RX_STA" was declared but never referenced
-        static u16 USART_RX_STA = 0, times = 0; //??????
-..\module\bluetooth\bluetooth.c(26): warning:  #177-D: variable "times" was declared but never referenced
-        static u16 USART_RX_STA = 0, times = 0; //??????
-..\module\bluetooth\bluetooth.c(99): warning:  #1-D: last line of file ends without a newline
+..\bsp\dma\dma.h(25): warning:  #1-D: last line of file ends without a newline
   #endif
-..\module\bluetooth\bluetooth.c: 5 warnings, 0 errors
+..\module\openmv\openmv.h(16): warning:  #1-D: last line of file ends without a newline
+  #endif
+main.c: 4 warnings, 0 errors
+compiling run.c...
+..\bsp\gpio\gpio.h(43): warning:  #1295-D: Deprecated declaration Key_GPIO_Init - give arg types
+  void Key_GPIO_Init();
+..\bsp\iic\iic.h(12): warning:  #1-D: last line of file ends without a newline
+      
+..\bsp\dma\dma.h(25): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\module\openmv\openmv.h(16): warning:  #1-D: last line of file ends without a newline
+  #endif
+run\run.c(14): warning:  #223-D: function "arm_Init" declared implicitly
+          arm_Init();
+run\run.c: 5 warnings, 0 errors
 linking...
-Program Size: Code=44092 RO-data=7124 RW-data=360 ZI-data=2704  
+Program Size: Code=44780 RO-data=7124 RW-data=392 ZI-data=2704  
 FromELF: creating hex file...
-"..\OBJ\Template.axf" - 0 Error(s), 5 Warning(s).
+"..\OBJ\Template.axf" - 0 Error(s), 9 Warning(s).
 
 <h2>Collection of Component include folders:</h2>
   D:\Github\Irrigation-robot\MAIN\USER\RTE

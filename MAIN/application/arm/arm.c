@@ -73,8 +73,9 @@ void water(colorIdx waterTimes)
             delay_ms(WATER_TIME);
             close_pump;
             delay_ms(WATER_TIME);
-            LCD_hanqing(drought_buff[plant_cnt], plant_cnt);
+            // LCD_hanqing(drought_buff[plant_cnt], plant_cnt);
         }
+        LCD_hanqing(drought_buff[plant_cnt], plant_cnt);
         MP3_broadcast(drought_buff[plant_cnt]);
     }
     else
@@ -87,8 +88,9 @@ void water(colorIdx waterTimes)
             delay_ms(WATER_TIME);
             close_pump;
             delay_ms(WATER_TIME);
-            LCD_hanqing(drought_buff[plant_cnt], plant_cnt);
+            // LCD_hanqing(drought_buff[plant_cnt], plant_cnt);
         }
+        LCD_hanqing(drought_buff[plant_cnt], plant_cnt);
         MP3_broadcast(drought_buff[plant_cnt]);
     }
     ++water_cnt;

@@ -22,6 +22,7 @@ int main(void)
 													//	delay_ms(5000);
 													//	Turn_Right_90_Angles();
 													//	delay_ms(10000);
+	Motor_Init();
 	// chassis_Init();
 	//	gray_GPIO_Init();
 	//	photoelectricity_GPIO_Init();
@@ -47,7 +48,8 @@ int main(void)
 	// cross_cnt = 1;
 	while (1)
 	{
-		Run();
+		Car_Load(10, 10);
+		// Run();
 		// chassis_rotate(target_Yaw);
 		//		set_speed(0, 0);
 		//		Run();

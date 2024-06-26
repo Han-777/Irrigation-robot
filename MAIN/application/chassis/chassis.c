@@ -55,15 +55,15 @@ void movement_stop(void)
 void chassis_Init(void)
 {
     Motor_Init();
-    chassis_pid_Init();
-    Encoder_TIM_Init_All();
-    gray_GPIO_Init();
-    GYRO_Init();
-    delay_ms(4000); // wait for stable(it is not necassary)
-    TTL_Hex2Dec();
-    ori_target_Yaw = Read_Yaw();
-    target_Yaw = ori_target_Yaw;
-    target_roll = Read_Roll();
+    // chassis_pid_Init();
+    // Encoder_TIM_Init_All();
+    // gray_GPIO_Init();
+    // GYRO_Init();
+    // delay_ms(4000); // wait for stable(it is not necassary)
+    // TTL_Hex2Dec();
+    // ori_target_Yaw = Read_Yaw();
+    // target_Yaw = ori_target_Yaw;
+    // target_roll = Read_Roll();
     //     lidar_Init(left_lidar); //  for test
     //    lidar_Init(right_lidar);
     TIM7_Init(1000 - 1, 840 - 1); // 84M / 4200 / 1000 = 20ms

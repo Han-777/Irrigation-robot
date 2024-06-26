@@ -1,7 +1,7 @@
 #include "bluetooth.h"
 
-u8 drought_buff[40] = {1, 2, 1, 2, 1, 3,  // A
-					   2, 1, 2, 1, 2, 1,  // B
+u8 drought_buff[40] = {1, 2, 3, 2, 1, 3,  // A
+					   3, 1, 2, 3, 2, 1,  // B
 					   1, 3, 2, 3, 1, 2,  // C
 					   1, 2, 3, 1, 2, 3}; // D
 u8 receive_flag = 1;

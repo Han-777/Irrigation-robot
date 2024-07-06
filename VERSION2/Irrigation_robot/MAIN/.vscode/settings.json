@@ -18,6 +18,7 @@
     "stm32h7xx_ll_exti.h": "c",
     "stm32h7xx_it.h": "c",
     "bsp_usart.h": "c",
-    "bsp_gpio.h": "c"
+    "bsp_gpio.h": "c",
+    "usart.h": "c"
   }
 }

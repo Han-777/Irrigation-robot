@@ -2370,44 +2370,44 @@ LOAD d:/rm/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+dp/
  .debug_line    0x0001535a      0x3e8 build/system_stm32h7xx.o
  .debug_line    0x00015742       0x76 build/startup_stm32h743xx.o
 
-.debug_str      0x00000000     0x5937
- .debug_str     0x00000000      0x790 build/main.o
-                                0x811 (size before relaxing)
- .debug_str     0x00000790       0xba build/gpio.o
+.debug_str      0x00000000     0x5971
+ .debug_str     0x00000000      0x7a4 build/main.o
+                                0x825 (size before relaxing)
+ .debug_str     0x000007a4       0xe0 build/gpio.o
                                 0x497 (size before relaxing)
- .debug_str     0x0000084a      0x82c build/dma.o
+ .debug_str     0x00000884      0x82c build/dma.o
                                 0xc0b (size before relaxing)
- .debug_str     0x00001076      0x6de build/tim.o
+ .debug_str     0x000010b0      0x6de build/tim.o
                                 0xbe1 (size before relaxing)
- .debug_str     0x00001754      0x702 build/usart.o
+ .debug_str     0x0000178e      0x702 build/usart.o
                                0x1790 (size before relaxing)
- .debug_str     0x00001e56      0x1ab build/stm32h7xx_it.o
+ .debug_str     0x00001e90      0x1ab build/stm32h7xx_it.o
                                 0x938 (size before relaxing)
- .debug_str     0x00002001       0x29 build/stm32h7xx_hal_msp.o
+ .debug_str     0x0000203b       0x29 build/stm32h7xx_hal_msp.o
                                 0x3d4 (size before relaxing)
- .debug_str     0x0000202a      0x51a build/stm32h7xx_hal_cortex.o
+ .debug_str     0x00002064      0x51a build/stm32h7xx_hal_cortex.o
                                0x1062 (size before relaxing)
- .debug_str     0x00002544      0x394 build/stm32h7xx_hal_rcc.o
+ .debug_str     0x0000257e      0x394 build/stm32h7xx_hal_rcc.o
                                 0x9fc (size before relaxing)
- .debug_str     0x000028d8      0x66b build/stm32h7xx_hal_rcc_ex.o
+ .debug_str     0x00002912      0x66b build/stm32h7xx_hal_rcc_ex.o
                                 0xf07 (size before relaxing)
- .debug_str     0x00002f43       0xf7 build/stm32h7xx_hal_gpio.o
+ .debug_str     0x00002f7d       0xf7 build/stm32h7xx_hal_gpio.o
                                 0x6b6 (size before relaxing)
- .debug_str     0x0000303a      0x3f3 build/stm32h7xx_hal_dma.o
+ .debug_str     0x00003074      0x3f3 build/stm32h7xx_hal_dma.o
                                 0x9ad (size before relaxing)
- .debug_str     0x0000342d      0x551 build/stm32h7xx_hal_pwr_ex.o
+ .debug_str     0x00003467      0x551 build/stm32h7xx_hal_pwr_ex.o
                                 0xa2b (size before relaxing)
- .debug_str     0x0000397e      0x5e5 build/stm32h7xx_hal.o
+ .debug_str     0x000039b8      0x5e5 build/stm32h7xx_hal.o
                                0x1492 (size before relaxing)
- .debug_str     0x00003f63      0xe8f build/stm32h7xx_hal_tim.o
+ .debug_str     0x00003f9d      0xe8f build/stm32h7xx_hal_tim.o
                                0x1815 (size before relaxing)
- .debug_str     0x00004df2      0x8a5 build/stm32h7xx_hal_uart.o
+ .debug_str     0x00004e2c      0x8a5 build/stm32h7xx_hal_uart.o
                                0x1495 (size before relaxing)
- .debug_str     0x00005697      0x23f build/stm32h7xx_hal_uart_ex.o
+ .debug_str     0x000056d1      0x23f build/stm32h7xx_hal_uart_ex.o
                                 0xb7e (size before relaxing)
- .debug_str     0x000058d6       0x3d build/system_stm32h7xx.o
+ .debug_str     0x00005910       0x3d build/system_stm32h7xx.o
                                 0x711 (size before relaxing)
- .debug_str     0x00005913       0x24 build/startup_stm32h743xx.o
+ .debug_str     0x0000594d       0x24 build/startup_stm32h743xx.o
                                  0x4a (size before relaxing)
 
 .comment        0x00000000       0x49

@@ -16,6 +16,8 @@
     "stm32h7xx_ll_system.h": "c",
     "stm32h7xx_ll_bus.h": "c",
     "stm32h7xx_ll_exti.h": "c",
-    "stm32h7xx_it.h": "c"
+    "stm32h7xx_it.h": "c",
+    "bsp_usart.h": "c",
+    "bsp_gpio.h": "c"
   }
 }

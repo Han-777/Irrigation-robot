@@ -1,14 +1,18 @@
-#ifndef BSP_RC_H
-#define BSP_RC_H
+#ifndef BSP_USART_H
+#define BSP_USART_H
 
 #include <stdint.h>
 #include "main.h"
+#include "usart.h"
 
 #define DEVICE_USART_CNT 5     // C板至多分配3个串口
 #define USART_RXBUFF_LIMIT 256 // 如果协议需要更大的buff,请修改这里
 
+// USART handle
+
+
 // 模块回调函数,用于解析协议
-typedef void (*usart_module_callback)();
+typedef void (*usart_module_callback)(UART_HandleTypeDef *huart);
 
 /* 发送模式枚举 */
 typedef enum

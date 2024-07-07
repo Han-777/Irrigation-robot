@@ -35,8 +35,6 @@
 /** Configure pins
      PC15-OSC32_OUT (OSC32_OUT)   ------> RCC_OSC32_OUT
      PC14-OSC32_IN (OSC32_IN)   ------> RCC_OSC32_IN
-     PB9   ------> FDCAN1_TX
-     PB8   ------> FDCAN1_RX
      PH1-OSC_OUT (PH1)   ------> RCC_OSC_OUT
      PH0-OSC_IN (PH0)   ------> RCC_OSC_IN
 */
@@ -47,9 +45,9 @@ void MX_GPIO_Init(void)
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOI_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOC_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOH_CLK_ENABLE();
 
@@ -81,14 +79,6 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pin = GRAY2_GPIO_Pin|GRAY1_GPIO_Pin|GRAY4_GPIO_Pin|GRAY3_GPIO_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : PB9 PB8 */
-  GPIO_InitStruct.Pin = GPIO_PIN_9|GPIO_PIN_8;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.Alternate = GPIO_AF9_FDCAN1;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PtPin */

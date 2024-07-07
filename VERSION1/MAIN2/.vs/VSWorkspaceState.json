@@ -1,17 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\application",
-    "\\application\\chassis",
     "\\bsp",
     "\\bsp\\exti",
     "\\module",
+    "\\module\\lidar",
     "\\module\\servo",
     "\\README",
     "\\SYSTEM",
     "\\USER",
     "\\USER\\run"
   ],
-  "SelectedNode": "\\module\\servo\\servo.c",
+  "SelectedNode": "\\module\\lidar\\lidar.c",
   "PreviewInSolutionExplorer": false
 }

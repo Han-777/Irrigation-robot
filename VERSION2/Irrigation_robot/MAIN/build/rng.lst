@@ -1,0 +1,369 @@
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccJnGM2a.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"rng.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.section	.text.MX_RNG_Init,"ax",%progbits
+  19              		.align	1
+  20              		.global	MX_RNG_Init
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	MX_RNG_Init:
+  26              	.LFB144:
+  27              		.file 1 "Core/Src/rng.c"
+   1:Core/Src/rng.c **** /* USER CODE BEGIN Header */
+   2:Core/Src/rng.c **** /**
+   3:Core/Src/rng.c ****   ******************************************************************************
+   4:Core/Src/rng.c ****   * @file    rng.c
+   5:Core/Src/rng.c ****   * @brief   This file provides code for the configuration
+   6:Core/Src/rng.c ****   *          of the RNG instances.
+   7:Core/Src/rng.c ****   ******************************************************************************
+   8:Core/Src/rng.c ****   * @attention
+   9:Core/Src/rng.c ****   *
+  10:Core/Src/rng.c ****   * Copyright (c) 2024 STMicroelectronics.
+  11:Core/Src/rng.c ****   * All rights reserved.
+  12:Core/Src/rng.c ****   *
+  13:Core/Src/rng.c ****   * This software is licensed under terms that can be found in the LICENSE file
+  14:Core/Src/rng.c ****   * in the root directory of this software component.
+  15:Core/Src/rng.c ****   * If no LICENSE file comes with this software, it is provided AS-IS.
+  16:Core/Src/rng.c ****   *
+  17:Core/Src/rng.c ****   ******************************************************************************
+  18:Core/Src/rng.c ****   */
+  19:Core/Src/rng.c **** /* USER CODE END Header */
+  20:Core/Src/rng.c **** /* Includes ------------------------------------------------------------------*/
+  21:Core/Src/rng.c **** #include "rng.h"
+  22:Core/Src/rng.c **** 
+  23:Core/Src/rng.c **** /* USER CODE BEGIN 0 */
+  24:Core/Src/rng.c **** 
+  25:Core/Src/rng.c **** /* USER CODE END 0 */
+  26:Core/Src/rng.c **** 
+  27:Core/Src/rng.c **** RNG_HandleTypeDef hrng;
+  28:Core/Src/rng.c **** 
+  29:Core/Src/rng.c **** /* RNG init function */
+  30:Core/Src/rng.c **** void MX_RNG_Init(void)
+  31:Core/Src/rng.c **** {
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccJnGM2a.s 			page 2
+
+
+  28              		.loc 1 31 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 08B5     		push	{r3, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 3, -8
+  36              		.cfi_offset 14, -4
+  32:Core/Src/rng.c **** 
+  33:Core/Src/rng.c ****   /* USER CODE BEGIN RNG_Init 0 */
+  34:Core/Src/rng.c **** 
+  35:Core/Src/rng.c ****   /* USER CODE END RNG_Init 0 */
+  36:Core/Src/rng.c **** 
+  37:Core/Src/rng.c ****   /* USER CODE BEGIN RNG_Init 1 */
+  38:Core/Src/rng.c **** 
+  39:Core/Src/rng.c ****   /* USER CODE END RNG_Init 1 */
+  40:Core/Src/rng.c ****   hrng.Instance = RNG;
+  37              		.loc 1 40 3 view .LVU1
+  38              		.loc 1 40 17 is_stmt 0 view .LVU2
+  39 0002 0648     		ldr	r0, .L5
+  40 0004 064B     		ldr	r3, .L5+4
+  41 0006 0360     		str	r3, [r0]
+  41:Core/Src/rng.c ****   hrng.Init.ClockErrorDetection = RNG_CED_ENABLE;
+  42              		.loc 1 41 3 is_stmt 1 view .LVU3
+  43              		.loc 1 41 33 is_stmt 0 view .LVU4
+  44 0008 0023     		movs	r3, #0
+  45 000a 4360     		str	r3, [r0, #4]
+  42:Core/Src/rng.c ****   if (HAL_RNG_Init(&hrng) != HAL_OK)
+  46              		.loc 1 42 3 is_stmt 1 view .LVU5
+  47              		.loc 1 42 7 is_stmt 0 view .LVU6
+  48 000c FFF7FEFF 		bl	HAL_RNG_Init
+  49              	.LVL0:
+  50              		.loc 1 42 6 view .LVU7
+  51 0010 00B9     		cbnz	r0, .L4
+  52              	.L1:
+  43:Core/Src/rng.c ****   {
+  44:Core/Src/rng.c ****     Error_Handler();
+  45:Core/Src/rng.c ****   }
+  46:Core/Src/rng.c ****   /* USER CODE BEGIN RNG_Init 2 */
+  47:Core/Src/rng.c **** 
+  48:Core/Src/rng.c ****   /* USER CODE END RNG_Init 2 */
+  49:Core/Src/rng.c **** 
+  50:Core/Src/rng.c **** }
+  53              		.loc 1 50 1 view .LVU8
+  54 0012 08BD     		pop	{r3, pc}
+  55              	.L4:
+  44:Core/Src/rng.c ****   }
+  56              		.loc 1 44 5 is_stmt 1 view .LVU9
+  57 0014 FFF7FEFF 		bl	Error_Handler
+  58              	.LVL1:
+  59              		.loc 1 50 1 is_stmt 0 view .LVU10
+  60 0018 FBE7     		b	.L1
+  61              	.L6:
+  62 001a 00BF     		.align	2
+  63              	.L5:
+  64 001c 00000000 		.word	.LANCHOR0
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccJnGM2a.s 			page 3
+
+
+  65 0020 00180248 		.word	1208096768
+  66              		.cfi_endproc
+  67              	.LFE144:
+  69              		.section	.text.HAL_RNG_MspInit,"ax",%progbits
+  70              		.align	1
+  71              		.global	HAL_RNG_MspInit
+  72              		.syntax unified
+  73              		.thumb
+  74              		.thumb_func
+  76              	HAL_RNG_MspInit:
+  77              	.LVL2:
+  78              	.LFB145:
+  51:Core/Src/rng.c **** 
+  52:Core/Src/rng.c **** void HAL_RNG_MspInit(RNG_HandleTypeDef* rngHandle)
+  53:Core/Src/rng.c **** {
+  79              		.loc 1 53 1 is_stmt 1 view -0
+  80              		.cfi_startproc
+  81              		@ args = 0, pretend = 0, frame = 200
+  82              		@ frame_needed = 0, uses_anonymous_args = 0
+  83              		.loc 1 53 1 is_stmt 0 view .LVU12
+  84 0000 10B5     		push	{r4, lr}
+  85              	.LCFI1:
+  86              		.cfi_def_cfa_offset 8
+  87              		.cfi_offset 4, -8
+  88              		.cfi_offset 14, -4
+  89 0002 B2B0     		sub	sp, sp, #200
+  90              	.LCFI2:
+  91              		.cfi_def_cfa_offset 208
+  92 0004 0446     		mov	r4, r0
+  54:Core/Src/rng.c **** 
+  55:Core/Src/rng.c ****   RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
+  93              		.loc 1 55 3 is_stmt 1 view .LVU13
+  94              		.loc 1 55 28 is_stmt 0 view .LVU14
+  95 0006 C022     		movs	r2, #192
+  96 0008 0021     		movs	r1, #0
+  97 000a 02A8     		add	r0, sp, #8
+  98              	.LVL3:
+  99              		.loc 1 55 28 view .LVU15
+ 100 000c FFF7FEFF 		bl	memset
+ 101              	.LVL4:
+  56:Core/Src/rng.c ****   if(rngHandle->Instance==RNG)
+ 102              		.loc 1 56 3 is_stmt 1 view .LVU16
+ 103              		.loc 1 56 15 is_stmt 0 view .LVU17
+ 104 0010 2268     		ldr	r2, [r4]
+ 105              		.loc 1 56 5 view .LVU18
+ 106 0012 0F4B     		ldr	r3, .L13
+ 107 0014 9A42     		cmp	r2, r3
+ 108 0016 01D0     		beq	.L11
+ 109              	.L7:
+  57:Core/Src/rng.c ****   {
+  58:Core/Src/rng.c ****   /* USER CODE BEGIN RNG_MspInit 0 */
+  59:Core/Src/rng.c **** 
+  60:Core/Src/rng.c ****   /* USER CODE END RNG_MspInit 0 */
+  61:Core/Src/rng.c **** 
+  62:Core/Src/rng.c ****   /** Initializes the peripherals clock
+  63:Core/Src/rng.c ****   */
+  64:Core/Src/rng.c ****     PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_RNG;
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccJnGM2a.s 			page 4
+
+
+  65:Core/Src/rng.c ****     PeriphClkInitStruct.RngClockSelection = RCC_RNGCLKSOURCE_HSI48;
+  66:Core/Src/rng.c ****     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+  67:Core/Src/rng.c ****     {
+  68:Core/Src/rng.c ****       Error_Handler();
+  69:Core/Src/rng.c ****     }
+  70:Core/Src/rng.c **** 
+  71:Core/Src/rng.c ****     /* RNG clock enable */
+  72:Core/Src/rng.c ****     __HAL_RCC_RNG_CLK_ENABLE();
+  73:Core/Src/rng.c ****   /* USER CODE BEGIN RNG_MspInit 1 */
+  74:Core/Src/rng.c **** 
+  75:Core/Src/rng.c ****   /* USER CODE END RNG_MspInit 1 */
+  76:Core/Src/rng.c ****   }
+  77:Core/Src/rng.c **** }
+ 110              		.loc 1 77 1 view .LVU19
+ 111 0018 32B0     		add	sp, sp, #200
+ 112              	.LCFI3:
+ 113              		.cfi_remember_state
+ 114              		.cfi_def_cfa_offset 8
+ 115              		@ sp needed
+ 116 001a 10BD     		pop	{r4, pc}
+ 117              	.LVL5:
+ 118              	.L11:
+ 119              	.LCFI4:
+ 120              		.cfi_restore_state
+  64:Core/Src/rng.c ****     PeriphClkInitStruct.RngClockSelection = RCC_RNGCLKSOURCE_HSI48;
+ 121              		.loc 1 64 5 is_stmt 1 view .LVU20
+  64:Core/Src/rng.c ****     PeriphClkInitStruct.RngClockSelection = RCC_RNGCLKSOURCE_HSI48;
+ 122              		.loc 1 64 46 is_stmt 0 view .LVU21
+ 123 001c 4FF40032 		mov	r2, #131072
+ 124 0020 0023     		movs	r3, #0
+ 125 0022 CDE90223 		strd	r2, [sp, #8]
+  65:Core/Src/rng.c ****     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+ 126              		.loc 1 65 5 is_stmt 1 view .LVU22
+  66:Core/Src/rng.c ****     {
+ 127              		.loc 1 66 5 view .LVU23
+  66:Core/Src/rng.c ****     {
+ 128              		.loc 1 66 9 is_stmt 0 view .LVU24
+ 129 0026 02A8     		add	r0, sp, #8
+ 130 0028 FFF7FEFF 		bl	HAL_RCCEx_PeriphCLKConfig
+ 131              	.LVL6:
+  66:Core/Src/rng.c ****     {
+ 132              		.loc 1 66 8 view .LVU25
+ 133 002c 68B9     		cbnz	r0, .L12
+ 134              	.L9:
+  72:Core/Src/rng.c ****   /* USER CODE BEGIN RNG_MspInit 1 */
+ 135              		.loc 1 72 5 is_stmt 1 view .LVU26
+ 136              	.LBB2:
+  72:Core/Src/rng.c ****   /* USER CODE BEGIN RNG_MspInit 1 */
+ 137              		.loc 1 72 5 view .LVU27
+  72:Core/Src/rng.c ****   /* USER CODE BEGIN RNG_MspInit 1 */
+ 138              		.loc 1 72 5 view .LVU28
+ 139 002e 094B     		ldr	r3, .L13+4
+ 140 0030 D3F8DC20 		ldr	r2, [r3, #220]
+ 141 0034 42F04002 		orr	r2, r2, #64
+ 142 0038 C3F8DC20 		str	r2, [r3, #220]
+  72:Core/Src/rng.c ****   /* USER CODE BEGIN RNG_MspInit 1 */
+ 143              		.loc 1 72 5 view .LVU29
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccJnGM2a.s 			page 5
+
+
+ 144 003c D3F8DC30 		ldr	r3, [r3, #220]
+ 145 0040 03F04003 		and	r3, r3, #64
+ 146 0044 0193     		str	r3, [sp, #4]
+  72:Core/Src/rng.c ****   /* USER CODE BEGIN RNG_MspInit 1 */
+ 147              		.loc 1 72 5 view .LVU30
+ 148 0046 019B     		ldr	r3, [sp, #4]
+ 149              	.LBE2:
+  72:Core/Src/rng.c ****   /* USER CODE BEGIN RNG_MspInit 1 */
+ 150              		.loc 1 72 5 view .LVU31
+ 151              		.loc 1 77 1 is_stmt 0 view .LVU32
+ 152 0048 E6E7     		b	.L7
+ 153              	.L12:
+  68:Core/Src/rng.c ****     }
+ 154              		.loc 1 68 7 is_stmt 1 view .LVU33
+ 155 004a FFF7FEFF 		bl	Error_Handler
+ 156              	.LVL7:
+ 157 004e EEE7     		b	.L9
+ 158              	.L14:
+ 159              		.align	2
+ 160              	.L13:
+ 161 0050 00180248 		.word	1208096768
+ 162 0054 00440258 		.word	1476543488
+ 163              		.cfi_endproc
+ 164              	.LFE145:
+ 166              		.section	.text.HAL_RNG_MspDeInit,"ax",%progbits
+ 167              		.align	1
+ 168              		.global	HAL_RNG_MspDeInit
+ 169              		.syntax unified
+ 170              		.thumb
+ 171              		.thumb_func
+ 173              	HAL_RNG_MspDeInit:
+ 174              	.LVL8:
+ 175              	.LFB146:
+  78:Core/Src/rng.c **** 
+  79:Core/Src/rng.c **** void HAL_RNG_MspDeInit(RNG_HandleTypeDef* rngHandle)
+  80:Core/Src/rng.c **** {
+ 176              		.loc 1 80 1 view -0
+ 177              		.cfi_startproc
+ 178              		@ args = 0, pretend = 0, frame = 0
+ 179              		@ frame_needed = 0, uses_anonymous_args = 0
+ 180              		@ link register save eliminated.
+  81:Core/Src/rng.c **** 
+  82:Core/Src/rng.c ****   if(rngHandle->Instance==RNG)
+ 181              		.loc 1 82 3 view .LVU35
+ 182              		.loc 1 82 15 is_stmt 0 view .LVU36
+ 183 0000 0268     		ldr	r2, [r0]
+ 184              		.loc 1 82 5 view .LVU37
+ 185 0002 064B     		ldr	r3, .L18
+ 186 0004 9A42     		cmp	r2, r3
+ 187 0006 00D0     		beq	.L17
+ 188              	.L15:
+  83:Core/Src/rng.c ****   {
+  84:Core/Src/rng.c ****   /* USER CODE BEGIN RNG_MspDeInit 0 */
+  85:Core/Src/rng.c **** 
+  86:Core/Src/rng.c ****   /* USER CODE END RNG_MspDeInit 0 */
+  87:Core/Src/rng.c ****     /* Peripheral clock disable */
+  88:Core/Src/rng.c ****     __HAL_RCC_RNG_CLK_DISABLE();
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccJnGM2a.s 			page 6
+
+
+  89:Core/Src/rng.c ****   /* USER CODE BEGIN RNG_MspDeInit 1 */
+  90:Core/Src/rng.c **** 
+  91:Core/Src/rng.c ****   /* USER CODE END RNG_MspDeInit 1 */
+  92:Core/Src/rng.c ****   }
+  93:Core/Src/rng.c **** }
+ 189              		.loc 1 93 1 view .LVU38
+ 190 0008 7047     		bx	lr
+ 191              	.L17:
+  88:Core/Src/rng.c ****   /* USER CODE BEGIN RNG_MspDeInit 1 */
+ 192              		.loc 1 88 5 is_stmt 1 view .LVU39
+ 193 000a 054A     		ldr	r2, .L18+4
+ 194 000c D2F8DC30 		ldr	r3, [r2, #220]
+ 195 0010 23F04003 		bic	r3, r3, #64
+ 196 0014 C2F8DC30 		str	r3, [r2, #220]
+ 197              		.loc 1 93 1 is_stmt 0 view .LVU40
+ 198 0018 F6E7     		b	.L15
+ 199              	.L19:
+ 200 001a 00BF     		.align	2
+ 201              	.L18:
+ 202 001c 00180248 		.word	1208096768
+ 203 0020 00440258 		.word	1476543488
+ 204              		.cfi_endproc
+ 205              	.LFE146:
+ 207              		.global	hrng
+ 208              		.section	.bss.hrng,"aw",%nobits
+ 209              		.align	2
+ 210              		.set	.LANCHOR0,. + 0
+ 213              	hrng:
+ 214 0000 00000000 		.space	20
+ 214      00000000 
+ 214      00000000 
+ 214      00000000 
+ 214      00000000 
+ 215              		.text
+ 216              	.Letext0:
+ 217              		.file 2 "d:\\rm\\arm-gnu-toolchian\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 218              		.file 3 "d:\\rm\\arm-gnu-toolchian\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 219              		.file 4 "Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h"
+ 220              		.file 5 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
+ 221              		.file 6 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rcc_ex.h"
+ 222              		.file 7 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rng.h"
+ 223              		.file 8 "Core/Inc/main.h"
+ 224              		.file 9 "Core/Inc/rng.h"
+ 225              		.file 10 "<built-in>"
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccJnGM2a.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 rng.c
+C:\Users\blue\AppData\Local\Temp\ccJnGM2a.s:19     .text.MX_RNG_Init:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccJnGM2a.s:25     .text.MX_RNG_Init:00000000 MX_RNG_Init
+C:\Users\blue\AppData\Local\Temp\ccJnGM2a.s:64     .text.MX_RNG_Init:0000001c $d
+C:\Users\blue\AppData\Local\Temp\ccJnGM2a.s:70     .text.HAL_RNG_MspInit:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccJnGM2a.s:76     .text.HAL_RNG_MspInit:00000000 HAL_RNG_MspInit
+C:\Users\blue\AppData\Local\Temp\ccJnGM2a.s:161    .text.HAL_RNG_MspInit:00000050 $d
+C:\Users\blue\AppData\Local\Temp\ccJnGM2a.s:167    .text.HAL_RNG_MspDeInit:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccJnGM2a.s:173    .text.HAL_RNG_MspDeInit:00000000 HAL_RNG_MspDeInit
+C:\Users\blue\AppData\Local\Temp\ccJnGM2a.s:202    .text.HAL_RNG_MspDeInit:0000001c $d
+C:\Users\blue\AppData\Local\Temp\ccJnGM2a.s:213    .bss.hrng:00000000 hrng
+C:\Users\blue\AppData\Local\Temp\ccJnGM2a.s:209    .bss.hrng:00000000 $d
+
+UNDEFINED SYMBOLS
+HAL_RNG_Init
+Error_Handler
+memset
+HAL_RCCEx_PeriphCLKConfig

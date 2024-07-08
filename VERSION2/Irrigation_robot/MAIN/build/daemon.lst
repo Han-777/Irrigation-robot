@@ -1,0 +1,338 @@
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccX56liB.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"daemon.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.section	.text.DaemonRegister,"ax",%progbits
+  19              		.align	1
+  20              		.global	DaemonRegister
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	DaemonRegister:
+  26              	.LVL0:
+  27              	.LFB0:
+  28              		.file 1 "modules/daemon/daemon.c"
+   1:modules/daemon/daemon.c **** #include "daemon.h"
+   2:modules/daemon/daemon.c **** // #include "bsp_dwt.h" // 后续通过定时器来计时?
+   3:modules/daemon/daemon.c **** #include "stdlib.h"
+   4:modules/daemon/daemon.c **** #include "memory.h"
+   5:modules/daemon/daemon.c **** 
+   6:modules/daemon/daemon.c **** // 用于保存所有的daemon instance
+   7:modules/daemon/daemon.c **** static DaemonInstance *daemon_instances[DAEMON_MX_CNT] = {NULL};
+   8:modules/daemon/daemon.c **** static uint8_t idx; // 用于记录当前的daemon instance数量,配合回调使用
+   9:modules/daemon/daemon.c **** 
+  10:modules/daemon/daemon.c **** DaemonInstance *DaemonRegister(Daemon_Init_Config_s *config)
+  11:modules/daemon/daemon.c **** {
+  29              		.loc 1 11 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 11 1 is_stmt 0 view .LVU1
+  34 0000 10B5     		push	{r4, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 4, -8
+  38              		.cfi_offset 14, -4
+  39 0002 0446     		mov	r4, r0
+  12:modules/daemon/daemon.c ****     DaemonInstance *instance = (DaemonInstance *)malloc(sizeof(DaemonInstance));
+  40              		.loc 1 12 5 is_stmt 1 view .LVU2
+  41              		.loc 1 12 50 is_stmt 0 view .LVU3
+  42 0004 1020     		movs	r0, #16
+  43              	.LVL1:
+  44              		.loc 1 12 50 view .LVU4
+  45 0006 FFF7FEFF 		bl	malloc
+  46              	.LVL2:
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccX56liB.s 			page 2
+
+
+  13:modules/daemon/daemon.c ****     memset(instance, 0, sizeof(DaemonInstance));
+  47              		.loc 1 13 5 is_stmt 1 view .LVU5
+  48 000a 0022     		movs	r2, #0
+  49 000c 0260     		str	r2, [r0]	@ unaligned
+  50 000e 4260     		str	r2, [r0, #4]	@ unaligned
+  51 0010 8260     		str	r2, [r0, #8]	@ unaligned
+  52 0012 C260     		str	r2, [r0, #12]	@ unaligned
+  14:modules/daemon/daemon.c **** 
+  15:modules/daemon/daemon.c ****     instance->owner_id = config->owner_id;
+  53              		.loc 1 15 5 view .LVU6
+  54              		.loc 1 15 32 is_stmt 0 view .LVU7
+  55 0014 A268     		ldr	r2, [r4, #8]
+  56              		.loc 1 15 24 view .LVU8
+  57 0016 C260     		str	r2, [r0, #12]
+  16:modules/daemon/daemon.c ****     instance->reload_count = config->reload_count;
+  58              		.loc 1 16 5 is_stmt 1 view .LVU9
+  59              		.loc 1 16 36 is_stmt 0 view .LVU10
+  60 0018 2288     		ldrh	r2, [r4]
+  61              		.loc 1 16 28 view .LVU11
+  62 001a 0280     		strh	r2, [r0]	@ movhi
+  17:modules/daemon/daemon.c ****     instance->callback = config->callback;
+  63              		.loc 1 17 5 is_stmt 1 view .LVU12
+  64              		.loc 1 17 32 is_stmt 0 view .LVU13
+  65 001c 6168     		ldr	r1, [r4, #4]
+  66              		.loc 1 17 24 view .LVU14
+  67 001e 4160     		str	r1, [r0, #4]
+  18:modules/daemon/daemon.c ****     instance->temp_count = config->reload_count;
+  68              		.loc 1 18 5 is_stmt 1 view .LVU15
+  69              		.loc 1 18 26 is_stmt 0 view .LVU16
+  70 0020 0281     		strh	r2, [r0, #8]	@ movhi
+  19:modules/daemon/daemon.c ****     daemon_instances[idx++] = instance;
+  71              		.loc 1 19 5 is_stmt 1 view .LVU17
+  72              		.loc 1 19 25 is_stmt 0 view .LVU18
+  73 0022 0449     		ldr	r1, .L3
+  74 0024 0A78     		ldrb	r2, [r1]	@ zero_extendqisi2
+  75 0026 541C     		adds	r4, r2, #1
+  76              	.LVL3:
+  77              		.loc 1 19 25 view .LVU19
+  78 0028 0C70     		strb	r4, [r1]
+  79              		.loc 1 19 29 view .LVU20
+  80 002a 0349     		ldr	r1, .L3+4
+  81 002c 41F82200 		str	r0, [r1, r2, lsl #2]
+  20:modules/daemon/daemon.c ****     return instance;
+  82              		.loc 1 20 5 is_stmt 1 view .LVU21
+  21:modules/daemon/daemon.c **** }
+  83              		.loc 1 21 1 is_stmt 0 view .LVU22
+  84 0030 10BD     		pop	{r4, pc}
+  85              	.L4:
+  86 0032 00BF     		.align	2
+  87              	.L3:
+  88 0034 00000000 		.word	.LANCHOR0
+  89 0038 00000000 		.word	.LANCHOR1
+  90              		.cfi_endproc
+  91              	.LFE0:
+  93              		.section	.text.DaemonReload,"ax",%progbits
+  94              		.align	1
+  95              		.global	DaemonReload
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccX56liB.s 			page 3
+
+
+  96              		.syntax unified
+  97              		.thumb
+  98              		.thumb_func
+ 100              	DaemonReload:
+ 101              	.LVL4:
+ 102              	.LFB1:
+  22:modules/daemon/daemon.c **** 
+  23:modules/daemon/daemon.c **** /* "喂狗"函数 */
+  24:modules/daemon/daemon.c **** void DaemonReload(DaemonInstance *instance)
+  25:modules/daemon/daemon.c **** {
+ 103              		.loc 1 25 1 is_stmt 1 view -0
+ 104              		.cfi_startproc
+ 105              		@ args = 0, pretend = 0, frame = 0
+ 106              		@ frame_needed = 0, uses_anonymous_args = 0
+ 107              		@ link register save eliminated.
+  26:modules/daemon/daemon.c ****     instance->temp_count = instance->reload_count;
+ 108              		.loc 1 26 5 view .LVU24
+ 109              		.loc 1 26 36 is_stmt 0 view .LVU25
+ 110 0000 0388     		ldrh	r3, [r0]
+ 111              		.loc 1 26 26 view .LVU26
+ 112 0002 0381     		strh	r3, [r0, #8]	@ movhi
+  27:modules/daemon/daemon.c **** }
+ 113              		.loc 1 27 1 view .LVU27
+ 114 0004 7047     		bx	lr
+ 115              		.cfi_endproc
+ 116              	.LFE1:
+ 118              		.section	.text.DaemonIsOnline,"ax",%progbits
+ 119              		.align	1
+ 120              		.global	DaemonIsOnline
+ 121              		.syntax unified
+ 122              		.thumb
+ 123              		.thumb_func
+ 125              	DaemonIsOnline:
+ 126              	.LVL5:
+ 127              	.LFB2:
+  28:modules/daemon/daemon.c **** 
+  29:modules/daemon/daemon.c **** uint8_t DaemonIsOnline(DaemonInstance *instance)
+  30:modules/daemon/daemon.c **** {
+ 128              		.loc 1 30 1 is_stmt 1 view -0
+ 129              		.cfi_startproc
+ 130              		@ args = 0, pretend = 0, frame = 0
+ 131              		@ frame_needed = 0, uses_anonymous_args = 0
+ 132              		@ link register save eliminated.
+  31:modules/daemon/daemon.c ****     return instance->temp_count > 0;
+ 133              		.loc 1 31 5 view .LVU29
+ 134              		.loc 1 31 20 is_stmt 0 view .LVU30
+ 135 0000 0089     		ldrh	r0, [r0, #8]
+ 136              	.LVL6:
+  32:modules/daemon/daemon.c **** }
+ 137              		.loc 1 32 1 view .LVU31
+ 138 0002 0038     		subs	r0, r0, #0
+ 139 0004 18BF     		it	ne
+ 140 0006 0120     		movne	r0, #1
+ 141 0008 7047     		bx	lr
+ 142              		.cfi_endproc
+ 143              	.LFE2:
+ 145              		.section	.text.DaemonTask,"ax",%progbits
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccX56liB.s 			page 4
+
+
+ 146              		.align	1
+ 147              		.global	DaemonTask
+ 148              		.syntax unified
+ 149              		.thumb
+ 150              		.thumb_func
+ 152              	DaemonTask:
+ 153              	.LFB3:
+  33:modules/daemon/daemon.c **** 
+  34:modules/daemon/daemon.c **** void DaemonTask()
+  35:modules/daemon/daemon.c **** {
+ 154              		.loc 1 35 1 is_stmt 1 view -0
+ 155              		.cfi_startproc
+ 156              		@ args = 0, pretend = 0, frame = 0
+ 157              		@ frame_needed = 0, uses_anonymous_args = 0
+ 158 0000 10B5     		push	{r4, lr}
+ 159              	.LCFI1:
+ 160              		.cfi_def_cfa_offset 8
+ 161              		.cfi_offset 4, -8
+ 162              		.cfi_offset 14, -4
+  36:modules/daemon/daemon.c ****     DaemonInstance *dins; // 提高可读性同时降低访存开销
+ 163              		.loc 1 36 5 view .LVU33
+  37:modules/daemon/daemon.c ****     for (size_t i = 0; i < idx; ++i)
+ 164              		.loc 1 37 5 view .LVU34
+ 165              	.LBB2:
+ 166              		.loc 1 37 10 view .LVU35
+ 167              	.LVL7:
+ 168              		.loc 1 37 17 is_stmt 0 view .LVU36
+ 169 0002 0024     		movs	r4, #0
+ 170              		.loc 1 37 5 view .LVU37
+ 171 0004 04E0     		b	.L8
+ 172              	.LVL8:
+ 173              	.L9:
+  38:modules/daemon/daemon.c ****     {
+  39:modules/daemon/daemon.c ****         dins = daemon_instances[i];
+  40:modules/daemon/daemon.c ****         if (dins->temp_count > 0) // 如果计数器还有值,说明上一次喂狗后还没有超�
+  41:modules/daemon/daemon.c ****             dins->temp_count--;
+  42:modules/daemon/daemon.c ****         else if (dins->callback) // 等于零说明超时了,调用回调函数(如果有的话)
+ 174              		.loc 1 42 14 is_stmt 1 view .LVU38
+ 175              		.loc 1 42 22 is_stmt 0 view .LVU39
+ 176 0006 5368     		ldr	r3, [r2, #4]
+ 177              		.loc 1 42 17 view .LVU40
+ 178 0008 0BB1     		cbz	r3, .L10
+  43:modules/daemon/daemon.c ****         {
+  44:modules/daemon/daemon.c ****             dins->callback(dins->owner_id); // module内可以将owner_id强制类型转换成自�
+ 179              		.loc 1 44 13 is_stmt 1 view .LVU41
+ 180 000a D068     		ldr	r0, [r2, #12]
+ 181 000c 9847     		blx	r3
+ 182              	.LVL9:
+ 183              	.L10:
+  37:modules/daemon/daemon.c ****     {
+ 184              		.loc 1 37 33 discriminator 2 view .LVU42
+ 185 000e 0134     		adds	r4, r4, #1
+ 186              	.LVL10:
+ 187              	.L8:
+  37:modules/daemon/daemon.c ****     {
+ 188              		.loc 1 37 24 discriminator 1 view .LVU43
+  37:modules/daemon/daemon.c ****     {
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccX56liB.s 			page 5
+
+
+ 189              		.loc 1 37 26 is_stmt 0 discriminator 1 view .LVU44
+ 190 0010 064B     		ldr	r3, .L14
+ 191 0012 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  37:modules/daemon/daemon.c ****     {
+ 192              		.loc 1 37 5 discriminator 1 view .LVU45
+ 193 0014 A342     		cmp	r3, r4
+ 194 0016 08D9     		bls	.L13
+  39:modules/daemon/daemon.c ****         if (dins->temp_count > 0) // 如果计数器还有值,说明上一次喂狗后还没有超�
+ 195              		.loc 1 39 9 is_stmt 1 view .LVU46
+  39:modules/daemon/daemon.c ****         if (dins->temp_count > 0) // 如果计数器还有值,说明上一次喂狗后还没有超�
+ 196              		.loc 1 39 14 is_stmt 0 view .LVU47
+ 197 0018 054B     		ldr	r3, .L14+4
+ 198 001a 53F82420 		ldr	r2, [r3, r4, lsl #2]
+ 199              	.LVL11:
+  40:modules/daemon/daemon.c ****             dins->temp_count--;
+ 200              		.loc 1 40 9 is_stmt 1 view .LVU48
+  40:modules/daemon/daemon.c ****             dins->temp_count--;
+ 201              		.loc 1 40 17 is_stmt 0 view .LVU49
+ 202 001e 1389     		ldrh	r3, [r2, #8]
+  40:modules/daemon/daemon.c ****             dins->temp_count--;
+ 203              		.loc 1 40 12 view .LVU50
+ 204 0020 002B     		cmp	r3, #0
+ 205 0022 F0D0     		beq	.L9
+  41:modules/daemon/daemon.c ****         else if (dins->callback) // 等于零说明超时了,调用回调函数(如果有的话)
+ 206              		.loc 1 41 13 is_stmt 1 view .LVU51
+  41:modules/daemon/daemon.c ****         else if (dins->callback) // 等于零说明超时了,调用回调函数(如果有的话)
+ 207              		.loc 1 41 29 is_stmt 0 view .LVU52
+ 208 0024 013B     		subs	r3, r3, #1
+ 209 0026 1381     		strh	r3, [r2, #8]	@ movhi
+ 210 0028 F1E7     		b	.L10
+ 211              	.LVL12:
+ 212              	.L13:
+  41:modules/daemon/daemon.c ****         else if (dins->callback) // 等于零说明超时了,调用回调函数(如果有的话)
+ 213              		.loc 1 41 29 view .LVU53
+ 214              	.LBE2:
+  45:modules/daemon/daemon.c ****             // ?????
+  46:modules/daemon/daemon.c ****         }
+  47:modules/daemon/daemon.c ****     }
+  48:modules/daemon/daemon.c **** }
+ 215              		.loc 1 48 1 view .LVU54
+ 216 002a 10BD     		pop	{r4, pc}
+ 217              	.LVL13:
+ 218              	.L15:
+ 219              		.loc 1 48 1 view .LVU55
+ 220              		.align	2
+ 221              	.L14:
+ 222 002c 00000000 		.word	.LANCHOR0
+ 223 0030 00000000 		.word	.LANCHOR1
+ 224              		.cfi_endproc
+ 225              	.LFE3:
+ 227              		.section	.bss.daemon_instances,"aw",%nobits
+ 228              		.align	2
+ 229              		.set	.LANCHOR1,. + 0
+ 232              	daemon_instances:
+ 233 0000 00000000 		.space	256
+ 233      00000000 
+ 233      00000000 
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccX56liB.s 			page 6
+
+
+ 233      00000000 
+ 233      00000000 
+ 234              		.section	.bss.idx,"aw",%nobits
+ 235              		.set	.LANCHOR0,. + 0
+ 238              	idx:
+ 239 0000 00       		.space	1
+ 240              		.text
+ 241              	.Letext0:
+ 242              		.file 2 "d:\\rm\\arm-gnu-toolchian\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 243              		.file 3 "d:\\rm\\arm-gnu-toolchian\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 244              		.file 4 "modules/daemon/daemon.h"
+ 245              		.file 5 "d:\\rm\\arm-gnu-toolchian\\lib\\gcc\\arm-none-eabi\\10.3.1\\include\\stddef.h"
+ 246              		.file 6 "d:\\rm\\arm-gnu-toolchian\\arm-none-eabi\\include\\stdlib.h"
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccX56liB.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 daemon.c
+C:\Users\blue\AppData\Local\Temp\ccX56liB.s:19     .text.DaemonRegister:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccX56liB.s:25     .text.DaemonRegister:00000000 DaemonRegister
+C:\Users\blue\AppData\Local\Temp\ccX56liB.s:88     .text.DaemonRegister:00000034 $d
+C:\Users\blue\AppData\Local\Temp\ccX56liB.s:94     .text.DaemonReload:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccX56liB.s:100    .text.DaemonReload:00000000 DaemonReload
+C:\Users\blue\AppData\Local\Temp\ccX56liB.s:119    .text.DaemonIsOnline:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccX56liB.s:125    .text.DaemonIsOnline:00000000 DaemonIsOnline
+C:\Users\blue\AppData\Local\Temp\ccX56liB.s:146    .text.DaemonTask:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccX56liB.s:152    .text.DaemonTask:00000000 DaemonTask
+C:\Users\blue\AppData\Local\Temp\ccX56liB.s:222    .text.DaemonTask:0000002c $d
+C:\Users\blue\AppData\Local\Temp\ccX56liB.s:228    .bss.daemon_instances:00000000 $d
+C:\Users\blue\AppData\Local\Temp\ccX56liB.s:232    .bss.daemon_instances:00000000 daemon_instances
+C:\Users\blue\AppData\Local\Temp\ccX56liB.s:238    .bss.idx:00000000 idx
+C:\Users\blue\AppData\Local\Temp\ccX56liB.s:239    .bss.idx:00000000 $d
+
+UNDEFINED SYMBOLS
+malloc

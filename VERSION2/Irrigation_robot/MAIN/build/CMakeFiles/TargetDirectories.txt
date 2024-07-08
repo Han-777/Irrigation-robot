@@ -1,0 +1,2 @@
+D:/Github/Irrigation-robot/VERSION2/Irrigation_robot/MAIN/build/CMakeFiles/edit_cache.dir
+D:/Github/Irrigation-robot/VERSION2/Irrigation_robot/MAIN/build/CMakeFiles/rebuild_cache.dir

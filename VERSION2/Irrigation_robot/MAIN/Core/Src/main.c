@@ -108,15 +108,16 @@ int main(void)
   MX_FDCAN1_Init();
   MX_FDCAN2_Init();
   /* USER CODE BEGIN 2 */
-
+  ld_data = Lidar_Init(&huart2);
+  int i = 0;
   /* USER CODE END 2 */
-
+  ld_data = Lidar_Init(&huart2);
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
     /* USER CODE END WHILE */
-    ld_data = Lidar_Init(&huart2);
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

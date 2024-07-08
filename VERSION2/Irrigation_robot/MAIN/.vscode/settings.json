@@ -25,6 +25,8 @@
     "lidar.h": "c",
     "dji_motor.h": "c",
     "stdint.h": "c",
-    "string.h": "c"
+    "string.h": "c",
+    "tim.h": "c",
+    "dma.h": "c"
   }
 }

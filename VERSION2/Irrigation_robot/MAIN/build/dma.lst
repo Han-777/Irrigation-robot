@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQY80h1.s 			page 1
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccm6kRb7.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQY80h1.s 			page 1
   29:Core/Src/dma.c **** /* Configure DMA                                                              */
   30:Core/Src/dma.c **** /*----------------------------------------------------------------------------*/
   31:Core/Src/dma.c **** 
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQY80h1.s 			page 2
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccm6kRb7.s 			page 2
 
 
   32:Core/Src/dma.c **** /* USER CODE BEGIN 1 */
@@ -103,10 +103,10 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQY80h1.s 			page 1
   44:Core/Src/dma.c **** 
   45:Core/Src/dma.c ****   /* DMA interrupt init */
   46:Core/Src/dma.c ****   /* DMA1_Stream0_IRQn interrupt configuration */
-  47:Core/Src/dma.c ****   HAL_NVIC_SetPriority(DMA1_Stream0_IRQn, 0, 0);
+  47:Core/Src/dma.c ****   HAL_NVIC_SetPriority(DMA1_Stream0_IRQn, 3, 0);
   55              		.loc 1 47 3 view .LVU7
   56 001e 0022     		movs	r2, #0
-  57 0020 1146     		mov	r1, r2
+  57 0020 0321     		movs	r1, #3
   58 0022 0B20     		movs	r0, #11
   59 0024 FFF7FEFF 		bl	HAL_NVIC_SetPriority
   60              	.LVL0:
@@ -116,13 +116,13 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQY80h1.s 			page 1
   63 002a FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
   64              	.LVL1:
   49:Core/Src/dma.c ****   /* DMA1_Stream1_IRQn interrupt configuration */
-  50:Core/Src/dma.c ****   HAL_NVIC_SetPriority(DMA1_Stream1_IRQn, 0, 0);
+  50:Core/Src/dma.c ****   HAL_NVIC_SetPriority(DMA1_Stream1_IRQn, 3, 0);
   65              		.loc 1 50 3 view .LVU9
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQY80h1.s 			page 3
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccm6kRb7.s 			page 3
 
 
   66 002e 0022     		movs	r2, #0
-  67 0030 1146     		mov	r1, r2
+  67 0030 0321     		movs	r1, #3
   68 0032 0C20     		movs	r0, #12
   69 0034 FFF7FEFF 		bl	HAL_NVIC_SetPriority
   70              	.LVL2:
@@ -132,10 +132,10 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQY80h1.s 			page 1
   73 003a FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
   74              	.LVL3:
   52:Core/Src/dma.c ****   /* DMA1_Stream2_IRQn interrupt configuration */
-  53:Core/Src/dma.c ****   HAL_NVIC_SetPriority(DMA1_Stream2_IRQn, 0, 0);
+  53:Core/Src/dma.c ****   HAL_NVIC_SetPriority(DMA1_Stream2_IRQn, 3, 0);
   75              		.loc 1 53 3 view .LVU11
   76 003e 0022     		movs	r2, #0
-  77 0040 1146     		mov	r1, r2
+  77 0040 0321     		movs	r1, #3
   78 0042 0D20     		movs	r0, #13
   79 0044 FFF7FEFF 		bl	HAL_NVIC_SetPriority
   80              	.LVL4:
@@ -145,10 +145,10 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQY80h1.s 			page 1
   83 004a FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
   84              	.LVL5:
   55:Core/Src/dma.c ****   /* DMA1_Stream3_IRQn interrupt configuration */
-  56:Core/Src/dma.c ****   HAL_NVIC_SetPriority(DMA1_Stream3_IRQn, 0, 0);
+  56:Core/Src/dma.c ****   HAL_NVIC_SetPriority(DMA1_Stream3_IRQn, 3, 0);
   85              		.loc 1 56 3 view .LVU13
   86 004e 0022     		movs	r2, #0
-  87 0050 1146     		mov	r1, r2
+  87 0050 0321     		movs	r1, #3
   88 0052 0E20     		movs	r0, #14
   89 0054 FFF7FEFF 		bl	HAL_NVIC_SetPriority
   90              	.LVL6:
@@ -158,10 +158,10 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQY80h1.s 			page 1
   93 005a FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
   94              	.LVL7:
   58:Core/Src/dma.c ****   /* DMA1_Stream4_IRQn interrupt configuration */
-  59:Core/Src/dma.c ****   HAL_NVIC_SetPriority(DMA1_Stream4_IRQn, 0, 0);
+  59:Core/Src/dma.c ****   HAL_NVIC_SetPriority(DMA1_Stream4_IRQn, 3, 0);
   95              		.loc 1 59 3 view .LVU15
   96 005e 0022     		movs	r2, #0
-  97 0060 1146     		mov	r1, r2
+  97 0060 0321     		movs	r1, #3
   98 0062 0F20     		movs	r0, #15
   99 0064 FFF7FEFF 		bl	HAL_NVIC_SetPriority
  100              	.LVL8:
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQY80h1.s 			page 1
  108              		.cfi_def_cfa_offset 4
  109              		@ sp needed
  110 0070 5DF804FB 		ldr	pc, [sp], #4
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQY80h1.s 			page 4
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccm6kRb7.s 			page 4
 
 
  111              	.L4:
@@ -193,14 +193,14 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQY80h1.s 			page 1
  121              		.file 3 "d:\\rm\\arm-gnu-toolchian\\arm-none-eabi\\include\\sys\\_stdint.h"
  122              		.file 4 "Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h"
  123              		.file 5 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cortex.h"
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQY80h1.s 			page 5
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccm6kRb7.s 			page 5
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 dma.c
-C:\Users\blue\AppData\Local\Temp\ccQY80h1.s:19     .text.MX_DMA_Init:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccQY80h1.s:25     .text.MX_DMA_Init:00000000 MX_DMA_Init
-C:\Users\blue\AppData\Local\Temp\ccQY80h1.s:114    .text.MX_DMA_Init:00000074 $d
+C:\Users\blue\AppData\Local\Temp\ccm6kRb7.s:19     .text.MX_DMA_Init:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccm6kRb7.s:25     .text.MX_DMA_Init:00000000 MX_DMA_Init
+C:\Users\blue\AppData\Local\Temp\ccm6kRb7.s:114    .text.MX_DMA_Init:00000074 $d
 
 UNDEFINED SYMBOLS
 HAL_NVIC_SetPriority

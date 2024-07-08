@@ -24,12 +24,10 @@
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
-
-#include "lidar.h"
-static LD_data_t *ld_data;
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "lidar.h"
+static LD_data_t *ld_data;
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -109,9 +107,8 @@ int main(void)
   MX_FDCAN2_Init();
   /* USER CODE BEGIN 2 */
   ld_data = Lidar_Init(&huart2);
-  int i = 0;
   /* USER CODE END 2 */
-  ld_data = Lidar_Init(&huart2);
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)

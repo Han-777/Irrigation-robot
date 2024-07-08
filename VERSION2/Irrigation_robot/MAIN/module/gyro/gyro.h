@@ -1,13 +1,17 @@
 /**
  * @file lidar.h
- * @author Han-777
- * @brief  gyro模块定义头文件
+ * @author DJI 2016
+ * @author modified by neozng
+ * @brief  遥控器模块定义头文件
  * @version beta
- * @date 2024-07-07
+ * @date 2022-11-01
+ *
+ * @copyright Copyright (c) 2016 DJI corp
+ * @copyright Copyright (c) 2022 HNU YueLu EC all rights reserved
  *
  */
-#ifndef GYRO_H
-#define GYRO_H
+#ifndef LIDAR_H
+#define LIDAR_H
 
 #include <stdint.h>
 #include "main.h"

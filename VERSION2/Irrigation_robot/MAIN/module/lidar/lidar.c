@@ -4,7 +4,7 @@
 
 #define LIDAR_FRAME_SIZE 9 // lidar receive buffer size
 
-static LD_data_t *ld_data;
+static LD_data_t ld_data;
 // static USARTInstance *ld_instance[2] = {NULL};
 static DaemonInstance *ld_daemon_instance;
 static USARTInstance *lld_instance; // left lidar
@@ -41,11 +41,11 @@ static void LDRxCallback(UART_HandleTypeDef *huart) // 串口接收回调_
     DaemonReload(ld_daemon_instance); // 先喂狗
     if (huart == &huart2)
     {
-        ld_data->lld_distance = ld_buff_to_data(lld_instance->recv_buff); // 进行协议解析
+        ld_data.lld_distance = ld_buff_to_data(lld_instance->recv_buff); // 进行协议解析
     }
     else if (huart == &huart4)
     {
-        ld_data->rld_distance = ld_buff_to_data(rld_instance->recv_buff);
+        ld_data.rld_distance = ld_buff_to_data(rld_instance->recv_buff);
     }
 }
 
@@ -58,14 +58,14 @@ static void LDLostCallback(void *id) // id is corresponding usart handle
 {
     if (id == &huart2) // left lidar handle
     {
-        memset(ld_data->lld_distance, 0, sizeof(ld_data->lld_distance)); // 清空数据
-        USARTServiceInit(lld_instance);                                  // 尝试重新启动接收
+        memset(ld_data.lld_distance, 0, sizeof(ld_data.lld_distance)); // 清空数据
+        USARTServiceInit(lld_instance);                                // 尝试重新启动接收
         LOGWARNING("[lidar] right lidar lost");
     }
     else
     {
-        memset(ld_data->rld_distance, 0, sizeof(ld_data->rld_distance)); // 清空数据
-        USARTServiceInit(rld_instance);                                  // 尝试重新启动接收
+        memset(ld_data.rld_distance, 0, sizeof(ld_data.rld_distance)); // 清空数据
+        USARTServiceInit(rld_instance);                                // 尝试重新启动接收
         LOGWARNING("[lidar] left lidar lost");
     }
 }
@@ -91,5 +91,4 @@ LD_data_t *Lidar_Init(USARTInstance *ld_usart_handle)
         .owner_id = ld_usart_handle,
     };
     ld_daemon_instance = DaemonRegister(&daemon_conf);
-    return ld_data;
 }

@@ -16,13 +16,15 @@
     "gpio.h": "c",
     "fdcan.h": "c",
     "usart.h": "c",
-    "bsp_can.h": "c", // bsp
+    "bsp_can.h": "c",
     "bsp_pwm.h": "c",
     "bsp_usart.h": "c",
     "bsp_gpio.h": "c",
-    "robot_def.h": "c", // module
+    "robot_def.h": "c",
     "daemon.h": "c",
     "lidar.h": "c",
-    "dji_motor.h": "c"
+    "dji_motor.h": "c",
+    "gyro.h": "c",
+    "stdint.h": "c"
   }
 }

@@ -1,5 +1,9 @@
 {
   "files.associations": {
     "lidar.h": "c"
+  },
+  "C_Cpp.files.exclude": {
+    "**/.vscode": true,
+    "**/.vs": true
   }
 }

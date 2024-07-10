@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cckScJUI.s 			page 1
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccc2H12L.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -19,7 +19,12 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cckScJUI.s 			page 1
   16              	.Ltext0:
   17              		.cfi_sections	.debug_frame
   18              	.Letext0:
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cckScJUI.s 			page 2
+  19              		.file 1 "d:\\rm\\arm-gnu-toolchian\\arm-none-eabi\\include\\machine\\_default_types.h"
+  20              		.file 2 "d:\\rm\\arm-gnu-toolchian\\arm-none-eabi\\include\\sys\\_stdint.h"
+  21              		.file 3 "modules/gyro/gyro.h"
+  22              		.file 4 "modules/daemon/daemon.h"
+  23              		.file 5 "modules/gyro/gyro.c"
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccc2H12L.s 			page 2
 
 
 DEFINED SYMBOLS

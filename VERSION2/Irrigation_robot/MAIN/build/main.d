@@ -37,7 +37,7 @@ build/main.o: Core/Src/main.c Core/Inc/main.h \
  Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h Core/Inc/crc.h \
  Core/Inc/main.h Core/Inc/dma.h Core/Inc/fdcan.h Core/Inc/memorymap.h \
  Core/Inc/rng.h Core/Inc/rtc.h Core/Inc/tim.h Core/Inc/usart.h \
- Core/Inc/gpio.h modules/lidar/lidar.h bsp/usart/bsp_usart.h
+ Core/Inc/gpio.h modules/lidar/lidar.h
 Core/Inc/main.h:
 Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h:
 Core/Inc/stm32h7xx_hal_conf.h:
@@ -88,4 +88,3 @@ Core/Inc/tim.h:
 Core/Inc/usart.h:
 Core/Inc/gpio.h:
 modules/lidar/lidar.h:
-bsp/usart/bsp_usart.h:

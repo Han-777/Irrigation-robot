@@ -27,55 +27,55 @@ void GYRO_Init(void)
 // float target_yaw;
 // int Flower_Count=0;
 
-// void UART5_IRQHandler(void)
-// {
-// 	static u8 Count = 0;
-// 	static u8 rs_count = 0;
-// 	static u8 last_rsnum = 0;
-// 	u8 Usart_Receive;
-// 	static u8 rsimu_flag = 0; // 接收开始标志位
-// 	static u8 rsacc_flag = 0;
-// 	RS485_RX_RE = 0;
-// 	RS485_RX_DE = 0;
-// 	ttl_receive = 1;
+void UART5_IRQHandler(void)
+{
+	static u8 Count = 0;
+	static u8 rs_count = 0;
+	static u8 last_rsnum = 0;
+	u8 Usart_Receive;
+	static u8 rsimu_flag = 0; // 接收开始标志位
+	static u8 rsacc_flag = 0;
+	RS485_RX_RE = 0;
+	RS485_RX_DE = 0;
+	ttl_receive = 1;
 
-// 	if (USART_GetITStatus(UART5, USART_IT_RXNE) == SET) // Check if data is received //判断是否接收到数据
-// 	{
-// 		USART_ClearITPendingBit(UART5, USART_IT_RXNE);
-// 		Usart_Receive = USART_ReceiveData(UART5);									   // Read the data //读取数据
-// 		Fd_data[Count] = Usart_Receive;												   // 串口数据填入数组
-// 		if (((last_rsnum == FRAME_END) && (Usart_Receive == FRAME_HEAD)) || Count > 0) // 重新对帧
-// 		{
-// 			rs_count = 1;
-// 			Count++;
-// 			if ((Fd_data[1] == TYPE_IMU) && (Fd_data[2] == IMU_LEN))
-// 				rsimu_flag = 1;
-// 			if ((Fd_data[1] == TYPE_AHRS) && (Fd_data[2] == AHRS_LEN))
-// 				rsacc_flag = 1;
-// 		}
-// 		else
-// 			Count = 0;
-// 		last_rsnum = Usart_Receive;
+	if (USART_GetITStatus(UART5, USART_IT_RXNE) == SET) // Check if data is received //判断是否接收到数据
+	{
+		USART_ClearITPendingBit(UART5, USART_IT_RXNE);
+		Usart_Receive = USART_ReceiveData(UART5);									   // Read the data //读取数据
+		Fd_data[Count] = Usart_Receive;												   // 串口数据填入数组
+		if (((last_rsnum == FRAME_END) && (Usart_Receive == FRAME_HEAD)) || Count > 0) // 重新对帧
+		{
+			rs_count = 1;
+			Count++;
+			if ((Fd_data[1] == TYPE_IMU) && (Fd_data[2] == IMU_LEN))
+				rsimu_flag = 1;
+			if ((Fd_data[1] == TYPE_AHRS) && (Fd_data[2] == AHRS_LEN))
+				rsacc_flag = 1;
+		}
+		else
+			Count = 0;
+		last_rsnum = Usart_Receive;
 
-// 		// 接收完整后进入
-// 		if (rsimu_flag == 1 && Count == IMU_RS) // 将本帧数据保存至Fd_rsimu数组中
-// 		{
-// 			Count = 0;
-// 			rsimu_flag = 0;
-// 			rs_imutype = 1;						  // imu data available flag
-// 			if (Fd_data[IMU_RS - 1] == FRAME_END) // 帧尾校验
-// 				memcpy(Fd_rsimu, Fd_data, sizeof(Fd_data));
-// 		}
-// 		if (rsacc_flag == 1 && Count == AHRS_RS)
-// 		{
-// 			Count = 0;
-// 			rsacc_flag = 0;
-// 			rs_ahrstype = 1; // ahrs data available flag
-// 			if (Fd_data[AHRS_RS - 1] == FRAME_END)
-// 				memcpy(Fd_rsahrs, Fd_data, sizeof(Fd_data));
-// 		}
-// 	}
-// }
+		// 接收完整后进入
+		if (rsimu_flag == 1 && Count == IMU_RS) // 将本帧数据保存至Fd_rsimu数组中
+		{
+			Count = 0;
+			rsimu_flag = 0;
+			rs_imutype = 1;						  // imu data available flag
+			if (Fd_data[IMU_RS - 1] == FRAME_END) // 帧尾校验
+				memcpy(Fd_rsimu, Fd_data, sizeof(Fd_data));
+		}
+		if (rsacc_flag == 1 && Count == AHRS_RS)
+		{
+			Count = 0;
+			rsacc_flag = 0;
+			rs_ahrstype = 1; // ahrs data available flag
+			if (Fd_data[AHRS_RS - 1] == FRAME_END)
+				memcpy(Fd_rsahrs, Fd_data, sizeof(Fd_data));
+		}
+	}
+}
 
 /**
  * @brief  Handling the angle for pid

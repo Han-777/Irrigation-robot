@@ -11,7 +11,6 @@
 
 #include <stdint.h>
 #include "main.h"
-#include <bsp_usart.h>
 
 typedef struct
 {

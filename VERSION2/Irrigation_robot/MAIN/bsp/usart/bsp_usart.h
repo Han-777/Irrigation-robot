@@ -9,8 +9,6 @@
 #define USART_RXBUFF_LIMIT 256 // 如果协议需要更大的buff,请修改这里
 
 // USART handle
-
-
 // 模块回调函数,用于解析协议
 typedef void (*usart_module_callback)(UART_HandleTypeDef *huart);
 
@@ -27,11 +25,22 @@ typedef enum
 // 由于串口是独占的点对点通信,所以不需要考虑多个module同时使用一个串口的情况,因此不用加入id;当然也可以选择加入,这样在bsp层可以访问到module的其他信息
 typedef struct // relate to usart module, which contains information about the data receiving process
 {
-    uint8_t recv_buff[USART_RXBUFF_LIMIT]; // 预先定义的最大buff大小,如果太小请修改USART_RXBUFF_LIMIT
+    uint8_t *recv_buff;                    // 预先定义的最大buff大小,如果太小请修改USART_RXBUFF_LIMIT
     uint8_t recv_buff_size;                // 模块接收一包数据的大小
     UART_HandleTypeDef *usart_handle;      // 实例对应的usart_handle
     usart_module_callback module_callback; // 解析收到的数据的回调函数
 } USARTInstance;
+
+// // 使用双缓冲机制的串口实例结构体
+// typedef struct // relate to usart module, which contains information about the data receiving process
+// {
+// #ifdef USART_
+//     uint8_t recv_buff[2][USART_RXBUFF_LIMIT]; // 双缓冲的buff
+//     uint8_t recv_buff_size;                   // 模块接收一包数据的大小
+//     uint8_t recv_buff_index;                  // 记录当前读取的buff index
+//     UART_HandleTypeDef *usart_handle;         // 实例对应的usart_handle
+//     usart_module_callback module_callback;    // 解析收到的数据的回调函数
+// } USARTInstance_doubleBuffer;
 
 /* usart 初始化配置结构体 */
 typedef struct

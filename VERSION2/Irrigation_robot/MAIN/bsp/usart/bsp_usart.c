@@ -14,8 +14,25 @@
 
 /* usart service instance, modules' info would be recoreded here using USARTRegister() */
 /* usart服务实例,所有注册了usart的模块信息会被保存在这里 */
-static uint8_t usart_instance_idx;
+static uint8_t usart_instance_idx = 0;
 static USARTInstance *usart_instance[DEVICE_USART_CNT] = {NULL};
+
+// 内存处理
+#define MY_SECTION_SIZE 512 * 1024 // 512KB
+uint8_t my_section[MY_SECTION_SIZE] __attribute__((section(".my_section")));
+size_t my_section_offset = 0;
+
+void *my_malloc(size_t size)
+{
+    if (my_section_offset + size > MY_SECTION_SIZE)
+    {
+        // 内存不足，处理错误
+        return NULL;
+    }
+    void *ptr = &my_section[my_section_offset];
+    my_section_offset += size;
+    return ptr;
+}
 
 /**
  * @brief 启动串口服务,会在每个实例注册之后自动启用接收,当前实现为DMA接收,后续可能添加IT和BLOCKING接收
@@ -41,17 +58,26 @@ USARTInstance *USARTRegister(USART_Init_Config_s *init_config)
     if (usart_instance_idx > DEVICE_USART_CNT) // 超过最大实例数
         while (1)
             ;
-    USARTInstance *instance = (USARTInstance *)malloc(sizeof(USARTInstance));
+    for (uint8_t i = 0; i < usart_instance_idx; i++)
+    {
+        if (usart_instance[i]->usart_handle == init_config->usart_handle)
+            while (1)
+                // LOGERROR("[bsp_usart]: USART instance %d is already registered!\n", i);
+                ;
+    }
+    USARTInstance *instance = (USARTInstance *)my_malloc(sizeof(USARTInstance));
     memset(instance, 0, sizeof(USARTInstance));
 
     instance->usart_handle = init_config->usart_handle;
     instance->recv_buff_size = init_config->recv_buff_size;
     instance->module_callback = init_config->module_callback;
+    instance->recv_buff = (uint8_t *)my_malloc(init_config->recv_buff_size);
 
     usart_instance[usart_instance_idx++] = instance;
     USARTServiceInit(instance);
     return instance;
 }
+// double buffer regisitor
 
 /* @todo 当前仅进行了形式上的封装,后续要进一步考虑是否将module的行为与bsp完全分离 */
 void USARTSend(USARTInstance *_instance, uint8_t *send_buf, uint16_t send_size, USART_TRANSFER_MODE mode)
@@ -106,6 +132,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
         {
             if (usart_instance[i]->module_callback != NULL)
             {
+                // SCB_InvalidateDCache_by_Addr((uint32_t *)usart_instance[i]->recv_buff, (usart_instance[i]->recv_buff_size + 31) / 32); // 前面加1是因为HAL库);
                 usart_instance[i]->module_callback(huart);
                 memset(usart_instance[i]->recv_buff, 0, Size); // 接收结束后清空buffer,对于变长数据是必要的
             }
@@ -134,6 +161,7 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
             if (error & HAL_UART_ERROR_ORE)
             {
                 // 溢出错误，可能需要清空接收缓冲区
+                __HAL_UART_CLEAR_OREFLAG(huart);
                 memset(usart_instance[i]->recv_buff, 0, usart_instance[i]->recv_buff_size);
             }
 

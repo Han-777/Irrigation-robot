@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
   29:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****          (+) Initialize CRC calculator
   30:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****              (++) specify generating polynomial (peripheral default or non-default one)
   31:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****              (++) specify initialization value (peripheral default or non-default one)
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 2
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 2
 
 
   32:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****              (++) specify input data format
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
   86:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****     [..]  This section provides functions allowing to:
   87:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****       (+) Initialize the CRC according to the specified parameters
   88:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****           in the CRC_InitTypeDef and create the associated handle
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 3
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 3
 
 
   89:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****       (+) DeInitialize the CRC peripheral
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
  143:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****    * picked up by user */
  144:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****   assert_param(IS_DEFAULT_INIT_VALUE(hcrc->Init.DefaultInitValueUse));
  145:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****   if (hcrc->Init.DefaultInitValueUse == DEFAULT_INIT_VALUE_ENABLE)
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 4
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 4
 
 
  146:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****   {
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
  200:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****   __HAL_CRC_DR_RESET(hcrc);
  201:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c **** 
  202:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****   /* Reset IDR register content */
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 5
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 5
 
 
  203:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****   CLEAR_REG(hcrc->Instance->IDR);
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
  257:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****                       ##### Peripheral Control functions #####
  258:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****  ===============================================================================
  259:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****     [..]  This section provides functions allowing to:
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 6
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 6
 
 
  260:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****       (+) compute the 7, 8, 16 or 32-bit CRC value of an 8, 16 or 32-bit data buffer
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
  314:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****       break;
  315:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****   }
  316:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c **** 
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 7
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 7
 
 
  317:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****   /* Change CRC peripheral state */
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
  371:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c **** 
  372:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****     default:
  373:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****       break;
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 8
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 8
 
 
  374:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****   }
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
  428:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****   * @param  pBuffer pointer to the input data buffer
  429:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****   * @param  BufferLength input data buffer length
  430:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****   * @retval uint32_t CRC (returned value LSBs for CRC shorter than 32 bits)
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 9
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 9
 
 
  431:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****   */
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
   64 0022 9EF803E0 		ldrb	lr, [lr, #3]	@ zero_extendqisi2
  445:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****                          ((uint32_t)pBuffer[(4U * i) + 2U] << 8U)  | \
   65              		.loc 1 445 68 discriminator 3 view .LVU16
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 10
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 10
 
 
   66 0026 43EA0E03 		orr	r3, r3, lr
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
  100              	.L4:
  462:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****     {
  463:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****       data = ((uint16_t)(pBuffer[4U * i]) << 8U) | (uint16_t)pBuffer[(4U * i) + 1U];
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 11
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 11
 
 
  464:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****       pReg = (__IO uint16_t *)(__IO void *)(&hcrc->Instance->DR);                    /* Derogation 
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
  459:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****     }
  134              		.loc 1 459 13 is_stmt 0 view .LVU46
  135 006a 2380     		strh	r3, [r4]	@ movhi
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 12
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 12
 
 
  136 006c EBE7     		b	.L6
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
  178              	.LVL16:
  179              	.LFB152:
  474:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c **** 
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 13
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 13
 
 
  475:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c **** /**
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
  213              		.loc 1 491 41 is_stmt 1 discriminator 3 view .LVU74
  491:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****   {
  214              		.loc 1 491 42 is_stmt 0 discriminator 3 view .LVU75
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 14
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 14
 
 
  215 001c 0133     		adds	r3, r3, #1
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
  255 003e 03D0     		beq	.L19
  497:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****     *pReg = pBuffer[2U * i];
  256              		.loc 1 497 5 is_stmt 1 view .LVU91
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 15
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 15
 
 
  497:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****     *pReg = pBuffer[2U * i];
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
  304              		.thumb
  305              		.thumb_func
  307              	HAL_CRC_Init:
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 16
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 16
 
 
  308              	.LVL29:
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
  131:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****   }
  347              		.loc 1 131 5 view .LVU118
  348 001a 2268     		ldr	r2, [r4]
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 17
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 17
 
 
  349 001c 9368     		ldr	r3, [r2, #8]
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
  172:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c **** 
  389              		.loc 1 172 1 view .LVU133
  390 0052 10BD     		pop	{r4, pc}
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 18
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 18
 
 
  391              	.LVL31:
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
  434              	.L37:
  435 007c B71DC104 		.word	79764919
  436              		.cfi_endproc
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 19
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 19
 
 
  437              	.LFE144:
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
  191:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****   {
  487              		.loc 1 191 3 view .LVU153
  191:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****   {
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 20
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 20
 
 
  488              		.loc 1 191 11 is_stmt 0 view .LVU154
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
  527              	.L42:
  528              	.LCFI6:
  529              		.cfi_def_cfa_offset 0
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 21
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 21
 
 
  530              		.cfi_restore 3
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
  575              		.loc 1 295 3 view .LVU180
  576 000a 022B     		cmp	r3, #2
  577 000c 16D0     		beq	.L48
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 22
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 22
 
 
  578 000e 032B     		cmp	r3, #3
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
  617 0030 F2E7     		b	.L51
  618              	.LVL49:
  619              	.L53:
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 23
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 23
 
 
  295:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****   {
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
  665              		.loc 1 342 3 view .LVU206
  666              	.LVL54:
  345:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c **** 
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 24
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 24
 
 
  667              		.loc 1 345 3 view .LVU207
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
  355:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_crc.c ****       {
  707              		.loc 1 355 51 is_stmt 0 discriminator 3 view .LVU222
  708 0030 0133     		adds	r3, r3, #1
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 25
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 25
 
 
  709              	.LVL58:
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
  751              		.global	HAL_CRC_GetState
  752              		.syntax unified
  753              		.thumb
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 26
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 26
 
 
  754              		.thumb_func
@@ -1530,30 +1530,30 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 1
  778              		.file 5 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
  779              		.file 6 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_crc.h"
  780              		.file 7 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_crc_ex.h"
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s 			page 27
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccGXFiko.s 			page 27
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32h7xx_hal_crc.c
-C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s:19     .text.CRC_Handle_8:00000000 $t
-C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s:24     .text.CRC_Handle_8:00000000 CRC_Handle_8
-C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s:172    .text.CRC_Handle_16:00000000 $t
-C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s:177    .text.CRC_Handle_16:00000000 CRC_Handle_16
-C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s:280    .text.HAL_CRC_MspInit:00000000 $t
-C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s:286    .text.HAL_CRC_MspInit:00000000 HAL_CRC_MspInit
-C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s:301    .text.HAL_CRC_Init:00000000 $t
-C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s:307    .text.HAL_CRC_Init:00000000 HAL_CRC_Init
-C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s:435    .text.HAL_CRC_Init:0000007c $d
-C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s:440    .text.HAL_CRC_MspDeInit:00000000 $t
-C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s:446    .text.HAL_CRC_MspDeInit:00000000 HAL_CRC_MspDeInit
-C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s:461    .text.HAL_CRC_DeInit:00000000 $t
-C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s:467    .text.HAL_CRC_DeInit:00000000 HAL_CRC_DeInit
-C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s:543    .text.HAL_CRC_Accumulate:00000000 $t
-C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s:549    .text.HAL_CRC_Accumulate:00000000 HAL_CRC_Accumulate
-C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s:642    .text.HAL_CRC_Calculate:00000000 $t
-C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s:648    .text.HAL_CRC_Calculate:00000000 HAL_CRC_Calculate
-C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s:750    .text.HAL_CRC_GetState:00000000 $t
-C:\Users\blue\AppData\Local\Temp\cctP7Lqb.s:756    .text.HAL_CRC_GetState:00000000 HAL_CRC_GetState
+C:\Users\blue\AppData\Local\Temp\ccGXFiko.s:19     .text.CRC_Handle_8:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccGXFiko.s:24     .text.CRC_Handle_8:00000000 CRC_Handle_8
+C:\Users\blue\AppData\Local\Temp\ccGXFiko.s:172    .text.CRC_Handle_16:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccGXFiko.s:177    .text.CRC_Handle_16:00000000 CRC_Handle_16
+C:\Users\blue\AppData\Local\Temp\ccGXFiko.s:280    .text.HAL_CRC_MspInit:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccGXFiko.s:286    .text.HAL_CRC_MspInit:00000000 HAL_CRC_MspInit
+C:\Users\blue\AppData\Local\Temp\ccGXFiko.s:301    .text.HAL_CRC_Init:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccGXFiko.s:307    .text.HAL_CRC_Init:00000000 HAL_CRC_Init
+C:\Users\blue\AppData\Local\Temp\ccGXFiko.s:435    .text.HAL_CRC_Init:0000007c $d
+C:\Users\blue\AppData\Local\Temp\ccGXFiko.s:440    .text.HAL_CRC_MspDeInit:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccGXFiko.s:446    .text.HAL_CRC_MspDeInit:00000000 HAL_CRC_MspDeInit
+C:\Users\blue\AppData\Local\Temp\ccGXFiko.s:461    .text.HAL_CRC_DeInit:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccGXFiko.s:467    .text.HAL_CRC_DeInit:00000000 HAL_CRC_DeInit
+C:\Users\blue\AppData\Local\Temp\ccGXFiko.s:543    .text.HAL_CRC_Accumulate:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccGXFiko.s:549    .text.HAL_CRC_Accumulate:00000000 HAL_CRC_Accumulate
+C:\Users\blue\AppData\Local\Temp\ccGXFiko.s:642    .text.HAL_CRC_Calculate:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccGXFiko.s:648    .text.HAL_CRC_Calculate:00000000 HAL_CRC_Calculate
+C:\Users\blue\AppData\Local\Temp\ccGXFiko.s:750    .text.HAL_CRC_GetState:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccGXFiko.s:756    .text.HAL_CRC_GetState:00000000 HAL_CRC_GetState
 
 UNDEFINED SYMBOLS
 HAL_CRCEx_Polynomial_Set

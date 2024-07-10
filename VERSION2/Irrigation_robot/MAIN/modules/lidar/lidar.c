@@ -17,6 +17,23 @@ static USARTInstance *rld_instance; // right lidar
  */
 static uint16_t ld_buff_to_data(const uint8_t *ld_buff)
 {
+    // for (uint8_t idx = 0; idx < LIDAR_FRAME_SIZE - 10; idx++)
+    // {
+    //     if ((ld_buff[idx] == 0x59) && (ld_buff[idx + 1] == 0x59))
+    //     {
+    //         uint8_t checksum = 0;
+    //         for (uint8_t i = 0; i < 8; i++)
+    //         {
+    //             checksum += ld_buff[i];
+    //         }
+    //         if (checksum == ld_buff[8])
+    //         {
+    //             return (uint16_t)(ld_buff[3] << 8 | ld_buff[2]);
+    //         }
+    //     }
+    // }
+    // return 0; // 协议错误
+
     if ((ld_buff[0] == 0x59) && (ld_buff[1] == 0x59))
     {
         uint8_t checksum = 0;

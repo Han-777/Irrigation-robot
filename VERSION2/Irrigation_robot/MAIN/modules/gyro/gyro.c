@@ -1,7 +1,7 @@
-// #include "gyro.h"
-// #include "bsp_usart.h"
-// #include "daemon.h"
-// #include "memory.h"
+#include "gyro.h"
+#include "bsp_usart.h"
+#include "daemon.h"
+#include "memory.h"
 // #define LIDAR_FRAME_SIZE 9 // lidar receive buffer size
 
 // static LD_data_t ld_data;

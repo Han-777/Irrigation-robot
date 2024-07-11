@@ -133,7 +133,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
             if (usart_instance[i]->module_callback != NULL)
             {
                 // SCB_InvalidateDCache_by_Addr((uint32_t *)usart_instance[i]->recv_buff, (usart_instance[i]->recv_buff_size + 31) / 32); // 前面加1是因为HAL库);
-                usart_instance[i]->module_callback(huart);
+                usart_instance[i]->module_callback(huart, Size);
                 memset(usart_instance[i]->recv_buff, 0, Size); // 接收结束后清空buffer,对于变长数据是必要的
             }
             HAL_UARTEx_ReceiveToIdle_DMA(usart_instance[i]->usart_handle, usart_instance[i]->recv_buff, usart_instance[i]->recv_buff_size);

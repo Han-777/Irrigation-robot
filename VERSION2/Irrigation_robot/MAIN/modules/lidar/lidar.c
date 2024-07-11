@@ -37,7 +37,7 @@ static uint16_t ld_buff_to_data(const uint8_t *ld_buff)
  * @note huart2: the address of left lidar usart handle
  *       huart4: the address of right lidar usart handle
  */
-static void LDRxCallback(UART_HandleTypeDef *huart) // 串口接收回调_
+static void LDRxCallback(UART_HandleTypeDef *huart, uint16_t Size) // 串口接收回调_
 {
     DaemonReload(ld_daemon_instance); // 先喂狗
     if (huart == &huart2)
@@ -59,14 +59,14 @@ static void LDLostCallback(void *id) // id is corresponding usart handle
 {
     if (id == &huart2) // left lidar handle
     {
-        memset(ld_data->lld_distance, 0, sizeof(ld_data->lld_distance)); // 清空数据
-        USARTServiceInit(lld_instance);                                  // 尝试重新启动接收
+        // memset(ld_data->lld_distance, 0, sizeof(ld_data->lld_distance)); // 清空数据
+        USARTServiceInit(lld_instance); // 尝试重新启动接收
         // LOGWARNING("[lidar] left lidar lost");
     }
     else
     {
-        memset(ld_data->rld_distance, 0, sizeof(ld_data->rld_distance)); // 清空数据
-        USARTServiceInit(rld_instance);                                  // 尝试重新启动接收
+        // memset(ld_data->rld_distance, 0, sizeof(ld_data->rld_distance)); // 清空数据
+        USARTServiceInit(rld_instance); // 尝试重新启动接收
         // LOGWARNING("[lidar] right lidar lost");
     }
 }

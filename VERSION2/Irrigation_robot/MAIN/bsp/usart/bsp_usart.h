@@ -10,7 +10,7 @@
 
 // USART handle
 // 模块回调函数,用于解析协议
-typedef void (*usart_module_callback)(UART_HandleTypeDef *huart);
+typedef void (*usart_module_callback)(UART_HandleTypeDef *huart, uint16_t Size);
 
 /* 发送模式枚举 */
 typedef enum

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccc2H12L.s 			page 1
+ARM GAS  C:\Users\blue\AppData\Local\Temp\cc28MLP5.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -18,16 +18,971 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccc2H12L.s 			page 1
   15              		.text
   16              	.Ltext0:
   17              		.cfi_sections	.debug_frame
-  18              	.Letext0:
-  19              		.file 1 "d:\\rm\\arm-gnu-toolchian\\arm-none-eabi\\include\\machine\\_default_types.h"
-  20              		.file 2 "d:\\rm\\arm-gnu-toolchian\\arm-none-eabi\\include\\sys\\_stdint.h"
-  21              		.file 3 "modules/gyro/gyro.h"
-  22              		.file 4 "modules/daemon/daemon.h"
-  23              		.file 5 "modules/gyro/gyro.c"
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccc2H12L.s 			page 2
+  18              		.section	.text.GYROLostCallback,"ax",%progbits
+  19              		.align	1
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	GYROLostCallback:
+  25              	.LVL0:
+  26              	.LFB148:
+  27              		.file 1 "modules/gyro/gyro.c"
+   1:modules/gyro/gyro.c **** #include "gyro.h"
+   2:modules/gyro/gyro.c **** #include "bsp_usart.h"
+   3:modules/gyro/gyro.c **** #include "daemon.h"
+   4:modules/gyro/gyro.c **** #include <string.h>
+   5:modules/gyro/gyro.c **** 
+   6:modules/gyro/gyro.c **** #define GYRO_FRAME_SIZE 80 // gyro receive buffer size
+   7:modules/gyro/gyro.c **** // 方便数据转化的结构体
+   8:modules/gyro/gyro.c **** static IMUData_Packet_t IMUData_Packet;
+   9:modules/gyro/gyro.c **** static AHRSData_Packet_t AHRSData_Packet;
+  10:modules/gyro/gyro.c **** // 最终数据
+  11:modules/gyro/gyro.c **** static GYRO_data_t *gyro_data;
+  12:modules/gyro/gyro.c **** static DaemonInstance *GYRO_daemon_instance;
+  13:modules/gyro/gyro.c **** static USARTInstance *gyro_instance;
+  14:modules/gyro/gyro.c **** 
+  15:modules/gyro/gyro.c **** /**
+  16:modules/gyro/gyro.c ****  * @brief 数据转换函数
+  17:modules/gyro/gyro.c ****  * @param
+  18:modules/gyro/gyro.c ****  * @return
+  19:modules/gyro/gyro.c ****  */
+  20:modules/gyro/gyro.c **** float DATA_Trans(uint8_t Data_1, uint8_t Data_2, uint8_t Data_3, uint8_t Data_4)
+  21:modules/gyro/gyro.c **** {
+  22:modules/gyro/gyro.c ****     long long transition_32;
+  23:modules/gyro/gyro.c ****     float tmp = 0;
+  24:modules/gyro/gyro.c ****     int sign = 0;
+  25:modules/gyro/gyro.c ****     int exponent = 0;
+  26:modules/gyro/gyro.c ****     float mantissa = 0;
+  27:modules/gyro/gyro.c ****     transition_32 = 0;
+  28:modules/gyro/gyro.c ****     transition_32 |= Data_4 << 24;
+  29:modules/gyro/gyro.c ****     transition_32 |= Data_3 << 16;
+  30:modules/gyro/gyro.c ****     transition_32 |= Data_2 << 8;
+  31:modules/gyro/gyro.c ****     transition_32 |= Data_1;
+ARM GAS  C:\Users\blue\AppData\Local\Temp\cc28MLP5.s 			page 2
+
+
+  32:modules/gyro/gyro.c ****     sign = (transition_32 & 0x80000000) ? -1 : 1; // 符号位
+  33:modules/gyro/gyro.c ****     // 先右移操作，再按位与计算，出来结果是30到23位对应的e
+  34:modules/gyro/gyro.c ****     exponent = ((transition_32 >> 23) & 0xff) - 127;
+  35:modules/gyro/gyro.c ****     // 将22~0转化为10进制，得到对应的x系数
+  36:modules/gyro/gyro.c ****     mantissa = 1 + ((float)(transition_32 & 0x7fffff) / 0x7fffff);
+  37:modules/gyro/gyro.c ****     tmp = sign * mantissa * pow(2, exponent);
+  38:modules/gyro/gyro.c ****     return tmp;
+  39:modules/gyro/gyro.c **** }
+  40:modules/gyro/gyro.c **** 
+  41:modules/gyro/gyro.c **** long long timestamp(uint8_t Data_1, uint8_t Data_2, uint8_t Data_3, uint8_t Data_4)
+  42:modules/gyro/gyro.c **** {
+  43:modules/gyro/gyro.c ****     uint32_t transition_32;
+  44:modules/gyro/gyro.c ****     transition_32 = 0;
+  45:modules/gyro/gyro.c ****     transition_32 |= Data_4 << 24;
+  46:modules/gyro/gyro.c ****     transition_32 |= Data_3 << 16;
+  47:modules/gyro/gyro.c ****     transition_32 |= Data_2 << 8;
+  48:modules/gyro/gyro.c ****     transition_32 |= Data_1;
+  49:modules/gyro/gyro.c ****     return transition_32;
+  50:modules/gyro/gyro.c **** }
+  51:modules/gyro/gyro.c **** 
+  52:modules/gyro/gyro.c **** /**
+  53:modules/gyro/gyro.c ****  * @brief gyro data parses
+  54:modules/gyro/gyro.c ****  *
+  55:modules/gyro/gyro.c ****  * @param GYRO_buff 接收buffer
+  56:modules/gyro/gyro.c ****  */
+  57:modules/gyro/gyro.c **** static void GYRO_buff_to_data(const uint8_t *gyro_buff, uint16_t size)
+  58:modules/gyro/gyro.c **** {
+  59:modules/gyro/gyro.c ****     if ((gyro_buff[0] == FRAME_HEAD) && (gyro_buff[size - 1] == FRAME_END))
+  60:modules/gyro/gyro.c ****     {
+  61:modules/gyro/gyro.c **** #if defined(GYRO_RSIMU) || defined(GYRO_RSIMU_AHRS)
+  62:modules/gyro/gyro.c ****         if ((gyro_buff[1] = TYPE_IMU) && (gyro_buff[2] = IMU_LEN))
+  63:modules/gyro/gyro.c ****         {
+  64:modules/gyro/gyro.c ****             IMUData_Packet.gyroscope_x = DATA_Trans(gyro_buff[7], gyro_buff[8], gyro_buff[9], gyro_
+  65:modules/gyro/gyro.c ****             IMUData_Packet.gyroscope_y = DATA_Trans(gyro_buff[11], gyro_buff[12], gyro_buff[13], gy
+  66:modules/gyro/gyro.c ****             IMUData_Packet.gyroscope_z = DATA_Trans(gyro_buff[15], gyro_buff[16], gyro_buff[17], gy
+  67:modules/gyro/gyro.c **** 
+  68:modules/gyro/gyro.c ****             IMUData_Packet.accelerometer_x = DATA_Trans(gyro_buff[19], gyro_buff[20], gyro_buff[21]
+  69:modules/gyro/gyro.c ****             IMUData_Packet.accelerometer_y = DATA_Trans(gyro_buff[23], gyro_buff[24], gyro_buff[25]
+  70:modules/gyro/gyro.c ****             IMUData_Packet.accelerometer_z = DATA_Trans(gyro_buff[27], gyro_buff[28], gyro_buff[29]
+  71:modules/gyro/gyro.c **** 
+  72:modules/gyro/gyro.c ****             IMUData_Packet.magnetometer_x = DATA_Trans(gyro_buff[31], gyro_buff[32], gyro_buff[33],
+  73:modules/gyro/gyro.c ****             IMUData_Packet.magnetometer_y = DATA_Trans(gyro_buff[35], gyro_buff[36], gyro_buff[37],
+  74:modules/gyro/gyro.c ****             IMUData_Packet.magnetometer_z = DATA_Trans(gyro_buff[39], gyro_buff[40], gyro_buff[41],
+  75:modules/gyro/gyro.c **** 
+  76:modules/gyro/gyro.c ****             IMUData_Packet.Timestamp = timestamp(gyro_buff[55], gyro_buff[56], gyro_buff[57], gyro_
+  77:modules/gyro/gyro.c ****         }
+  78:modules/gyro/gyro.c **** #endif
+  79:modules/gyro/gyro.c **** #if defined(GYRO_RSAHRS) || defined(GYRO_RSIMU_AHRS)
+  80:modules/gyro/gyro.c ****         if ((gyro_buff[1] == TYPE_AHRS) && (gyro_buff[2] == AHRS_LEN))
+  81:modules/gyro/gyro.c ****         {
+  82:modules/gyro/gyro.c ****             AHRSData_Packet.RollSpeed = DATA_Trans(gyro_buff[7], gyro_buff[8], gyro_buff[9], gyro_b
+  83:modules/gyro/gyro.c ****             AHRSData_Packet.PitchSpeed = DATA_Trans(gyro_buff[11], gyro_buff[12], gyro_buff[13], gy
+  84:modules/gyro/gyro.c ****             AHRSData_Packet.HeadingSpeed = DATA_Trans(gyro_buff[15], gyro_buff[16], gyro_buff[17], 
+  85:modules/gyro/gyro.c ****             AHRSData_Packet.Roll = DATA_Trans(gyro_buff[19], gyro_buff[20], gyro_buff[21], gyro_buf
+  86:modules/gyro/gyro.c ****             AHRSData_Packet.Pitch = DATA_Trans(gyro_buff[23], gyro_buff[24], gyro_buff[25], gyro_bu
+  87:modules/gyro/gyro.c ****             AHRSData_Packet.Heading = DATA_Trans(gyro_buff[27], gyro_buff[28], gyro_buff[29], gyro_
+  88:modules/gyro/gyro.c ****             AHRSData_Packet.Qw = DATA_Trans(gyro_buff[31], gyro_buff[32], gyro_buff[33], gyro_buff[
+ARM GAS  C:\Users\blue\AppData\Local\Temp\cc28MLP5.s 			page 3
+
+
+  89:modules/gyro/gyro.c ****             AHRSData_Packet.Qx = DATA_Trans(gyro_buff[35], gyro_buff[36], gyro_buff[37], gyro_buff[
+  90:modules/gyro/gyro.c ****             AHRSData_Packet.Qy = DATA_Trans(gyro_buff[39], gyro_buff[40], gyro_buff[41], gyro_buff[
+  91:modules/gyro/gyro.c ****             AHRSData_Packet.Qz = DATA_Trans(gyro_buff[43], gyro_buff[44], gyro_buff[45], gyro_buff[
+  92:modules/gyro/gyro.c ****             AHRSData_Packet.Timestamp = timestamp(gyro_buff[47], gyro_buff[48], gyro_buff[49], gyro
+  93:modules/gyro/gyro.c ****             gyro_data->Pitch = AHRSData_Packet.Pitch * 180.0 / PI;
+  94:modules/gyro/gyro.c ****             gyro_data->PitchSpeed = AHRSData_Packet.PitchSpeed * 180.0 / PI;
+  95:modules/gyro/gyro.c ****             gyro_data->Roll = AHRSData_Packet.Roll * 180.0 / PI;
+  96:modules/gyro/gyro.c ****             gyro_data->RollSpeed = AHRSData_Packet.RollSpeed * 180.0 / PI;
+  97:modules/gyro/gyro.c ****             gyro_data->Yaw = AHRSData_Packet.Heading * 180.0 / PI;
+  98:modules/gyro/gyro.c ****             gyro_data->YawSpeed = AHRSData_Packet.HeadingSpeed * 180.0 / PI;
+  99:modules/gyro/gyro.c ****         }
+ 100:modules/gyro/gyro.c **** 
+ 101:modules/gyro/gyro.c **** #endif
+ 102:modules/gyro/gyro.c ****     }
+ 103:modules/gyro/gyro.c **** }
+ 104:modules/gyro/gyro.c **** 
+ 105:modules/gyro/gyro.c **** /**
+ 106:modules/gyro/gyro.c ****  * @brief GYRO_buff_to_data,用于注册到bsp_usart的回调函数中
+ 107:modules/gyro/gyro.c ****  *
+ 108:modules/gyro/gyro.c ****  * @note huart2: the address of left lidar usart handle
+ 109:modules/gyro/gyro.c ****  *       huart4: the address of right lidar usart handle
+ 110:modules/gyro/gyro.c ****  */
+ 111:modules/gyro/gyro.c **** static void GYRORxCallback(UART_HandleTypeDef *huart, uint16_t size) // 串口接收回调_
+ 112:modules/gyro/gyro.c **** {
+ 113:modules/gyro/gyro.c ****     DaemonReload(GYRO_daemon_instance); // 先喂狗
+ 114:modules/gyro/gyro.c ****     GYRO_buff_to_data(gyro_instance->recv_buff, size);
+ 115:modules/gyro/gyro.c **** }
+ 116:modules/gyro/gyro.c **** 
+ 117:modules/gyro/gyro.c **** /**
+ 118:modules/gyro/gyro.c ****  * @brief 雷达离线的回调函数,注册到守护进程中,串口掉线时调用
+ 119:modules/gyro/gyro.c ****  * @note huart2: the address of left lidar usart handle
+ 120:modules/gyro/gyro.c ****  *       huart4: the address of right lidar usart handle
+ 121:modules/gyro/gyro.c ****  */
+ 122:modules/gyro/gyro.c **** static void GYROLostCallback(void *id) // id is corresponding usart handle
+ 123:modules/gyro/gyro.c **** {
+  28              		.loc 1 123 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 123 1 is_stmt 0 view .LVU1
+  33 0000 08B5     		push	{r3, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 3, -8
+  37              		.cfi_offset 14, -4
+ 124:modules/gyro/gyro.c ****     // if (id == &huart2) // left lidar handle
+ 125:modules/gyro/gyro.c ****     // {
+ 126:modules/gyro/gyro.c ****     //     memset(gyro_data->lGYRO_distance, 0, sizeof(gyro_data->lGYRO_distance)); // 清空数据
+ 127:modules/gyro/gyro.c ****     //     USARTServiceInit(lGYRO_instance);                                      // 尝试重新�
+ 128:modules/gyro/gyro.c ****     //     LOGWARNING("[lidar] right lidar lost");
+ 129:modules/gyro/gyro.c ****     // }
+ 130:modules/gyro/gyro.c ****     // else
+ 131:modules/gyro/gyro.c ****     // {
+ 132:modules/gyro/gyro.c ****     //     memset(gyro_data->rGYRO_distance, 0, sizeof(gyro_data->rGYRO_distance)); // 清空数据
+ 133:modules/gyro/gyro.c ****     //     USARTServiceInit(rGYRO_instance);                                      // 尝试重新�
+ 134:modules/gyro/gyro.c ****     //     LOGWARNING("[lidar] left lidar lost");
+ 135:modules/gyro/gyro.c ****     // }
+ARM GAS  C:\Users\blue\AppData\Local\Temp\cc28MLP5.s 			page 4
+
+
+ 136:modules/gyro/gyro.c ****     USARTServiceInit(gyro_instance);
+  38              		.loc 1 136 5 is_stmt 1 view .LVU2
+  39 0002 024B     		ldr	r3, .L3
+  40 0004 1868     		ldr	r0, [r3]
+  41              	.LVL1:
+  42              		.loc 1 136 5 is_stmt 0 view .LVU3
+  43 0006 FFF7FEFF 		bl	USARTServiceInit
+  44              	.LVL2:
+ 137:modules/gyro/gyro.c **** }
+  45              		.loc 1 137 1 view .LVU4
+  46 000a 08BD     		pop	{r3, pc}
+  47              	.L4:
+  48              		.align	2
+  49              	.L3:
+  50 000c 00000000 		.word	.LANCHOR0
+  51              		.cfi_endproc
+  52              	.LFE148:
+  54              		.global	__aeabi_l2f
+  55              		.section	.text.DATA_Trans,"ax",%progbits
+  56              		.align	1
+  57              		.global	DATA_Trans
+  58              		.syntax unified
+  59              		.thumb
+  60              		.thumb_func
+  62              	DATA_Trans:
+  63              	.LVL3:
+  64              	.LFB144:
+  21:modules/gyro/gyro.c ****     long long transition_32;
+  65              		.loc 1 21 1 is_stmt 1 view -0
+  66              		.cfi_startproc
+  67              		@ args = 0, pretend = 0, frame = 0
+  68              		@ frame_needed = 0, uses_anonymous_args = 0
+  21:modules/gyro/gyro.c ****     long long transition_32;
+  69              		.loc 1 21 1 is_stmt 0 view .LVU6
+  70 0000 10B5     		push	{r4, lr}
+  71              	.LCFI1:
+  72              		.cfi_def_cfa_offset 8
+  73              		.cfi_offset 4, -8
+  74              		.cfi_offset 14, -4
+  75 0002 2DED028B 		vpush.64	{d8}
+  76              	.LCFI2:
+  77              		.cfi_def_cfa_offset 16
+  78              		.cfi_offset 80, -16
+  79              		.cfi_offset 81, -12
+  22:modules/gyro/gyro.c ****     float tmp = 0;
+  80              		.loc 1 22 5 is_stmt 1 view .LVU7
+  23:modules/gyro/gyro.c ****     int sign = 0;
+  81              		.loc 1 23 5 view .LVU8
+  82              	.LVL4:
+  24:modules/gyro/gyro.c ****     int exponent = 0;
+  83              		.loc 1 24 5 view .LVU9
+  25:modules/gyro/gyro.c ****     float mantissa = 0;
+  84              		.loc 1 25 5 view .LVU10
+  26:modules/gyro/gyro.c ****     transition_32 = 0;
+  85              		.loc 1 26 5 view .LVU11
+  27:modules/gyro/gyro.c ****     transition_32 |= Data_4 << 24;
+  86              		.loc 1 27 5 view .LVU12
+ARM GAS  C:\Users\blue\AppData\Local\Temp\cc28MLP5.s 			page 5
+
+
+  28:modules/gyro/gyro.c ****     transition_32 |= Data_3 << 16;
+  87              		.loc 1 28 5 view .LVU13
+  29:modules/gyro/gyro.c ****     transition_32 |= Data_2 << 8;
+  88              		.loc 1 29 5 view .LVU14
+  29:modules/gyro/gyro.c ****     transition_32 |= Data_2 << 8;
+  89              		.loc 1 29 29 is_stmt 0 view .LVU15
+  90 0006 1204     		lsls	r2, r2, #16
+  91              	.LVL5:
+  30:modules/gyro/gyro.c ****     transition_32 |= Data_1;
+  92              		.loc 1 30 5 is_stmt 1 view .LVU16
+  30:modules/gyro/gyro.c ****     transition_32 |= Data_1;
+  93              		.loc 1 30 19 is_stmt 0 view .LVU17
+  94 0008 42EA0362 		orr	r2, r2, r3, lsl #24
+  95              	.LVL6:
+  30:modules/gyro/gyro.c ****     transition_32 |= Data_1;
+  96              		.loc 1 30 19 view .LVU18
+  97 000c 42EA0121 		orr	r1, r2, r1, lsl #8
+  98              	.LVL7:
+  31:modules/gyro/gyro.c ****     sign = (transition_32 & 0x80000000) ? -1 : 1; // 符号位
+  99              		.loc 1 31 5 is_stmt 1 view .LVU19
+  31:modules/gyro/gyro.c ****     sign = (transition_32 & 0x80000000) ? -1 : 1; // 符号位
+ 100              		.loc 1 31 19 is_stmt 0 view .LVU20
+ 101 0010 0843     		orrs	r0, r0, r1
+ 102              	.LVL8:
+  32:modules/gyro/gyro.c ****     // 先右移操作，再按位与计算，出来结果是30到23位对应的e
+ 103              		.loc 1 32 5 is_stmt 1 view .LVU21
+  32:modules/gyro/gyro.c ****     // 先右移操作，再按位与计算，出来结果是30到23位对应的e
+ 104              		.loc 1 32 46 is_stmt 0 view .LVU22
+ 105 0012 0029     		cmp	r1, #0
+ 106 0014 29DA     		bge	.L7
+ 107 0016 DFED168A 		vldr.32	s17, .L9	@ int
+ 108              	.L6:
+ 109              	.LVL9:
+  34:modules/gyro/gyro.c ****     // 将22~0转化为10进制，得到对应的x系数
+ 110              		.loc 1 34 5 is_stmt 1 discriminator 4 view .LVU23
+  34:modules/gyro/gyro.c ****     // 将22~0转化为10进制，得到对应的x系数
+ 111              		.loc 1 34 39 is_stmt 0 discriminator 4 view .LVU24
+ 112 001a C0F3C753 		ubfx	r3, r0, #23, #8
+ 113              	.LVL10:
+  34:modules/gyro/gyro.c ****     // 将22~0转化为10进制，得到对应的x系数
+ 114              		.loc 1 34 47 discriminator 4 view .LVU25
+ 115 001e A3F17F04 		sub	r4, r3, #127
+ 116              	.LVL11:
+  36:modules/gyro/gyro.c ****     tmp = sign * mantissa * pow(2, exponent);
+ 117              		.loc 1 36 5 is_stmt 1 discriminator 4 view .LVU26
+  36:modules/gyro/gyro.c ****     tmp = sign * mantissa * pow(2, exponent);
+ 118              		.loc 1 36 21 is_stmt 0 discriminator 4 view .LVU27
+ 119 0022 C0F31600 		ubfx	r0, r0, #0, #23
+ 120              	.LVL12:
+  36:modules/gyro/gyro.c ****     tmp = sign * mantissa * pow(2, exponent);
+ 121              		.loc 1 36 21 discriminator 4 view .LVU28
+ 122 0026 0021     		movs	r1, #0
+ 123 0028 FFF7FEFF 		bl	__aeabi_l2f
+ 124              	.LVL13:
+ 125 002c 07EE100A 		vmov	s14, r0
+  36:modules/gyro/gyro.c ****     tmp = sign * mantissa * pow(2, exponent);
+ 126              		.loc 1 36 55 discriminator 4 view .LVU29
+ARM GAS  C:\Users\blue\AppData\Local\Temp\cc28MLP5.s 			page 6
+
+
+ 127 0030 DFED107A 		vldr.32	s15, .L9+4
+ 128 0034 87EE278A 		vdiv.f32	s16, s14, s15
+  36:modules/gyro/gyro.c ****     tmp = sign * mantissa * pow(2, exponent);
+ 129              		.loc 1 36 14 discriminator 4 view .LVU30
+ 130 0038 B7EE000A 		vmov.f32	s0, #1.0e+0
+ 131 003c 38EE000A 		vadd.f32	s0, s16, s0
+ 132              	.LVL14:
+  37:modules/gyro/gyro.c ****     return tmp;
+ 133              		.loc 1 37 5 is_stmt 1 discriminator 4 view .LVU31
+  37:modules/gyro/gyro.c ****     return tmp;
+ 134              		.loc 1 37 16 is_stmt 0 discriminator 4 view .LVU32
+ 135 0040 B8EEE88A 		vcvt.f32.s32	s16, s17
+ 136 0044 28EE008A 		vmul.f32	s16, s16, s0
+ 137 0048 B7EEC88A 		vcvt.f64.f32	d8, s16
+  37:modules/gyro/gyro.c ****     return tmp;
+ 138              		.loc 1 37 29 discriminator 4 view .LVU33
+ 139 004c 07EE904A 		vmov	s15, r4	@ int
+ 140 0050 B8EEE71B 		vcvt.f64.s32	d1, s15
+ 141 0054 B0EE000B 		vmov.f64	d0, #2.0e+0
+ 142              	.LVL15:
+  37:modules/gyro/gyro.c ****     return tmp;
+ 143              		.loc 1 37 29 discriminator 4 view .LVU34
+ 144 0058 FFF7FEFF 		bl	pow
+ 145              	.LVL16:
+  37:modules/gyro/gyro.c ****     return tmp;
+ 146              		.loc 1 37 27 discriminator 4 view .LVU35
+ 147 005c 28EE000B 		vmul.f64	d0, d8, d0
+ 148              	.LVL17:
+  38:modules/gyro/gyro.c **** }
+ 149              		.loc 1 38 5 is_stmt 1 discriminator 4 view .LVU36
+  39:modules/gyro/gyro.c **** 
+ 150              		.loc 1 39 1 is_stmt 0 discriminator 4 view .LVU37
+ 151 0060 B7EEC00B 		vcvt.f32.f64	s0, d0
+ 152              	.LVL18:
+  39:modules/gyro/gyro.c **** 
+ 153              		.loc 1 39 1 discriminator 4 view .LVU38
+ 154 0064 BDEC028B 		vldm	sp!, {d8}
+ 155              	.LCFI3:
+ 156              		.cfi_remember_state
+ 157              		.cfi_restore 80
+ 158              		.cfi_restore 81
+ 159              		.cfi_def_cfa_offset 8
+ 160 0068 10BD     		pop	{r4, pc}
+ 161              	.LVL19:
+ 162              	.L7:
+ 163              	.LCFI4:
+ 164              		.cfi_restore_state
+  32:modules/gyro/gyro.c ****     // 先右移操作，再按位与计算，出来结果是30到23位对应的e
+ 165              		.loc 1 32 46 view .LVU39
+ 166 006a DFED038A 		vldr.32	s17, .L9+8	@ int
+ 167 006e D4E7     		b	.L6
+ 168              	.L10:
+ 169              		.align	2
+ 170              	.L9:
+ 171 0070 FFFFFFFF 		.word	-1
+ 172 0074 FEFFFF4A 		.word	1258291198
+ 173 0078 01000000 		.word	1
+ARM GAS  C:\Users\blue\AppData\Local\Temp\cc28MLP5.s 			page 7
+
+
+ 174              		.cfi_endproc
+ 175              	.LFE144:
+ 177              		.section	.text.timestamp,"ax",%progbits
+ 178              		.align	1
+ 179              		.global	timestamp
+ 180              		.syntax unified
+ 181              		.thumb
+ 182              		.thumb_func
+ 184              	timestamp:
+ 185              	.LVL20:
+ 186              	.LFB145:
+  42:modules/gyro/gyro.c ****     uint32_t transition_32;
+ 187              		.loc 1 42 1 is_stmt 1 view -0
+ 188              		.cfi_startproc
+ 189              		@ args = 0, pretend = 0, frame = 0
+ 190              		@ frame_needed = 0, uses_anonymous_args = 0
+ 191              		@ link register save eliminated.
+  43:modules/gyro/gyro.c ****     transition_32 = 0;
+ 192              		.loc 1 43 5 view .LVU41
+  44:modules/gyro/gyro.c ****     transition_32 |= Data_4 << 24;
+ 193              		.loc 1 44 5 view .LVU42
+  45:modules/gyro/gyro.c ****     transition_32 |= Data_3 << 16;
+ 194              		.loc 1 45 5 view .LVU43
+  46:modules/gyro/gyro.c ****     transition_32 |= Data_2 << 8;
+ 195              		.loc 1 46 5 view .LVU44
+  46:modules/gyro/gyro.c ****     transition_32 |= Data_2 << 8;
+ 196              		.loc 1 46 29 is_stmt 0 view .LVU45
+ 197 0000 1204     		lsls	r2, r2, #16
+ 198              	.LVL21:
+  46:modules/gyro/gyro.c ****     transition_32 |= Data_2 << 8;
+ 199              		.loc 1 46 19 view .LVU46
+ 200 0002 42EA0362 		orr	r2, r2, r3, lsl #24
+ 201              	.LVL22:
+  47:modules/gyro/gyro.c ****     transition_32 |= Data_1;
+ 202              		.loc 1 47 5 is_stmt 1 view .LVU47
+  47:modules/gyro/gyro.c ****     transition_32 |= Data_1;
+ 203              		.loc 1 47 19 is_stmt 0 view .LVU48
+ 204 0006 42EA0122 		orr	r2, r2, r1, lsl #8
+ 205              	.LVL23:
+  48:modules/gyro/gyro.c ****     return transition_32;
+ 206              		.loc 1 48 5 is_stmt 1 view .LVU49
+  49:modules/gyro/gyro.c **** }
+ 207              		.loc 1 49 5 view .LVU50
+  50:modules/gyro/gyro.c **** 
+ 208              		.loc 1 50 1 is_stmt 0 view .LVU51
+ 209 000a 1043     		orrs	r0, r0, r2
+ 210              	.LVL24:
+  50:modules/gyro/gyro.c **** 
+ 211              		.loc 1 50 1 view .LVU52
+ 212 000c 0021     		movs	r1, #0
+ 213              	.LVL25:
+  50:modules/gyro/gyro.c **** 
+ 214              		.loc 1 50 1 view .LVU53
+ 215 000e 7047     		bx	lr
+ 216              		.cfi_endproc
+ 217              	.LFE145:
+ 219              		.section	.text.GYRO_buff_to_data,"ax",%progbits
+ARM GAS  C:\Users\blue\AppData\Local\Temp\cc28MLP5.s 			page 8
+
+
+ 220              		.align	1
+ 221              		.syntax unified
+ 222              		.thumb
+ 223              		.thumb_func
+ 225              	GYRO_buff_to_data:
+ 226              	.LVL26:
+ 227              	.LFB146:
+  58:modules/gyro/gyro.c ****     if ((gyro_buff[0] == FRAME_HEAD) && (gyro_buff[size - 1] == FRAME_END))
+ 228              		.loc 1 58 1 is_stmt 1 view -0
+ 229              		.cfi_startproc
+ 230              		@ args = 0, pretend = 0, frame = 0
+ 231              		@ frame_needed = 0, uses_anonymous_args = 0
+  58:modules/gyro/gyro.c ****     if ((gyro_buff[0] == FRAME_HEAD) && (gyro_buff[size - 1] == FRAME_END))
+ 232              		.loc 1 58 1 is_stmt 0 view .LVU55
+ 233 0000 38B5     		push	{r3, r4, r5, lr}
+ 234              	.LCFI5:
+ 235              		.cfi_def_cfa_offset 16
+ 236              		.cfi_offset 3, -16
+ 237              		.cfi_offset 4, -12
+ 238              		.cfi_offset 5, -8
+ 239              		.cfi_offset 14, -4
+  59:modules/gyro/gyro.c ****     {
+ 240              		.loc 1 59 5 is_stmt 1 view .LVU56
+  59:modules/gyro/gyro.c ****     {
+ 241              		.loc 1 59 19 is_stmt 0 view .LVU57
+ 242 0002 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+  59:modules/gyro/gyro.c ****     {
+ 243              		.loc 1 59 8 view .LVU58
+ 244 0004 FC2B     		cmp	r3, #252
+ 245 0006 00D0     		beq	.L15
+ 246              	.LVL27:
+ 247              	.L12:
+ 103:modules/gyro/gyro.c **** 
+ 248              		.loc 1 103 1 view .LVU59
+ 249 0008 38BD     		pop	{r3, r4, r5, pc}
+ 250              	.LVL28:
+ 251              	.L15:
+ 103:modules/gyro/gyro.c **** 
+ 252              		.loc 1 103 1 view .LVU60
+ 253 000a 0446     		mov	r4, r0
+  59:modules/gyro/gyro.c ****     {
+ 254              		.loc 1 59 51 discriminator 1 view .LVU61
+ 255 000c 0144     		add	r1, r1, r0
+ 256              	.LVL29:
+  59:modules/gyro/gyro.c ****     {
+ 257              		.loc 1 59 51 discriminator 1 view .LVU62
+ 258 000e 11F8013C 		ldrb	r3, [r1, #-1]	@ zero_extendqisi2
+  59:modules/gyro/gyro.c ****     {
+ 259              		.loc 1 59 38 discriminator 1 view .LVU63
+ 260 0012 FD2B     		cmp	r3, #253
+ 261 0014 F8D1     		bne	.L12
+  80:modules/gyro/gyro.c ****         {
+ 262              		.loc 1 80 9 is_stmt 1 view .LVU64
+  80:modules/gyro/gyro.c ****         {
+ 263              		.loc 1 80 23 is_stmt 0 view .LVU65
+ 264 0016 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+  80:modules/gyro/gyro.c ****         {
+ARM GAS  C:\Users\blue\AppData\Local\Temp\cc28MLP5.s 			page 9
+
+
+ 265              		.loc 1 80 12 view .LVU66
+ 266 0018 412B     		cmp	r3, #65
+ 267 001a F5D1     		bne	.L12
+  80:modules/gyro/gyro.c ****         {
+ 268              		.loc 1 80 54 discriminator 1 view .LVU67
+ 269 001c 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
+  80:modules/gyro/gyro.c ****         {
+ 270              		.loc 1 80 41 discriminator 1 view .LVU68
+ 271 001e 302B     		cmp	r3, #48
+ 272 0020 F2D1     		bne	.L12
+  82:modules/gyro/gyro.c ****             AHRSData_Packet.PitchSpeed = DATA_Trans(gyro_buff[11], gyro_buff[12], gyro_buff[13], gy
+ 273              		.loc 1 82 13 is_stmt 1 view .LVU69
+  82:modules/gyro/gyro.c ****             AHRSData_Packet.PitchSpeed = DATA_Trans(gyro_buff[11], gyro_buff[12], gyro_buff[13], gy
+ 274              		.loc 1 82 41 is_stmt 0 view .LVU70
+ 275 0022 837A     		ldrb	r3, [r0, #10]	@ zero_extendqisi2
+ 276 0024 427A     		ldrb	r2, [r0, #9]	@ zero_extendqisi2
+ 277 0026 017A     		ldrb	r1, [r0, #8]	@ zero_extendqisi2
+ 278 0028 C079     		ldrb	r0, [r0, #7]	@ zero_extendqisi2
+ 279              	.LVL30:
+  82:modules/gyro/gyro.c ****             AHRSData_Packet.PitchSpeed = DATA_Trans(gyro_buff[11], gyro_buff[12], gyro_buff[13], gy
+ 280              		.loc 1 82 41 view .LVU71
+ 281 002a FFF7FEFF 		bl	DATA_Trans
+ 282              	.LVL31:
+  82:modules/gyro/gyro.c ****             AHRSData_Packet.PitchSpeed = DATA_Trans(gyro_buff[11], gyro_buff[12], gyro_buff[13], gy
+ 283              		.loc 1 82 39 view .LVU72
+ 284 002e 5E4D     		ldr	r5, .L16+16
+ 285 0030 85ED000A 		vstr.32	s0, [r5]
+  83:modules/gyro/gyro.c ****             AHRSData_Packet.HeadingSpeed = DATA_Trans(gyro_buff[15], gyro_buff[16], gyro_buff[17], 
+ 286              		.loc 1 83 13 is_stmt 1 view .LVU73
+  83:modules/gyro/gyro.c ****             AHRSData_Packet.HeadingSpeed = DATA_Trans(gyro_buff[15], gyro_buff[16], gyro_buff[17], 
+ 287              		.loc 1 83 42 is_stmt 0 view .LVU74
+ 288 0034 A37B     		ldrb	r3, [r4, #14]	@ zero_extendqisi2
+ 289 0036 627B     		ldrb	r2, [r4, #13]	@ zero_extendqisi2
+ 290 0038 217B     		ldrb	r1, [r4, #12]	@ zero_extendqisi2
+ 291 003a E07A     		ldrb	r0, [r4, #11]	@ zero_extendqisi2
+ 292 003c FFF7FEFF 		bl	DATA_Trans
+ 293              	.LVL32:
+  83:modules/gyro/gyro.c ****             AHRSData_Packet.HeadingSpeed = DATA_Trans(gyro_buff[15], gyro_buff[16], gyro_buff[17], 
+ 294              		.loc 1 83 40 view .LVU75
+ 295 0040 85ED010A 		vstr.32	s0, [r5, #4]
+  84:modules/gyro/gyro.c ****             AHRSData_Packet.Roll = DATA_Trans(gyro_buff[19], gyro_buff[20], gyro_buff[21], gyro_buf
+ 296              		.loc 1 84 13 is_stmt 1 view .LVU76
+  84:modules/gyro/gyro.c ****             AHRSData_Packet.Roll = DATA_Trans(gyro_buff[19], gyro_buff[20], gyro_buff[21], gyro_buf
+ 297              		.loc 1 84 44 is_stmt 0 view .LVU77
+ 298 0044 A37C     		ldrb	r3, [r4, #18]	@ zero_extendqisi2
+ 299 0046 627C     		ldrb	r2, [r4, #17]	@ zero_extendqisi2
+ 300 0048 217C     		ldrb	r1, [r4, #16]	@ zero_extendqisi2
+ 301 004a E07B     		ldrb	r0, [r4, #15]	@ zero_extendqisi2
+ 302 004c FFF7FEFF 		bl	DATA_Trans
+ 303              	.LVL33:
+  84:modules/gyro/gyro.c ****             AHRSData_Packet.Roll = DATA_Trans(gyro_buff[19], gyro_buff[20], gyro_buff[21], gyro_buf
+ 304              		.loc 1 84 42 view .LVU78
+ 305 0050 85ED020A 		vstr.32	s0, [r5, #8]
+  85:modules/gyro/gyro.c ****             AHRSData_Packet.Pitch = DATA_Trans(gyro_buff[23], gyro_buff[24], gyro_buff[25], gyro_bu
+ 306              		.loc 1 85 13 is_stmt 1 view .LVU79
+  85:modules/gyro/gyro.c ****             AHRSData_Packet.Pitch = DATA_Trans(gyro_buff[23], gyro_buff[24], gyro_buff[25], gyro_bu
+ 307              		.loc 1 85 36 is_stmt 0 view .LVU80
+ARM GAS  C:\Users\blue\AppData\Local\Temp\cc28MLP5.s 			page 10
+
+
+ 308 0054 A37D     		ldrb	r3, [r4, #22]	@ zero_extendqisi2
+ 309 0056 627D     		ldrb	r2, [r4, #21]	@ zero_extendqisi2
+ 310 0058 217D     		ldrb	r1, [r4, #20]	@ zero_extendqisi2
+ 311 005a E07C     		ldrb	r0, [r4, #19]	@ zero_extendqisi2
+ 312 005c FFF7FEFF 		bl	DATA_Trans
+ 313              	.LVL34:
+  85:modules/gyro/gyro.c ****             AHRSData_Packet.Pitch = DATA_Trans(gyro_buff[23], gyro_buff[24], gyro_buff[25], gyro_bu
+ 314              		.loc 1 85 34 view .LVU81
+ 315 0060 85ED030A 		vstr.32	s0, [r5, #12]
+  86:modules/gyro/gyro.c ****             AHRSData_Packet.Heading = DATA_Trans(gyro_buff[27], gyro_buff[28], gyro_buff[29], gyro_
+ 316              		.loc 1 86 13 is_stmt 1 view .LVU82
+  86:modules/gyro/gyro.c ****             AHRSData_Packet.Heading = DATA_Trans(gyro_buff[27], gyro_buff[28], gyro_buff[29], gyro_
+ 317              		.loc 1 86 37 is_stmt 0 view .LVU83
+ 318 0064 A37E     		ldrb	r3, [r4, #26]	@ zero_extendqisi2
+ 319 0066 627E     		ldrb	r2, [r4, #25]	@ zero_extendqisi2
+ 320 0068 217E     		ldrb	r1, [r4, #24]	@ zero_extendqisi2
+ 321 006a E07D     		ldrb	r0, [r4, #23]	@ zero_extendqisi2
+ 322 006c FFF7FEFF 		bl	DATA_Trans
+ 323              	.LVL35:
+  86:modules/gyro/gyro.c ****             AHRSData_Packet.Heading = DATA_Trans(gyro_buff[27], gyro_buff[28], gyro_buff[29], gyro_
+ 324              		.loc 1 86 35 view .LVU84
+ 325 0070 85ED040A 		vstr.32	s0, [r5, #16]
+  87:modules/gyro/gyro.c ****             AHRSData_Packet.Qw = DATA_Trans(gyro_buff[31], gyro_buff[32], gyro_buff[33], gyro_buff[
+ 326              		.loc 1 87 13 is_stmt 1 view .LVU85
+  87:modules/gyro/gyro.c ****             AHRSData_Packet.Qw = DATA_Trans(gyro_buff[31], gyro_buff[32], gyro_buff[33], gyro_buff[
+ 327              		.loc 1 87 39 is_stmt 0 view .LVU86
+ 328 0074 A37F     		ldrb	r3, [r4, #30]	@ zero_extendqisi2
+ 329 0076 627F     		ldrb	r2, [r4, #29]	@ zero_extendqisi2
+ 330 0078 217F     		ldrb	r1, [r4, #28]	@ zero_extendqisi2
+ 331 007a E07E     		ldrb	r0, [r4, #27]	@ zero_extendqisi2
+ 332 007c FFF7FEFF 		bl	DATA_Trans
+ 333              	.LVL36:
+  87:modules/gyro/gyro.c ****             AHRSData_Packet.Qw = DATA_Trans(gyro_buff[31], gyro_buff[32], gyro_buff[33], gyro_buff[
+ 334              		.loc 1 87 37 view .LVU87
+ 335 0080 85ED050A 		vstr.32	s0, [r5, #20]
+  88:modules/gyro/gyro.c ****             AHRSData_Packet.Qx = DATA_Trans(gyro_buff[35], gyro_buff[36], gyro_buff[37], gyro_buff[
+ 336              		.loc 1 88 13 is_stmt 1 view .LVU88
+  88:modules/gyro/gyro.c ****             AHRSData_Packet.Qx = DATA_Trans(gyro_buff[35], gyro_buff[36], gyro_buff[37], gyro_buff[
+ 337              		.loc 1 88 34 is_stmt 0 view .LVU89
+ 338 0084 94F82230 		ldrb	r3, [r4, #34]	@ zero_extendqisi2
+ 339 0088 94F82120 		ldrb	r2, [r4, #33]	@ zero_extendqisi2
+ 340 008c 94F82010 		ldrb	r1, [r4, #32]	@ zero_extendqisi2
+ 341 0090 E07F     		ldrb	r0, [r4, #31]	@ zero_extendqisi2
+ 342 0092 FFF7FEFF 		bl	DATA_Trans
+ 343              	.LVL37:
+  88:modules/gyro/gyro.c ****             AHRSData_Packet.Qx = DATA_Trans(gyro_buff[35], gyro_buff[36], gyro_buff[37], gyro_buff[
+ 344              		.loc 1 88 32 view .LVU90
+ 345 0096 85ED060A 		vstr.32	s0, [r5, #24]
+  89:modules/gyro/gyro.c ****             AHRSData_Packet.Qy = DATA_Trans(gyro_buff[39], gyro_buff[40], gyro_buff[41], gyro_buff[
+ 346              		.loc 1 89 13 is_stmt 1 view .LVU91
+  89:modules/gyro/gyro.c ****             AHRSData_Packet.Qy = DATA_Trans(gyro_buff[39], gyro_buff[40], gyro_buff[41], gyro_buff[
+ 347              		.loc 1 89 34 is_stmt 0 view .LVU92
+ 348 009a 94F82630 		ldrb	r3, [r4, #38]	@ zero_extendqisi2
+ 349 009e 94F82520 		ldrb	r2, [r4, #37]	@ zero_extendqisi2
+ 350 00a2 94F82410 		ldrb	r1, [r4, #36]	@ zero_extendqisi2
+ 351 00a6 94F82300 		ldrb	r0, [r4, #35]	@ zero_extendqisi2
+ 352 00aa FFF7FEFF 		bl	DATA_Trans
+ARM GAS  C:\Users\blue\AppData\Local\Temp\cc28MLP5.s 			page 11
+
+
+ 353              	.LVL38:
+  89:modules/gyro/gyro.c ****             AHRSData_Packet.Qy = DATA_Trans(gyro_buff[39], gyro_buff[40], gyro_buff[41], gyro_buff[
+ 354              		.loc 1 89 32 view .LVU93
+ 355 00ae 85ED070A 		vstr.32	s0, [r5, #28]
+  90:modules/gyro/gyro.c ****             AHRSData_Packet.Qz = DATA_Trans(gyro_buff[43], gyro_buff[44], gyro_buff[45], gyro_buff[
+ 356              		.loc 1 90 13 is_stmt 1 view .LVU94
+  90:modules/gyro/gyro.c ****             AHRSData_Packet.Qz = DATA_Trans(gyro_buff[43], gyro_buff[44], gyro_buff[45], gyro_buff[
+ 357              		.loc 1 90 34 is_stmt 0 view .LVU95
+ 358 00b2 94F82A30 		ldrb	r3, [r4, #42]	@ zero_extendqisi2
+ 359 00b6 94F82920 		ldrb	r2, [r4, #41]	@ zero_extendqisi2
+ 360 00ba 94F82810 		ldrb	r1, [r4, #40]	@ zero_extendqisi2
+ 361 00be 94F82700 		ldrb	r0, [r4, #39]	@ zero_extendqisi2
+ 362 00c2 FFF7FEFF 		bl	DATA_Trans
+ 363              	.LVL39:
+  90:modules/gyro/gyro.c ****             AHRSData_Packet.Qz = DATA_Trans(gyro_buff[43], gyro_buff[44], gyro_buff[45], gyro_buff[
+ 364              		.loc 1 90 32 view .LVU96
+ 365 00c6 85ED080A 		vstr.32	s0, [r5, #32]
+  91:modules/gyro/gyro.c ****             AHRSData_Packet.Timestamp = timestamp(gyro_buff[47], gyro_buff[48], gyro_buff[49], gyro
+ 366              		.loc 1 91 13 is_stmt 1 view .LVU97
+  91:modules/gyro/gyro.c ****             AHRSData_Packet.Timestamp = timestamp(gyro_buff[47], gyro_buff[48], gyro_buff[49], gyro
+ 367              		.loc 1 91 34 is_stmt 0 view .LVU98
+ 368 00ca 94F82E30 		ldrb	r3, [r4, #46]	@ zero_extendqisi2
+ 369 00ce 94F82D20 		ldrb	r2, [r4, #45]	@ zero_extendqisi2
+ 370 00d2 94F82C10 		ldrb	r1, [r4, #44]	@ zero_extendqisi2
+ 371 00d6 94F82B00 		ldrb	r0, [r4, #43]	@ zero_extendqisi2
+ 372 00da FFF7FEFF 		bl	DATA_Trans
+ 373              	.LVL40:
+  91:modules/gyro/gyro.c ****             AHRSData_Packet.Timestamp = timestamp(gyro_buff[47], gyro_buff[48], gyro_buff[49], gyro
+ 374              		.loc 1 91 32 view .LVU99
+ 375 00de 85ED090A 		vstr.32	s0, [r5, #36]
+  92:modules/gyro/gyro.c ****             gyro_data->Pitch = AHRSData_Packet.Pitch * 180.0 / PI;
+ 376              		.loc 1 92 13 is_stmt 1 view .LVU100
+  92:modules/gyro/gyro.c ****             gyro_data->Pitch = AHRSData_Packet.Pitch * 180.0 / PI;
+ 377              		.loc 1 92 41 is_stmt 0 view .LVU101
+ 378 00e2 94F83230 		ldrb	r3, [r4, #50]	@ zero_extendqisi2
+ 379 00e6 94F83120 		ldrb	r2, [r4, #49]	@ zero_extendqisi2
+ 380 00ea 94F83010 		ldrb	r1, [r4, #48]	@ zero_extendqisi2
+ 381 00ee 94F82F00 		ldrb	r0, [r4, #47]	@ zero_extendqisi2
+ 382 00f2 FFF7FEFF 		bl	timestamp
+ 383              	.LVL41:
+  92:modules/gyro/gyro.c ****             gyro_data->Pitch = AHRSData_Packet.Pitch * 180.0 / PI;
+ 384              		.loc 1 92 39 view .LVU102
+ 385 00f6 A862     		str	r0, [r5, #40]
+  93:modules/gyro/gyro.c ****             gyro_data->PitchSpeed = AHRSData_Packet.PitchSpeed * 180.0 / PI;
+ 386              		.loc 1 93 13 is_stmt 1 view .LVU103
+  93:modules/gyro/gyro.c ****             gyro_data->PitchSpeed = AHRSData_Packet.PitchSpeed * 180.0 / PI;
+ 387              		.loc 1 93 47 is_stmt 0 view .LVU104
+ 388 00f8 95ED045A 		vldr.32	s10, [r5, #16]
+ 389 00fc B7EEC55A 		vcvt.f64.f32	d5, s10
+  93:modules/gyro/gyro.c ****             gyro_data->PitchSpeed = AHRSData_Packet.PitchSpeed * 180.0 / PI;
+ 390              		.loc 1 93 54 view .LVU105
+ 391 0100 9FED256B 		vldr.64	d6, .L16
+ 392 0104 25EE065B 		vmul.f64	d5, d5, d6
+  93:modules/gyro/gyro.c ****             gyro_data->PitchSpeed = AHRSData_Packet.PitchSpeed * 180.0 / PI;
+ 393              		.loc 1 93 62 view .LVU106
+ 394 0108 9FED257B 		vldr.64	d7, .L16+8
+ 395 010c 85EE074B 		vdiv.f64	d4, d5, d7
+ARM GAS  C:\Users\blue\AppData\Local\Temp\cc28MLP5.s 			page 12
+
+
+ 396 0110 B7EEC44B 		vcvt.f32.f64	s8, d4
+  93:modules/gyro/gyro.c ****             gyro_data->PitchSpeed = AHRSData_Packet.PitchSpeed * 180.0 / PI;
+ 397              		.loc 1 93 30 view .LVU107
+ 398 0114 0023     		movs	r3, #0
+ 399 0116 83ED044A 		vstr.32	s8, [r3, #16]
+  94:modules/gyro/gyro.c ****             gyro_data->Roll = AHRSData_Packet.Roll * 180.0 / PI;
+ 400              		.loc 1 94 13 is_stmt 1 view .LVU108
+  94:modules/gyro/gyro.c ****             gyro_data->Roll = AHRSData_Packet.Roll * 180.0 / PI;
+ 401              		.loc 1 94 52 is_stmt 0 view .LVU109
+ 402 011a 95ED015A 		vldr.32	s10, [r5, #4]
+ 403 011e B7EEC55A 		vcvt.f64.f32	d5, s10
+  94:modules/gyro/gyro.c ****             gyro_data->Roll = AHRSData_Packet.Roll * 180.0 / PI;
+ 404              		.loc 1 94 64 view .LVU110
+ 405 0122 25EE065B 		vmul.f64	d5, d5, d6
+  94:modules/gyro/gyro.c ****             gyro_data->Roll = AHRSData_Packet.Roll * 180.0 / PI;
+ 406              		.loc 1 94 72 view .LVU111
+ 407 0126 85EE074B 		vdiv.f64	d4, d5, d7
+ 408 012a B7EEC44B 		vcvt.f32.f64	s8, d4
+  94:modules/gyro/gyro.c ****             gyro_data->Roll = AHRSData_Packet.Roll * 180.0 / PI;
+ 409              		.loc 1 94 35 view .LVU112
+ 410 012e 83ED014A 		vstr.32	s8, [r3, #4]
+  95:modules/gyro/gyro.c ****             gyro_data->RollSpeed = AHRSData_Packet.RollSpeed * 180.0 / PI;
+ 411              		.loc 1 95 13 is_stmt 1 view .LVU113
+  95:modules/gyro/gyro.c ****             gyro_data->RollSpeed = AHRSData_Packet.RollSpeed * 180.0 / PI;
+ 412              		.loc 1 95 46 is_stmt 0 view .LVU114
+ 413 0132 95ED035A 		vldr.32	s10, [r5, #12]
+ 414 0136 B7EEC55A 		vcvt.f64.f32	d5, s10
+  95:modules/gyro/gyro.c ****             gyro_data->RollSpeed = AHRSData_Packet.RollSpeed * 180.0 / PI;
+ 415              		.loc 1 95 52 view .LVU115
+ 416 013a 25EE065B 		vmul.f64	d5, d5, d6
+  95:modules/gyro/gyro.c ****             gyro_data->RollSpeed = AHRSData_Packet.RollSpeed * 180.0 / PI;
+ 417              		.loc 1 95 60 view .LVU116
+ 418 013e 85EE074B 		vdiv.f64	d4, d5, d7
+ 419 0142 B7EEC44B 		vcvt.f32.f64	s8, d4
+  95:modules/gyro/gyro.c ****             gyro_data->RollSpeed = AHRSData_Packet.RollSpeed * 180.0 / PI;
+ 420              		.loc 1 95 29 view .LVU117
+ 421 0146 83ED034A 		vstr.32	s8, [r3, #12]
+  96:modules/gyro/gyro.c ****             gyro_data->Yaw = AHRSData_Packet.Heading * 180.0 / PI;
+ 422              		.loc 1 96 13 is_stmt 1 view .LVU118
+  96:modules/gyro/gyro.c ****             gyro_data->Yaw = AHRSData_Packet.Heading * 180.0 / PI;
+ 423              		.loc 1 96 51 is_stmt 0 view .LVU119
+ 424 014a 95ED005A 		vldr.32	s10, [r5]
+ 425 014e B7EEC55A 		vcvt.f64.f32	d5, s10
+  96:modules/gyro/gyro.c ****             gyro_data->Yaw = AHRSData_Packet.Heading * 180.0 / PI;
+ 426              		.loc 1 96 62 view .LVU120
+ 427 0152 25EE065B 		vmul.f64	d5, d5, d6
+  96:modules/gyro/gyro.c ****             gyro_data->Yaw = AHRSData_Packet.Heading * 180.0 / PI;
+ 428              		.loc 1 96 70 view .LVU121
+ 429 0156 85EE074B 		vdiv.f64	d4, d5, d7
+ 430 015a B7EEC44B 		vcvt.f32.f64	s8, d4
+  96:modules/gyro/gyro.c ****             gyro_data->Yaw = AHRSData_Packet.Heading * 180.0 / PI;
+ 431              		.loc 1 96 34 view .LVU122
+ 432 015e 83ED004A 		vstr.32	s8, [r3]
+  97:modules/gyro/gyro.c ****             gyro_data->YawSpeed = AHRSData_Packet.HeadingSpeed * 180.0 / PI;
+ 433              		.loc 1 97 13 is_stmt 1 view .LVU123
+  97:modules/gyro/gyro.c ****             gyro_data->YawSpeed = AHRSData_Packet.HeadingSpeed * 180.0 / PI;
+ 434              		.loc 1 97 45 is_stmt 0 view .LVU124
+ARM GAS  C:\Users\blue\AppData\Local\Temp\cc28MLP5.s 			page 13
+
+
+ 435 0162 95ED055A 		vldr.32	s10, [r5, #20]
+ 436 0166 B7EEC55A 		vcvt.f64.f32	d5, s10
+  97:modules/gyro/gyro.c ****             gyro_data->YawSpeed = AHRSData_Packet.HeadingSpeed * 180.0 / PI;
+ 437              		.loc 1 97 54 view .LVU125
+ 438 016a 25EE065B 		vmul.f64	d5, d5, d6
+  97:modules/gyro/gyro.c ****             gyro_data->YawSpeed = AHRSData_Packet.HeadingSpeed * 180.0 / PI;
+ 439              		.loc 1 97 62 view .LVU126
+ 440 016e 85EE074B 		vdiv.f64	d4, d5, d7
+ 441 0172 B7EEC44B 		vcvt.f32.f64	s8, d4
+  97:modules/gyro/gyro.c ****             gyro_data->YawSpeed = AHRSData_Packet.HeadingSpeed * 180.0 / PI;
+ 442              		.loc 1 97 28 view .LVU127
+ 443 0176 83ED054A 		vstr.32	s8, [r3, #20]
+  98:modules/gyro/gyro.c ****         }
+ 444              		.loc 1 98 13 is_stmt 1 view .LVU128
+  98:modules/gyro/gyro.c ****         }
+ 445              		.loc 1 98 50 is_stmt 0 view .LVU129
+ 446 017a 95ED025A 		vldr.32	s10, [r5, #8]
+ 447 017e B7EEC55A 		vcvt.f64.f32	d5, s10
+  98:modules/gyro/gyro.c ****         }
+ 448              		.loc 1 98 64 view .LVU130
+ 449 0182 25EE066B 		vmul.f64	d6, d5, d6
+  98:modules/gyro/gyro.c ****         }
+ 450              		.loc 1 98 72 view .LVU131
+ 451 0186 86EE075B 		vdiv.f64	d5, d6, d7
+ 452 018a B7EEC55B 		vcvt.f32.f64	s10, d5
+  98:modules/gyro/gyro.c ****         }
+ 453              		.loc 1 98 33 view .LVU132
+ 454 018e 83ED025A 		vstr.32	s10, [r3, #8]
+ 103:modules/gyro/gyro.c **** 
+ 455              		.loc 1 103 1 view .LVU133
+ 456 0192 39E7     		b	.L12
+ 457              	.L17:
+ 458 0194 AFF30080 		.align	3
+ 459              	.L16:
+ 460 0198 00000000 		.word	0
+ 461 019c 00806640 		.word	1080459264
+ 462 01a0 00000060 		.word	1610612736
+ 463 01a4 FB210940 		.word	1074340347
+ 464 01a8 00000000 		.word	.LANCHOR1
+ 465              		.cfi_endproc
+ 466              	.LFE146:
+ 468              		.section	.text.GYRORxCallback,"ax",%progbits
+ 469              		.align	1
+ 470              		.syntax unified
+ 471              		.thumb
+ 472              		.thumb_func
+ 474              	GYRORxCallback:
+ 475              	.LVL42:
+ 476              	.LFB147:
+ 112:modules/gyro/gyro.c ****     DaemonReload(GYRO_daemon_instance); // 先喂狗
+ 477              		.loc 1 112 1 is_stmt 1 view -0
+ 478              		.cfi_startproc
+ 479              		@ args = 0, pretend = 0, frame = 0
+ 480              		@ frame_needed = 0, uses_anonymous_args = 0
+ 112:modules/gyro/gyro.c ****     DaemonReload(GYRO_daemon_instance); // 先喂狗
+ 481              		.loc 1 112 1 is_stmt 0 view .LVU135
+ 482 0000 10B5     		push	{r4, lr}
+ARM GAS  C:\Users\blue\AppData\Local\Temp\cc28MLP5.s 			page 14
+
+
+ 483              	.LCFI6:
+ 484              		.cfi_def_cfa_offset 8
+ 485              		.cfi_offset 4, -8
+ 486              		.cfi_offset 14, -4
+ 487 0002 0C46     		mov	r4, r1
+ 113:modules/gyro/gyro.c ****     GYRO_buff_to_data(gyro_instance->recv_buff, size);
+ 488              		.loc 1 113 5 is_stmt 1 view .LVU136
+ 489 0004 054B     		ldr	r3, .L20
+ 490 0006 1868     		ldr	r0, [r3]
+ 491              	.LVL43:
+ 113:modules/gyro/gyro.c ****     GYRO_buff_to_data(gyro_instance->recv_buff, size);
+ 492              		.loc 1 113 5 is_stmt 0 view .LVU137
+ 493 0008 FFF7FEFF 		bl	DaemonReload
+ 494              	.LVL44:
+ 114:modules/gyro/gyro.c **** }
+ 495              		.loc 1 114 5 is_stmt 1 view .LVU138
+ 114:modules/gyro/gyro.c **** }
+ 496              		.loc 1 114 36 is_stmt 0 view .LVU139
+ 497 000c 044B     		ldr	r3, .L20+4
+ 498 000e 1B68     		ldr	r3, [r3]
+ 114:modules/gyro/gyro.c **** }
+ 499              		.loc 1 114 5 view .LVU140
+ 500 0010 2146     		mov	r1, r4
+ 501 0012 1868     		ldr	r0, [r3]
+ 502 0014 FFF7FEFF 		bl	GYRO_buff_to_data
+ 503              	.LVL45:
+ 115:modules/gyro/gyro.c **** 
+ 504              		.loc 1 115 1 view .LVU141
+ 505 0018 10BD     		pop	{r4, pc}
+ 506              	.L21:
+ 507 001a 00BF     		.align	2
+ 508              	.L20:
+ 509 001c 00000000 		.word	.LANCHOR2
+ 510 0020 00000000 		.word	.LANCHOR0
+ 511              		.cfi_endproc
+ 512              	.LFE147:
+ 514              		.section	.text.Gyro_Init,"ax",%progbits
+ 515              		.align	1
+ 516              		.global	Gyro_Init
+ 517              		.syntax unified
+ 518              		.thumb
+ 519              		.thumb_func
+ 521              	Gyro_Init:
+ 522              	.LVL46:
+ 523              	.LFB149:
+ 138:modules/gyro/gyro.c **** 
+ 139:modules/gyro/gyro.c **** GYRO_data_t *Gyro_Init(UART_HandleTypeDef *gyro_usart_handle)
+ 140:modules/gyro/gyro.c **** {
+ 524              		.loc 1 140 1 is_stmt 1 view -0
+ 525              		.cfi_startproc
+ 526              		@ args = 0, pretend = 0, frame = 24
+ 527              		@ frame_needed = 0, uses_anonymous_args = 0
+ 528              		.loc 1 140 1 is_stmt 0 view .LVU143
+ 529 0000 10B5     		push	{r4, lr}
+ 530              	.LCFI7:
+ 531              		.cfi_def_cfa_offset 8
+ 532              		.cfi_offset 4, -8
+ARM GAS  C:\Users\blue\AppData\Local\Temp\cc28MLP5.s 			page 15
+
+
+ 533              		.cfi_offset 14, -4
+ 534 0002 86B0     		sub	sp, sp, #24
+ 535              	.LCFI8:
+ 536              		.cfi_def_cfa_offset 32
+ 537 0004 0446     		mov	r4, r0
+ 141:modules/gyro/gyro.c ****     USART_Init_Config_s conf;
+ 538              		.loc 1 141 5 is_stmt 1 view .LVU144
+ 142:modules/gyro/gyro.c ****     conf.module_callback = GYRORxCallback;
+ 539              		.loc 1 142 5 view .LVU145
+ 540              		.loc 1 142 26 is_stmt 0 view .LVU146
+ 541 0006 0C4B     		ldr	r3, .L24
+ 542 0008 0593     		str	r3, [sp, #20]
+ 143:modules/gyro/gyro.c ****     conf.usart_handle = gyro_usart_handle;
+ 543              		.loc 1 143 5 is_stmt 1 view .LVU147
+ 544              		.loc 1 143 23 is_stmt 0 view .LVU148
+ 545 000a 0490     		str	r0, [sp, #16]
+ 144:modules/gyro/gyro.c ****     conf.recv_buff_size = GYRO_FRAME_SIZE;
+ 546              		.loc 1 144 5 is_stmt 1 view .LVU149
+ 547              		.loc 1 144 25 is_stmt 0 view .LVU150
+ 548 000c 5023     		movs	r3, #80
+ 549 000e 8DF80C30 		strb	r3, [sp, #12]
+ 145:modules/gyro/gyro.c ****     gyro_instance = USARTRegister(&conf);
+ 550              		.loc 1 145 5 is_stmt 1 view .LVU151
+ 551              		.loc 1 145 21 is_stmt 0 view .LVU152
+ 552 0012 03A8     		add	r0, sp, #12
+ 553              	.LVL47:
+ 554              		.loc 1 145 21 view .LVU153
+ 555 0014 FFF7FEFF 		bl	USARTRegister
+ 556              	.LVL48:
+ 557              		.loc 1 145 19 view .LVU154
+ 558 0018 084B     		ldr	r3, .L24+4
+ 559 001a 1860     		str	r0, [r3]
+ 146:modules/gyro/gyro.c **** 
+ 147:modules/gyro/gyro.c ****     Daemon_Init_Config_s daemon_conf = {
+ 560              		.loc 1 147 5 is_stmt 1 view .LVU155
+ 561              		.loc 1 147 26 is_stmt 0 view .LVU156
+ 562 001c 0223     		movs	r3, #2
+ 563 001e ADF80030 		strh	r3, [sp]	@ movhi
+ 564 0022 074B     		ldr	r3, .L24+8
+ 565 0024 0193     		str	r3, [sp, #4]
+ 566 0026 0294     		str	r4, [sp, #8]
+ 148:modules/gyro/gyro.c ****         .reload_count = 2, // 看门狗待了解_ 20ms没收到消息  输出频率默认为100Hz->
+ 149:modules/gyro/gyro.c ****         .callback = GYROLostCallback,
+ 150:modules/gyro/gyro.c ****         .owner_id = gyro_usart_handle,
+ 151:modules/gyro/gyro.c ****     };
+ 152:modules/gyro/gyro.c ****     GYRO_daemon_instance = DaemonRegister(&daemon_conf);
+ 567              		.loc 1 152 5 is_stmt 1 view .LVU157
+ 568              		.loc 1 152 28 is_stmt 0 view .LVU158
+ 569 0028 6846     		mov	r0, sp
+ 570 002a FFF7FEFF 		bl	DaemonRegister
+ 571              	.LVL49:
+ 572              		.loc 1 152 26 view .LVU159
+ 573 002e 054B     		ldr	r3, .L24+12
+ 574 0030 1860     		str	r0, [r3]
+ 153:modules/gyro/gyro.c ****     return gyro_data;
+ 575              		.loc 1 153 5 is_stmt 1 view .LVU160
+ 154:modules/gyro/gyro.c **** }
+ARM GAS  C:\Users\blue\AppData\Local\Temp\cc28MLP5.s 			page 16
+
+
+ 576              		.loc 1 154 1 is_stmt 0 view .LVU161
+ 577 0032 0020     		movs	r0, #0
+ 578 0034 06B0     		add	sp, sp, #24
+ 579              	.LCFI9:
+ 580              		.cfi_def_cfa_offset 8
+ 581              		@ sp needed
+ 582 0036 10BD     		pop	{r4, pc}
+ 583              	.LVL50:
+ 584              	.L25:
+ 585              		.loc 1 154 1 view .LVU162
+ 586              		.align	2
+ 587              	.L24:
+ 588 0038 00000000 		.word	GYRORxCallback
+ 589 003c 00000000 		.word	.LANCHOR0
+ 590 0040 00000000 		.word	GYROLostCallback
+ 591 0044 00000000 		.word	.LANCHOR2
+ 592              		.cfi_endproc
+ 593              	.LFE149:
+ 595              		.section	.bss.AHRSData_Packet,"aw",%nobits
+ 596              		.align	2
+ 597              		.set	.LANCHOR1,. + 0
+ 600              	AHRSData_Packet:
+ 601 0000 00000000 		.space	44
+ 601      00000000 
+ 601      00000000 
+ 601      00000000 
+ 601      00000000 
+ 602              		.section	.bss.GYRO_daemon_instance,"aw",%nobits
+ 603              		.align	2
+ 604              		.set	.LANCHOR2,. + 0
+ 607              	GYRO_daemon_instance:
+ 608 0000 00000000 		.space	4
+ 609              		.section	.bss.gyro_instance,"aw",%nobits
+ 610              		.align	2
+ 611              		.set	.LANCHOR0,. + 0
+ 614              	gyro_instance:
+ 615 0000 00000000 		.space	4
+ 616              		.text
+ 617              	.Letext0:
+ 618              		.file 2 "d:\\rm\\arm-gnu-toolchian\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 619              		.file 3 "d:\\rm\\arm-gnu-toolchian\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 620              		.file 4 "Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h"
+ 621              		.file 5 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
+ 622              		.file 6 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h"
+ 623              		.file 7 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h"
+ 624              		.file 8 "modules/gyro/gyro.h"
+ 625              		.file 9 "bsp/usart/bsp_usart.h"
+ 626              		.file 10 "modules/daemon/daemon.h"
+ 627              		.file 11 "d:\\rm\\arm-gnu-toolchian\\arm-none-eabi\\include\\math.h"
+ARM GAS  C:\Users\blue\AppData\Local\Temp\cc28MLP5.s 			page 17
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 gyro.c
+C:\Users\blue\AppData\Local\Temp\cc28MLP5.s:19     .text.GYROLostCallback:00000000 $t
+C:\Users\blue\AppData\Local\Temp\cc28MLP5.s:24     .text.GYROLostCallback:00000000 GYROLostCallback
+C:\Users\blue\AppData\Local\Temp\cc28MLP5.s:50     .text.GYROLostCallback:0000000c $d
+C:\Users\blue\AppData\Local\Temp\cc28MLP5.s:56     .text.DATA_Trans:00000000 $t
+C:\Users\blue\AppData\Local\Temp\cc28MLP5.s:62     .text.DATA_Trans:00000000 DATA_Trans
+C:\Users\blue\AppData\Local\Temp\cc28MLP5.s:171    .text.DATA_Trans:00000070 $d
+C:\Users\blue\AppData\Local\Temp\cc28MLP5.s:178    .text.timestamp:00000000 $t
+C:\Users\blue\AppData\Local\Temp\cc28MLP5.s:184    .text.timestamp:00000000 timestamp
+C:\Users\blue\AppData\Local\Temp\cc28MLP5.s:220    .text.GYRO_buff_to_data:00000000 $t
+C:\Users\blue\AppData\Local\Temp\cc28MLP5.s:225    .text.GYRO_buff_to_data:00000000 GYRO_buff_to_data
+C:\Users\blue\AppData\Local\Temp\cc28MLP5.s:460    .text.GYRO_buff_to_data:00000198 $d
+C:\Users\blue\AppData\Local\Temp\cc28MLP5.s:469    .text.GYRORxCallback:00000000 $t
+C:\Users\blue\AppData\Local\Temp\cc28MLP5.s:474    .text.GYRORxCallback:00000000 GYRORxCallback
+C:\Users\blue\AppData\Local\Temp\cc28MLP5.s:509    .text.GYRORxCallback:0000001c $d
+C:\Users\blue\AppData\Local\Temp\cc28MLP5.s:515    .text.Gyro_Init:00000000 $t
+C:\Users\blue\AppData\Local\Temp\cc28MLP5.s:521    .text.Gyro_Init:00000000 Gyro_Init
+C:\Users\blue\AppData\Local\Temp\cc28MLP5.s:588    .text.Gyro_Init:00000038 $d
+C:\Users\blue\AppData\Local\Temp\cc28MLP5.s:596    .bss.AHRSData_Packet:00000000 $d
+C:\Users\blue\AppData\Local\Temp\cc28MLP5.s:600    .bss.AHRSData_Packet:00000000 AHRSData_Packet
+C:\Users\blue\AppData\Local\Temp\cc28MLP5.s:603    .bss.GYRO_daemon_instance:00000000 $d
+C:\Users\blue\AppData\Local\Temp\cc28MLP5.s:607    .bss.GYRO_daemon_instance:00000000 GYRO_daemon_instance
+C:\Users\blue\AppData\Local\Temp\cc28MLP5.s:610    .bss.gyro_instance:00000000 $d
+C:\Users\blue\AppData\Local\Temp\cc28MLP5.s:614    .bss.gyro_instance:00000000 gyro_instance
 
-NO UNDEFINED SYMBOLS
+UNDEFINED SYMBOLS
+USARTServiceInit
+__aeabi_l2f
+pow
+DaemonReload
+USARTRegister
+DaemonRegister

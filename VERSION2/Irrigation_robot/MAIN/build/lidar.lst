@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s 			page 1
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s 			page 1
   37 0002 592B     		cmp	r3, #89
   38 0004 01D0     		beq	.L8
   20:modules/lidar/lidar.c ****     {
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s 			page 2
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s 			page 2
 
 
   21:modules/lidar/lidar.c ****         uint8_t checksum = 0;
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s 			page 1
   73              		.loc 1 22 37 discriminator 3 view .LVU16
   74 001c DBB2     		uxtb	r3, r3
   75              	.LVL8:
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s 			page 3
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s 			page 3
 
 
   76              	.L3:
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s 			page 1
  118              	.LFE144:
  120              		.section	.text.LDLostCallback,"ax",%progbits
  121              		.align	1
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s 			page 4
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s 			page 4
 
 
  122              		.syntax unified
@@ -194,7 +194,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s 			page 1
   37:modules/lidar/lidar.c ****  * @note huart2: the address of left lidar usart handle
   38:modules/lidar/lidar.c ****  *       huart4: the address of right lidar usart handle
   39:modules/lidar/lidar.c ****  */
-  40:modules/lidar/lidar.c **** static void LDRxCallback(UART_HandleTypeDef *huart) // 串口接收回调_
+  40:modules/lidar/lidar.c **** static void LDRxCallback(UART_HandleTypeDef *huart, uint16_t Size) // 串口接收回调_
   41:modules/lidar/lidar.c **** {
   42:modules/lidar/lidar.c ****     DaemonReload(ld_daemon_instance); // 先喂狗
   43:modules/lidar/lidar.c ****     if (huart == &huart2)
@@ -227,385 +227,370 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s 			page 1
   60:modules/lidar/lidar.c ****     if (id == &huart2) // left lidar handle
  139              		.loc 1 60 5 is_stmt 1 view .LVU32
  140              		.loc 1 60 8 is_stmt 0 view .LVU33
- 141 0002 094B     		ldr	r3, .L15
+ 141 0002 064B     		ldr	r3, .L15
  142 0004 8342     		cmp	r3, r0
- 143 0006 07D0     		beq	.L14
+ 143 0006 04D0     		beq	.L14
   61:modules/lidar/lidar.c ****     {
-  62:modules/lidar/lidar.c ****         memset(ld_data->lld_distance, 0, sizeof(ld_data->lld_distance)); // 清空数据
-  63:modules/lidar/lidar.c ****         USARTServiceInit(lld_instance);                                  // 尝试重新启动接�
+  62:modules/lidar/lidar.c ****         // memset(ld_data->lld_distance, 0, sizeof(ld_data->lld_distance)); // 清空数据
+  63:modules/lidar/lidar.c ****         USARTServiceInit(lld_instance); // 尝试重新启动接收
   64:modules/lidar/lidar.c ****         // LOGWARNING("[lidar] left lidar lost");
   65:modules/lidar/lidar.c ****     }
   66:modules/lidar/lidar.c ****     else
   67:modules/lidar/lidar.c ****     {
-  68:modules/lidar/lidar.c ****         memset(ld_data->rld_distance, 0, sizeof(ld_data->rld_distance)); // 清空数据
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s 			page 5
+  68:modules/lidar/lidar.c ****         // memset(ld_data->rld_distance, 0, sizeof(ld_data->rld_distance)); // 清空数据
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s 			page 5
 
 
- 144              		.loc 1 68 9 is_stmt 1 view .LVU34
- 145              		.loc 1 68 23 is_stmt 0 view .LVU35
- 146 0008 0023     		movs	r3, #0
- 147 000a 5A88     		ldrh	r2, [r3, #2]
- 148              		.loc 1 68 9 view .LVU36
- 149 000c 1380     		strh	r3, [r2]	@ unaligned
-  69:modules/lidar/lidar.c ****         USARTServiceInit(rld_instance);                                  // 尝试重新启动接�
- 150              		.loc 1 69 9 is_stmt 1 view .LVU37
- 151 000e 074B     		ldr	r3, .L15+4
- 152 0010 1868     		ldr	r0, [r3]
- 153              	.LVL15:
- 154              		.loc 1 69 9 is_stmt 0 view .LVU38
- 155 0012 FFF7FEFF 		bl	USARTServiceInit
- 156              	.LVL16:
- 157              	.L10:
+  69:modules/lidar/lidar.c ****         USARTServiceInit(rld_instance); // 尝试重新启动接收
+ 144              		.loc 1 69 9 is_stmt 1 view .LVU34
+ 145 0008 054B     		ldr	r3, .L15+4
+ 146 000a 1868     		ldr	r0, [r3]
+ 147              	.LVL15:
+ 148              		.loc 1 69 9 is_stmt 0 view .LVU35
+ 149 000c FFF7FEFF 		bl	USARTServiceInit
+ 150              	.LVL16:
+ 151              	.L10:
   70:modules/lidar/lidar.c ****         // LOGWARNING("[lidar] right lidar lost");
   71:modules/lidar/lidar.c ****     }
   72:modules/lidar/lidar.c **** }
- 158              		.loc 1 72 1 view .LVU39
- 159 0016 08BD     		pop	{r3, pc}
- 160              	.LVL17:
- 161              	.L14:
-  62:modules/lidar/lidar.c ****         USARTServiceInit(lld_instance);                                  // 尝试重新启动接�
- 162              		.loc 1 62 9 is_stmt 1 view .LVU40
-  62:modules/lidar/lidar.c ****         USARTServiceInit(lld_instance);                                  // 尝试重新启动接�
- 163              		.loc 1 62 23 is_stmt 0 view .LVU41
- 164 0018 0023     		movs	r3, #0
- 165 001a 1A88     		ldrh	r2, [r3]
-  62:modules/lidar/lidar.c ****         USARTServiceInit(lld_instance);                                  // 尝试重新启动接�
- 166              		.loc 1 62 9 view .LVU42
- 167 001c 1380     		strh	r3, [r2]	@ unaligned
+ 152              		.loc 1 72 1 view .LVU36
+ 153 0010 08BD     		pop	{r3, pc}
+ 154              	.LVL17:
+ 155              	.L14:
   63:modules/lidar/lidar.c ****         // LOGWARNING("[lidar] left lidar lost");
- 168              		.loc 1 63 9 is_stmt 1 view .LVU43
- 169 001e 044B     		ldr	r3, .L15+8
- 170 0020 1868     		ldr	r0, [r3]
- 171              	.LVL18:
+ 156              		.loc 1 63 9 is_stmt 1 view .LVU37
+ 157 0012 044B     		ldr	r3, .L15+8
+ 158 0014 1868     		ldr	r0, [r3]
+ 159              	.LVL18:
   63:modules/lidar/lidar.c ****         // LOGWARNING("[lidar] left lidar lost");
- 172              		.loc 1 63 9 is_stmt 0 view .LVU44
- 173 0022 FFF7FEFF 		bl	USARTServiceInit
- 174              	.LVL19:
- 175 0026 F6E7     		b	.L10
- 176              	.L16:
- 177              		.align	2
- 178              	.L15:
- 179 0028 00000000 		.word	huart2
- 180 002c 00000000 		.word	.LANCHOR1
- 181 0030 00000000 		.word	.LANCHOR0
- 182              		.cfi_endproc
- 183              	.LFE146:
- 185              		.section	.text.LDRxCallback,"ax",%progbits
- 186              		.align	1
- 187              		.syntax unified
- 188              		.thumb
- 189              		.thumb_func
- 191              	LDRxCallback:
- 192              	.LVL20:
- 193              	.LFB145:
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s 			page 6
-
-
+ 160              		.loc 1 63 9 is_stmt 0 view .LVU38
+ 161 0016 FFF7FEFF 		bl	USARTServiceInit
+ 162              	.LVL19:
+ 163 001a F9E7     		b	.L10
+ 164              	.L16:
+ 165              		.align	2
+ 166              	.L15:
+ 167 001c 00000000 		.word	huart2
+ 168 0020 00000000 		.word	.LANCHOR1
+ 169 0024 00000000 		.word	.LANCHOR0
+ 170              		.cfi_endproc
+ 171              	.LFE146:
+ 173              		.section	.text.LDRxCallback,"ax",%progbits
+ 174              		.align	1
+ 175              		.syntax unified
+ 176              		.thumb
+ 177              		.thumb_func
+ 179              	LDRxCallback:
+ 180              	.LVL20:
+ 181              	.LFB145:
   41:modules/lidar/lidar.c ****     DaemonReload(ld_daemon_instance); // 先喂狗
- 194              		.loc 1 41 1 is_stmt 1 view -0
- 195              		.cfi_startproc
- 196              		@ args = 0, pretend = 0, frame = 0
- 197              		@ frame_needed = 0, uses_anonymous_args = 0
+ 182              		.loc 1 41 1 is_stmt 1 view -0
+ 183              		.cfi_startproc
+ 184              		@ args = 0, pretend = 0, frame = 0
+ 185              		@ frame_needed = 0, uses_anonymous_args = 0
   41:modules/lidar/lidar.c ****     DaemonReload(ld_daemon_instance); // 先喂狗
- 198              		.loc 1 41 1 is_stmt 0 view .LVU46
- 199 0000 10B5     		push	{r4, lr}
- 200              	.LCFI1:
- 201              		.cfi_def_cfa_offset 8
- 202              		.cfi_offset 4, -8
- 203              		.cfi_offset 14, -4
- 204 0002 0446     		mov	r4, r0
+ 186              		.loc 1 41 1 is_stmt 0 view .LVU40
+ 187 0000 10B5     		push	{r4, lr}
+ 188              	.LCFI1:
+ 189              		.cfi_def_cfa_offset 8
+ 190              		.cfi_offset 4, -8
+ 191              		.cfi_offset 14, -4
+ 192 0002 0446     		mov	r4, r0
   42:modules/lidar/lidar.c ****     if (huart == &huart2)
- 205              		.loc 1 42 5 is_stmt 1 view .LVU47
- 206 0004 0D4B     		ldr	r3, .L23
- 207 0006 1868     		ldr	r0, [r3]
- 208              	.LVL21:
-  42:modules/lidar/lidar.c ****     if (huart == &huart2)
- 209              		.loc 1 42 5 is_stmt 0 view .LVU48
- 210 0008 FFF7FEFF 		bl	DaemonReload
- 211              	.LVL22:
-  43:modules/lidar/lidar.c ****     {
- 212              		.loc 1 43 5 is_stmt 1 view .LVU49
-  43:modules/lidar/lidar.c ****     {
- 213              		.loc 1 43 8 is_stmt 0 view .LVU50
- 214 000c 0C4B     		ldr	r3, .L23+4
- 215 000e 9C42     		cmp	r4, r3
- 216 0010 03D0     		beq	.L21
-  47:modules/lidar/lidar.c ****     {
- 217              		.loc 1 47 10 is_stmt 1 view .LVU51
-  47:modules/lidar/lidar.c ****     {
- 218              		.loc 1 47 13 is_stmt 0 view .LVU52
- 219 0012 0C4B     		ldr	r3, .L23+8
- 220 0014 9C42     		cmp	r4, r3
- 221 0016 08D0     		beq	.L22
- 222              	.L17:
-  51:modules/lidar/lidar.c **** 
- 223              		.loc 1 51 1 view .LVU53
- 224 0018 10BD     		pop	{r4, pc}
- 225              	.LVL23:
- 226              	.L21:
-  45:modules/lidar/lidar.c ****     }
- 227              		.loc 1 45 9 is_stmt 1 view .LVU54
-  45:modules/lidar/lidar.c ****     }
- 228              		.loc 1 45 61 is_stmt 0 view .LVU55
- 229 001a 0B4B     		ldr	r3, .L23+12
- 230 001c 1B68     		ldr	r3, [r3]
-  45:modules/lidar/lidar.c ****     }
- 231              		.loc 1 45 33 view .LVU56
- 232 001e 1868     		ldr	r0, [r3]
- 233 0020 FFF7FEFF 		bl	ld_buff_to_data
- 234              	.LVL24:
-  45:modules/lidar/lidar.c ****     }
- 235              		.loc 1 45 31 view .LVU57
- 236 0024 0023     		movs	r3, #0
- 237 0026 1880     		strh	r0, [r3]	@ movhi
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s 			page 7
+ 193              		.loc 1 42 5 is_stmt 1 view .LVU41
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s 			page 6
 
 
- 238 0028 F6E7     		b	.L17
- 239              	.L22:
-  49:modules/lidar/lidar.c ****     }
- 240              		.loc 1 49 9 is_stmt 1 view .LVU58
-  49:modules/lidar/lidar.c ****     }
- 241              		.loc 1 49 61 is_stmt 0 view .LVU59
- 242 002a 084B     		ldr	r3, .L23+16
- 243 002c 1B68     		ldr	r3, [r3]
-  49:modules/lidar/lidar.c ****     }
- 244              		.loc 1 49 33 view .LVU60
- 245 002e 1868     		ldr	r0, [r3]
- 246 0030 FFF7FEFF 		bl	ld_buff_to_data
- 247              	.LVL25:
-  49:modules/lidar/lidar.c ****     }
- 248              		.loc 1 49 31 view .LVU61
- 249 0034 0023     		movs	r3, #0
- 250 0036 5880     		strh	r0, [r3, #2]	@ movhi
+ 194 0004 0D4B     		ldr	r3, .L23
+ 195 0006 1868     		ldr	r0, [r3]
+ 196              	.LVL21:
+  42:modules/lidar/lidar.c ****     if (huart == &huart2)
+ 197              		.loc 1 42 5 is_stmt 0 view .LVU42
+ 198 0008 FFF7FEFF 		bl	DaemonReload
+ 199              	.LVL22:
+  43:modules/lidar/lidar.c ****     {
+ 200              		.loc 1 43 5 is_stmt 1 view .LVU43
+  43:modules/lidar/lidar.c ****     {
+ 201              		.loc 1 43 8 is_stmt 0 view .LVU44
+ 202 000c 0C4B     		ldr	r3, .L23+4
+ 203 000e 9C42     		cmp	r4, r3
+ 204 0010 03D0     		beq	.L21
+  47:modules/lidar/lidar.c ****     {
+ 205              		.loc 1 47 10 is_stmt 1 view .LVU45
+  47:modules/lidar/lidar.c ****     {
+ 206              		.loc 1 47 13 is_stmt 0 view .LVU46
+ 207 0012 0C4B     		ldr	r3, .L23+8
+ 208 0014 9C42     		cmp	r4, r3
+ 209 0016 08D0     		beq	.L22
+ 210              	.L17:
   51:modules/lidar/lidar.c **** 
- 251              		.loc 1 51 1 view .LVU62
- 252 0038 EEE7     		b	.L17
- 253              	.L24:
- 254 003a 00BF     		.align	2
- 255              	.L23:
- 256 003c 00000000 		.word	.LANCHOR2
- 257 0040 00000000 		.word	huart2
- 258 0044 00000000 		.word	huart4
- 259 0048 00000000 		.word	.LANCHOR0
- 260 004c 00000000 		.word	.LANCHOR1
- 261              		.cfi_endproc
- 262              	.LFE145:
- 264              		.section	.text.Lidar_Init,"ax",%progbits
- 265              		.align	1
- 266              		.global	Lidar_Init
- 267              		.syntax unified
- 268              		.thumb
- 269              		.thumb_func
- 271              	Lidar_Init:
- 272              	.LVL26:
- 273              	.LFB147:
+ 211              		.loc 1 51 1 view .LVU47
+ 212 0018 10BD     		pop	{r4, pc}
+ 213              	.LVL23:
+ 214              	.L21:
+  45:modules/lidar/lidar.c ****     }
+ 215              		.loc 1 45 9 is_stmt 1 view .LVU48
+  45:modules/lidar/lidar.c ****     }
+ 216              		.loc 1 45 61 is_stmt 0 view .LVU49
+ 217 001a 0B4B     		ldr	r3, .L23+12
+ 218 001c 1B68     		ldr	r3, [r3]
+  45:modules/lidar/lidar.c ****     }
+ 219              		.loc 1 45 33 view .LVU50
+ 220 001e 1868     		ldr	r0, [r3]
+ 221 0020 FFF7FEFF 		bl	ld_buff_to_data
+ 222              	.LVL24:
+  45:modules/lidar/lidar.c ****     }
+ 223              		.loc 1 45 31 view .LVU51
+ 224 0024 0023     		movs	r3, #0
+ 225 0026 1880     		strh	r0, [r3]	@ movhi
+ 226 0028 F6E7     		b	.L17
+ 227              	.L22:
+  49:modules/lidar/lidar.c ****     }
+ 228              		.loc 1 49 9 is_stmt 1 view .LVU52
+  49:modules/lidar/lidar.c ****     }
+ 229              		.loc 1 49 61 is_stmt 0 view .LVU53
+ 230 002a 084B     		ldr	r3, .L23+16
+ 231 002c 1B68     		ldr	r3, [r3]
+  49:modules/lidar/lidar.c ****     }
+ 232              		.loc 1 49 33 view .LVU54
+ 233 002e 1868     		ldr	r0, [r3]
+ 234 0030 FFF7FEFF 		bl	ld_buff_to_data
+ 235              	.LVL25:
+  49:modules/lidar/lidar.c ****     }
+ 236              		.loc 1 49 31 view .LVU55
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s 			page 7
+
+
+ 237 0034 0023     		movs	r3, #0
+ 238 0036 5880     		strh	r0, [r3, #2]	@ movhi
+  51:modules/lidar/lidar.c **** 
+ 239              		.loc 1 51 1 view .LVU56
+ 240 0038 EEE7     		b	.L17
+ 241              	.L24:
+ 242 003a 00BF     		.align	2
+ 243              	.L23:
+ 244 003c 00000000 		.word	.LANCHOR2
+ 245 0040 00000000 		.word	huart2
+ 246 0044 00000000 		.word	huart4
+ 247 0048 00000000 		.word	.LANCHOR0
+ 248 004c 00000000 		.word	.LANCHOR1
+ 249              		.cfi_endproc
+ 250              	.LFE145:
+ 252              		.section	.text.Lidar_Init,"ax",%progbits
+ 253              		.align	1
+ 254              		.global	Lidar_Init
+ 255              		.syntax unified
+ 256              		.thumb
+ 257              		.thumb_func
+ 259              	Lidar_Init:
+ 260              	.LVL26:
+ 261              	.LFB147:
   73:modules/lidar/lidar.c **** 
   74:modules/lidar/lidar.c **** LD_data_t *Lidar_Init(UART_HandleTypeDef *ld_usart_handle)
   75:modules/lidar/lidar.c **** {
- 274              		.loc 1 75 1 is_stmt 1 view -0
- 275              		.cfi_startproc
- 276              		@ args = 0, pretend = 0, frame = 24
- 277              		@ frame_needed = 0, uses_anonymous_args = 0
- 278              		.loc 1 75 1 is_stmt 0 view .LVU64
- 279 0000 10B5     		push	{r4, lr}
- 280              	.LCFI2:
- 281              		.cfi_def_cfa_offset 8
- 282              		.cfi_offset 4, -8
- 283              		.cfi_offset 14, -4
- 284 0002 86B0     		sub	sp, sp, #24
- 285              	.LCFI3:
- 286              		.cfi_def_cfa_offset 32
- 287 0004 0446     		mov	r4, r0
+ 262              		.loc 1 75 1 is_stmt 1 view -0
+ 263              		.cfi_startproc
+ 264              		@ args = 0, pretend = 0, frame = 24
+ 265              		@ frame_needed = 0, uses_anonymous_args = 0
+ 266              		.loc 1 75 1 is_stmt 0 view .LVU58
+ 267 0000 10B5     		push	{r4, lr}
+ 268              	.LCFI2:
+ 269              		.cfi_def_cfa_offset 8
+ 270              		.cfi_offset 4, -8
+ 271              		.cfi_offset 14, -4
+ 272 0002 86B0     		sub	sp, sp, #24
+ 273              	.LCFI3:
+ 274              		.cfi_def_cfa_offset 32
+ 275 0004 0446     		mov	r4, r0
   76:modules/lidar/lidar.c ****     USART_Init_Config_s conf;
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s 			page 8
-
-
- 288              		.loc 1 76 5 is_stmt 1 view .LVU65
+ 276              		.loc 1 76 5 is_stmt 1 view .LVU59
   77:modules/lidar/lidar.c ****     conf.module_callback = LDRxCallback;
- 289              		.loc 1 77 5 view .LVU66
- 290              		.loc 1 77 26 is_stmt 0 view .LVU67
- 291 0006 154B     		ldr	r3, .L31
- 292 0008 0593     		str	r3, [sp, #20]
+ 277              		.loc 1 77 5 view .LVU60
+ 278              		.loc 1 77 26 is_stmt 0 view .LVU61
+ 279 0006 154B     		ldr	r3, .L31
+ 280 0008 0593     		str	r3, [sp, #20]
   78:modules/lidar/lidar.c ****     conf.usart_handle = ld_usart_handle;
- 293              		.loc 1 78 5 is_stmt 1 view .LVU68
- 294              		.loc 1 78 23 is_stmt 0 view .LVU69
- 295 000a 0490     		str	r0, [sp, #16]
+ 281              		.loc 1 78 5 is_stmt 1 view .LVU62
+ 282              		.loc 1 78 23 is_stmt 0 view .LVU63
+ 283 000a 0490     		str	r0, [sp, #16]
   79:modules/lidar/lidar.c ****     conf.recv_buff_size = LIDAR_FRAME_SIZE;
- 296              		.loc 1 79 5 is_stmt 1 view .LVU70
- 297              		.loc 1 79 25 is_stmt 0 view .LVU71
- 298 000c 0923     		movs	r3, #9
- 299 000e 8DF80C30 		strb	r3, [sp, #12]
+ 284              		.loc 1 79 5 is_stmt 1 view .LVU64
+ 285              		.loc 1 79 25 is_stmt 0 view .LVU65
+ 286 000c 0923     		movs	r3, #9
+ 287 000e 8DF80C30 		strb	r3, [sp, #12]
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s 			page 8
+
+
   80:modules/lidar/lidar.c ****     if (ld_usart_handle == &huart2) // left lidar handle
- 300              		.loc 1 80 5 is_stmt 1 view .LVU72
- 301              		.loc 1 80 8 is_stmt 0 view .LVU73
- 302 0012 134B     		ldr	r3, .L31+4
- 303 0014 9842     		cmp	r0, r3
- 304 0016 10D0     		beq	.L29
+ 288              		.loc 1 80 5 is_stmt 1 view .LVU66
+ 289              		.loc 1 80 8 is_stmt 0 view .LVU67
+ 290 0012 134B     		ldr	r3, .L31+4
+ 291 0014 9842     		cmp	r0, r3
+ 292 0016 10D0     		beq	.L29
   81:modules/lidar/lidar.c ****     {
   82:modules/lidar/lidar.c ****         ld_data->lld_distance = 0;
   83:modules/lidar/lidar.c ****         lld_instance = USARTRegister(&conf);
   84:modules/lidar/lidar.c ****     }
   85:modules/lidar/lidar.c ****     else if (ld_usart_handle == &huart4) // right lidar handle
- 305              		.loc 1 85 10 is_stmt 1 view .LVU74
- 306              		.loc 1 85 13 is_stmt 0 view .LVU75
- 307 0018 124B     		ldr	r3, .L31+8
- 308 001a 9842     		cmp	r0, r3
- 309 001c 15D0     		beq	.L30
- 310              	.LVL27:
- 311              	.L27:
+ 293              		.loc 1 85 10 is_stmt 1 view .LVU68
+ 294              		.loc 1 85 13 is_stmt 0 view .LVU69
+ 295 0018 124B     		ldr	r3, .L31+8
+ 296 001a 9842     		cmp	r0, r3
+ 297 001c 15D0     		beq	.L30
+ 298              	.LVL27:
+ 299              	.L27:
   86:modules/lidar/lidar.c ****     {
   87:modules/lidar/lidar.c ****         ld_data->rld_distance = 0;
   88:modules/lidar/lidar.c ****         rld_instance = USARTRegister(&conf);
   89:modules/lidar/lidar.c ****     }
   90:modules/lidar/lidar.c **** 
   91:modules/lidar/lidar.c ****     Daemon_Init_Config_s daemon_conf = {
- 312              		.loc 1 91 5 is_stmt 1 view .LVU76
- 313              		.loc 1 91 26 is_stmt 0 view .LVU77
- 314 001e 0223     		movs	r3, #2
- 315 0020 ADF80030 		strh	r3, [sp]	@ movhi
- 316 0024 104B     		ldr	r3, .L31+12
- 317 0026 0193     		str	r3, [sp, #4]
- 318 0028 0294     		str	r4, [sp, #8]
+ 300              		.loc 1 91 5 is_stmt 1 view .LVU70
+ 301              		.loc 1 91 26 is_stmt 0 view .LVU71
+ 302 001e 0223     		movs	r3, #2
+ 303 0020 ADF80030 		strh	r3, [sp]	@ movhi
+ 304 0024 104B     		ldr	r3, .L31+12
+ 305 0026 0193     		str	r3, [sp, #4]
+ 306 0028 0294     		str	r4, [sp, #8]
   92:modules/lidar/lidar.c ****         .reload_count = 2, // 看门狗待了解_ 20ms没收到消息  输出频率默认为100Hz->
   93:modules/lidar/lidar.c ****         .callback = LDLostCallback,
   94:modules/lidar/lidar.c ****         .owner_id = ld_usart_handle,
   95:modules/lidar/lidar.c ****     };
   96:modules/lidar/lidar.c ****     ld_daemon_instance = DaemonRegister(&daemon_conf);
- 319              		.loc 1 96 5 is_stmt 1 view .LVU78
- 320              		.loc 1 96 26 is_stmt 0 view .LVU79
- 321 002a 6846     		mov	r0, sp
- 322 002c FFF7FEFF 		bl	DaemonRegister
- 323              	.LVL28:
- 324              		.loc 1 96 24 view .LVU80
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s 			page 9
-
-
- 325 0030 0E4B     		ldr	r3, .L31+16
- 326 0032 1860     		str	r0, [r3]
+ 307              		.loc 1 96 5 is_stmt 1 view .LVU72
+ 308              		.loc 1 96 26 is_stmt 0 view .LVU73
+ 309 002a 6846     		mov	r0, sp
+ 310 002c FFF7FEFF 		bl	DaemonRegister
+ 311              	.LVL28:
+ 312              		.loc 1 96 24 view .LVU74
+ 313 0030 0E4B     		ldr	r3, .L31+16
+ 314 0032 1860     		str	r0, [r3]
   97:modules/lidar/lidar.c ****     return ld_data;
- 327              		.loc 1 97 5 is_stmt 1 view .LVU81
+ 315              		.loc 1 97 5 is_stmt 1 view .LVU75
   98:modules/lidar/lidar.c **** }
- 328              		.loc 1 98 1 is_stmt 0 view .LVU82
- 329 0034 0020     		movs	r0, #0
- 330 0036 06B0     		add	sp, sp, #24
- 331              	.LCFI4:
- 332              		.cfi_remember_state
- 333              		.cfi_def_cfa_offset 8
- 334              		@ sp needed
- 335 0038 10BD     		pop	{r4, pc}
- 336              	.LVL29:
- 337              	.L29:
- 338              	.LCFI5:
- 339              		.cfi_restore_state
-  82:modules/lidar/lidar.c ****         lld_instance = USARTRegister(&conf);
- 340              		.loc 1 82 9 is_stmt 1 view .LVU83
-  82:modules/lidar/lidar.c ****         lld_instance = USARTRegister(&conf);
- 341              		.loc 1 82 31 is_stmt 0 view .LVU84
- 342 003a 0023     		movs	r3, #0
- 343 003c 1B80     		strh	r3, [r3]	@ movhi
-  83:modules/lidar/lidar.c ****     }
- 344              		.loc 1 83 9 is_stmt 1 view .LVU85
-  83:modules/lidar/lidar.c ****     }
- 345              		.loc 1 83 24 is_stmt 0 view .LVU86
- 346 003e 03A8     		add	r0, sp, #12
- 347              	.LVL30:
-  83:modules/lidar/lidar.c ****     }
- 348              		.loc 1 83 24 view .LVU87
- 349 0040 FFF7FEFF 		bl	USARTRegister
- 350              	.LVL31:
-  83:modules/lidar/lidar.c ****     }
- 351              		.loc 1 83 22 view .LVU88
- 352 0044 0A4B     		ldr	r3, .L31+20
- 353 0046 1860     		str	r0, [r3]
- 354 0048 E9E7     		b	.L27
- 355              	.LVL32:
- 356              	.L30:
-  87:modules/lidar/lidar.c ****         rld_instance = USARTRegister(&conf);
- 357              		.loc 1 87 9 is_stmt 1 view .LVU89
-  87:modules/lidar/lidar.c ****         rld_instance = USARTRegister(&conf);
- 358              		.loc 1 87 31 is_stmt 0 view .LVU90
- 359 004a 0023     		movs	r3, #0
- 360 004c 5B80     		strh	r3, [r3, #2]	@ movhi
-  88:modules/lidar/lidar.c ****     }
- 361              		.loc 1 88 9 is_stmt 1 view .LVU91
-  88:modules/lidar/lidar.c ****     }
- 362              		.loc 1 88 24 is_stmt 0 view .LVU92
- 363 004e 03A8     		add	r0, sp, #12
- 364              	.LVL33:
-  88:modules/lidar/lidar.c ****     }
- 365              		.loc 1 88 24 view .LVU93
- 366 0050 FFF7FEFF 		bl	USARTRegister
- 367              	.LVL34:
-  88:modules/lidar/lidar.c ****     }
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s 			page 10
+ 316              		.loc 1 98 1 is_stmt 0 view .LVU76
+ 317 0034 0020     		movs	r0, #0
+ 318 0036 06B0     		add	sp, sp, #24
+ 319              	.LCFI4:
+ 320              		.cfi_remember_state
+ 321              		.cfi_def_cfa_offset 8
+ 322              		@ sp needed
+ 323 0038 10BD     		pop	{r4, pc}
+ 324              	.LVL29:
+ 325              	.L29:
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s 			page 9
 
 
- 368              		.loc 1 88 22 view .LVU94
- 369 0054 074B     		ldr	r3, .L31+24
- 370 0056 1860     		str	r0, [r3]
- 371 0058 E1E7     		b	.L27
- 372              	.L32:
- 373 005a 00BF     		.align	2
- 374              	.L31:
- 375 005c 00000000 		.word	LDRxCallback
- 376 0060 00000000 		.word	huart2
- 377 0064 00000000 		.word	huart4
- 378 0068 00000000 		.word	LDLostCallback
- 379 006c 00000000 		.word	.LANCHOR2
- 380 0070 00000000 		.word	.LANCHOR0
- 381 0074 00000000 		.word	.LANCHOR1
- 382              		.cfi_endproc
- 383              	.LFE147:
- 385              		.section	.bss.ld_daemon_instance,"aw",%nobits
- 386              		.align	2
- 387              		.set	.LANCHOR2,. + 0
- 390              	ld_daemon_instance:
- 391 0000 00000000 		.space	4
- 392              		.section	.bss.lld_instance,"aw",%nobits
- 393              		.align	2
- 394              		.set	.LANCHOR0,. + 0
- 397              	lld_instance:
- 398 0000 00000000 		.space	4
- 399              		.section	.bss.rld_instance,"aw",%nobits
- 400              		.align	2
- 401              		.set	.LANCHOR1,. + 0
- 404              	rld_instance:
- 405 0000 00000000 		.space	4
- 406              		.text
- 407              	.Letext0:
- 408              		.file 2 "d:\\rm\\arm-gnu-toolchian\\arm-none-eabi\\include\\machine\\_default_types.h"
- 409              		.file 3 "d:\\rm\\arm-gnu-toolchian\\arm-none-eabi\\include\\sys\\_stdint.h"
- 410              		.file 4 "Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h"
- 411              		.file 5 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
- 412              		.file 6 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h"
- 413              		.file 7 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h"
- 414              		.file 8 "modules/lidar/lidar.h"
- 415              		.file 9 "Core/Inc/usart.h"
- 416              		.file 10 "bsp/usart/bsp_usart.h"
- 417              		.file 11 "modules/daemon/daemon.h"
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s 			page 11
+ 326              	.LCFI5:
+ 327              		.cfi_restore_state
+  82:modules/lidar/lidar.c ****         lld_instance = USARTRegister(&conf);
+ 328              		.loc 1 82 9 is_stmt 1 view .LVU77
+  82:modules/lidar/lidar.c ****         lld_instance = USARTRegister(&conf);
+ 329              		.loc 1 82 31 is_stmt 0 view .LVU78
+ 330 003a 0023     		movs	r3, #0
+ 331 003c 1B80     		strh	r3, [r3]	@ movhi
+  83:modules/lidar/lidar.c ****     }
+ 332              		.loc 1 83 9 is_stmt 1 view .LVU79
+  83:modules/lidar/lidar.c ****     }
+ 333              		.loc 1 83 24 is_stmt 0 view .LVU80
+ 334 003e 03A8     		add	r0, sp, #12
+ 335              	.LVL30:
+  83:modules/lidar/lidar.c ****     }
+ 336              		.loc 1 83 24 view .LVU81
+ 337 0040 FFF7FEFF 		bl	USARTRegister
+ 338              	.LVL31:
+  83:modules/lidar/lidar.c ****     }
+ 339              		.loc 1 83 22 view .LVU82
+ 340 0044 0A4B     		ldr	r3, .L31+20
+ 341 0046 1860     		str	r0, [r3]
+ 342 0048 E9E7     		b	.L27
+ 343              	.LVL32:
+ 344              	.L30:
+  87:modules/lidar/lidar.c ****         rld_instance = USARTRegister(&conf);
+ 345              		.loc 1 87 9 is_stmt 1 view .LVU83
+  87:modules/lidar/lidar.c ****         rld_instance = USARTRegister(&conf);
+ 346              		.loc 1 87 31 is_stmt 0 view .LVU84
+ 347 004a 0023     		movs	r3, #0
+ 348 004c 5B80     		strh	r3, [r3, #2]	@ movhi
+  88:modules/lidar/lidar.c ****     }
+ 349              		.loc 1 88 9 is_stmt 1 view .LVU85
+  88:modules/lidar/lidar.c ****     }
+ 350              		.loc 1 88 24 is_stmt 0 view .LVU86
+ 351 004e 03A8     		add	r0, sp, #12
+ 352              	.LVL33:
+  88:modules/lidar/lidar.c ****     }
+ 353              		.loc 1 88 24 view .LVU87
+ 354 0050 FFF7FEFF 		bl	USARTRegister
+ 355              	.LVL34:
+  88:modules/lidar/lidar.c ****     }
+ 356              		.loc 1 88 22 view .LVU88
+ 357 0054 074B     		ldr	r3, .L31+24
+ 358 0056 1860     		str	r0, [r3]
+ 359 0058 E1E7     		b	.L27
+ 360              	.L32:
+ 361 005a 00BF     		.align	2
+ 362              	.L31:
+ 363 005c 00000000 		.word	LDRxCallback
+ 364 0060 00000000 		.word	huart2
+ 365 0064 00000000 		.word	huart4
+ 366 0068 00000000 		.word	LDLostCallback
+ 367 006c 00000000 		.word	.LANCHOR2
+ 368 0070 00000000 		.word	.LANCHOR0
+ 369 0074 00000000 		.word	.LANCHOR1
+ 370              		.cfi_endproc
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s 			page 10
+
+
+ 371              	.LFE147:
+ 373              		.section	.bss.ld_daemon_instance,"aw",%nobits
+ 374              		.align	2
+ 375              		.set	.LANCHOR2,. + 0
+ 378              	ld_daemon_instance:
+ 379 0000 00000000 		.space	4
+ 380              		.section	.bss.lld_instance,"aw",%nobits
+ 381              		.align	2
+ 382              		.set	.LANCHOR0,. + 0
+ 385              	lld_instance:
+ 386 0000 00000000 		.space	4
+ 387              		.section	.bss.rld_instance,"aw",%nobits
+ 388              		.align	2
+ 389              		.set	.LANCHOR1,. + 0
+ 392              	rld_instance:
+ 393 0000 00000000 		.space	4
+ 394              		.text
+ 395              	.Letext0:
+ 396              		.file 2 "d:\\rm\\arm-gnu-toolchian\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 397              		.file 3 "d:\\rm\\arm-gnu-toolchian\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 398              		.file 4 "Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h"
+ 399              		.file 5 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
+ 400              		.file 6 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h"
+ 401              		.file 7 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h"
+ 402              		.file 8 "modules/lidar/lidar.h"
+ 403              		.file 9 "Core/Inc/usart.h"
+ 404              		.file 10 "bsp/usart/bsp_usart.h"
+ 405              		.file 11 "modules/daemon/daemon.h"
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s 			page 11
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 lidar.c
-C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s:19     .text.ld_buff_to_data:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s:24     .text.ld_buff_to_data:00000000 ld_buff_to_data
-C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s:121    .text.LDLostCallback:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s:126    .text.LDLostCallback:00000000 LDLostCallback
-C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s:179    .text.LDLostCallback:00000028 $d
-C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s:186    .text.LDRxCallback:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s:191    .text.LDRxCallback:00000000 LDRxCallback
-C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s:256    .text.LDRxCallback:0000003c $d
-C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s:265    .text.Lidar_Init:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s:271    .text.Lidar_Init:00000000 Lidar_Init
-C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s:375    .text.Lidar_Init:0000005c $d
-C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s:386    .bss.ld_daemon_instance:00000000 $d
-C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s:390    .bss.ld_daemon_instance:00000000 ld_daemon_instance
-C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s:393    .bss.lld_instance:00000000 $d
-C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s:397    .bss.lld_instance:00000000 lld_instance
-C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s:400    .bss.rld_instance:00000000 $d
-C:\Users\blue\AppData\Local\Temp\ccnSuSVL.s:404    .bss.rld_instance:00000000 rld_instance
+C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s:19     .text.ld_buff_to_data:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s:24     .text.ld_buff_to_data:00000000 ld_buff_to_data
+C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s:121    .text.LDLostCallback:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s:126    .text.LDLostCallback:00000000 LDLostCallback
+C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s:167    .text.LDLostCallback:0000001c $d
+C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s:174    .text.LDRxCallback:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s:179    .text.LDRxCallback:00000000 LDRxCallback
+C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s:244    .text.LDRxCallback:0000003c $d
+C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s:253    .text.Lidar_Init:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s:259    .text.Lidar_Init:00000000 Lidar_Init
+C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s:363    .text.Lidar_Init:0000005c $d
+C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s:374    .bss.ld_daemon_instance:00000000 $d
+C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s:378    .bss.ld_daemon_instance:00000000 ld_daemon_instance
+C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s:381    .bss.lld_instance:00000000 $d
+C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s:385    .bss.lld_instance:00000000 lld_instance
+C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s:388    .bss.rld_instance:00000000 $d
+C:\Users\blue\AppData\Local\Temp\ccB6o9Fg.s:392    .bss.rld_instance:00000000 rld_instance
 
 UNDEFINED SYMBOLS
 USARTServiceInit

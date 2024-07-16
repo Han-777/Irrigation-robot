@@ -1,0 +1,21 @@
+{
+  "cortex-debug.variableUseNaturalFormat": true,
+  "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
+  // "C_Cpp.default.compilerPath": "D:\\Msys2\\mingw64\\bin\\arm-none-eabi-gcc.exe"
+  "makefile.compileCommandsPath": "build/compile_commands.json",
+  "stm32-for-vscode.openOCDPath": "D:\\Downloads\\msys32\\mingw64\\bin\\openocd.exe",
+  "stm32-for-vscode.makePath": "D:\\Downloads\\msys32\\mingw64\\bin\\make.exe",
+  "stm32-for-vscode.armToolchainPath": "D:\\RM\\Arm-GNU-Toolchian\\bin",
+  "cortex-debug.armToolchainPath": "D:\\RM\\Arm-GNU-Toolchian\\bin",
+  "cortex-debug.openocdPath": "D:\\DOWNLOADS\\MSYS32\\MINGW64\\BIN\\OPENOCD.EXE",
+  "cortex-debug.gdbPath": "D:\\RM\\Arm-GNU-Toolchian\\bin\\arm-none-eabi-gdb.exe",
+  "files.associations": {
+    "main.h": "c",
+    "stm32h7xx_ll_gpio.h": "c",
+    "gpio.h": "c",
+    "stm32h7xx_ll_system.h": "c",
+    "stm32h7xx_ll_bus.h": "c",
+    "stm32h7xx_ll_exti.h": "c",
+    "stm32h7xx_it.h": "c"
+  }
+}

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
   28:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   ==============================================================================
   29:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   [..]
   30:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     (+) Enable the RTC domain access.
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 2
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 2
 
 
   31:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     (+) Configure the RTC Prescaler (Asynchronous and Synchronous) and RTC hour
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
   85:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****         value, sampling frequency, NoErase, MaskFlag,  precharge or discharge and
   86:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****         Pull-UP using the HAL_RTCEx_SetTamper() function. You can configure RTC Tamper
   87:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****         with interrupt mode using HAL_RTCEx_SetTamper_IT() function.
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 3
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 3
 
 
   88:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     (+) The default configuration of the Tamper erases the backup registers. To avoid
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  142:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   */
  143:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
  144:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** /**
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 4
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 4
 
 
  145:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   * @brief  Set TimeStamp.
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
   52              		.loc 1 174 3 is_stmt 0 discriminator 2 view .LVU9
   53 000c 80F82020 		strb	r2, [r0, #32]
   54              		.loc 1 174 3 is_stmt 1 discriminator 2 view .LVU10
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 5
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 5
 
 
  175:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
   94 0038 8B60     		str	r3, [r1, #8]
  190:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
  191:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   /* Enable the write protection for RTC registers */
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 6
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 6
 
 
  192:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   __HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  140              	.LVL10:
  141              	.LFB145:
  202:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 7
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 7
 
 
  203:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** /**
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  164              		.loc 1 233 3 discriminator 2 view .LVU52
  234:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
  235:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   hrtc->State = HAL_RTC_STATE_BUSY;
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 8
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 8
 
 
  165              		.loc 1 235 3 discriminator 2 view .LVU53
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  249:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
  250:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   /* Enable IT timestamp */
  251:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   __HAL_RTC_TIMESTAMP_ENABLE_IT(hrtc, RTC_IT_TS);
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 9
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 9
 
 
  206              		.loc 1 251 3 is_stmt 1 discriminator 2 view .LVU71
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  234              		.loc 1 277 3 discriminator 2 view .LVU82
  235              		.loc 1 277 10 is_stmt 0 discriminator 2 view .LVU83
  236 006e 1846     		mov	r0, r3
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 10
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 10
 
 
  237              	.LVL16:
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  278 0008 10B4     		push	{r4}
  279              	.LCFI4:
  280              		.cfi_def_cfa_offset 4
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 11
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 11
 
 
  281              		.cfi_offset 4, -4
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  318              		.loc 1 307 3 discriminator 2 view .LVU109
  319 0036 0368     		ldr	r3, [r0]
  320              	.LVL22:
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 12
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 12
 
 
  321              		.loc 1 307 3 is_stmt 0 discriminator 2 view .LVU110
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  368              	HAL_RTCEx_SetInternalTimeStamp:
  369              	.LVL28:
  370              	.LFB147:
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 13
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 13
 
 
  316:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  337:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   __HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
  404              		.loc 1 337 3 discriminator 2 view .LVU136
  405              		.loc 1 337 3 discriminator 2 view .LVU137
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 14
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 14
 
 
  406 002a 0368     		ldr	r3, [r0]
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  444              		.loc 1 354 1 is_stmt 1 view -0
  445              		.cfi_startproc
  446              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 15
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 15
 
 
  447              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  370:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
  371:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   /* Process Unlocked */
  372:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   __HAL_UNLOCK(hrtc);
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 16
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 16
 
 
  486              		.loc 1 372 3 is_stmt 1 discriminator 2 view .LVU166
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  524              		.cfi_def_cfa_offset 16
  525              		.cfi_offset 4, -16
  526              		.cfi_offset 5, -12
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 17
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 17
 
 
  527              		.cfi_offset 6, -8
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  566              		.loc 1 404 26 view .LVU195
  567 0024 E270     		strb	r2, [r4, #3]
  405:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   sTimeStamp->SubSeconds = (uint32_t) hrtc->Instance->TSSSR;
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 18
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 18
 
 
  568              		.loc 1 405 3 is_stmt 1 view .LVU196
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  428:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   __HAL_RTC_INTERNAL_TIMESTAMP_CLEAR_FLAG(hrtc, RTC_FLAG_ITSF);
  600              		.loc 1 428 3 is_stmt 1 view .LVU213
  601 0044 3168     		ldr	r1, [r6]
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 19
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 19
 
 
  602 0046 CA68     		ldr	r2, [r1, #12]
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  641              		.loc 1 422 40 is_stmt 0 view .LVU227
  642 0078 6878     		ldrb	r0, [r5, #1]	@ zero_extendqisi2
  643 007a FFF7FEFF 		bl	RTC_Bcd2ToByte
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 20
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 20
 
 
  644              	.LVL48:
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  447:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****       HAL_RTC_Init() function.
  448:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   (+) In that ine you can select to output tamper event on RTC pin.
  449:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****  [..]
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 21
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 21
 
 
  450:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   (+) Enable the Tamper and configure the Tamper filter count, trigger Edge
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  504:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     tmpreg |= (sTamper->Tamper << TAMP_CR2_TAMP1MSK_Pos);
  505:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   }
  506:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 22
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 22
 
 
  507:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   /* Configure the tamper backup registers erasure bit */
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  550:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   assert_param(IS_RTC_TAMPER_SAMPLING_FREQ(sTamper->SamplingFrequency));
  690              		.loc 1 550 3 view .LVU242
  551:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   assert_param(IS_RTC_TAMPER_PRECHARGE_DURATION(sTamper->PrechargeDuration));
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 23
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 23
 
 
  691              		.loc 1 551 3 view .LVU243
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  727              		.loc 1 568 15 is_stmt 0 discriminator 2 view .LVU261
  728 001e 8C68     		ldr	r4, [r1, #8]
  729              		.loc 1 568 6 discriminator 2 view .LVU262
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 24
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 24
 
 
  730 0020 022C     		cmp	r4, #2
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  590:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     if ((sTamper->Tamper & RTC_TAMPER_3) != 0U)
  763              		.loc 1 590 5 is_stmt 1 view .LVU276
  764              		.loc 1 590 8 is_stmt 0 view .LVU277
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 25
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 25
 
 
  765 0046 13F0200F 		tst	r3, #32
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  620:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****       tmpreg |= (uint32_t)(RTC_TAMPCR_TAMP2MF);
  790              		.loc 1 620 7 is_stmt 1 view .LVU289
  791              		.loc 1 620 14 is_stmt 0 view .LVU290
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 26
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 26
 
 
  792 0064 42F40012 		orr	r2, r2, #2097152
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  815 007a 1343     		orrs	r3, r3, r2
  651:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****              (uint32_t)sTamper->PrechargeDuration | \
  816              		.loc 1 651 31 view .LVU301
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 27
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 27
 
 
  817 007c CA69     		ldr	r2, [r1, #28]
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  854              		.cfi_restore 5
  855              		.cfi_restore 4
  856              		.cfi_def_cfa_offset 0
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 28
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 28
 
 
  857 009c 7047     		bx	lr
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  895              		.loc 1 607 14 view .LVU334
  896 00c2 C5E7     		b	.L43
  897              	.L46:
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 29
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 29
 
 
  629:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     {
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  938              		.align	2
  939              	.L57:
  940 00e8 7F00FFFF 		.word	-65409
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 30
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 30
 
 
  941              		.cfi_endproc
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  708:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     tmpreg |= (sTamper->Tamper << TAMP_CR2_TAMP1MSK_Pos);
  709:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   }
  710:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 31
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 31
 
 
  711:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   /* Configure the tamper backup registers erasure bit */
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  961              		.loc 1 757 3 view .LVU353
  758:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   assert_param(IS_RTC_TAMPER_TRIGGER(sTamper->Trigger));
  962              		.loc 1 758 3 view .LVU354
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 32
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 32
 
 
  759:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   assert_param(IS_RTC_TAMPER_ERASE_MODE(sTamper->NoErase));
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  997              		.loc 1 777 21 is_stmt 0 discriminator 2 view .LVU374
  998 001a 0B68     		ldr	r3, [r1]
  999              		.loc 1 777 10 discriminator 2 view .LVU375
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 33
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 33
 
 
  1000 001c 1A43     		orrs	r2, r2, r3
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  1033 0040 01D0     		beq	.L65
  799:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     {
  800:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****       tmpreg |= (uint32_t)(RTC_TAMPCR_TAMP2NOERASE);
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 34
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 34
 
 
  1034              		.loc 1 800 7 is_stmt 1 view .LVU390
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  1060 005c 42F48022 		orr	r2, r2, #262144
  1061              	.LVL83:
  1062              	.L70:
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 35
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 35
 
 
  829:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     }
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  860:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   /* Set remaining parameters of desired configuration into temporary variable */
  861:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   tmpreg |= ((uint32_t)sTamper->Filter            | \
  1086              		.loc 1 861 3 is_stmt 1 view .LVU413
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 36
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 36
 
 
  1087              		.loc 1 861 31 is_stmt 0 view .LVU414
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  881:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     __HAL_RTC_TAMPER_TIMESTAMP_EXTID2_ENABLE_IT();
  882:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   }
  883:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** #else /* SINGLE_CORE */
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 37
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 37
 
 
  884:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   __HAL_RTC_TAMPER_TIMESTAMP_EXTI_ENABLE_IT();
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  1157              	.LVL93:
  788:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   }
  1158              		.loc 1 788 12 view .LVU442
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 38
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 38
 
 
  1159 00c0 B4E7     		b	.L62
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  1196 00e8 22F48022 		bic	r2, r2, #262144
  1197              	.LVL97:
  1198              	.L73:
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 39
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 39
 
 
  845:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     {
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  1245              	.LFB152:
  896:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** #endif /* TAMP */
  897:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 40
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 40
 
 
  898:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** #if defined(TAMP)
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  1252              		.loc 1 945 3 view .LVU473
  1253              		.loc 1 945 3 view .LVU474
  1254 0000 90F82030 		ldrb	r3, [r0, #32]	@ zero_extendqisi2
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 41
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 41
 
 
  1255 0004 012B     		cmp	r3, #1
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  960:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     hrtc->Instance->TAMPCR &= ((uint32_t)~(RTC_IT_TAMP | RTC_IT_TAMP2));
  1294              		.loc 1 960 5 is_stmt 1 view .LVU490
  1295              		.loc 1 960 9 is_stmt 0 view .LVU491
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 42
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 42
 
 
  1296 0036 0268     		ldr	r2, [r0]
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  1336 0062 7047     		bx	lr
  1337              	.LVL105:
  1338              	.L87:
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 43
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 43
 
 
  945:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 1006:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   * @param  hrtc RTC handle
 1007:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   * @param  sIntTamper Pointer to Internal Tamper Structure.
 1008:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   * @retval HAL status
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 44
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 44
 
 
 1009:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   */
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 1063:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   * @param  sAllTamper Pointer to active Tamper Structure.
 1064:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   * @retval HAL status
 1065:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   */
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 45
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 45
 
 
 1066:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** HAL_StatusTypeDef HAL_RTCEx_SetActiveTampers(RTC_HandleTypeDef *hrtc, RTC_ActiveTampersTypeDef *sAl
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 1120:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****         __HAL_RTC_TAMPER_TIMESTAMP_EXTI_ENABLE_RISING_EDGE();
 1121:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
 1122:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****         /* Interrupt enable register */
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 46
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 46
 
 
 1123:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****         IER |= (TAMP_IER_TAMP1IE << i);
@@ -2758,7 +2758,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 1177:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   * @param  pSeed Pointer to active tamper seed values.
 1178:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   * @retval HAL status
 1179:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   */
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 47
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 47
 
 
 1180:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** HAL_StatusTypeDef HAL_RTCEx_SetActiveSeed(RTC_HandleTypeDef *hrtc, uint32_t *pSeed)
@@ -2818,7 +2818,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 1234:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** #if defined(TAMP_ATCR2_ATOSEL1)
 1235:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   CLEAR_BIT(TAMP->ATCR2, TAMP_ATCR2_ATOSEL1 | TAMP_ATCR2_ATOSEL2 | TAMP_ATCR2_ATOSEL3 | TAMP_ATCR2_
 1236:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****             TAMP_ATCR2_ATOSEL5 | TAMP_ATCR2_ATOSEL6 | TAMP_ATCR2_ATOSEL7 | TAMP_ATCR2_ATOSEL8);
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 48
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 48
 
 
 1237:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** #endif /* TAMP_ATCR2_ATOSEL1 */
@@ -2878,7 +2878,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 1291:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     hrtc->Tamper1EventCallback(hrtc);
 1292:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** #else
 1293:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     /* Tamper 1 callback */
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 49
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 49
 
 
 1294:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     HAL_RTCEx_Tamper1EventCallback(hrtc);
@@ -2938,7 +2938,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 1348:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   {
 1349:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** #if (USE_HAL_RTC_REGISTER_CALLBACKS == 1)
 1350:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     /* Call Internal Tamper 3 Event registered callback */
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 50
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 50
 
 
 1351:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     hrtc->InternalTamper3EventCallback(hrtc);
@@ -2998,7 +2998,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 1405:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
 1406:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   /* Change RTC state */
 1407:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   hrtc->State = HAL_RTC_STATE_READY;
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 51
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 51
 
 
 1408:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** }
@@ -3058,7 +3058,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 1462:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   /* Get the Tamper 2 interrupt source enable status */
 1463:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   if (__HAL_RTC_TAMPER_GET_IT_SOURCE(hrtc, RTC_IT_TAMP | RTC_IT_TAMP2) != 0U)
 1464:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   {
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 52
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 52
 
 
 1465:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     /* Get the pending status of the Tamper 2 Interrupt */
@@ -3118,7 +3118,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 1513:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   /* NOTE : This function should not be modified, when the callback is needed,
 1514:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****             the HAL_RTCEx_TimeStampEventCallback could be implemented in the user file
 1515:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   */
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 53
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 53
 
 
 1516:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** }
@@ -3178,7 +3178,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  1400              		.thumb_func
  1402              	HAL_RTCEx_Tamper2EventCallback:
  1403              	.LVL109:
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 54
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 54
 
 
  1404              	.LFB156:
@@ -3238,7 +3238,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 1570:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****    */
 1571:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** }
  1432              		.loc 1 1571 1 is_stmt 0 view .LVU520
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 55
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 55
 
 
  1433 0000 7047     		bx	lr
@@ -3298,7 +3298,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  1478              		.loc 1 1445 7 is_stmt 0 view .LVU531
  1479 0022 2268     		ldr	r2, [r4]
  1480 0024 116C     		ldr	r1, [r2, #64]
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 56
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 56
 
 
  1481 0026 234B     		ldr	r3, .L108
@@ -3358,7 +3358,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  1519 0052 13F4004F 		tst	r3, #32768
  1520 0056 1ED1     		bne	.L107
  1521              	.L102:
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 57
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 57
 
 
 1499:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** }
@@ -3418,7 +3418,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  1566 009a 43F07F43 		orr	r3, r3, #-16777216
  1567 009e 43F47F03 		orr	r3, r3, #16711680
  1568 00a2 43F4FE43 		orr	r3, r3, #32512
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 58
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 58
 
 
  1569 00a6 43F07F03 		orr	r3, r3, #127
@@ -3478,7 +3478,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 1601:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****    */
 1602:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** }
 1603:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 59
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 59
 
 
 1604:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** /**
@@ -3538,7 +3538,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 1658:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
 1659:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   /* NOTE : This function should not be modified, when the callback is needed,
 1660:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****             the HAL_RTCEx_InternalTamper6EventCallback could be implemented in the user file
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 60
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 60
 
 
 1661:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****    */
@@ -3598,7 +3598,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  1611 0006 FFF7FEFF 		bl	HAL_GetTick
  1612              	.LVL119:
  1613              		.loc 1 1698 24 view .LVU563
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 61
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 61
 
 
  1614 000a 0646     		mov	r6, r0
@@ -3658,7 +3658,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  1649              		.loc 1 1717 21 is_stmt 0 view .LVU579
  1650 0032 0320     		movs	r0, #3
  1651 0034 84F82100 		strb	r0, [r4, #33]
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 62
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 62
 
 
 1718:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****         return HAL_TIMEOUT;
@@ -3718,7 +3718,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  1693              	.LFB159:
 1728:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
 1729:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** /**
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 63
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 63
 
 
 1730:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   * @}
@@ -3778,7 +3778,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  1725              		.loc 1 1752 8 is_stmt 0 view .LVU603
  1726 0016 B5F1FF3F 		cmp	r5, #-1
  1727 001a F7D0     		beq	.L122
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 64
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 64
 
 
 1753:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     {
@@ -3838,7 +3838,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  1765              		.cfi_endproc
  1766              	.LFE159:
  1768              		.section	.text.HAL_RTCEx_PollForTamper2Event,"ax",%progbits
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 65
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 65
 
 
  1769              		.align	1
@@ -3898,7 +3898,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  1809              		.loc 1 1784 8 is_stmt 0 view .LVU630
  1810 0016 B5F1FF3F 		cmp	r5, #-1
  1811 001a F7D0     		beq	.L130
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 66
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 66
 
 
 1785:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     {
@@ -3958,7 +3958,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  1849              		.cfi_endproc
  1850              	.LFE160:
  1852              		.section	.text.HAL_RTCEx_PollForTamper3Event,"ax",%progbits
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 67
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 67
 
 
  1853              		.align	1
@@ -4018,7 +4018,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  1893              		.loc 1 1816 8 is_stmt 0 view .LVU657
  1894 0016 B5F1FF3F 		cmp	r5, #-1
  1895 001a F7D0     		beq	.L138
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 68
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 68
 
 
 1817:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     {
@@ -4078,7 +4078,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  1933              		.loc 1 1833 1 view .LVU672
  1934 0050 70BD     		pop	{r4, r5, r6, pc}
  1935              		.loc 1 1833 1 view .LVU673
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 69
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 69
 
 
  1936              		.cfi_endproc
@@ -4138,7 +4138,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 1877:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** @verbatim
 1878:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****  ===============================================================================
 1879:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****                         ##### RTC Wake-up functions #####
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 70
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 70
 
 
 1880:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****  ===============================================================================
@@ -4198,7 +4198,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 1905:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
 1906:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   hrtc->State = HAL_RTC_STATE_BUSY;
  1978              		.loc 1 1906 3 discriminator 2 view .LVU683
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 71
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 71
 
 
  1979              		.loc 1 1906 15 is_stmt 0 discriminator 2 view .LVU684
@@ -4258,7 +4258,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 1933:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****         /* Enable the write protection for RTC registers */
 1934:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****         __HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
 1935:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 72
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 72
 
 
 1936:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****         hrtc->State = HAL_RTC_STATE_TIMEOUT;
@@ -4318,7 +4318,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  2037              		.loc 1 1959 3 view .LVU708
  2038 0054 2368     		ldr	r3, [r4]
  2039 0056 FF22     		movs	r2, #255
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 73
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 73
 
 
  2040 0058 5A62     		str	r2, [r3, #36]
@@ -4378,7 +4378,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  2077              	.LVL146:
 1931:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****       {
  2078              		.loc 1 1931 26 view .LVU726
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 74
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 74
 
 
  2079 007c C01B     		subs	r0, r0, r7
@@ -4438,7 +4438,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  2122              	HAL_RTCEx_SetWakeUpTimer_IT:
  2123              	.LVL149:
  2124              	.LFB163:
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 75
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 75
 
 
 1968:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
@@ -4498,7 +4498,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 1989:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   /* Disable the write protection for RTC registers */
 1990:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   __HAL_RTC_WRITEPROTECTION_DISABLE(hrtc);
  2158              		.loc 1 1990 3 is_stmt 1 discriminator 2 view .LVU751
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 76
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 76
 
 
  2159              		.loc 1 1990 3 discriminator 2 view .LVU752
@@ -4558,7 +4558,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 2021:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
 2022:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****         return HAL_TIMEOUT;
 2023:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****       }
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 77
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 77
 
 
 2024:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     }
@@ -4618,7 +4618,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  2211 004e D3F88020 		ldr	r2, [r3, #128]
  2212 0052 42F40022 		orr	r2, r2, #524288
  2213 0056 C3F88020 		str	r2, [r3, #128]
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 78
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 78
 
 
  2214              	.LVL156:
@@ -4678,7 +4678,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  2248 0088 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
  2249              	.LVL158:
  2250              	.L161:
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 79
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 79
 
 
 2007:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
@@ -4738,7 +4738,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  2287              		.loc 1 2020 9 view .LVU804
  2288 00b2 0023     		movs	r3, #0
  2289 00b4 84F82030 		strb	r3, [r4, #32]
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 80
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 80
 
 
 2020:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
@@ -4798,7 +4798,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 2080:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   /* Process Locked */
 2081:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   __HAL_LOCK(hrtc);
  2331              		.loc 1 2081 3 view .LVU813
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 81
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 81
 
 
  2332              		.loc 1 2081 3 view .LVU814
@@ -4858,7 +4858,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 2096:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** #if defined(TAMP)
 2097:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   while (READ_BIT(hrtc->Instance->ICSR, RTC_FLAG_WUTWF) == 0U)
 2098:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** #else
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 82
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 82
 
 
 2099:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   while(__HAL_RTC_WAKEUPTIMER_GET_FLAG(hrtc, RTC_FLAG_WUTWF) == 0U)
@@ -4918,7 +4918,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 2116:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   /* Enable the write protection for RTC registers */
 2117:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   __HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
  2409              		.loc 1 2117 3 is_stmt 1 view .LVU846
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 83
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 83
 
 
  2410              		.loc 1 2117 3 view .LVU847
@@ -4978,7 +4978,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  2448              		.loc 1 2133 1 is_stmt 1 view -0
  2449              		.cfi_startproc
  2450              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 84
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 84
 
 
  2451              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -5038,7 +5038,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 2166:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     /* WAKEUPTIMER callback */
 2167:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   #if (USE_HAL_RTC_REGISTER_CALLBACKS == 1)
 2168:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     /* Call WakeUpTimerEvent registered Callback */
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 85
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 85
 
 
 2169:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     hrtc->WakeUpTimerEventCallback(hrtc);
@@ -5098,7 +5098,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  2490              		.thumb
  2491              		.thumb_func
  2493              	HAL_RTCEx_WakeUpTimerIRQHandler:
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 86
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 86
 
 
  2494              	.LVL174:
@@ -5158,7 +5158,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  2536              		.loc 1 2186 5 is_stmt 0 view .LVU877
  2537 0030 F3E7     		b	.L174
  2538              		.cfi_endproc
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 87
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 87
 
 
  2539              	.LFE166:
@@ -5218,7 +5218,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 2223:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     if (Timeout != HAL_MAX_DELAY)
  2581              		.loc 1 2223 5 is_stmt 1 view .LVU887
  2582              		.loc 1 2223 8 is_stmt 0 view .LVU888
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 88
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 88
 
 
  2583 0016 B5F1FF3F 		cmp	r5, #-1
@@ -5278,7 +5278,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  2620 0044 70BD     		pop	{r4, r5, r6, pc}
  2621              		.loc 1 2240 1 view .LVU904
  2622              		.cfi_endproc
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 89
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 89
 
 
  2623              	.LFE168:
@@ -5338,7 +5338,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 2279:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
 2280:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   /* Check the parameters */
 2281:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   assert_param(IS_RTC_BKP(BackupRegister));
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 90
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 90
 
 
  2641              		.loc 1 2281 3 view .LVU907
@@ -5398,7 +5398,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 2307:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   uint32_t tmp;
  2672              		.loc 1 2307 3 view .LVU916
 2308:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 91
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 91
 
 
 2309:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   /* Check the parameters */
@@ -5458,7 +5458,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 2338:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     [..]
 2339:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     This subsection provides functions allowing to
 2340:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****       (+) Write a data in a specified RTC Backup data register
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 92
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 92
 
 
 2341:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****       (+) Read a data in a specified RTC Backup data register
@@ -5518,7 +5518,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 2379:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
 2380:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   /* Check the parameters */
 2381:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   assert_param(IS_RTC_SMOOTH_CALIB_PERIOD(SmoothCalibPeriod));
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 93
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 93
 
 
  2716              		.loc 1 2381 3 view .LVU928
@@ -5578,7 +5578,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 2403:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   if ((hrtc->Instance->ISR  & RTC_ISR_RECALPF)  != 0U)
  2749              		.loc 1 2403 3 discriminator 2 view .LVU943
  2750              		.loc 1 2403 12 is_stmt 0 discriminator 2 view .LVU944
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 94
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 94
 
 
  2751 002c 0368     		ldr	r3, [r0]
@@ -5638,7 +5638,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  2777              		.loc 1 2431 3 view .LVU952
 2432:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
 2433:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   /* Change RTC state */
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 95
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 95
 
 
 2434:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   hrtc->State = HAL_RTC_STATE_READY;
@@ -5698,7 +5698,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 2411:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****       {
  2815              		.loc 1 2411 26 view .LVU970
  2816 0070 A0EB0800 		sub	r0, r0, r8
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 96
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 96
 
 
 2411:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****       {
@@ -5758,7 +5758,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  2860              	.LVL200:
  2861              	.LFB172:
 2441:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 97
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 97
 
 
 2442:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** /**
@@ -5818,7 +5818,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  2891              		.loc 1 2465 3 discriminator 2 view .LVU993
  2892              		.loc 1 2465 15 is_stmt 0 discriminator 2 view .LVU994
  2893 0018 0223     		movs	r3, #2
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 98
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 98
 
 
  2894 001a 80F82130 		strb	r3, [r0, #33]
@@ -5878,7 +5878,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 2481:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****         /* Enable the write protection for RTC registers */
 2482:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****         __HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
  2933              		.loc 1 2482 9 is_stmt 1 view .LVU1012
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 99
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 99
 
 
  2934              		.loc 1 2482 9 view .LVU1013
@@ -5938,7 +5938,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 2520:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
 2521:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     /* Change RTC state */
 2522:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     hrtc->State = HAL_RTC_STATE_ERROR;
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 100
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 100
 
 
 2523:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
@@ -5998,7 +5998,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  2976              		.loc 1 2531 3 is_stmt 1 view .LVU1032
 2531:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
  2977              		.loc 1 2531 3 view .LVU1033
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 101
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 101
 
 
  2978 0074 2368     		ldr	r3, [r4]
@@ -6058,7 +6058,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  3014              		.loc 1 2510 9 view .LVU1051
  3015 009e 0023     		movs	r3, #0
  3016 00a0 84F82030 		strb	r3, [r4, #32]
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 102
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 102
 
 
 2510:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
@@ -6118,7 +6118,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  3057              		.cfi_endproc
  3058              	.LFE172:
  3060              		.section	.text.HAL_RTCEx_SetCalibrationOutPut,"ax",%progbits
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 103
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 103
 
 
  3061              		.align	1
@@ -6178,7 +6178,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 2562:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   __HAL_RTC_WRITEPROTECTION_DISABLE(hrtc);
  3094              		.loc 1 2562 3 is_stmt 1 discriminator 2 view .LVU1076
  3095              		.loc 1 2562 3 discriminator 2 view .LVU1077
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 104
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 104
 
 
  3096 0016 0368     		ldr	r3, [r0]
@@ -6238,7 +6238,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 2579:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   __HAL_UNLOCK(hrtc);
  3134              		.loc 1 2579 3 is_stmt 1 discriminator 2 view .LVU1093
  3135              		.loc 1 2579 3 discriminator 2 view .LVU1094
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 105
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 105
 
 
  3136 0048 0023     		movs	r3, #0
@@ -6298,7 +6298,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  3178 0006 1AD0     		beq	.L219
  3179              		.loc 1 2592 3 discriminator 2 view .LVU1104
  3180 0008 0122     		movs	r2, #1
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 106
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 106
 
 
  3181 000a 80F82020 		strb	r2, [r0, #32]
@@ -6358,7 +6358,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  3217              		.loc 1 2610 10 is_stmt 0 discriminator 2 view .LVU1122
  3218 003a 1846     		mov	r0, r3
  3219              	.LVL218:
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 107
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 107
 
 
  3220              		.loc 1 2610 10 discriminator 2 view .LVU1123
@@ -6418,7 +6418,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  3262              		.loc 1 2622 3 discriminator 2 view .LVU1132
 2623:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
 2624:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   hrtc->State = HAL_RTC_STATE_BUSY;
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 108
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 108
 
 
  3263              		.loc 1 2624 3 discriminator 2 view .LVU1133
@@ -6478,7 +6478,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  3297              		.loc 1 2644 17 is_stmt 0 view .LVU1149
  3298 0034 0123     		movs	r3, #1
  3299              	.LVL224:
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 109
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 109
 
 
  3300              		.loc 1 2644 17 view .LVU1150
@@ -6538,7 +6538,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  3343              		.section	.text.HAL_RTCEx_DeactivateRefClock,"ax",%progbits
  3344              		.align	1
  3345              		.global	HAL_RTCEx_DeactivateRefClock
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 110
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 110
 
 
  3346              		.syntax unified
@@ -6598,7 +6598,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  3384 001e 0368     		ldr	r3, [r0]
  3385 0020 5322     		movs	r2, #83
  3386 0022 5A62     		str	r2, [r3, #36]
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 111
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 111
 
 
  3387              		.loc 1 2666 3 discriminator 2 view .LVU1175
@@ -6658,7 +6658,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  3418              		.loc 1 2689 3 view .LVU1190
 2690:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
 2691:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   return HAL_OK;
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 112
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 112
 
 
  3419              		.loc 1 2691 3 view .LVU1191
@@ -6718,7 +6718,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 2697:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   *         directly from the Calendar counter.
 2698:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   * @param  hrtc RTC handle
 2699:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   * @retval HAL status
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 113
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 113
 
 
 2700:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   */
@@ -6778,7 +6778,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  3502 002c FF21     		movs	r1, #255
  3503 002e 5962     		str	r1, [r3, #36]
  3504              		.loc 1 2715 3 discriminator 2 view .LVU1216
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 114
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 114
 
 
 2716:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
@@ -6838,7 +6838,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  3541              		@ args = 0, pretend = 0, frame = 0
  3542              		@ frame_needed = 0, uses_anonymous_args = 0
  3543              		@ link register save eliminated.
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 115
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 115
 
 
 2735:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   /* Process Locked */
@@ -6898,7 +6898,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  3582 0030 80F82120 		strb	r2, [r0, #33]
 2751:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
 2752:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   /* Process Unlocked */
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 116
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 116
 
 
 2753:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   __HAL_UNLOCK(hrtc);
@@ -6958,7 +6958,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 2777:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** 
 2778:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** /**
 2779:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   * @brief  Monotonic counter incrementation.
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 117
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 117
 
 
 2780:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   * @param  hrtc RTC handle
@@ -7018,7 +7018,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
 2828:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   /* NOTE : This function should not be modified, when the callback is needed,
 2829:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****             the HAL_RTCEx_AlarmBEventCallback could be implemented in the user file
 2830:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****    */
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 118
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 118
 
 
 2831:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** }
@@ -7078,7 +7078,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  3663 0010 12F4007F 		tst	r2, #512
  3664 0014 0DD1     		bne	.L254
 2844:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****   {
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 119
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 119
 
 
 2845:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c ****     if (Timeout != HAL_MAX_DELAY)
@@ -7138,7 +7138,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  3702              	.L251:
 2862:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rtc_ex.c **** }
  3703              		.loc 1 2862 1 view .LVU1282
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 120
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 120
 
 
  3704 0044 70BD     		pop	{r4, r5, r6, pc}
@@ -7154,97 +7154,97 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 1
  3715              		.file 6 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc.h"
  3716              		.file 7 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_rtc_ex.h"
  3717              		.file 8 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h"
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 121
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 121
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32h7xx_hal_rtc_ex.c
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:19     .text.HAL_RTCEx_SetTimeStamp:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:25     .text.HAL_RTCEx_SetTimeStamp:00000000 HAL_RTCEx_SetTimeStamp
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:133    .text.HAL_RTCEx_SetTimeStamp_IT:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:139    .text.HAL_RTCEx_SetTimeStamp_IT:00000000 HAL_RTCEx_SetTimeStamp_IT
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:257    .text.HAL_RTCEx_DeactivateTimeStamp:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:263    .text.HAL_RTCEx_DeactivateTimeStamp:00000000 HAL_RTCEx_DeactivateTimeStamp
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:357    .text.HAL_RTCEx_DeactivateTimeStamp:00000054 $d
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:362    .text.HAL_RTCEx_SetInternalTimeStamp:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:368    .text.HAL_RTCEx_SetInternalTimeStamp:00000000 HAL_RTCEx_SetInternalTimeStamp
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:435    .text.HAL_RTCEx_DeactivateInternalTimeStamp:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:441    .text.HAL_RTCEx_DeactivateInternalTimeStamp:00000000 HAL_RTCEx_DeactivateInternalTimeStamp
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:508    .text.HAL_RTCEx_GetTimeStamp:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:514    .text.HAL_RTCEx_GetTimeStamp:00000000 HAL_RTCEx_GetTimeStamp
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:665    .text.HAL_RTCEx_GetTimeStamp:00000094 $d
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:670    .text.HAL_RTCEx_SetTamper:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:676    .text.HAL_RTCEx_SetTamper:00000000 HAL_RTCEx_SetTamper
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:940    .text.HAL_RTCEx_SetTamper:000000e8 $d
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:945    .text.HAL_RTCEx_SetTamper_IT:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:951    .text.HAL_RTCEx_SetTamper_IT:00000000 HAL_RTCEx_SetTamper_IT
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:1232   .text.HAL_RTCEx_SetTamper_IT:00000108 $d
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:1237   .text.HAL_RTCEx_DeactivateTamper:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:1243   .text.HAL_RTCEx_DeactivateTamper:00000000 HAL_RTCEx_DeactivateTamper
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:1347   .text.HAL_RTCEx_DeactivateTamper:00000068 $d
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:1354   .text.HAL_RTCEx_TimeStampEventCallback:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:1360   .text.HAL_RTCEx_TimeStampEventCallback:00000000 HAL_RTCEx_TimeStampEventCallback
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:1375   .text.HAL_RTCEx_Tamper1EventCallback:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:1381   .text.HAL_RTCEx_Tamper1EventCallback:00000000 HAL_RTCEx_Tamper1EventCallback
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:1396   .text.HAL_RTCEx_Tamper2EventCallback:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:1402   .text.HAL_RTCEx_Tamper2EventCallback:00000000 HAL_RTCEx_Tamper2EventCallback
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:1417   .text.HAL_RTCEx_Tamper3EventCallback:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:1423   .text.HAL_RTCEx_Tamper3EventCallback:00000000 HAL_RTCEx_Tamper3EventCallback
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:1438   .text.HAL_RTCEx_TamperTimeStampIRQHandler:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:1444   .text.HAL_RTCEx_TamperTimeStampIRQHandler:00000000 HAL_RTCEx_TamperTimeStampIRQHandler
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:1579   .text.HAL_RTCEx_TamperTimeStampIRQHandler:000000b4 $d
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:1586   .text.HAL_RTCEx_PollForTimeStampEvent:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:1592   .text.HAL_RTCEx_PollForTimeStampEvent:00000000 HAL_RTCEx_PollForTimeStampEvent
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:1685   .text.HAL_RTCEx_PollForTamper1Event:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:1691   .text.HAL_RTCEx_PollForTamper1Event:00000000 HAL_RTCEx_PollForTamper1Event
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:1769   .text.HAL_RTCEx_PollForTamper2Event:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:1775   .text.HAL_RTCEx_PollForTamper2Event:00000000 HAL_RTCEx_PollForTamper2Event
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:1853   .text.HAL_RTCEx_PollForTamper3Event:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:1859   .text.HAL_RTCEx_PollForTamper3Event:00000000 HAL_RTCEx_PollForTamper3Event
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:1940   .text.HAL_RTCEx_SetWakeUpTimer:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:1946   .text.HAL_RTCEx_SetWakeUpTimer:00000000 HAL_RTCEx_SetWakeUpTimer
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:2111   .text.HAL_RTCEx_SetWakeUpTimer:0000009c $d
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:2116   .text.HAL_RTCEx_SetWakeUpTimer_IT:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:2122   .text.HAL_RTCEx_SetWakeUpTimer_IT:00000000 HAL_RTCEx_SetWakeUpTimer_IT
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:2304   .text.HAL_RTCEx_SetWakeUpTimer_IT:000000c0 $d
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:2309   .text.HAL_RTCEx_DeactivateWakeUpTimer:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:2315   .text.HAL_RTCEx_DeactivateWakeUpTimer:00000000 HAL_RTCEx_DeactivateWakeUpTimer
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:2439   .text.HAL_RTCEx_GetWakeUpTimer:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:2445   .text.HAL_RTCEx_GetWakeUpTimer:00000000 HAL_RTCEx_GetWakeUpTimer
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:2466   .text.HAL_RTCEx_WakeUpTimerEventCallback:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:2472   .text.HAL_RTCEx_WakeUpTimerEventCallback:00000000 HAL_RTCEx_WakeUpTimerEventCallback
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:2487   .text.HAL_RTCEx_WakeUpTimerIRQHandler:00000000 $t
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s 			page 122
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:19     .text.HAL_RTCEx_SetTimeStamp:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:25     .text.HAL_RTCEx_SetTimeStamp:00000000 HAL_RTCEx_SetTimeStamp
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:133    .text.HAL_RTCEx_SetTimeStamp_IT:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:139    .text.HAL_RTCEx_SetTimeStamp_IT:00000000 HAL_RTCEx_SetTimeStamp_IT
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:257    .text.HAL_RTCEx_DeactivateTimeStamp:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:263    .text.HAL_RTCEx_DeactivateTimeStamp:00000000 HAL_RTCEx_DeactivateTimeStamp
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:357    .text.HAL_RTCEx_DeactivateTimeStamp:00000054 $d
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:362    .text.HAL_RTCEx_SetInternalTimeStamp:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:368    .text.HAL_RTCEx_SetInternalTimeStamp:00000000 HAL_RTCEx_SetInternalTimeStamp
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:435    .text.HAL_RTCEx_DeactivateInternalTimeStamp:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:441    .text.HAL_RTCEx_DeactivateInternalTimeStamp:00000000 HAL_RTCEx_DeactivateInternalTimeStamp
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:508    .text.HAL_RTCEx_GetTimeStamp:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:514    .text.HAL_RTCEx_GetTimeStamp:00000000 HAL_RTCEx_GetTimeStamp
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:665    .text.HAL_RTCEx_GetTimeStamp:00000094 $d
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:670    .text.HAL_RTCEx_SetTamper:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:676    .text.HAL_RTCEx_SetTamper:00000000 HAL_RTCEx_SetTamper
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:940    .text.HAL_RTCEx_SetTamper:000000e8 $d
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:945    .text.HAL_RTCEx_SetTamper_IT:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:951    .text.HAL_RTCEx_SetTamper_IT:00000000 HAL_RTCEx_SetTamper_IT
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:1232   .text.HAL_RTCEx_SetTamper_IT:00000108 $d
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:1237   .text.HAL_RTCEx_DeactivateTamper:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:1243   .text.HAL_RTCEx_DeactivateTamper:00000000 HAL_RTCEx_DeactivateTamper
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:1347   .text.HAL_RTCEx_DeactivateTamper:00000068 $d
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:1354   .text.HAL_RTCEx_TimeStampEventCallback:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:1360   .text.HAL_RTCEx_TimeStampEventCallback:00000000 HAL_RTCEx_TimeStampEventCallback
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:1375   .text.HAL_RTCEx_Tamper1EventCallback:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:1381   .text.HAL_RTCEx_Tamper1EventCallback:00000000 HAL_RTCEx_Tamper1EventCallback
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:1396   .text.HAL_RTCEx_Tamper2EventCallback:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:1402   .text.HAL_RTCEx_Tamper2EventCallback:00000000 HAL_RTCEx_Tamper2EventCallback
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:1417   .text.HAL_RTCEx_Tamper3EventCallback:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:1423   .text.HAL_RTCEx_Tamper3EventCallback:00000000 HAL_RTCEx_Tamper3EventCallback
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:1438   .text.HAL_RTCEx_TamperTimeStampIRQHandler:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:1444   .text.HAL_RTCEx_TamperTimeStampIRQHandler:00000000 HAL_RTCEx_TamperTimeStampIRQHandler
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:1579   .text.HAL_RTCEx_TamperTimeStampIRQHandler:000000b4 $d
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:1586   .text.HAL_RTCEx_PollForTimeStampEvent:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:1592   .text.HAL_RTCEx_PollForTimeStampEvent:00000000 HAL_RTCEx_PollForTimeStampEvent
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:1685   .text.HAL_RTCEx_PollForTamper1Event:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:1691   .text.HAL_RTCEx_PollForTamper1Event:00000000 HAL_RTCEx_PollForTamper1Event
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:1769   .text.HAL_RTCEx_PollForTamper2Event:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:1775   .text.HAL_RTCEx_PollForTamper2Event:00000000 HAL_RTCEx_PollForTamper2Event
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:1853   .text.HAL_RTCEx_PollForTamper3Event:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:1859   .text.HAL_RTCEx_PollForTamper3Event:00000000 HAL_RTCEx_PollForTamper3Event
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:1940   .text.HAL_RTCEx_SetWakeUpTimer:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:1946   .text.HAL_RTCEx_SetWakeUpTimer:00000000 HAL_RTCEx_SetWakeUpTimer
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:2111   .text.HAL_RTCEx_SetWakeUpTimer:0000009c $d
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:2116   .text.HAL_RTCEx_SetWakeUpTimer_IT:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:2122   .text.HAL_RTCEx_SetWakeUpTimer_IT:00000000 HAL_RTCEx_SetWakeUpTimer_IT
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:2304   .text.HAL_RTCEx_SetWakeUpTimer_IT:000000c0 $d
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:2309   .text.HAL_RTCEx_DeactivateWakeUpTimer:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:2315   .text.HAL_RTCEx_DeactivateWakeUpTimer:00000000 HAL_RTCEx_DeactivateWakeUpTimer
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:2439   .text.HAL_RTCEx_GetWakeUpTimer:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:2445   .text.HAL_RTCEx_GetWakeUpTimer:00000000 HAL_RTCEx_GetWakeUpTimer
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:2466   .text.HAL_RTCEx_WakeUpTimerEventCallback:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:2472   .text.HAL_RTCEx_WakeUpTimerEventCallback:00000000 HAL_RTCEx_WakeUpTimerEventCallback
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:2487   .text.HAL_RTCEx_WakeUpTimerIRQHandler:00000000 $t
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s 			page 122
 
 
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:2493   .text.HAL_RTCEx_WakeUpTimerIRQHandler:00000000 HAL_RTCEx_WakeUpTimerIRQHandler
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:2542   .text.HAL_RTCEx_PollForWakeUpTimerEvent:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:2548   .text.HAL_RTCEx_PollForWakeUpTimerEvent:00000000 HAL_RTCEx_PollForWakeUpTimerEvent
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:2626   .text.HAL_RTCEx_BKUPWrite:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:2632   .text.HAL_RTCEx_BKUPWrite:00000000 HAL_RTCEx_BKUPWrite
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:2658   .text.HAL_RTCEx_BKUPRead:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:2664   .text.HAL_RTCEx_BKUPRead:00000000 HAL_RTCEx_BKUPRead
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:2691   .text.HAL_RTCEx_SetSmoothCalib:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:2697   .text.HAL_RTCEx_SetSmoothCalib:00000000 HAL_RTCEx_SetSmoothCalib
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:2848   .text.HAL_RTCEx_SetSmoothCalib:00000094 $d
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:2853   .text.HAL_RTCEx_SetSynchroShift:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:2859   .text.HAL_RTCEx_SetSynchroShift:00000000 HAL_RTCEx_SetSynchroShift
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:3061   .text.HAL_RTCEx_SetCalibrationOutPut:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:3067   .text.HAL_RTCEx_SetCalibrationOutPut:00000000 HAL_RTCEx_SetCalibrationOutPut
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:3160   .text.HAL_RTCEx_DeactivateCalibrationOutPut:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:3166   .text.HAL_RTCEx_DeactivateCalibrationOutPut:00000000 HAL_RTCEx_DeactivateCalibrationOutPut
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:3233   .text.HAL_RTCEx_SetRefClock:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:3239   .text.HAL_RTCEx_SetRefClock:00000000 HAL_RTCEx_SetRefClock
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:3344   .text.HAL_RTCEx_DeactivateRefClock:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:3350   .text.HAL_RTCEx_DeactivateRefClock:00000000 HAL_RTCEx_DeactivateRefClock
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:3455   .text.HAL_RTCEx_EnableBypassShadow:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:3461   .text.HAL_RTCEx_EnableBypassShadow:00000000 HAL_RTCEx_EnableBypassShadow
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:3530   .text.HAL_RTCEx_DisableBypassShadow:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:3536   .text.HAL_RTCEx_DisableBypassShadow:00000000 HAL_RTCEx_DisableBypassShadow
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:3605   .text.HAL_RTCEx_AlarmBEventCallback:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:3611   .text.HAL_RTCEx_AlarmBEventCallback:00000000 HAL_RTCEx_AlarmBEventCallback
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:3626   .text.HAL_RTCEx_PollForAlarmBEvent:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccFu6GDF.s:3632   .text.HAL_RTCEx_PollForAlarmBEvent:00000000 HAL_RTCEx_PollForAlarmBEvent
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:2493   .text.HAL_RTCEx_WakeUpTimerIRQHandler:00000000 HAL_RTCEx_WakeUpTimerIRQHandler
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:2542   .text.HAL_RTCEx_PollForWakeUpTimerEvent:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:2548   .text.HAL_RTCEx_PollForWakeUpTimerEvent:00000000 HAL_RTCEx_PollForWakeUpTimerEvent
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:2626   .text.HAL_RTCEx_BKUPWrite:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:2632   .text.HAL_RTCEx_BKUPWrite:00000000 HAL_RTCEx_BKUPWrite
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:2658   .text.HAL_RTCEx_BKUPRead:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:2664   .text.HAL_RTCEx_BKUPRead:00000000 HAL_RTCEx_BKUPRead
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:2691   .text.HAL_RTCEx_SetSmoothCalib:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:2697   .text.HAL_RTCEx_SetSmoothCalib:00000000 HAL_RTCEx_SetSmoothCalib
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:2848   .text.HAL_RTCEx_SetSmoothCalib:00000094 $d
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:2853   .text.HAL_RTCEx_SetSynchroShift:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:2859   .text.HAL_RTCEx_SetSynchroShift:00000000 HAL_RTCEx_SetSynchroShift
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:3061   .text.HAL_RTCEx_SetCalibrationOutPut:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:3067   .text.HAL_RTCEx_SetCalibrationOutPut:00000000 HAL_RTCEx_SetCalibrationOutPut
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:3160   .text.HAL_RTCEx_DeactivateCalibrationOutPut:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:3166   .text.HAL_RTCEx_DeactivateCalibrationOutPut:00000000 HAL_RTCEx_DeactivateCalibrationOutPut
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:3233   .text.HAL_RTCEx_SetRefClock:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:3239   .text.HAL_RTCEx_SetRefClock:00000000 HAL_RTCEx_SetRefClock
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:3344   .text.HAL_RTCEx_DeactivateRefClock:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:3350   .text.HAL_RTCEx_DeactivateRefClock:00000000 HAL_RTCEx_DeactivateRefClock
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:3455   .text.HAL_RTCEx_EnableBypassShadow:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:3461   .text.HAL_RTCEx_EnableBypassShadow:00000000 HAL_RTCEx_EnableBypassShadow
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:3530   .text.HAL_RTCEx_DisableBypassShadow:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:3536   .text.HAL_RTCEx_DisableBypassShadow:00000000 HAL_RTCEx_DisableBypassShadow
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:3605   .text.HAL_RTCEx_AlarmBEventCallback:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:3611   .text.HAL_RTCEx_AlarmBEventCallback:00000000 HAL_RTCEx_AlarmBEventCallback
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:3626   .text.HAL_RTCEx_PollForAlarmBEvent:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccQKbDLE.s:3632   .text.HAL_RTCEx_PollForAlarmBEvent:00000000 HAL_RTCEx_PollForAlarmBEvent
 
 UNDEFINED SYMBOLS
 RTC_Bcd2ToByte

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 1
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 1
   29:modules/gyro/gyro.c ****     transition_32 |= Data_3 << 16;
   30:modules/gyro/gyro.c ****     transition_32 |= Data_2 << 8;
   31:modules/gyro/gyro.c ****     transition_32 |= Data_1;
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 2
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s 			page 2
 
 
   32:modules/gyro/gyro.c ****     sign = (transition_32 & 0x80000000) ? -1 : 1; // 符号位
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 1
   86:modules/gyro/gyro.c ****             AHRSData_Packet.Pitch = DATA_Trans(gyro_buff[23], gyro_buff[24], gyro_buff[25], gyro_bu
   87:modules/gyro/gyro.c ****             AHRSData_Packet.Heading = DATA_Trans(gyro_buff[27], gyro_buff[28], gyro_buff[29], gyro_
   88:modules/gyro/gyro.c ****             AHRSData_Packet.Qw = DATA_Trans(gyro_buff[31], gyro_buff[32], gyro_buff[33], gyro_buff[
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 3
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s 			page 3
 
 
   89:modules/gyro/gyro.c ****             AHRSData_Packet.Qx = DATA_Trans(gyro_buff[35], gyro_buff[36], gyro_buff[37], gyro_buff[
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 1
  133:modules/gyro/gyro.c ****     //     USARTServiceInit(rGYRO_instance);                                      // 尝试重新�
  134:modules/gyro/gyro.c ****     //     LOGWARNING("[lidar] left lidar lost");
  135:modules/gyro/gyro.c ****     // }
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 4
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s 			page 4
 
 
  136:modules/gyro/gyro.c ****     USARTServiceInit(gyro_instance);
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 1
   85              		.loc 1 26 5 view .LVU11
   27:modules/gyro/gyro.c ****     transition_32 |= Data_4 << 24;
   86              		.loc 1 27 5 view .LVU12
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 5
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s 			page 5
 
 
   28:modules/gyro/gyro.c ****     transition_32 |= Data_3 << 16;
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 1
  125 002c 07EE100A 		vmov	s14, r0
   36:modules/gyro/gyro.c ****     tmp = sign * mantissa * pow(2, exponent);
  126              		.loc 1 36 55 discriminator 4 view .LVU29
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 6
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s 			page 6
 
 
  127 0030 DFED107A 		vldr.32	s15, .L9+4
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 1
  171 0070 FFFFFFFF 		.word	-1
  172 0074 FEFFFF4A 		.word	1258291198
  173 0078 01000000 		.word	1
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 7
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s 			page 7
 
 
  174              		.cfi_endproc
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 1
  216              		.cfi_endproc
  217              	.LFE145:
  219              		.section	.text.GYRO_buff_to_data,"ax",%progbits
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 8
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s 			page 8
 
 
  220              		.align	1
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 1
  263              		.loc 1 80 23 is_stmt 0 view .LVU65
  264 0016 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
   80:modules/gyro/gyro.c ****         {
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 9
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s 			page 9
 
 
  265              		.loc 1 80 12 view .LVU66
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 1
  306              		.loc 1 85 13 is_stmt 1 view .LVU79
   85:modules/gyro/gyro.c ****             AHRSData_Packet.Pitch = DATA_Trans(gyro_buff[23], gyro_buff[24], gyro_buff[25], gyro_bu
  307              		.loc 1 85 36 is_stmt 0 view .LVU80
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 10
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s 			page 10
 
 
  308 0054 A37D     		ldrb	r3, [r4, #22]	@ zero_extendqisi2
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 1
  350 00a2 94F82410 		ldrb	r1, [r4, #36]	@ zero_extendqisi2
  351 00a6 94F82300 		ldrb	r0, [r4, #35]	@ zero_extendqisi2
  352 00aa FFF7FEFF 		bl	DATA_Trans
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 11
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s 			page 11
 
 
  353              	.LVL38:
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 1
  393              		.loc 1 93 62 view .LVU106
  394 0108 9FED257B 		vldr.64	d7, .L16+8
  395 010c 85EE074B 		vdiv.f64	d4, d5, d7
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 12
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s 			page 12
 
 
  396 0110 B7EEC44B 		vcvt.f32.f64	s8, d4
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 1
  433              		.loc 1 97 13 is_stmt 1 view .LVU123
   97:modules/gyro/gyro.c ****             gyro_data->YawSpeed = AHRSData_Packet.HeadingSpeed * 180.0 / PI;
  434              		.loc 1 97 45 is_stmt 0 view .LVU124
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 13
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s 			page 13
 
 
  435 0162 95ED055A 		vldr.32	s10, [r5, #20]
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 1
  112:modules/gyro/gyro.c ****     DaemonReload(GYRO_daemon_instance); // 先喂狗
  481              		.loc 1 112 1 is_stmt 0 view .LVU135
  482 0000 10B5     		push	{r4, lr}
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 14
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s 			page 14
 
 
  483              	.LCFI6:
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 1
  530              	.LCFI7:
  531              		.cfi_def_cfa_offset 8
  532              		.cfi_offset 4, -8
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 15
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s 			page 15
 
 
  533              		.cfi_offset 14, -4
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 1
  153:modules/gyro/gyro.c ****     return gyro_data;
  575              		.loc 1 153 5 is_stmt 1 view .LVU160
  154:modules/gyro/gyro.c **** }
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 16
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s 			page 16
 
 
  576              		.loc 1 154 1 is_stmt 0 view .LVU161
@@ -951,34 +951,34 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 1
  626              		.file 10 "bsp/usart/bsp_usart.h"
  627              		.file 11 "modules/daemon/daemon.h"
  628              		.file 12 "d:\\rm\\arm-gnu-toolchian\\arm-none-eabi\\include\\math.h"
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s 			page 17
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s 			page 17
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 gyro.c
-C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s:19     .text.GYROLostCallback:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s:24     .text.GYROLostCallback:00000000 GYROLostCallback
-C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s:50     .text.GYROLostCallback:0000000c $d
-C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s:56     .text.DATA_Trans:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s:62     .text.DATA_Trans:00000000 DATA_Trans
-C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s:171    .text.DATA_Trans:00000070 $d
-C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s:178    .text.timestamp:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s:184    .text.timestamp:00000000 timestamp
-C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s:220    .text.GYRO_buff_to_data:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s:225    .text.GYRO_buff_to_data:00000000 GYRO_buff_to_data
-C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s:460    .text.GYRO_buff_to_data:00000198 $d
-C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s:469    .text.GYRORxCallback:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s:474    .text.GYRORxCallback:00000000 GYRORxCallback
-C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s:509    .text.GYRORxCallback:0000001c $d
-C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s:515    .text.Gyro_Init:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s:521    .text.Gyro_Init:00000000 Gyro_Init
-C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s:588    .text.Gyro_Init:00000038 $d
-C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s:596    .bss.AHRSData_Packet:00000000 $d
-C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s:600    .bss.AHRSData_Packet:00000000 AHRSData_Packet
-C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s:603    .bss.GYRO_daemon_instance:00000000 $d
-C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s:607    .bss.GYRO_daemon_instance:00000000 GYRO_daemon_instance
-C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s:610    .bss.gyro_instance:00000000 $d
-C:\Users\blue\AppData\Local\Temp\ccBM7EHa.s:614    .bss.gyro_instance:00000000 gyro_instance
+C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s:19     .text.GYROLostCallback:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s:24     .text.GYROLostCallback:00000000 GYROLostCallback
+C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s:50     .text.GYROLostCallback:0000000c $d
+C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s:56     .text.DATA_Trans:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s:62     .text.DATA_Trans:00000000 DATA_Trans
+C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s:171    .text.DATA_Trans:00000070 $d
+C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s:178    .text.timestamp:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s:184    .text.timestamp:00000000 timestamp
+C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s:220    .text.GYRO_buff_to_data:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s:225    .text.GYRO_buff_to_data:00000000 GYRO_buff_to_data
+C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s:460    .text.GYRO_buff_to_data:00000198 $d
+C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s:469    .text.GYRORxCallback:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s:474    .text.GYRORxCallback:00000000 GYRORxCallback
+C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s:509    .text.GYRORxCallback:0000001c $d
+C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s:515    .text.Gyro_Init:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s:521    .text.Gyro_Init:00000000 Gyro_Init
+C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s:588    .text.Gyro_Init:00000038 $d
+C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s:596    .bss.AHRSData_Packet:00000000 $d
+C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s:600    .bss.AHRSData_Packet:00000000 AHRSData_Packet
+C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s:603    .bss.GYRO_daemon_instance:00000000 $d
+C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s:607    .bss.GYRO_daemon_instance:00000000 GYRO_daemon_instance
+C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s:610    .bss.gyro_instance:00000000 $d
+C:\Users\blue\AppData\Local\Temp\ccwYLLQ7.s:614    .bss.gyro_instance:00000000 gyro_instance
 
 UNDEFINED SYMBOLS
 USARTServiceInit

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 1
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,30 +58,27 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 1
   29:Core/Src/syscalls.c **** #include <time.h>
   30:Core/Src/syscalls.c **** #include <sys/time.h>
   31:Core/Src/syscalls.c **** #include <sys/times.h>
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 2
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s 			page 2
 
 
   32:Core/Src/syscalls.c **** 
-  33:Core/Src/syscalls.c **** 
-  34:Core/Src/syscalls.c **** /* Variables */
-  35:Core/Src/syscalls.c **** extern int __io_putchar(int ch) __attribute__((weak));
-  36:Core/Src/syscalls.c **** extern int __io_getchar(void) __attribute__((weak));
-  37:Core/Src/syscalls.c **** 
-  38:Core/Src/syscalls.c **** 
-  39:Core/Src/syscalls.c **** char *__env[1] = { 0 };
-  40:Core/Src/syscalls.c **** char **environ = __env;
-  41:Core/Src/syscalls.c **** 
-  42:Core/Src/syscalls.c **** 
-  43:Core/Src/syscalls.c **** /* Functions */
-  44:Core/Src/syscalls.c **** void initialise_monitor_handles()
-  45:Core/Src/syscalls.c **** {
-  28              		.loc 1 45 1 view -0
+  33:Core/Src/syscalls.c **** /* Variables */
+  34:Core/Src/syscalls.c **** extern int __io_putchar(int ch) __attribute__((weak));
+  35:Core/Src/syscalls.c **** extern int __io_getchar(void) __attribute__((weak));
+  36:Core/Src/syscalls.c **** 
+  37:Core/Src/syscalls.c **** char *__env[1] = {0};
+  38:Core/Src/syscalls.c **** char **environ = __env;
+  39:Core/Src/syscalls.c **** 
+  40:Core/Src/syscalls.c **** /* Functions */
+  41:Core/Src/syscalls.c **** void initialise_monitor_handles()
+  42:Core/Src/syscalls.c **** {
+  28              		.loc 1 42 1 view -0
   29              		.cfi_startproc
   30              		@ args = 0, pretend = 0, frame = 0
   31              		@ frame_needed = 0, uses_anonymous_args = 0
   32              		@ link register save eliminated.
-  46:Core/Src/syscalls.c **** }
-  33              		.loc 1 46 1 view .LVU1
+  43:Core/Src/syscalls.c **** }
+  33              		.loc 1 43 1 view .LVU1
   34 0000 7047     		bx	lr
   35              		.cfi_endproc
   36              	.LFE25:
@@ -93,18 +90,18 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 1
   43              		.thumb_func
   45              	_getpid:
   46              	.LFB26:
-  47:Core/Src/syscalls.c **** 
-  48:Core/Src/syscalls.c **** int _getpid(void)
-  49:Core/Src/syscalls.c **** {
-  47              		.loc 1 49 1 view -0
+  44:Core/Src/syscalls.c **** 
+  45:Core/Src/syscalls.c **** int _getpid(void)
+  46:Core/Src/syscalls.c **** {
+  47              		.loc 1 46 1 view -0
   48              		.cfi_startproc
   49              		@ args = 0, pretend = 0, frame = 0
   50              		@ frame_needed = 0, uses_anonymous_args = 0
   51              		@ link register save eliminated.
-  50:Core/Src/syscalls.c ****   return 1;
-  52              		.loc 1 50 3 view .LVU3
-  51:Core/Src/syscalls.c **** }
-  53              		.loc 1 51 1 is_stmt 0 view .LVU4
+  47:Core/Src/syscalls.c ****   return 1;
+  52              		.loc 1 47 3 view .LVU3
+  48:Core/Src/syscalls.c **** }
+  53              		.loc 1 48 1 is_stmt 0 view .LVU4
   54 0000 0120     		movs	r0, #1
   55 0002 7047     		bx	lr
   56              		.cfi_endproc
@@ -118,37 +115,37 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 1
   66              	_kill:
   67              	.LVL0:
   68              	.LFB27:
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 3
+  49:Core/Src/syscalls.c **** 
+  50:Core/Src/syscalls.c **** int _kill(int pid, int sig)
+  51:Core/Src/syscalls.c **** {
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s 			page 3
 
 
-  52:Core/Src/syscalls.c **** 
-  53:Core/Src/syscalls.c **** int _kill(int pid, int sig)
-  54:Core/Src/syscalls.c **** {
-  69              		.loc 1 54 1 is_stmt 1 view -0
+  69              		.loc 1 51 1 is_stmt 1 view -0
   70              		.cfi_startproc
   71              		@ args = 0, pretend = 0, frame = 0
   72              		@ frame_needed = 0, uses_anonymous_args = 0
-  73              		.loc 1 54 1 is_stmt 0 view .LVU6
+  73              		.loc 1 51 1 is_stmt 0 view .LVU6
   74 0000 08B5     		push	{r3, lr}
   75              	.LCFI0:
   76              		.cfi_def_cfa_offset 8
   77              		.cfi_offset 3, -8
   78              		.cfi_offset 14, -4
-  55:Core/Src/syscalls.c ****   (void)pid;
-  79              		.loc 1 55 3 is_stmt 1 view .LVU7
-  56:Core/Src/syscalls.c ****   (void)sig;
-  80              		.loc 1 56 3 view .LVU8
-  57:Core/Src/syscalls.c ****   errno = EINVAL;
-  81              		.loc 1 57 3 view .LVU9
+  52:Core/Src/syscalls.c ****   (void)pid;
+  79              		.loc 1 52 3 is_stmt 1 view .LVU7
+  53:Core/Src/syscalls.c ****   (void)sig;
+  80              		.loc 1 53 3 view .LVU8
+  54:Core/Src/syscalls.c ****   errno = EINVAL;
+  81              		.loc 1 54 3 view .LVU9
   82 0002 FFF7FEFF 		bl	__errno
   83              	.LVL1:
-  84              		.loc 1 57 9 is_stmt 0 view .LVU10
+  84              		.loc 1 54 9 is_stmt 0 view .LVU10
   85 0006 1623     		movs	r3, #22
   86 0008 0360     		str	r3, [r0]
-  58:Core/Src/syscalls.c ****   return -1;
-  87              		.loc 1 58 3 is_stmt 1 view .LVU11
-  59:Core/Src/syscalls.c **** }
-  88              		.loc 1 59 1 is_stmt 0 view .LVU12
+  55:Core/Src/syscalls.c ****   return -1;
+  87              		.loc 1 55 3 is_stmt 1 view .LVU11
+  56:Core/Src/syscalls.c **** }
+  88              		.loc 1 56 1 is_stmt 0 view .LVU12
   89 000a 4FF0FF30 		mov	r0, #-1
   90 000e 08BD     		pop	{r3, pc}
   91              		.cfi_endproc
@@ -162,33 +159,36 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 1
  101              	_exit:
  102              	.LVL2:
  103              	.LFB28:
-  60:Core/Src/syscalls.c **** 
-  61:Core/Src/syscalls.c **** void _exit (int status)
-  62:Core/Src/syscalls.c **** {
- 104              		.loc 1 62 1 is_stmt 1 view -0
+  57:Core/Src/syscalls.c **** 
+  58:Core/Src/syscalls.c **** void _exit(int status)
+  59:Core/Src/syscalls.c **** {
+ 104              		.loc 1 59 1 is_stmt 1 view -0
  105              		.cfi_startproc
  106              		@ Volatile: function does not return.
  107              		@ args = 0, pretend = 0, frame = 0
  108              		@ frame_needed = 0, uses_anonymous_args = 0
- 109              		.loc 1 62 1 is_stmt 0 view .LVU14
+ 109              		.loc 1 59 1 is_stmt 0 view .LVU14
  110 0000 08B5     		push	{r3, lr}
  111              	.LCFI1:
  112              		.cfi_def_cfa_offset 8
  113              		.cfi_offset 3, -8
  114              		.cfi_offset 14, -4
-  63:Core/Src/syscalls.c ****   _kill(status, -1);
- 115              		.loc 1 63 3 is_stmt 1 view .LVU15
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 4
-
-
+  60:Core/Src/syscalls.c ****   _kill(status, -1);
+ 115              		.loc 1 60 3 is_stmt 1 view .LVU15
  116 0002 4FF0FF31 		mov	r1, #-1
  117 0006 FFF7FEFF 		bl	_kill
  118              	.LVL3:
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s 			page 4
+
+
  119              	.L6:
-  64:Core/Src/syscalls.c ****   while (1) {}    /* Make sure we hang here */
- 120              		.loc 1 64 3 discriminator 1 view .LVU16
- 121              		.loc 1 64 14 discriminator 1 view .LVU17
- 122              		.loc 1 64 9 discriminator 1 view .LVU18
+  61:Core/Src/syscalls.c ****   while (1)
+ 120              		.loc 1 61 3 discriminator 1 view .LVU16
+  62:Core/Src/syscalls.c ****   {
+  63:Core/Src/syscalls.c ****   } /* Make sure we hang here */
+ 121              		.loc 1 63 3 discriminator 1 view .LVU17
+  61:Core/Src/syscalls.c ****   while (1)
+ 122              		.loc 1 61 9 discriminator 1 view .LVU18
  123 000a FEE7     		b	.L6
  124              		.cfi_endproc
  125              	.LFE28:
@@ -201,15 +201,15 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 1
  134              	_read:
  135              	.LVL4:
  136              	.LFB29:
-  65:Core/Src/syscalls.c **** }
-  66:Core/Src/syscalls.c **** 
-  67:Core/Src/syscalls.c **** __attribute__((weak)) int _read(int file, char *ptr, int len)
-  68:Core/Src/syscalls.c **** {
- 137              		.loc 1 68 1 view -0
+  64:Core/Src/syscalls.c **** }
+  65:Core/Src/syscalls.c **** 
+  66:Core/Src/syscalls.c **** __attribute__((weak)) int _read(int file, char *ptr, int len)
+  67:Core/Src/syscalls.c **** {
+ 137              		.loc 1 67 1 view -0
  138              		.cfi_startproc
  139              		@ args = 0, pretend = 0, frame = 0
  140              		@ frame_needed = 0, uses_anonymous_args = 0
- 141              		.loc 1 68 1 is_stmt 0 view .LVU20
+ 141              		.loc 1 67 1 is_stmt 0 view .LVU20
  142 0000 70B5     		push	{r4, r5, r6, lr}
  143              	.LCFI2:
  144              		.cfi_def_cfa_offset 16
@@ -219,60 +219,60 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 1
  148              		.cfi_offset 14, -4
  149 0002 0C46     		mov	r4, r1
  150 0004 1646     		mov	r6, r2
-  69:Core/Src/syscalls.c ****   (void)file;
- 151              		.loc 1 69 3 is_stmt 1 view .LVU21
-  70:Core/Src/syscalls.c ****   int DataIdx;
- 152              		.loc 1 70 3 view .LVU22
-  71:Core/Src/syscalls.c **** 
-  72:Core/Src/syscalls.c ****   for (DataIdx = 0; DataIdx < len; DataIdx++)
- 153              		.loc 1 72 3 view .LVU23
+  68:Core/Src/syscalls.c ****   (void)file;
+ 151              		.loc 1 68 3 is_stmt 1 view .LVU21
+  69:Core/Src/syscalls.c ****   int DataIdx;
+ 152              		.loc 1 69 3 view .LVU22
+  70:Core/Src/syscalls.c **** 
+  71:Core/Src/syscalls.c ****   for (DataIdx = 0; DataIdx < len; DataIdx++)
+ 153              		.loc 1 71 3 view .LVU23
  154              	.LVL5:
- 155              		.loc 1 72 16 is_stmt 0 view .LVU24
+ 155              		.loc 1 71 16 is_stmt 0 view .LVU24
  156 0006 0025     		movs	r5, #0
- 157              		.loc 1 72 3 view .LVU25
+ 157              		.loc 1 71 3 view .LVU25
  158 0008 06E0     		b	.L9
  159              	.LVL6:
  160              	.L10:
-  73:Core/Src/syscalls.c ****   {
-  74:Core/Src/syscalls.c ****     *ptr++ = __io_getchar();
- 161              		.loc 1 74 5 is_stmt 1 discriminator 3 view .LVU26
- 162              		.loc 1 74 14 is_stmt 0 discriminator 3 view .LVU27
+  72:Core/Src/syscalls.c ****   {
+  73:Core/Src/syscalls.c ****     *ptr++ = __io_getchar();
+ 161              		.loc 1 73 5 is_stmt 1 discriminator 3 view .LVU26
+ 162              		.loc 1 73 14 is_stmt 0 discriminator 3 view .LVU27
  163 000a FFF7FEFF 		bl	__io_getchar
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 5
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s 			page 5
 
 
  164              	.LVL7:
- 165              		.loc 1 74 9 discriminator 3 view .LVU28
+ 165              		.loc 1 73 9 discriminator 3 view .LVU28
  166 000e 2146     		mov	r1, r4
  167              	.LVL8:
- 168              		.loc 1 74 12 discriminator 3 view .LVU29
+ 168              		.loc 1 73 12 discriminator 3 view .LVU29
  169 0010 01F8010B 		strb	r0, [r1], #1
  170              	.LVL9:
-  72:Core/Src/syscalls.c ****   {
- 171              		.loc 1 72 36 is_stmt 1 discriminator 3 view .LVU30
-  72:Core/Src/syscalls.c ****   {
- 172              		.loc 1 72 43 is_stmt 0 discriminator 3 view .LVU31
+  71:Core/Src/syscalls.c ****   {
+ 171              		.loc 1 71 36 is_stmt 1 discriminator 3 view .LVU30
+  71:Core/Src/syscalls.c ****   {
+ 172              		.loc 1 71 43 is_stmt 0 discriminator 3 view .LVU31
  173 0014 0135     		adds	r5, r5, #1
  174              	.LVL10:
- 175              		.loc 1 74 9 discriminator 3 view .LVU32
+ 175              		.loc 1 73 9 discriminator 3 view .LVU32
  176 0016 0C46     		mov	r4, r1
  177              	.LVL11:
  178              	.L9:
-  72:Core/Src/syscalls.c ****   {
- 179              		.loc 1 72 21 is_stmt 1 discriminator 1 view .LVU33
-  72:Core/Src/syscalls.c ****   {
- 180              		.loc 1 72 3 is_stmt 0 discriminator 1 view .LVU34
+  71:Core/Src/syscalls.c ****   {
+ 179              		.loc 1 71 21 is_stmt 1 discriminator 1 view .LVU33
+  71:Core/Src/syscalls.c ****   {
+ 180              		.loc 1 71 3 is_stmt 0 discriminator 1 view .LVU34
  181 0018 B542     		cmp	r5, r6
  182 001a F6DB     		blt	.L10
-  75:Core/Src/syscalls.c ****   }
-  76:Core/Src/syscalls.c **** 
-  77:Core/Src/syscalls.c ****   return len;
- 183              		.loc 1 77 3 is_stmt 1 view .LVU35
-  78:Core/Src/syscalls.c **** }
- 184              		.loc 1 78 1 is_stmt 0 view .LVU36
+  74:Core/Src/syscalls.c ****   }
+  75:Core/Src/syscalls.c **** 
+  76:Core/Src/syscalls.c ****   return len;
+ 183              		.loc 1 76 3 is_stmt 1 view .LVU35
+  77:Core/Src/syscalls.c **** }
+ 184              		.loc 1 77 1 is_stmt 0 view .LVU36
  185 001c 3046     		mov	r0, r6
  186 001e 70BD     		pop	{r4, r5, r6, pc}
- 187              		.loc 1 78 1 view .LVU37
+ 187              		.loc 1 77 1 view .LVU37
  188              		.cfi_endproc
  189              	.LFE29:
  191              		.section	.text._write,"ax",%progbits
@@ -284,70 +284,70 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 1
  198              	_write:
  199              	.LVL12:
  200              	.LFB30:
-  79:Core/Src/syscalls.c **** 
-  80:Core/Src/syscalls.c **** __attribute__((weak)) int _write(int file, char *ptr, int len)
-  81:Core/Src/syscalls.c **** {
- 201              		.loc 1 81 1 is_stmt 1 view -0
+  78:Core/Src/syscalls.c **** 
+  79:Core/Src/syscalls.c **** __attribute__((weak)) int _write(int file, char *ptr, int len)
+  80:Core/Src/syscalls.c **** {
+ 201              		.loc 1 80 1 is_stmt 1 view -0
  202              		.cfi_startproc
  203              		@ args = 0, pretend = 0, frame = 0
  204              		@ frame_needed = 0, uses_anonymous_args = 0
- 205              		.loc 1 81 1 is_stmt 0 view .LVU39
+ 205              		.loc 1 80 1 is_stmt 0 view .LVU39
  206 0000 70B5     		push	{r4, r5, r6, lr}
  207              	.LCFI3:
  208              		.cfi_def_cfa_offset 16
  209              		.cfi_offset 4, -16
  210              		.cfi_offset 5, -12
  211              		.cfi_offset 6, -8
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 6
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s 			page 6
 
 
  212              		.cfi_offset 14, -4
  213 0002 0C46     		mov	r4, r1
  214 0004 1646     		mov	r6, r2
-  82:Core/Src/syscalls.c ****   (void)file;
- 215              		.loc 1 82 3 is_stmt 1 view .LVU40
-  83:Core/Src/syscalls.c ****   int DataIdx;
- 216              		.loc 1 83 3 view .LVU41
-  84:Core/Src/syscalls.c **** 
-  85:Core/Src/syscalls.c ****   for (DataIdx = 0; DataIdx < len; DataIdx++)
- 217              		.loc 1 85 3 view .LVU42
+  81:Core/Src/syscalls.c ****   (void)file;
+ 215              		.loc 1 81 3 is_stmt 1 view .LVU40
+  82:Core/Src/syscalls.c ****   int DataIdx;
+ 216              		.loc 1 82 3 view .LVU41
+  83:Core/Src/syscalls.c **** 
+  84:Core/Src/syscalls.c ****   for (DataIdx = 0; DataIdx < len; DataIdx++)
+ 217              		.loc 1 84 3 view .LVU42
  218              	.LVL13:
- 219              		.loc 1 85 16 is_stmt 0 view .LVU43
+ 219              		.loc 1 84 16 is_stmt 0 view .LVU43
  220 0006 0025     		movs	r5, #0
- 221              		.loc 1 85 3 view .LVU44
+ 221              		.loc 1 84 3 view .LVU44
  222 0008 04E0     		b	.L13
  223              	.LVL14:
  224              	.L14:
-  86:Core/Src/syscalls.c ****   {
-  87:Core/Src/syscalls.c ****     __io_putchar(*ptr++);
- 225              		.loc 1 87 5 is_stmt 1 discriminator 3 view .LVU45
- 226              		.loc 1 87 5 is_stmt 0 discriminator 3 view .LVU46
+  85:Core/Src/syscalls.c ****   {
+  86:Core/Src/syscalls.c ****     __io_putchar(*ptr++);
+ 225              		.loc 1 86 5 is_stmt 1 discriminator 3 view .LVU45
+ 226              		.loc 1 86 5 is_stmt 0 discriminator 3 view .LVU46
  227 000a 14F8010B 		ldrb	r0, [r4], #1	@ zero_extendqisi2
  228              	.LVL15:
- 229              		.loc 1 87 5 discriminator 3 view .LVU47
+ 229              		.loc 1 86 5 discriminator 3 view .LVU47
  230 000e FFF7FEFF 		bl	__io_putchar
  231              	.LVL16:
-  85:Core/Src/syscalls.c ****   {
- 232              		.loc 1 85 36 is_stmt 1 discriminator 3 view .LVU48
-  85:Core/Src/syscalls.c ****   {
- 233              		.loc 1 85 43 is_stmt 0 discriminator 3 view .LVU49
+  84:Core/Src/syscalls.c ****   {
+ 232              		.loc 1 84 36 is_stmt 1 discriminator 3 view .LVU48
+  84:Core/Src/syscalls.c ****   {
+ 233              		.loc 1 84 43 is_stmt 0 discriminator 3 view .LVU49
  234 0012 0135     		adds	r5, r5, #1
  235              	.LVL17:
  236              	.L13:
-  85:Core/Src/syscalls.c ****   {
- 237              		.loc 1 85 21 is_stmt 1 discriminator 1 view .LVU50
-  85:Core/Src/syscalls.c ****   {
- 238              		.loc 1 85 3 is_stmt 0 discriminator 1 view .LVU51
+  84:Core/Src/syscalls.c ****   {
+ 237              		.loc 1 84 21 is_stmt 1 discriminator 1 view .LVU50
+  84:Core/Src/syscalls.c ****   {
+ 238              		.loc 1 84 3 is_stmt 0 discriminator 1 view .LVU51
  239 0014 B542     		cmp	r5, r6
  240 0016 F8DB     		blt	.L14
-  88:Core/Src/syscalls.c ****   }
-  89:Core/Src/syscalls.c ****   return len;
- 241              		.loc 1 89 3 is_stmt 1 view .LVU52
-  90:Core/Src/syscalls.c **** }
- 242              		.loc 1 90 1 is_stmt 0 view .LVU53
+  87:Core/Src/syscalls.c ****   }
+  88:Core/Src/syscalls.c ****   return len;
+ 241              		.loc 1 88 3 is_stmt 1 view .LVU52
+  89:Core/Src/syscalls.c **** }
+ 242              		.loc 1 89 1 is_stmt 0 view .LVU53
  243 0018 3046     		mov	r0, r6
  244 001a 70BD     		pop	{r4, r5, r6, pc}
- 245              		.loc 1 90 1 view .LVU54
+ 245              		.loc 1 89 1 view .LVU54
  246              		.cfi_endproc
  247              	.LFE30:
  249              		.section	.text._close,"ax",%progbits
@@ -358,27 +358,27 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 1
  254              		.thumb_func
  256              	_close:
  257              	.LVL18:
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 7
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s 			page 7
 
 
  258              	.LFB31:
-  91:Core/Src/syscalls.c **** 
-  92:Core/Src/syscalls.c **** int _close(int file)
-  93:Core/Src/syscalls.c **** {
- 259              		.loc 1 93 1 is_stmt 1 view -0
+  90:Core/Src/syscalls.c **** 
+  91:Core/Src/syscalls.c **** int _close(int file)
+  92:Core/Src/syscalls.c **** {
+ 259              		.loc 1 92 1 is_stmt 1 view -0
  260              		.cfi_startproc
  261              		@ args = 0, pretend = 0, frame = 0
  262              		@ frame_needed = 0, uses_anonymous_args = 0
  263              		@ link register save eliminated.
-  94:Core/Src/syscalls.c ****   (void)file;
- 264              		.loc 1 94 3 view .LVU56
-  95:Core/Src/syscalls.c ****   return -1;
- 265              		.loc 1 95 3 view .LVU57
-  96:Core/Src/syscalls.c **** }
- 266              		.loc 1 96 1 is_stmt 0 view .LVU58
+  93:Core/Src/syscalls.c ****   (void)file;
+ 264              		.loc 1 93 3 view .LVU56
+  94:Core/Src/syscalls.c ****   return -1;
+ 265              		.loc 1 94 3 view .LVU57
+  95:Core/Src/syscalls.c **** }
+ 266              		.loc 1 95 1 is_stmt 0 view .LVU58
  267 0000 4FF0FF30 		mov	r0, #-1
  268              	.LVL19:
- 269              		.loc 1 96 1 view .LVU59
+ 269              		.loc 1 95 1 view .LVU59
  270 0004 7047     		bx	lr
  271              		.cfi_endproc
  272              	.LFE31:
@@ -391,37 +391,36 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 1
  281              	_fstat:
  282              	.LVL20:
  283              	.LFB32:
-  97:Core/Src/syscalls.c **** 
-  98:Core/Src/syscalls.c **** 
-  99:Core/Src/syscalls.c **** int _fstat(int file, struct stat *st)
- 100:Core/Src/syscalls.c **** {
- 284              		.loc 1 100 1 is_stmt 1 view -0
+  96:Core/Src/syscalls.c **** 
+  97:Core/Src/syscalls.c **** int _fstat(int file, struct stat *st)
+  98:Core/Src/syscalls.c **** {
+ 284              		.loc 1 98 1 is_stmt 1 view -0
  285              		.cfi_startproc
  286              		@ args = 0, pretend = 0, frame = 0
  287              		@ frame_needed = 0, uses_anonymous_args = 0
  288              		@ link register save eliminated.
- 101:Core/Src/syscalls.c ****   (void)file;
- 289              		.loc 1 101 3 view .LVU61
- 102:Core/Src/syscalls.c ****   st->st_mode = S_IFCHR;
- 290              		.loc 1 102 3 view .LVU62
- 291              		.loc 1 102 15 is_stmt 0 view .LVU63
+  99:Core/Src/syscalls.c ****   (void)file;
+ 289              		.loc 1 99 3 view .LVU61
+ 100:Core/Src/syscalls.c ****   st->st_mode = S_IFCHR;
+ 290              		.loc 1 100 3 view .LVU62
+ 291              		.loc 1 100 15 is_stmt 0 view .LVU63
  292 0000 4FF40053 		mov	r3, #8192
  293 0004 4B60     		str	r3, [r1, #4]
- 103:Core/Src/syscalls.c ****   return 0;
- 294              		.loc 1 103 3 is_stmt 1 view .LVU64
- 104:Core/Src/syscalls.c **** }
- 295              		.loc 1 104 1 is_stmt 0 view .LVU65
+ 101:Core/Src/syscalls.c ****   return 0;
+ 294              		.loc 1 101 3 is_stmt 1 view .LVU64
+ 102:Core/Src/syscalls.c **** }
+ 295              		.loc 1 102 1 is_stmt 0 view .LVU65
  296 0006 0020     		movs	r0, #0
  297              	.LVL21:
- 298              		.loc 1 104 1 view .LVU66
+ 298              		.loc 1 102 1 view .LVU66
  299 0008 7047     		bx	lr
  300              		.cfi_endproc
  301              	.LFE32:
  303              		.section	.text._isatty,"ax",%progbits
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 8
-
-
  304              		.align	1
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s 			page 8
+
+
  305              		.global	_isatty
  306              		.syntax unified
  307              		.thumb
@@ -429,23 +428,23 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 1
  310              	_isatty:
  311              	.LVL22:
  312              	.LFB33:
- 105:Core/Src/syscalls.c **** 
- 106:Core/Src/syscalls.c **** int _isatty(int file)
- 107:Core/Src/syscalls.c **** {
- 313              		.loc 1 107 1 is_stmt 1 view -0
+ 103:Core/Src/syscalls.c **** 
+ 104:Core/Src/syscalls.c **** int _isatty(int file)
+ 105:Core/Src/syscalls.c **** {
+ 313              		.loc 1 105 1 is_stmt 1 view -0
  314              		.cfi_startproc
  315              		@ args = 0, pretend = 0, frame = 0
  316              		@ frame_needed = 0, uses_anonymous_args = 0
  317              		@ link register save eliminated.
- 108:Core/Src/syscalls.c ****   (void)file;
- 318              		.loc 1 108 3 view .LVU68
- 109:Core/Src/syscalls.c ****   return 1;
- 319              		.loc 1 109 3 view .LVU69
- 110:Core/Src/syscalls.c **** }
- 320              		.loc 1 110 1 is_stmt 0 view .LVU70
+ 106:Core/Src/syscalls.c ****   (void)file;
+ 318              		.loc 1 106 3 view .LVU68
+ 107:Core/Src/syscalls.c ****   return 1;
+ 319              		.loc 1 107 3 view .LVU69
+ 108:Core/Src/syscalls.c **** }
+ 320              		.loc 1 108 1 is_stmt 0 view .LVU70
  321 0000 0120     		movs	r0, #1
  322              	.LVL23:
- 323              		.loc 1 110 1 view .LVU71
+ 323              		.loc 1 108 1 view .LVU71
  324 0002 7047     		bx	lr
  325              		.cfi_endproc
  326              	.LFE33:
@@ -458,30 +457,30 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 1
  335              	_lseek:
  336              	.LVL24:
  337              	.LFB34:
- 111:Core/Src/syscalls.c **** 
- 112:Core/Src/syscalls.c **** int _lseek(int file, int ptr, int dir)
- 113:Core/Src/syscalls.c **** {
- 338              		.loc 1 113 1 is_stmt 1 view -0
+ 109:Core/Src/syscalls.c **** 
+ 110:Core/Src/syscalls.c **** int _lseek(int file, int ptr, int dir)
+ 111:Core/Src/syscalls.c **** {
+ 338              		.loc 1 111 1 is_stmt 1 view -0
  339              		.cfi_startproc
  340              		@ args = 0, pretend = 0, frame = 0
  341              		@ frame_needed = 0, uses_anonymous_args = 0
  342              		@ link register save eliminated.
- 114:Core/Src/syscalls.c ****   (void)file;
- 343              		.loc 1 114 3 view .LVU73
- 115:Core/Src/syscalls.c ****   (void)ptr;
- 344              		.loc 1 115 3 view .LVU74
- 116:Core/Src/syscalls.c ****   (void)dir;
- 345              		.loc 1 116 3 view .LVU75
- 117:Core/Src/syscalls.c ****   return 0;
- 346              		.loc 1 117 3 view .LVU76
- 118:Core/Src/syscalls.c **** }
- 347              		.loc 1 118 1 is_stmt 0 view .LVU77
+ 112:Core/Src/syscalls.c ****   (void)file;
+ 343              		.loc 1 112 3 view .LVU73
+ 113:Core/Src/syscalls.c ****   (void)ptr;
+ 344              		.loc 1 113 3 view .LVU74
+ 114:Core/Src/syscalls.c ****   (void)dir;
+ 345              		.loc 1 114 3 view .LVU75
+ 115:Core/Src/syscalls.c ****   return 0;
+ 346              		.loc 1 115 3 view .LVU76
+ 116:Core/Src/syscalls.c **** }
+ 347              		.loc 1 116 1 is_stmt 0 view .LVU77
  348 0000 0020     		movs	r0, #0
  349              	.LVL25:
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 9
+ 350              		.loc 1 116 1 view .LVU78
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s 			page 9
 
 
- 350              		.loc 1 118 1 view .LVU78
  351 0002 7047     		bx	lr
  352              		.cfi_endproc
  353              	.LFE34:
@@ -494,33 +493,33 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 1
  362              	_open:
  363              	.LVL26:
  364              	.LFB35:
- 119:Core/Src/syscalls.c **** 
- 120:Core/Src/syscalls.c **** int _open(char *path, int flags, ...)
- 121:Core/Src/syscalls.c **** {
- 365              		.loc 1 121 1 is_stmt 1 view -0
+ 117:Core/Src/syscalls.c **** 
+ 118:Core/Src/syscalls.c **** int _open(char *path, int flags, ...)
+ 119:Core/Src/syscalls.c **** {
+ 365              		.loc 1 119 1 is_stmt 1 view -0
  366              		.cfi_startproc
  367              		@ args = 4, pretend = 12, frame = 0
  368              		@ frame_needed = 0, uses_anonymous_args = 1
  369              		@ link register save eliminated.
- 370              		.loc 1 121 1 is_stmt 0 view .LVU80
+ 370              		.loc 1 119 1 is_stmt 0 view .LVU80
  371 0000 0EB4     		push	{r1, r2, r3}
  372              	.LCFI4:
  373              		.cfi_def_cfa_offset 12
  374              		.cfi_offset 1, -12
  375              		.cfi_offset 2, -8
  376              		.cfi_offset 3, -4
- 122:Core/Src/syscalls.c ****   (void)path;
- 377              		.loc 1 122 3 is_stmt 1 view .LVU81
- 123:Core/Src/syscalls.c ****   (void)flags;
- 378              		.loc 1 123 3 view .LVU82
- 124:Core/Src/syscalls.c ****   /* Pretend like we always fail */
- 125:Core/Src/syscalls.c ****   return -1;
- 379              		.loc 1 125 3 view .LVU83
- 126:Core/Src/syscalls.c **** }
- 380              		.loc 1 126 1 is_stmt 0 view .LVU84
+ 120:Core/Src/syscalls.c ****   (void)path;
+ 377              		.loc 1 120 3 is_stmt 1 view .LVU81
+ 121:Core/Src/syscalls.c ****   (void)flags;
+ 378              		.loc 1 121 3 view .LVU82
+ 122:Core/Src/syscalls.c ****   /* Pretend like we always fail */
+ 123:Core/Src/syscalls.c ****   return -1;
+ 379              		.loc 1 123 3 view .LVU83
+ 124:Core/Src/syscalls.c **** }
+ 380              		.loc 1 124 1 is_stmt 0 view .LVU84
  381 0002 4FF0FF30 		mov	r0, #-1
  382              	.LVL27:
- 383              		.loc 1 126 1 view .LVU85
+ 383              		.loc 1 124 1 view .LVU85
  384 0006 03B0     		add	sp, sp, #12
  385              	.LCFI5:
  386              		.cfi_restore 3
@@ -538,36 +537,36 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 1
  399              		.thumb_func
  401              	_wait:
  402              	.LVL28:
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 10
-
-
  403              	.LFB36:
- 127:Core/Src/syscalls.c **** 
- 128:Core/Src/syscalls.c **** int _wait(int *status)
- 129:Core/Src/syscalls.c **** {
- 404              		.loc 1 129 1 is_stmt 1 view -0
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s 			page 10
+
+
+ 125:Core/Src/syscalls.c **** 
+ 126:Core/Src/syscalls.c **** int _wait(int *status)
+ 127:Core/Src/syscalls.c **** {
+ 404              		.loc 1 127 1 is_stmt 1 view -0
  405              		.cfi_startproc
  406              		@ args = 0, pretend = 0, frame = 0
  407              		@ frame_needed = 0, uses_anonymous_args = 0
- 408              		.loc 1 129 1 is_stmt 0 view .LVU87
+ 408              		.loc 1 127 1 is_stmt 0 view .LVU87
  409 0000 08B5     		push	{r3, lr}
  410              	.LCFI6:
  411              		.cfi_def_cfa_offset 8
  412              		.cfi_offset 3, -8
  413              		.cfi_offset 14, -4
- 130:Core/Src/syscalls.c ****   (void)status;
- 414              		.loc 1 130 3 is_stmt 1 view .LVU88
- 131:Core/Src/syscalls.c ****   errno = ECHILD;
- 415              		.loc 1 131 3 view .LVU89
+ 128:Core/Src/syscalls.c ****   (void)status;
+ 414              		.loc 1 128 3 is_stmt 1 view .LVU88
+ 129:Core/Src/syscalls.c ****   errno = ECHILD;
+ 415              		.loc 1 129 3 view .LVU89
  416 0002 FFF7FEFF 		bl	__errno
  417              	.LVL29:
- 418              		.loc 1 131 9 is_stmt 0 view .LVU90
+ 418              		.loc 1 129 9 is_stmt 0 view .LVU90
  419 0006 0A23     		movs	r3, #10
  420 0008 0360     		str	r3, [r0]
- 132:Core/Src/syscalls.c ****   return -1;
- 421              		.loc 1 132 3 is_stmt 1 view .LVU91
- 133:Core/Src/syscalls.c **** }
- 422              		.loc 1 133 1 is_stmt 0 view .LVU92
+ 130:Core/Src/syscalls.c ****   return -1;
+ 421              		.loc 1 130 3 is_stmt 1 view .LVU91
+ 131:Core/Src/syscalls.c **** }
+ 422              		.loc 1 131 1 is_stmt 0 view .LVU92
  423 000a 4FF0FF30 		mov	r0, #-1
  424 000e 08BD     		pop	{r3, pc}
  425              		.cfi_endproc
@@ -581,35 +580,35 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 1
  435              	_unlink:
  436              	.LVL30:
  437              	.LFB37:
- 134:Core/Src/syscalls.c **** 
- 135:Core/Src/syscalls.c **** int _unlink(char *name)
- 136:Core/Src/syscalls.c **** {
- 438              		.loc 1 136 1 is_stmt 1 view -0
+ 132:Core/Src/syscalls.c **** 
+ 133:Core/Src/syscalls.c **** int _unlink(char *name)
+ 134:Core/Src/syscalls.c **** {
+ 438              		.loc 1 134 1 is_stmt 1 view -0
  439              		.cfi_startproc
  440              		@ args = 0, pretend = 0, frame = 0
  441              		@ frame_needed = 0, uses_anonymous_args = 0
- 442              		.loc 1 136 1 is_stmt 0 view .LVU94
+ 442              		.loc 1 134 1 is_stmt 0 view .LVU94
  443 0000 08B5     		push	{r3, lr}
  444              	.LCFI7:
  445              		.cfi_def_cfa_offset 8
  446              		.cfi_offset 3, -8
  447              		.cfi_offset 14, -4
- 137:Core/Src/syscalls.c ****   (void)name;
- 448              		.loc 1 137 3 is_stmt 1 view .LVU95
- 138:Core/Src/syscalls.c ****   errno = ENOENT;
- 449              		.loc 1 138 3 view .LVU96
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 11
-
-
+ 135:Core/Src/syscalls.c ****   (void)name;
+ 448              		.loc 1 135 3 is_stmt 1 view .LVU95
+ 136:Core/Src/syscalls.c ****   errno = ENOENT;
+ 449              		.loc 1 136 3 view .LVU96
  450 0002 FFF7FEFF 		bl	__errno
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s 			page 11
+
+
  451              	.LVL31:
- 452              		.loc 1 138 9 is_stmt 0 view .LVU97
+ 452              		.loc 1 136 9 is_stmt 0 view .LVU97
  453 0006 0223     		movs	r3, #2
  454 0008 0360     		str	r3, [r0]
- 139:Core/Src/syscalls.c ****   return -1;
- 455              		.loc 1 139 3 is_stmt 1 view .LVU98
- 140:Core/Src/syscalls.c **** }
- 456              		.loc 1 140 1 is_stmt 0 view .LVU99
+ 137:Core/Src/syscalls.c ****   return -1;
+ 455              		.loc 1 137 3 is_stmt 1 view .LVU98
+ 138:Core/Src/syscalls.c **** }
+ 456              		.loc 1 138 1 is_stmt 0 view .LVU99
  457 000a 4FF0FF30 		mov	r0, #-1
  458 000e 08BD     		pop	{r3, pc}
  459              		.cfi_endproc
@@ -623,23 +622,23 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 1
  469              	_times:
  470              	.LVL32:
  471              	.LFB38:
- 141:Core/Src/syscalls.c **** 
- 142:Core/Src/syscalls.c **** int _times(struct tms *buf)
- 143:Core/Src/syscalls.c **** {
- 472              		.loc 1 143 1 is_stmt 1 view -0
+ 139:Core/Src/syscalls.c **** 
+ 140:Core/Src/syscalls.c **** int _times(struct tms *buf)
+ 141:Core/Src/syscalls.c **** {
+ 472              		.loc 1 141 1 is_stmt 1 view -0
  473              		.cfi_startproc
  474              		@ args = 0, pretend = 0, frame = 0
  475              		@ frame_needed = 0, uses_anonymous_args = 0
  476              		@ link register save eliminated.
- 144:Core/Src/syscalls.c ****   (void)buf;
- 477              		.loc 1 144 3 view .LVU101
- 145:Core/Src/syscalls.c ****   return -1;
- 478              		.loc 1 145 3 view .LVU102
- 146:Core/Src/syscalls.c **** }
- 479              		.loc 1 146 1 is_stmt 0 view .LVU103
+ 142:Core/Src/syscalls.c ****   (void)buf;
+ 477              		.loc 1 142 3 view .LVU101
+ 143:Core/Src/syscalls.c ****   return -1;
+ 478              		.loc 1 143 3 view .LVU102
+ 144:Core/Src/syscalls.c **** }
+ 479              		.loc 1 144 1 is_stmt 0 view .LVU103
  480 0000 4FF0FF30 		mov	r0, #-1
  481              	.LVL33:
- 482              		.loc 1 146 1 view .LVU104
+ 482              		.loc 1 144 1 view .LVU104
  483 0004 7047     		bx	lr
  484              		.cfi_endproc
  485              	.LFE38:
@@ -652,31 +651,31 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 1
  494              	_stat:
  495              	.LVL34:
  496              	.LFB39:
- 147:Core/Src/syscalls.c **** 
- 148:Core/Src/syscalls.c **** int _stat(char *file, struct stat *st)
- 149:Core/Src/syscalls.c **** {
- 497              		.loc 1 149 1 is_stmt 1 view -0
+ 145:Core/Src/syscalls.c **** 
+ 146:Core/Src/syscalls.c **** int _stat(char *file, struct stat *st)
+ 147:Core/Src/syscalls.c **** {
+ 497              		.loc 1 147 1 is_stmt 1 view -0
  498              		.cfi_startproc
  499              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 12
-
-
  500              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s 			page 12
+
+
  501              		@ link register save eliminated.
- 150:Core/Src/syscalls.c ****   (void)file;
- 502              		.loc 1 150 3 view .LVU106
- 151:Core/Src/syscalls.c ****   st->st_mode = S_IFCHR;
- 503              		.loc 1 151 3 view .LVU107
- 504              		.loc 1 151 15 is_stmt 0 view .LVU108
+ 148:Core/Src/syscalls.c ****   (void)file;
+ 502              		.loc 1 148 3 view .LVU106
+ 149:Core/Src/syscalls.c ****   st->st_mode = S_IFCHR;
+ 503              		.loc 1 149 3 view .LVU107
+ 504              		.loc 1 149 15 is_stmt 0 view .LVU108
  505 0000 4FF40053 		mov	r3, #8192
  506 0004 4B60     		str	r3, [r1, #4]
- 152:Core/Src/syscalls.c ****   return 0;
- 507              		.loc 1 152 3 is_stmt 1 view .LVU109
- 153:Core/Src/syscalls.c **** }
- 508              		.loc 1 153 1 is_stmt 0 view .LVU110
+ 150:Core/Src/syscalls.c ****   return 0;
+ 507              		.loc 1 150 3 is_stmt 1 view .LVU109
+ 151:Core/Src/syscalls.c **** }
+ 508              		.loc 1 151 1 is_stmt 0 view .LVU110
  509 0006 0020     		movs	r0, #0
  510              	.LVL35:
- 511              		.loc 1 153 1 view .LVU111
+ 511              		.loc 1 151 1 view .LVU111
  512 0008 7047     		bx	lr
  513              		.cfi_endproc
  514              	.LFE39:
@@ -689,39 +688,39 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 1
  523              	_link:
  524              	.LVL36:
  525              	.LFB40:
- 154:Core/Src/syscalls.c **** 
- 155:Core/Src/syscalls.c **** int _link(char *old, char *new)
- 156:Core/Src/syscalls.c **** {
- 526              		.loc 1 156 1 is_stmt 1 view -0
+ 152:Core/Src/syscalls.c **** 
+ 153:Core/Src/syscalls.c **** int _link(char *old, char *new)
+ 154:Core/Src/syscalls.c **** {
+ 526              		.loc 1 154 1 is_stmt 1 view -0
  527              		.cfi_startproc
  528              		@ args = 0, pretend = 0, frame = 0
  529              		@ frame_needed = 0, uses_anonymous_args = 0
- 530              		.loc 1 156 1 is_stmt 0 view .LVU113
+ 530              		.loc 1 154 1 is_stmt 0 view .LVU113
  531 0000 08B5     		push	{r3, lr}
  532              	.LCFI8:
  533              		.cfi_def_cfa_offset 8
  534              		.cfi_offset 3, -8
  535              		.cfi_offset 14, -4
- 157:Core/Src/syscalls.c ****   (void)old;
- 536              		.loc 1 157 3 is_stmt 1 view .LVU114
- 158:Core/Src/syscalls.c ****   (void)new;
- 537              		.loc 1 158 3 view .LVU115
- 159:Core/Src/syscalls.c ****   errno = EMLINK;
- 538              		.loc 1 159 3 view .LVU116
+ 155:Core/Src/syscalls.c ****   (void)old;
+ 536              		.loc 1 155 3 is_stmt 1 view .LVU114
+ 156:Core/Src/syscalls.c ****   (void)new;
+ 537              		.loc 1 156 3 view .LVU115
+ 157:Core/Src/syscalls.c ****   errno = EMLINK;
+ 538              		.loc 1 157 3 view .LVU116
  539 0002 FFF7FEFF 		bl	__errno
  540              	.LVL37:
- 541              		.loc 1 159 9 is_stmt 0 view .LVU117
+ 541              		.loc 1 157 9 is_stmt 0 view .LVU117
  542 0006 1F23     		movs	r3, #31
  543 0008 0360     		str	r3, [r0]
- 160:Core/Src/syscalls.c ****   return -1;
- 544              		.loc 1 160 3 is_stmt 1 view .LVU118
- 161:Core/Src/syscalls.c **** }
- 545              		.loc 1 161 1 is_stmt 0 view .LVU119
+ 158:Core/Src/syscalls.c ****   return -1;
+ 544              		.loc 1 158 3 is_stmt 1 view .LVU118
+ 159:Core/Src/syscalls.c **** }
+ 545              		.loc 1 159 1 is_stmt 0 view .LVU119
  546 000a 4FF0FF30 		mov	r0, #-1
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 13
-
-
  547 000e 08BD     		pop	{r3, pc}
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s 			page 13
+
+
  548              		.cfi_endproc
  549              	.LFE40:
  551              		.section	.text._fork,"ax",%progbits
@@ -732,10 +731,10 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 1
  556              		.thumb_func
  558              	_fork:
  559              	.LFB41:
- 162:Core/Src/syscalls.c **** 
- 163:Core/Src/syscalls.c **** int _fork(void)
- 164:Core/Src/syscalls.c **** {
- 560              		.loc 1 164 1 is_stmt 1 view -0
+ 160:Core/Src/syscalls.c **** 
+ 161:Core/Src/syscalls.c **** int _fork(void)
+ 162:Core/Src/syscalls.c **** {
+ 560              		.loc 1 162 1 is_stmt 1 view -0
  561              		.cfi_startproc
  562              		@ args = 0, pretend = 0, frame = 0
  563              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -744,17 +743,17 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 1
  566              		.cfi_def_cfa_offset 8
  567              		.cfi_offset 3, -8
  568              		.cfi_offset 14, -4
- 165:Core/Src/syscalls.c ****   errno = EAGAIN;
- 569              		.loc 1 165 3 view .LVU121
+ 163:Core/Src/syscalls.c ****   errno = EAGAIN;
+ 569              		.loc 1 163 3 view .LVU121
  570 0002 FFF7FEFF 		bl	__errno
  571              	.LVL38:
- 572              		.loc 1 165 9 is_stmt 0 view .LVU122
+ 572              		.loc 1 163 9 is_stmt 0 view .LVU122
  573 0006 0B23     		movs	r3, #11
  574 0008 0360     		str	r3, [r0]
- 166:Core/Src/syscalls.c ****   return -1;
- 575              		.loc 1 166 3 is_stmt 1 view .LVU123
- 167:Core/Src/syscalls.c **** }
- 576              		.loc 1 167 1 is_stmt 0 view .LVU124
+ 164:Core/Src/syscalls.c ****   return -1;
+ 575              		.loc 1 164 3 is_stmt 1 view .LVU123
+ 165:Core/Src/syscalls.c **** }
+ 576              		.loc 1 165 1 is_stmt 0 view .LVU124
  577 000a 4FF0FF30 		mov	r0, #-1
  578 000e 08BD     		pop	{r3, pc}
  579              		.cfi_endproc
@@ -768,39 +767,39 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 1
  589              	_execve:
  590              	.LVL39:
  591              	.LFB42:
- 168:Core/Src/syscalls.c **** 
- 169:Core/Src/syscalls.c **** int _execve(char *name, char **argv, char **env)
- 170:Core/Src/syscalls.c **** {
- 592              		.loc 1 170 1 is_stmt 1 view -0
+ 166:Core/Src/syscalls.c **** 
+ 167:Core/Src/syscalls.c **** int _execve(char *name, char **argv, char **env)
+ 168:Core/Src/syscalls.c **** {
+ 592              		.loc 1 168 1 is_stmt 1 view -0
  593              		.cfi_startproc
  594              		@ args = 0, pretend = 0, frame = 0
  595              		@ frame_needed = 0, uses_anonymous_args = 0
- 596              		.loc 1 170 1 is_stmt 0 view .LVU126
+ 596              		.loc 1 168 1 is_stmt 0 view .LVU126
  597 0000 08B5     		push	{r3, lr}
  598              	.LCFI10:
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 14
-
-
  599              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s 			page 14
+
+
  600              		.cfi_offset 3, -8
  601              		.cfi_offset 14, -4
- 171:Core/Src/syscalls.c ****   (void)name;
- 602              		.loc 1 171 3 is_stmt 1 view .LVU127
- 172:Core/Src/syscalls.c ****   (void)argv;
- 603              		.loc 1 172 3 view .LVU128
- 173:Core/Src/syscalls.c ****   (void)env;
- 604              		.loc 1 173 3 view .LVU129
- 174:Core/Src/syscalls.c ****   errno = ENOMEM;
- 605              		.loc 1 174 3 view .LVU130
+ 169:Core/Src/syscalls.c ****   (void)name;
+ 602              		.loc 1 169 3 is_stmt 1 view .LVU127
+ 170:Core/Src/syscalls.c ****   (void)argv;
+ 603              		.loc 1 170 3 view .LVU128
+ 171:Core/Src/syscalls.c ****   (void)env;
+ 604              		.loc 1 171 3 view .LVU129
+ 172:Core/Src/syscalls.c ****   errno = ENOMEM;
+ 605              		.loc 1 172 3 view .LVU130
  606 0002 FFF7FEFF 		bl	__errno
  607              	.LVL40:
- 608              		.loc 1 174 9 is_stmt 0 view .LVU131
+ 608              		.loc 1 172 9 is_stmt 0 view .LVU131
  609 0006 0C23     		movs	r3, #12
  610 0008 0360     		str	r3, [r0]
- 175:Core/Src/syscalls.c ****   return -1;
- 611              		.loc 1 175 3 is_stmt 1 view .LVU132
- 176:Core/Src/syscalls.c **** }
- 612              		.loc 1 176 1 is_stmt 0 view .LVU133
+ 173:Core/Src/syscalls.c ****   return -1;
+ 611              		.loc 1 173 3 is_stmt 1 view .LVU132
+ 174:Core/Src/syscalls.c **** }
+ 612              		.loc 1 174 1 is_stmt 0 view .LVU133
  613 000a 4FF0FF30 		mov	r0, #-1
  614 000e 08BD     		pop	{r3, pc}
  615              		.cfi_endproc
@@ -827,51 +826,51 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 1
  641              		.file 7 "d:\\rm\\arm-gnu-toolchian\\arm-none-eabi\\include\\sys\\stat.h"
  642              		.file 8 "d:\\rm\\arm-gnu-toolchian\\arm-none-eabi\\include\\sys\\times.h"
  643              		.file 9 "d:\\rm\\arm-gnu-toolchian\\arm-none-eabi\\include\\sys\\errno.h"
-ARM GAS  C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s 			page 15
+ARM GAS  C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s 			page 15
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 syscalls.c
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:19     .text.initialise_monitor_handles:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:25     .text.initialise_monitor_handles:00000000 initialise_monitor_handles
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:39     .text._getpid:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:45     .text._getpid:00000000 _getpid
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:60     .text._kill:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:66     .text._kill:00000000 _kill
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:95     .text._exit:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:101    .text._exit:00000000 _exit
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:128    .text._read:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:134    .text._read:00000000 _read
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:192    .text._write:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:198    .text._write:00000000 _write
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:250    .text._close:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:256    .text._close:00000000 _close
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:275    .text._fstat:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:281    .text._fstat:00000000 _fstat
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:304    .text._isatty:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:310    .text._isatty:00000000 _isatty
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:329    .text._lseek:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:335    .text._lseek:00000000 _lseek
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:356    .text._open:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:362    .text._open:00000000 _open
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:395    .text._wait:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:401    .text._wait:00000000 _wait
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:429    .text._unlink:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:435    .text._unlink:00000000 _unlink
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:463    .text._times:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:469    .text._times:00000000 _times
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:488    .text._stat:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:494    .text._stat:00000000 _stat
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:517    .text._link:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:523    .text._link:00000000 _link
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:552    .text._fork:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:558    .text._fork:00000000 _fork
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:583    .text._execve:00000000 $t
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:589    .text._execve:00000000 _execve
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:630    .data.environ:00000000 environ
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:624    .bss.__env:00000000 __env
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:621    .bss.__env:00000000 $d
-C:\Users\blue\AppData\Local\Temp\ccx5FhrX.s:627    .data.environ:00000000 $d
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:19     .text.initialise_monitor_handles:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:25     .text.initialise_monitor_handles:00000000 initialise_monitor_handles
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:39     .text._getpid:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:45     .text._getpid:00000000 _getpid
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:60     .text._kill:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:66     .text._kill:00000000 _kill
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:95     .text._exit:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:101    .text._exit:00000000 _exit
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:128    .text._read:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:134    .text._read:00000000 _read
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:192    .text._write:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:198    .text._write:00000000 _write
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:250    .text._close:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:256    .text._close:00000000 _close
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:275    .text._fstat:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:281    .text._fstat:00000000 _fstat
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:304    .text._isatty:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:310    .text._isatty:00000000 _isatty
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:329    .text._lseek:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:335    .text._lseek:00000000 _lseek
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:356    .text._open:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:362    .text._open:00000000 _open
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:395    .text._wait:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:401    .text._wait:00000000 _wait
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:429    .text._unlink:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:435    .text._unlink:00000000 _unlink
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:463    .text._times:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:469    .text._times:00000000 _times
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:488    .text._stat:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:494    .text._stat:00000000 _stat
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:517    .text._link:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:523    .text._link:00000000 _link
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:552    .text._fork:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:558    .text._fork:00000000 _fork
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:583    .text._execve:00000000 $t
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:589    .text._execve:00000000 _execve
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:630    .data.environ:00000000 environ
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:624    .bss.__env:00000000 __env
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:621    .bss.__env:00000000 $d
+C:\Users\blue\AppData\Local\Temp\ccFSEn1W.s:627    .data.environ:00000000 $d
 
 UNDEFINED SYMBOLS
 __errno

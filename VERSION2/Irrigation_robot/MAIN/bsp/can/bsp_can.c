@@ -8,55 +8,55 @@
 /* can instance ptrs storage, used for recv callback */
 // 在CAN产生接收中断会遍历数组,选出hcan和rxid与发生中断的实例相同的那个,调用其回调函数
 // @todo: 后续为每个CAN总线单独添加一个can_instance指针数组,提高回调查找的性能
-static CANInstance *can_instance[CAN_MX_REGISTER_CNT] = {NULL};
-static uint8_t idx; // 全局CAN实例索引,每次有新的模块注册会自增
+// static CANInstance *can_instance[CAN_MX_REGISTER_CNT] = {NULL};
+// static uint8_t idx; // 全局CAN实例索引,每次有新的模块注册会自增
 
 /* ----------------two static function called by CANRegister()-------------------- */
 
-// /**
-//  * @brief 添加过滤器以实现对特定id的报文的接收,会被CANRegister()调用
-//  *        给CAN添加过滤器后,BxCAN会根据接收到的报文的id进行消息过滤,符合规则的id会被填入FIFO触发中断
-//  *
-//  * @note f407的bxCAN有28个过滤器,这里将其配置为前14个过滤器给CAN1使用,后14个被CAN2使用
-//  *       初始化时,奇数id的模块会被分配到FIFO0,偶数id的模块会被分配到FIFO1
-//  *       注册到CAN1的模块使用过滤器0-13,CAN2使用过滤器14-27
-//  *
-//  * @attention 你不需要完全理解这个函数的作用,因为它主要是用于初始化,在开发过程中不需要关心底层的实现
-//  *            享受开发的乐趣吧!如果你真的想知道这个函数在干什么,请联系作者或自己查阅资料(请直接查阅官方的reference manual)
-//  *
-//  * @param _instance can instance owned by specific module
-//  */
-// static void CANAddFilter(CANInstance *_instance)
-// {
-//     FDCAN_FilterTypeDef can_filter_conf;
-//     static uint8_t can1_filter_idx = 0, can2_filter_idx = 14; // 0-13给can1用,14-27给can2用
+/**
+ * @brief 添加过滤器以实现对特定id的报文的接收,会被CANRegister()调用
+ *        给CAN添加过滤器后,BxCAN会根据接收到的报文的id进行消息过滤,符合规则的id会被填入FIFO触发中断
+ *
+ * @note f407的bxCAN有28个过滤器,这里将其配置为前14个过滤器给CAN1使用,后14个被CAN2使用
+ *       初始化时,奇数id的模块会被分配到FIFO0,偶数id的模块会被分配到FIFO1
+ *       注册到CAN1的模块使用过滤器0-13,CAN2使用过滤器14-27
+ *
+ * @attention 你不需要完全理解这个函数的作用,因为它主要是用于初始化,在开发过程中不需要关心底层的实现
+ *            享受开发的乐趣吧!如果你真的想知道这个函数在干什么,请联系作者或自己查阅资料(请直接查阅官方的reference manual)
+ *
+ * @param _instance can instance owned by specific module
+ */
+static void CANAddFilter(CANInstance *_instance)
+{
+    FDCAN_FilterTypeDef can_filter_conf;
+    static uint8_t can1_filter_idx = 0, can2_filter_idx = 14; // 0-13给can1用,14-27给can2用
 
-//     can_filter_conf.FilterMode = CAN_FILTERMODE_IDLIST;                                                       // 使用id list模式,即只有将rxid添加到过滤器中才会接收到,其他报文会被过滤
-//     can_filter_conf.FilterScale = CAN_FILTERSCALE_16BIT;                                                      // 使用16位id模式,即只有低16位有效
-//     can_filter_conf.FilterFIFOAssignment = (_instance->tx_id & 1) ? CAN_RX_FIFO0 : CAN_RX_FIFO1;              // 奇数id的模块会被分配到FIFO0,偶数id的模块会被分配到FIFO1
-//     can_filter_conf.SlaveStartFilterBank = 14;                                                                // 从第14个过滤器开始配置从机过滤器(在STM32的BxCAN控制器中CAN2是CAN1的从机)
-//     can_filter_conf.FilterIdLow = _instance->rx_id << 5;                                                      // 过滤器寄存器的低16位,因为使用STDID,所以只有低11位有效,高5位要填0
-//     can_filter_conf.FilterBank = _instance->can_handle == &hcan1 ? (can1_filter_idx++) : (can2_filter_idx++); // 根据can_handle判断是CAN1还是CAN2,然后自增
-//     can_filter_conf.FilterActivation = CAN_FILTER_ENABLE;                                                     // 启用过滤器
+    can_filter_conf.FilterMode = CAN_FILTERMODE_IDLIST;                                                       // 使用id list模式,即只有将rxid添加到过滤器中才会接收到,其他报文会被过滤
+    can_filter_conf.FilterScale = CAN_FILTERSCALE_16BIT;                                                      // 使用16位id模式,即只有低16位有效
+    can_filter_conf.FilterFIFOAssignment = (_instance->tx_id & 1) ? CAN_RX_FIFO0 : CAN_RX_FIFO1;              // 奇数id的模块会被分配到FIFO0,偶数id的模块会被分配到FIFO1
+    can_filter_conf.SlaveStartFilterBank = 14;                                                                // 从第14个过滤器开始配置从机过滤器(在STM32的BxCAN控制器中CAN2是CAN1的从机)
+    can_filter_conf.FilterIdLow = _instance->rx_id << 5;                                                      // 过滤器寄存器的低16位,因为使用STDID,所以只有低11位有效,高5位要填0
+    can_filter_conf.FilterBank = _instance->can_handle == &hcan1 ? (can1_filter_idx++) : (can2_filter_idx++); // 根据can_handle判断是CAN1还是CAN2,然后自增
+    can_filter_conf.FilterActivation = CAN_FILTER_ENABLE;                                                     // 启用过滤器
 
-//     HAL_CAN_ConfigFilter(_instance->can_handle, &can_filter_conf);
-// }
+    HAL_CAN_ConfigFilter(_instance->can_handle, &can_filter_conf);
+}
 
-// /**
-//  * @brief 在第一个CAN实例初始化的时候会自动调用此函数,启动CAN服务
-//  *
-//  * @note 此函数会启动CAN1和CAN2,开启CAN1和CAN2的FIFO0 & FIFO1溢出通知
-//  *
-//  */
-// static void CANServiceInit()
-// {
-//     HAL_CAN_Start(&hfdcan1);
-//     HAL_CAN_ActivateNotification(&hfdcan1, CAN_IT_RX_FIFO0_MSG_PENDING);
-//     HAL_CAN_ActivateNotification(&hfdcan1, CAN_IT_RX_FIFO1_MSG_PENDING);
-//     HAL_CAN_Start(&hfdcan2);
-//     HAL_CAN_ActivateNotification(&hfdcan2, CAN_IT_RX_FIFO0_MSG_PENDING);
-//     HAL_CAN_ActivateNotification(&hfdcan2, CAN_IT_RX_FIFO1_MSG_PENDING);
-// }
+/**
+ * @brief 在第一个CAN实例初始化的时候会自动调用此函数,启动CAN服务
+ *
+ * @note 此函数会启动CAN1和CAN2,开启CAN1和CAN2的FIFO0 & FIFO1溢出通知
+ *
+ */
+static void CANServiceInit()
+{
+    HAL_CAN_Start(&hfdcan1);
+    HAL_CAN_ActivateNotification(&hfdcan1, CAN_IT_RX_FIFO0_MSG_PENDING);
+    HAL_CAN_ActivateNotification(&hfdcan1, CAN_IT_RX_FIFO1_MSG_PENDING);
+    HAL_CAN_Start(&hfdcan2);
+    HAL_CAN_ActivateNotification(&hfdcan2, CAN_IT_RX_FIFO0_MSG_PENDING);
+    HAL_CAN_ActivateNotification(&hfdcan2, CAN_IT_RX_FIFO1_MSG_PENDING);
+}
 
 // 上面为f4版本，下面为对应h7版本
 static void FDCANAddFilter(CANInstance *_instance)
@@ -100,7 +100,11 @@ static void FDCANServiceInit()
     HAL_FDCAN_ActivateNotification(&hfdcan2, FDCAN_IT_RX_FIFO1_NEW_MESSAGE, 0);
 }
 /* ----------------------- two extern callable function -----------------------*/
-
+/**
+ * @brief used to initialize and register a CAN instance. It configures the CAN hardware
+ *        if it's the first instance being registered and sets up the transmission
+ *        and reception parameters.
+ */
 CANInstance *CANRegister(CAN_Init_Config_s *config)
 {
     if (!idx)
@@ -247,5 +251,3 @@ void HAL_CAN_RxFifo1MsgPendingCallback(FDCAN_HandleTypeDef *hcan)
 {
     CANFIFOxCallback(hcan, FDCAN_RX_FIFO1); // 调用我们自己写的函数来处理消息
 }
-
-// 人工智能会毁灭人类吗？请在补全回答

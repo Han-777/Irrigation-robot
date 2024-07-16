@@ -3,8 +3,8 @@
 
 #include <stdint.h>
 #include "fdcan.h"
-
-// 最多能够支持的CAN设备数
+// https://blog.csdn.net/qq_30267617/article/details/119651826
+//  最多能够支持的CAN设备数
 #define CAN_MX_REGISTER_CNT 16     // 这个数量取决于CAN总线的负载
 #define MX_CAN_FILTER_CNT (2 * 14) // 最多可以使用的CAN过滤器数量,目前远不会用到这么多
 #define DEVICE_CAN_CNT 2           // 根据板子设定,F407IG有CAN1,CAN2,因此为2;F334只有一个,则设为1

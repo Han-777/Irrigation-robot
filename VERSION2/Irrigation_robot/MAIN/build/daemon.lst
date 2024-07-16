@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctbGP5c.s 			page 1
+ARM GAS  C:\Users\blue\AppData\Local\Temp\cczjdIe0.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctbGP5c.s 			page 1
   44              		.loc 1 12 50 view .LVU4
   45 0006 FFF7FEFF 		bl	malloc
   46              	.LVL2:
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctbGP5c.s 			page 2
+ARM GAS  C:\Users\blue\AppData\Local\Temp\cczjdIe0.s 			page 2
 
 
   13:modules/daemon/daemon.c ****     memset(instance, 0, sizeof(DaemonInstance));
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctbGP5c.s 			page 1
   93              		.section	.text.DaemonReload,"ax",%progbits
   94              		.align	1
   95              		.global	DaemonReload
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctbGP5c.s 			page 3
+ARM GAS  C:\Users\blue\AppData\Local\Temp\cczjdIe0.s 			page 3
 
 
   96              		.syntax unified
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctbGP5c.s 			page 1
  142              		.cfi_endproc
  143              	.LFE2:
  145              		.section	.text.DaemonTask,"ax",%progbits
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctbGP5c.s 			page 4
+ARM GAS  C:\Users\blue\AppData\Local\Temp\cczjdIe0.s 			page 4
 
 
  146              		.align	1
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctbGP5c.s 			page 1
   37:modules/daemon/daemon.c ****     {
  188              		.loc 1 37 24 discriminator 1 view .LVU43
   37:modules/daemon/daemon.c ****     {
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctbGP5c.s 			page 5
+ARM GAS  C:\Users\blue\AppData\Local\Temp\cczjdIe0.s 			page 5
 
 
  189              		.loc 1 37 26 is_stmt 0 discriminator 1 view .LVU44
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctbGP5c.s 			page 1
  233 0000 00000000 		.space	256
  233      00000000 
  233      00000000 
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctbGP5c.s 			page 6
+ARM GAS  C:\Users\blue\AppData\Local\Temp\cczjdIe0.s 			page 6
 
 
  233      00000000 
@@ -314,25 +314,25 @@ ARM GAS  C:\Users\blue\AppData\Local\Temp\cctbGP5c.s 			page 1
  244              		.file 4 "modules/daemon/daemon.h"
  245              		.file 5 "d:\\rm\\arm-gnu-toolchian\\lib\\gcc\\arm-none-eabi\\10.3.1\\include\\stddef.h"
  246              		.file 6 "d:\\rm\\arm-gnu-toolchian\\arm-none-eabi\\include\\stdlib.h"
-ARM GAS  C:\Users\blue\AppData\Local\Temp\cctbGP5c.s 			page 7
+ARM GAS  C:\Users\blue\AppData\Local\Temp\cczjdIe0.s 			page 7
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 daemon.c
-C:\Users\blue\AppData\Local\Temp\cctbGP5c.s:19     .text.DaemonRegister:00000000 $t
-C:\Users\blue\AppData\Local\Temp\cctbGP5c.s:25     .text.DaemonRegister:00000000 DaemonRegister
-C:\Users\blue\AppData\Local\Temp\cctbGP5c.s:88     .text.DaemonRegister:00000034 $d
-C:\Users\blue\AppData\Local\Temp\cctbGP5c.s:94     .text.DaemonReload:00000000 $t
-C:\Users\blue\AppData\Local\Temp\cctbGP5c.s:100    .text.DaemonReload:00000000 DaemonReload
-C:\Users\blue\AppData\Local\Temp\cctbGP5c.s:119    .text.DaemonIsOnline:00000000 $t
-C:\Users\blue\AppData\Local\Temp\cctbGP5c.s:125    .text.DaemonIsOnline:00000000 DaemonIsOnline
-C:\Users\blue\AppData\Local\Temp\cctbGP5c.s:146    .text.DaemonTask:00000000 $t
-C:\Users\blue\AppData\Local\Temp\cctbGP5c.s:152    .text.DaemonTask:00000000 DaemonTask
-C:\Users\blue\AppData\Local\Temp\cctbGP5c.s:222    .text.DaemonTask:0000002c $d
-C:\Users\blue\AppData\Local\Temp\cctbGP5c.s:228    .bss.daemon_instances:00000000 $d
-C:\Users\blue\AppData\Local\Temp\cctbGP5c.s:232    .bss.daemon_instances:00000000 daemon_instances
-C:\Users\blue\AppData\Local\Temp\cctbGP5c.s:238    .bss.idx:00000000 idx
-C:\Users\blue\AppData\Local\Temp\cctbGP5c.s:239    .bss.idx:00000000 $d
+C:\Users\blue\AppData\Local\Temp\cczjdIe0.s:19     .text.DaemonRegister:00000000 $t
+C:\Users\blue\AppData\Local\Temp\cczjdIe0.s:25     .text.DaemonRegister:00000000 DaemonRegister
+C:\Users\blue\AppData\Local\Temp\cczjdIe0.s:88     .text.DaemonRegister:00000034 $d
+C:\Users\blue\AppData\Local\Temp\cczjdIe0.s:94     .text.DaemonReload:00000000 $t
+C:\Users\blue\AppData\Local\Temp\cczjdIe0.s:100    .text.DaemonReload:00000000 DaemonReload
+C:\Users\blue\AppData\Local\Temp\cczjdIe0.s:119    .text.DaemonIsOnline:00000000 $t
+C:\Users\blue\AppData\Local\Temp\cczjdIe0.s:125    .text.DaemonIsOnline:00000000 DaemonIsOnline
+C:\Users\blue\AppData\Local\Temp\cczjdIe0.s:146    .text.DaemonTask:00000000 $t
+C:\Users\blue\AppData\Local\Temp\cczjdIe0.s:152    .text.DaemonTask:00000000 DaemonTask
+C:\Users\blue\AppData\Local\Temp\cczjdIe0.s:222    .text.DaemonTask:0000002c $d
+C:\Users\blue\AppData\Local\Temp\cczjdIe0.s:228    .bss.daemon_instances:00000000 $d
+C:\Users\blue\AppData\Local\Temp\cczjdIe0.s:232    .bss.daemon_instances:00000000 daemon_instances
+C:\Users\blue\AppData\Local\Temp\cczjdIe0.s:238    .bss.idx:00000000 idx
+C:\Users\blue\AppData\Local\Temp\cczjdIe0.s:239    .bss.idx:00000000 $d
 
 UNDEFINED SYMBOLS
 malloc

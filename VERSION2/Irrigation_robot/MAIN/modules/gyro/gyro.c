@@ -5,7 +5,7 @@
 
 #define GYRO_FRAME_SIZE 80 // gyro receive buffer size
 // 方便数据转化的结构体
-static IMUData_Packet_t IMUData_Packet;
+// static IMUData_Packet_t IMUData_Packet;
 static AHRSData_Packet_t AHRSData_Packet;
 // 最终数据
 static GYRO_data_t *gyro_data;

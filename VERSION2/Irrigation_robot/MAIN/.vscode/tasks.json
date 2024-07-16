@@ -4,7 +4,7 @@
     {
       "label": "build task",
       "type": "shell",
-      "command": "mingw32-make -j24",
+      "command": "mingw32-make -j20",
       "problemMatcher": [],
       "group": {
         "kind": "build",

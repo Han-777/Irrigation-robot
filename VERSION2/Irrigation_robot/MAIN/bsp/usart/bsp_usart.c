@@ -24,8 +24,7 @@ __attribute__((section(".my_section"))) static uint8_t my_section[MY_SECTION_SIZ
 void *my_malloc(size_t size)
 {
     static size_t my_section_offset = 0;
-    my_section_offset += size;
-    if (my_section_offset > MY_SECTION_SIZE_LIMIT)
+    if (my_section_offset + size > MY_SECTION_SIZE_LIMIT)
         while (1)
             ;
     void *ptr = &my_section[my_section_offset];

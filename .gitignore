@@ -1,0 +1,18 @@
+# ignore all contents:
+# *
+
+# ignroe all dir:
+# */
+
+# ignore contents under directory:
+# directory name/*
+# !directory name/file name needed to be tracked
+
+
+# =========================================================== #
+# ignore all files under build directory
+build/
+
+# ignore all files under OBJ directory
+OBJ/
+Objects/

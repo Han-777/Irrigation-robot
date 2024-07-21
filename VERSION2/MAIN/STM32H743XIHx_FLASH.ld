@@ -78,7 +78,7 @@ SECTIONS
     *(.my_section) /* Place .my_section section here */
     . = ALIGN(4);
   } >RAM
-  
+
   /* The startup code goes first into FLASH */
   .isr_vector :
   {

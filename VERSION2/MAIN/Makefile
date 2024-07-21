@@ -83,6 +83,7 @@ bsp/can/bsp_can.c \
 modules/lidar/lidar.c \
 modules/daemon/daemon.c \
 modules/gyro/gyro.c \
+modules/mp3/mp3.c \
 application/chassis/chassis.c
 
 
@@ -152,6 +153,7 @@ C_INCLUDES =  \
 -Imodules/lidar \
 -Imodules/daemon \
 -Imodules/gyro \
+-Imodules/mp3 \
 -Iapplication/chassis
 
 

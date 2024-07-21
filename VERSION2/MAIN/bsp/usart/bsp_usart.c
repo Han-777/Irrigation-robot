@@ -24,9 +24,8 @@ static size_t my_section_offset = 0;
 void *my_malloc(size_t size)
 {
     if (my_section_offset + size > MY_SECTION_SIZE_LIMIT)
-    {
-        return NULL;
-    }
+        while (1)
+            ;
     void *ptr = &my_section[my_section_offset];
     my_section_offset += size;
     return ptr;
@@ -182,5 +181,59 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
             __HAL_DMA_DISABLE_IT(usart_instance[i]->usart_handle->hdmarx, DMA_IT_HT);
             return;
         }
+    }
+}
+
+/*================================VIRTUAL USART==================================*/
+static uint8_t virtual_instance_idx = 0;
+
+/**
+ * @brief Virtual usart register
+ *
+ */
+VIRTUALInstance *VIRTUAL_USARTRegister(VIRTUAL_Init_Config_s *init_config)
+{
+    if (virtual_instance_idx > DEVICE_VIRTUAL_CNT)
+        while (1)
+            ;
+    VIRTUALInstance *instance = (VIRTUALInstance *)malloc(sizeof(VIRTUALInstance));
+    memset(instance, 0, sizeof(VIRTUALInstance));
+
+    instance->tx_pin = init_config->tx_pin;
+    instance->rx_pin = init_config->rx_pin;
+    instance->tx_port = init_config->tx_port;
+    instance->rx_port = init_config->rx_port;
+    instance->recv_buff_size = init_config->recv_buff_size;
+    instance->recv_buff = (uint8_t *)malloc(init_config->recv_buff_size);
+    instance->trans_baud = init_config->trans_baud;
+
+    virtual_instance_idx++;
+    return instance;
+}
+
+/* @todo 在实现freertos之后补充delay_us的实现 */
+void VirtualCOM_ByteSend(VIRTUALInstance *instance, uint8_t data)
+{
+    uint8_t i;
+    HAL_GPIO_WritePin(instance->tx_port, instance->tx_pin, GPIO_PIN_RESET); // 发送起始位
+    // delay_us(instance->trans_baud); // after freertos
+    for (i = 0; i < 8; i++) // 发送8位数据位
+    {
+        if (data & 0x01)
+            HAL_GPIO_WritePin(instance->tx_port, instance->tx_pin, GPIO_PIN_SET); // 1
+        else
+            HAL_GPIO_WritePin(instance->tx_port, instance->tx_pin, GPIO_PIN_RESET); // 0
+        data >>= 1;
+        // delay_us(instance->trans_baud); // after freertos
+    }
+    HAL_GPIO_WritePin(instance->tx_port, instance->tx_pin, GPIO_PIN_SET); // 发送结束位
+    // delay_us(instance->trans_baud); // after freertos
+}
+
+void VirtualCOM_SendArr(VIRTUALInstance *instance, uint8_t *arr, size_t arr_len)
+{
+    for (size_t i = 0; i < arr_len; i++)
+    {
+        VirtualCOM_ByteSend(instance, arr[i]);
     }
 }

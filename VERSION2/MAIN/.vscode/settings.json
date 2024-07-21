@@ -33,7 +33,9 @@
     "memory.h": "c",
     "chassis.h": "c",
     "ieeefp.h": "c",
-    "servo_motor.h": "c"
+    "servo_motor.h": "c",
+    "mp3.h": "c",
+    "stm32h7xx_hal.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

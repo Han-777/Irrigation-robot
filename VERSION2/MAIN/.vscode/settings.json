@@ -35,7 +35,12 @@
     "ieeefp.h": "c",
     "servo_motor.h": "c",
     "mp3.h": "c",
-    "stm32h7xx_hal.h": "c"
+    "stm32h7xx_hal.h": "c",
+    "typeinfo": "cpp",
+    "bsp_dwt.h": "c",
+    "bsp_log.h": "c",
+    "bsp_init.h": "c",
+    "message_center.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

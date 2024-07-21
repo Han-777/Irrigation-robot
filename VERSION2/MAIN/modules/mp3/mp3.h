@@ -2,6 +2,7 @@
 #define __MP3_H
 
 #include "main.h"
+#include <stdint.h>
 
 typedef enum
 {

@@ -133,6 +133,7 @@ static void GYROLostCallback(void *id) // id is corresponding usart handle
     //     USARTServiceInit(rGYRO_instance);                                      // 尝试重新启动接收
     //     LOGWARNING("[lidar] left lidar lost");
     // }
+    memset(gyro_instance, 0, sizeof(gyro_instance));
     USARTServiceInit(gyro_instance);
 }
 

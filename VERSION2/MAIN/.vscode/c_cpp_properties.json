@@ -12,7 +12,11 @@
         "${workspaceFolder}/modules/lidar",
         "${workspaceFolder}/modules/daemon",
         "${workspaceFolder}/modules/gyro",
-        "${workspaceFolder}/bsp/usart"
+        "${workspaceFolder}/modules/mp3",
+        "${workspaceFolder}/bsp/usart",
+        "${workspaceFolder}/bsp/dwt",
+        "${workspaceFolder}/bsp/tools",
+        "${workspaceFolder}/bsp"
       ],
       "defines": [
         "_DEBUG",

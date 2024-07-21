@@ -20,10 +20,9 @@ static USARTInstance *usart_instance[DEVICE_USART_CNT] = {NULL};
 // // 内存处理
 #define MY_SECTION_SIZE_LIMIT 2 * 1024 // 2KB(for memory protection unit), ram size
 __attribute__((section(".my_section"))) static uint8_t my_section[MY_SECTION_SIZE_LIMIT];
-
+static size_t my_section_offset = 0;
 void *my_malloc(size_t size)
 {
-    static size_t my_section_offset = 0;
     if (my_section_offset + size > MY_SECTION_SIZE_LIMIT)
         while (1)
             ;

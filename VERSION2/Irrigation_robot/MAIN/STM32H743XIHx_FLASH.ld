@@ -72,13 +72,6 @@ FLASH (rx)      : ORIGIN = 0x8000000, LENGTH = 2048K
 /* Define output sections */
 SECTIONS
 {
-  .my_section 0x38000000 (NOLOAD) :
-  {
-      . = ALIGN(4);
-      *(.my_section) /* Place .my_section section here */
-      . = ALIGN(4);
-  } >RAM_D3
-  
   /* The startup code goes first into FLASH */
   .isr_vector :
   {

@@ -13,9 +13,11 @@
         "${workspaceFolder}/modules/daemon",
         "${workspaceFolder}/modules/gyro",
         "${workspaceFolder}/modules/mp3",
+        "${workspaceFolder}/modules/photoelectric",
         "${workspaceFolder}/bsp/usart",
         "${workspaceFolder}/bsp/dwt",
         "${workspaceFolder}/bsp/tools",
+        "${workspaceFolder}/bsp/exti",
         "${workspaceFolder}/bsp"
       ],
       "defines": [

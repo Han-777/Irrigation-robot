@@ -68,9 +68,15 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(RELAY_GPIO_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PIPin PIPin PIPin PIPin */
-  GPIO_InitStruct.Pin = WATER_PE_GPIO_Pin|RIGHT_PE_GPIO_Pin|LEFT_PE_GPIO_Pin|MP3_VIRTUAL_UART_RX_Pin;
+  /*Configure GPIO pins : PIPin PIPin */
+  GPIO_InitStruct.Pin = PE_HEAD_Pin|MP3_VIRTUAL_UART_RX_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOI, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PIPin PIPin */
+  GPIO_InitStruct.Pin = RIGHT_PE_Pin|LEFT_PE_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOI, &GPIO_InitStruct);
 
@@ -214,6 +220,13 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI3_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI3_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI4_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI4_IRQn);
 
 }
 

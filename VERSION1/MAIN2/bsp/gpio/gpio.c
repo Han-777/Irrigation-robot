@@ -1,7 +1,7 @@
 #include "gpio.h"
 
 /**************************************************************************
-						鐢垫満鎺у埗鍒濓�??锟藉寲GPIO
+						鐢垫満鎺у埗鍒濓�??锟藉寲GPIO
 **************************************************************************/
 void MOTOR_GPIO_Init(void)
 {
@@ -28,7 +28,7 @@ void MOTOR_GPIO_Init(void)
 }
 
 /**************************************************************************
-						   鍏�?�數鍒濓�??锟藉寲GPIO
+						   鍏�?�數鍒濓�??锟藉寲GPIO
 **************************************************************************/
 void photoelectricity_GPIO_Init(void)
 {
@@ -95,7 +95,7 @@ void gray_GPIO_Init(void)
 	GPIO_Init(GPIOD, &GPIO_InitStruct); //
 }
 
-// //閰嶇疆鍏夌數浼犳劅锟�??
+// //閰嶇疆鍏夌數浼犳劅锟�??
 // GPIO_InitStructure.GPIO_Pin=GPIO_Pin_3 ;
 // GPIO_InitStructure.GPIO_Mode=GPIO_Mode_IN;
 // GPIO_InitStructure.GPIO_Speed=GPIO_Speed_100MHz;
@@ -107,7 +107,7 @@ void gray_GPIO_Init(void)
 // GPIO_InitStructure.GPIO_Mode=GPIO_Mode_OUT;
 // GPIO_InitStructure.GPIO_Speed=GPIO_Speed_100MHz;
 // GPIO_InitStructure.GPIO_OType=GPIO_OType_PP;
-// GPIO_InitStructure.GPIO_PuPd=GPIO_PuPd_DOWN;   //楂�?�數骞宠Е锟�?
+// GPIO_InitStructure.GPIO_PuPd=GPIO_PuPd_DOWN;   //楂�?�數骞宠Е锟�?
 // GPIO_Init(GPIOB,&GPIO_InitStructure);
 // GPIO_ResetBits(GPIOB, GPIO_Pin_4);
 // //閰嶇疆缁х數鍣≒F13
@@ -115,12 +115,12 @@ void gray_GPIO_Init(void)
 // GPIO_InitStructure.GPIO_Mode=GPIO_Mode_OUT;
 // GPIO_InitStructure.GPIO_Speed=GPIO_Speed_100MHz;
 // GPIO_InitStructure.GPIO_OType=GPIO_OType_PP;
-// GPIO_InitStructure.GPIO_PuPd=GPIO_PuPd_DOWN;   //楂�?�數骞宠Е锟�?
+// GPIO_InitStructure.GPIO_PuPd=GPIO_PuPd_DOWN;   //楂�?�數骞宠Е锟�?
 // GPIO_Init(GPIOB,&GPIO_InitStructure);
 // GPIO_ResetBits(GPIOB, GPIO_Pin_12);
 
 /**************************************************************************
-						   Key鍒濓�??锟藉寲GPIO
+						   Key鍒濓�??锟藉寲GPIO
 **************************************************************************/
 void Key_GPIO_Init()
 {
@@ -146,7 +146,7 @@ void Key_GPIO_Init()
 }
 
 /**************************************************************************
-						   锟�?闊虫挱锟�?? 鍒濓�??锟藉寲GPIO
+						   锟�?闊虫挱锟�?? 鍒濓�??锟藉寲GPIO
 **************************************************************************/
 
 void voice_Config(void)
@@ -170,10 +170,10 @@ void voice_Config(void)
 }
 
 /**************************************************************************
-				photoelectric 鍏�?�數x3 鍒濓�??锟藉寲GPIO
+				photoelectric 鍏�?�數x3 鍒濓�??锟藉寲GPIO
 **************************************************************************/
 
-// 鍏�?�數
+// 鍏�?�數
 void photoelectric_GPIO_Init(void)
 {
 	GPIO_InitTypeDef GPIO_InitStruct;
@@ -220,7 +220,7 @@ void pump_GPIO_Init(void)
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_DOWN; // 楂�?�數骞宠Е鍙�
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_DOWN; // 楂�?�數骞宠Е鍙�
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 	GPIO_ResetBits(GPIOA, GPIO_Pin_12);
 }

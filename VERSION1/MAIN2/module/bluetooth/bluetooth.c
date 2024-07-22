@@ -48,15 +48,15 @@ void USART1_IRQHandler(void) //??1??????
 			lRxState = 2;
 			lRxBuffer1[lRxCounter1++] = com_data;
 		}
-		else if (lRxState == 2) // ¶ÔÍêÃ¿Ò»´ÎÖ¡Í·
+		else if (lRxState == 2) // ï¿½ï¿½ï¿½ï¿½Ã¿Ò»ï¿½ï¿½Ö¡Í·
 		{
 			//					LED2=0;
 			lRxBuffer1[lRxCounter1++] = com_data;
-			if (lRxCounter1 >= 10 || com_data == 0x5B) // µ½Ö¡Î²»òÊý¾ÝÌ«³¤
+			if (lRxCounter1 >= 10 || com_data == 0x5B) // ï¿½ï¿½Ö¡Î²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì«ï¿½ï¿½
 			{
 				lRxState = 3;
 				lRxFlag1 = 1;										  // receive finish flag
-				drought_buff[ganhan++] = lRxBuffer1[lRxCounter1 - 2]; // -2: ÕýºÃÈ¡µ½¸ÉºµÊý¾Ý
+				drought_buff[ganhan++] = lRxBuffer1[lRxCounter1 - 2]; // -2: ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½Éºï¿½ï¿½ï¿½ï¿½ï¿½
 																	  //						lz=lRxBuffer1[lRxCounter1-2];
 																	  //						USART_SendData(USART1,lcolor);
 			}

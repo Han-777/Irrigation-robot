@@ -40,7 +40,11 @@
     "bsp_dwt.h": "c",
     "bsp_log.h": "c",
     "bsp_init.h": "c",
-    "message_center.h": "c"
+    "message_center.h": "c",
+    "exti.h": "c",
+    "bsp_exti.h": "c",
+    "photoelectric.h": "c",
+    "water.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

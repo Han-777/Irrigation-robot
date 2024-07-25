@@ -13,6 +13,7 @@
         "${workspaceFolder}/modules/daemon",
         "${workspaceFolder}/modules/gyro",
         "${workspaceFolder}/modules/mp3",
+        "${workspaceFolder}/modules/openmv",
         "${workspaceFolder}/modules/photoelectric",
         "${workspaceFolder}/bsp/usart",
         "${workspaceFolder}/bsp/dwt",

@@ -44,7 +44,11 @@
     "exti.h": "c",
     "bsp_exti.h": "c",
     "photoelectric.h": "c",
-    "water.h": "c"
+    "water.h": "c",
+    "gray.h": "c",
+    "openmv.h": "c",
+    "robot.h": "c",
+    "stm32h7xx_hal_def.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

@@ -75,7 +75,7 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOI, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PIPin PIPin */
-  GPIO_InitStruct.Pin = RIGHT_PE_Pin|LEFT_PE_Pin;
+  GPIO_InitStruct.Pin = LEFT_PE_Pin|RIGHT_PE_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOI, &GPIO_InitStruct);
@@ -110,8 +110,8 @@ void MX_GPIO_Init(void)
 
   /*Configure GPIO pins : PDPin PDPin PDPin PDPin
                            PDPin */
-  GPIO_InitStruct.Pin = GRAY12_GPIO_Pin|GRAY11_GPIO_Pin|GRAY13_GPIO_Pin|GRAY10_GPIO_Pin
-                          |GRAY14_GPIO_Pin;
+  GPIO_InitStruct.Pin = GRAY11_GPIO_Pin|GRAY10_GPIO_Pin|GRAY12_GPIO_Pin|GRAY9_GPIO_Pin
+                          |GRAY13_GPIO_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
@@ -171,7 +171,7 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PBPin PBPin PBPin PBPin */
-  GPIO_InitStruct.Pin = GRAY2_GPIO_Pin|GRAY1_GPIO_Pin|GRAY4_GPIO_Pin|GRAY3_GPIO_Pin;
+  GPIO_InitStruct.Pin = GRAY1_GPIO_Pin|GRAY0_GPIO_Pin|GRAY3_GPIO_Pin|GRAY2_GPIO_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
@@ -215,8 +215,8 @@ void MX_GPIO_Init(void)
 
   /*Configure GPIO pins : PCPin PCPin PCPin PCPin
                            PCPin */
-  GPIO_InitStruct.Pin = GRAY5_GPIO_Pin|GRAY6_GPIO_Pin|GRAY7_GPIO_Pin|GRAY8_GPIO_Pin
-                          |GRAY9_GPIO_Pin;
+  GPIO_InitStruct.Pin = GRAY4_GPIO_Pin|GRAY5_GPIO_Pin|GRAY6_GPIO_Pin|GRAY7_GPIO_Pin
+                          |GRAY8_GPIO_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);

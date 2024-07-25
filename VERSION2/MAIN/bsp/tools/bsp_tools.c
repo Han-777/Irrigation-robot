@@ -38,9 +38,9 @@ uint32_t CreateCallbackTask(char *name, void *cbk, void *ins, osPriority priorit
 {
     if (sig_idx >= MX_SIG_LIST_SIZE)
         while (1)
-            LOGERROR("[rtos:cbk_register] CreateCallbackTask: sig_idx >= MX_SIG_LIST_SIZE");
+            // LOGERROR("[rtos:cbk_register] CreateCallbackTask: sig_idx >= MX_SIG_LIST_SIZE");
 
-    cbkinfo_list[sig_idx].callback = cbk;
+            cbkinfo_list[sig_idx].callback = cbk;
     cbkinfo_list[sig_idx].sig = tmp_sig << sig_idx;
     cbkinfo_list[sig_idx].ins = ins;
 

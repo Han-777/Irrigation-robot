@@ -48,6 +48,7 @@ while(True):
             cx=max_b.cx()
             cy=max_b.cy()
         if max_b.code() == 2:
+
             img.draw_rectangle(max_b.rect(),color=(0,255,0))
             img.draw_cross(max_b.cx(),max_b.cy())
             cx=max_b.cx()
@@ -87,6 +88,6 @@ while(True):
             cx=max_b.cx()
             cy=max_b.cy()
 
-     FH = bytearray([0x2C,0x12,cx,cy,a,ch,0x5B])
+     FH = bytearray([0x2C,0x2D,a,cx,cy,ch,0x5B,0x5A])
      uart.write(FH)
      print(FH)

@@ -2,6 +2,10 @@
 #include "robot.h"
 #include "robot_def.h"
 
+/*      Add for testing            */
+#include "ldiar.h"
+static LD_data_t *ld_data;
+
 // 编译warning,提醒开发者修改机器人参数
 #ifndef ROBOT_DEF_PARAM_WARNING
 #define ROBOT_DEF_PARAM_WARNING
@@ -24,6 +28,7 @@
 
 void RobotInit()
 {
+
     // // 关闭中断,防止在初始化过程中发生中断
     // // 请不要在初始化过程中使用中断和延时函数！
     // // 若必须,则只允许使用DWT_Delay()

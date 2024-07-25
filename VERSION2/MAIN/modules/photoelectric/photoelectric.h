@@ -6,11 +6,10 @@
 
 typedef enum
 {
-    LEFT_PE_FLAG = 0b01,
-    RIGHT_PE_FLAG = 0b10
+    LEFT_PE_FLAG = 0b00000001,
+    RIGHT_PE_FLAG = 0b00000010
 } PE_FLAG_e;
-static void PECallback(uint16_t pin_handle);
 
-void PE_Init(uint16_t pe_pin_handle);
+uint8_t *PE_Init(uint16_t pe_pin_handle);
 
 #endif

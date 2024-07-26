@@ -10,9 +10,9 @@
 #ifndef SERVO_MOTOR_H
 #define SERVO_MOTOR_H
 
+#include <stdint.h>
 #include "main.h"
 #include "tim.h"
-#include <stdint.h>
 
 #define SERVO_MOTOR_CNT 7 // number of servo motors
 

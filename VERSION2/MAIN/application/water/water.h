@@ -8,7 +8,4 @@ typedef enum
     right_water_flag = 0b001
 } Water_State_e;
 
-typedef struct
-{
-}
 #endif

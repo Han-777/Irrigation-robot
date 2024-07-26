@@ -3,9 +3,9 @@
 
 #define DROUGHT_BUFF_LEN 8
 static VIRTUALInstance *mp3_instance;
-uint8_t slight[DROUGHT_BUFF_LEN] = {0x7E, 0x04, 0x45, 0x00, 0x01, 0xEF, 0x0D, 0x0A}, // 轻微干旱
-    general[DROUGHT_BUFF_LEN] = {0x7E, 0x04, 0x45, 0x00, 0x02, 0xEF, 0x0D, 0x0A},    // 一般干旱
-    serious[DROUGHT_BUFF_LEN] = {0x7E, 0x04, 0x45, 0x00, 0x03, 0xEF, 0x0D, 0x0A};    // 严重干旱
+uint8_t slight[DROUGHT_BUFF_LEN] = {0x7E, 0x04, 0x45, 0x00, 0x01, 0xEF, 0x0D, 0x0A};  // 轻微干旱
+uint8_t general[DROUGHT_BUFF_LEN] = {0x7E, 0x04, 0x45, 0x00, 0x02, 0xEF, 0x0D, 0x0A}; // 一般干旱
+uint8_t serious[DROUGHT_BUFF_LEN] = {0x7E, 0x04, 0x45, 0x00, 0x03, 0xEF, 0x0D, 0x0A}; // 严重干旱
 
 void MP3_Init(void)
 {
@@ -23,12 +23,19 @@ void MP3_Init(void)
 void MP3_broadcast(MP3_broadcast_type info)
 {
     if (info == SLIGHT)
+    {
         VirtualCOM_SendArr(mp3_instance, slight, DROUGHT_BUFF_LEN);
-    else if (info == GENERAl)
+    }
+    else if (info == GENERAL)
+    {
         VirtualCOM_SendArr(mp3_instance, general, DROUGHT_BUFF_LEN);
-
+    }
     else if (info == SERIOUS)
+    {
         VirtualCOM_SendArr(mp3_instance, serious, DROUGHT_BUFF_LEN);
+    }
     else
+    {
         VirtualCOM_SendArr(mp3_instance, slight, DROUGHT_BUFF_LEN);
+    }
 }

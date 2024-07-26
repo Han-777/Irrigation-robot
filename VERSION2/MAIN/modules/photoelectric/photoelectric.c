@@ -7,7 +7,7 @@
  * @note This function should be modified every time when
  *       application changes
  */
-static uint8_t pe_state = 0;
+static uint8_t pe_state;
 static void PECallback(uint16_t pin_handle)
 {
     switch (pin_handle)

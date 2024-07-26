@@ -30,14 +30,6 @@ typedef struct
  *        首先需要创建一个float类型的变量,用于存储时间间隔
  *        计算得到的时间间隔同时还会通过RTT打印到日志终端,你也可以将你的dt变量添加到查看
  */
-// #define TIME_ELAPSE(dt, code)                    \
-//     do                                           \
-//     {                                            \
-//         float tstart = DWT_GetTimeline_s();      \
-//         code;                                    \
-//         dt = DWT_GetTimeline_s() - tstart;       \
-//         LOGINFO("[DWT] " #dt " = %f s\r\n", dt); \
-//     } while (0)
 #define TIME_ELAPSE(dt, code)               \
     do                                      \
     {                                       \

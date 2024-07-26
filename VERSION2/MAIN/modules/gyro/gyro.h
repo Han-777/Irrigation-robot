@@ -13,6 +13,8 @@
 #define PI 3.1415926535f
 #endif
 
+// 数据处理选择
+// #define INFO_HANDLE_OUT
 // 接收处理宏
 #define FRAME_HEAD 0xfc
 #define FRAME_END 0xfd
@@ -43,7 +45,11 @@ typedef struct
     float Roll;       // unit: degrees
     float Pitch;      // unit: degrees
     float Yaw;        // unit: degrees
-} GYRO_data_t;        // 只对ahrsdata进行了封装
+    // 上电角
+    float ori_yaw;
+    float ori_pitch;
+    float ori_roll;
+} GYRO_data_t; // 只对ahrsdata进行了封装
 
 //
 typedef struct IMUData_Packet_t
@@ -78,6 +84,9 @@ typedef struct AHRSData_Packet_t
     uint32_t Timestamp; // unit: us
 } AHRSData_Packet_t;
 
+#ifdef INFO_HANDLE_OUT
+void GYRO_buff_to_data(); // 外部处理，中断只负责数据搬运
+#endif
 GYRO_data_t *Gyro_Init(UART_HandleTypeDef *gyro_usart_handle);
 
 #endif

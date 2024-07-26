@@ -1,7 +1,7 @@
 #include "message_center.h"
 #include "stdlib.h"
 #include "string.h"
-// #include "bsp_log.h"
+#include "bsp_log.h"
 
 /* message_center是fake head node,是方便链表编写的技巧,这样就不需要处理链表头的特殊情况 */
 static Publisher_t message_center = {
@@ -13,7 +13,6 @@ static void CheckName(char *name)
 {
     if (strnlen(name, MAX_TOPIC_NAME_LEN + 1) >= MAX_TOPIC_NAME_LEN)
     {
-        LOGERROR("EVENT NAME TOO LONG:%s", name);
         while (1)
             ; // 进入这里说明话题名超出长度限制
     }
@@ -23,7 +22,6 @@ static void CheckLen(uint8_t len1, uint8_t len2)
 {
     if (len1 != len2)
     {
-        LOGERROR("EVENT LEN NOT SAME:%d,%d", len1, len2);
         while (1)
             ; // 进入这里说明相同话题的消息长度却不同
     }

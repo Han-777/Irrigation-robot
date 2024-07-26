@@ -48,7 +48,19 @@
     "gray.h": "c",
     "openmv.h": "c",
     "robot.h": "c",
-    "stm32h7xx_hal_def.h": "c"
+    "stm32h7xx_hal_def.h": "c",
+    "memorymap.h": "c",
+    "cstdint": "c",
+    "controller.h": "c",
+    "robot_cmd.h": "c",
+    "buzzer.h": "c",
+    "robot_task.h": "c",
+    "general_def.h": "c",
+    "motor_task.h": "c",
+    "stm32h7xx_hal_rcc.h": "c",
+    "stm32h743xx.h": "c",
+    "stdio.h": "c",
+    "segger_rtt_conf.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

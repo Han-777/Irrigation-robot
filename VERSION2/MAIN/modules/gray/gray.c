@@ -1,6 +1,7 @@
 #include "gray.h"
 
-int get_gray_cnt(void)
+static uint8_t gray_cnt = 0;
+void get_gray_cnt(void)
 {
     int i = 0;
     if (OUT0 == 0)
@@ -59,9 +60,14 @@ int get_gray_cnt(void)
     {
         i++;
     }
-    return i;
+    gray_cnt = i;
+    return;
 }
 
+uint8_t *Gray_Init(void)
+{
+    return &gray_cnt;
+}
 // int cross_cnt = 0;
 // put to application
 // this function should followed by next operation, IT CAN NOT BE CALLED MULTIPLE TIMES!!!

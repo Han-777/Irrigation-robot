@@ -60,7 +60,10 @@
     "stm32h7xx_hal_rcc.h": "c",
     "stm32h743xx.h": "c",
     "stdio.h": "c",
-    "segger_rtt_conf.h": "c"
+    "segger_rtt_conf.h": "c",
+    "compare": "c",
+    "robot_queen.h": "c",
+    "robot_queue.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

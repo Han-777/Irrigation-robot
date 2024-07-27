@@ -3,18 +3,43 @@
 #include "daemon.h"
 #include <string.h>
 
-#define LIDAR_FRAME_SIZE 9 // lidar receive buffer size
-
 static LD_data_t *ld_data;
 static DaemonInstance *ld_daemon_instance;
 static USARTInstance *lld_instance; // left lidar
 static USARTInstance *rld_instance; // right lidar
+#ifdef LIDAR_INFO_HANDLE_OUT
+
+static uint8_t lidar_buff[LIDAR_FRAME_SIZE + 1]; // +1: for indentification of left and right
+
+void lidar_data_handle(uint8_t *buffer)
+{
+    if ((buffer[0] == 0x59) && (buffer[1] == 0x59))
+    {
+        uint8_t checksum = 0;
+        for (uint8_t i = 0; i < 8; i++)
+        {
+            checksum += buffer[i];
+        }
+        if (checksum == buffer[8])
+        {
+            if (buffer[9] == 0) // left lidar
+            {
+                ld_data->lld_distance = (uint16_t)(buffer[3] << 8 | buffer[2]);
+            }
+            else if (buffer[9] == 1) // right lidar
+            {
+                ld_data->rld_distance = (uint16_t)(buffer[3] << 8 | buffer[2]);
+            }
+        }
+    }
+}
+#else
 /**
  * @brief lidar data parses
  * 内部判断usart_instance给左右lidar赋值
  * @param ld_buff 接收buffer
  */
-static uint16_t ld_buff_to_data(const uint8_t *ld_buff)
+static void ld_buff_to_data(UART_HandleTypeDef *huart, uint8_t *ld_buff)
 {
     if ((ld_buff[0] == 0x59) && (ld_buff[1] == 0x59))
     {
@@ -25,11 +50,19 @@ static uint16_t ld_buff_to_data(const uint8_t *ld_buff)
         }
         if (checksum == ld_buff[8])
         {
-            return (uint16_t)(ld_buff[3] << 8 | ld_buff[2]);
+            if (huart == &huart2)
+            {
+                ld_data->lld_distance = (uint16_t)(ld_buff[3] << 8 | ld_buff[2]);
+            }
+            else if (huart == &huart4)
+            {
+                ld_data->rld_distance = (uint16_t)(ld_buff[3] << 8 | ld_buff[2]);
+            }
         }
+        return; // 协议错误
     }
-    return 0; // 协议错误
 }
+#endif
 
 /**
  * @brief ld_buff_to_data,用于注册到bsp_usart的回调函数中
@@ -40,14 +73,26 @@ static uint16_t ld_buff_to_data(const uint8_t *ld_buff)
 static void LDRxCallback(UART_HandleTypeDef *huart, uint16_t Size) // 串口接收回调_
 {
     DaemonReload(ld_daemon_instance); // 先喂狗
+#ifdef LIDAR_INFO_HANDLE_OUT
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
     if (huart == &huart2)
     {
-        ld_data->lld_distance = ld_buff_to_data(lld_instance->recv_buff); // 进行协议解析
+        memset(lidar_buff, 0, LIDAR_FRAME_SIZE + 1);
+        memcpy(lidar_buff, lld_instance->recv_buff, Size);
+        lidar_buff[Size] = 0; // 左激光雷达标识
+        xQueueSendFromISR(lidarQueue, &lidar_buff, 0);
     }
     else if (huart == &huart4)
     {
-        ld_data->rld_distance = ld_buff_to_data(rld_instance->recv_buff);
+        // memset(lidar_buff, 0, LIDAR_FRAME_SIZE + 1);
+        memcpy(lidar_buff, rld_instance->recv_buff, Size);
+        lidar_buff[Size] = 1; // 右激光雷达标识
+        xQueueSendFromISR(lidarQueue, &lidar_buff, 0);
     }
+    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+#else
+    ld_buff_to_data(huart, lld_instance->recv_buff);
+#endif
 }
 
 /**

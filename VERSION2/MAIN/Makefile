@@ -97,6 +97,7 @@ modules/algorithm/controller.c \
 modules/message_center/message_center.c \
 application/chassis/chassis.c \
 application/cmd/robot_cmd.c \
+application/cmd/robot_queue.c \
 application/robot.c \
 application/water/water.c \
 Core/Src/stm32h7xx_hal_timebase_tim.c \

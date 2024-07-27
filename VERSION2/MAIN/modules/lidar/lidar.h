@@ -12,6 +12,9 @@
 #include <stdint.h>
 #include "main.h"
 
+#define LIDAR_FRAME_SIZE 9 // lidar receive buffer size
+#define LIDAR_INFO_HANDLE_OUT
+
 typedef struct
 {
     uint16_t lld_distance;
@@ -19,7 +22,11 @@ typedef struct
 } LD_data_t;
 
 /* ------------------------- Internal Data ----------------------------------- */
+#ifdef LIDAR_INFO_HANDLE_OUT
+#include "robot_queue.h"
+void lidar_data_handle(uint8_t *buffer);
 
+#endif
 /**
  * @brief 初始化lidar,该函数会将遥控器注册到串口
  *

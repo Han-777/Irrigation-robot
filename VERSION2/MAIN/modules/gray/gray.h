@@ -4,7 +4,6 @@
 #include "main.h"
 
 /*** @note later it should be put to application layer*/
-#define GRAY_THRESHOLD
 /*--------------------------------------------------------------*/
 // OUT1 -> OUT12 from left to right
 

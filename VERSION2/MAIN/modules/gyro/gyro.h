@@ -13,8 +13,10 @@
 #define PI 3.1415926535f
 #endif
 
+#define GYRO_FRAME_SIZE 80 // gyro receive buffer size
+
 // 数据处理选择
-// #define INFO_HANDLE_OUT
+#define GYRO_INFO_HANDLE_OUT
 // 接收处理宏
 #define FRAME_HEAD 0xfc
 #define FRAME_END 0xfd
@@ -84,7 +86,8 @@ typedef struct AHRSData_Packet_t
     uint32_t Timestamp; // unit: us
 } AHRSData_Packet_t;
 
-#ifdef INFO_HANDLE_OUT
+#ifdef GYRO_INFO_HANDLE_OUT
+
 void GYRO_buff_to_data(); // 外部处理，中断只负责数据搬运
 #endif
 GYRO_data_t *Gyro_Init(UART_HandleTypeDef *gyro_usart_handle);

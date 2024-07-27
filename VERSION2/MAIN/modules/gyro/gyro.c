@@ -2,8 +2,6 @@
 #include "bsp_usart.h"
 #include "daemon.h"
 #include <string.h>
-
-#define GYRO_FRAME_SIZE 80 // gyro receive buffer size
 // 方便数据转化的结构体
 // static IMUData_Packet_t IMUData_Packet;
 static AHRSData_Packet_t AHRSData_Packet;
@@ -11,7 +9,6 @@ static AHRSData_Packet_t AHRSData_Packet;
 static GYRO_data_t *gyro_data;
 static DaemonInstance *GYRO_daemon_instance;
 static USARTInstance *gyro_instance;
-static uint16_t gyro_data_size = 0;
 /**
  * @brief transfer data from hexadecimaml to floating-point values
  * 实现16进制的can数据转换成浮点型数据
@@ -49,49 +46,52 @@ static long long timestamp(uint8_t Data_1, uint8_t Data_2, uint8_t Data_3, uint8
     return transition_32;
 }
 
+#ifdef GYRO_INFO_HANDLE_OUT
+static uint16_t gyro_data_size;
 /**
  * @brief gyro data parses
  *
  * @param GYRO_buff 接收buffer
  */
-#ifdef INFO_HANDLE_OUT
+static uint8_t gyro_buff[GYRO_FRAME_SIZE];
+
 void GYRO_buff_to_data()
 {
     static uint8_t initialized = 0;
-    if ((gyro_instance->recv_buff[0] == FRAME_HEAD) && (gyro_instance->recv_buff[gyro_data_size - 1] == FRAME_END))
+    if ((gyro_buff[0] == FRAME_HEAD) && (gyro_buff[gyro_data_size - 1] == FRAME_END))
     {
 #if defined(GYRO_RSIMU) || defined(GYRO_RSIMU_AHRS)
-        if ((gyro_instance->recv_buff[1] = TYPE_IMU) && (gyro_instance->recv_buff[2] = IMU_LEN))
+        if ((gyro_buff[1] = TYPE_IMU) && (gyro_buff[2] = IMU_LEN))
         {
-            IMUData_Packet.gyroscope_x = DATA_Trans(gyro_instance->recv_buff[7], gyro_instance->recv_buff[8], gyro_instance->recv_buff[9], gyro_instance->recv_buff[10]); // 角速度
-            IMUData_Packet.gyroscope_y = DATA_Trans(gyro_instance->recv_buff[11], gyro_instance->recv_buff[12], gyro_instance->recv_buff[13], gyro_instance->recv_buff[14]);
-            IMUData_Packet.gyroscope_z = DATA_Trans(gyro_instance->recv_buff[15], gyro_instance->recv_buff[16], gyro_instance->recv_buff[17], gyro_instance->recv_buff[18]);
+            IMUData_Packet.gyroscope_x = DATA_Trans(gyro_buff[7], gyro_buff[8], gyro_buff[9], gyro_buff[10]); // 角速度
+            IMUData_Packet.gyroscope_y = DATA_Trans(gyro_buff[11], gyro_buff[12], gyro_buff[13], gyro_buff[14]);
+            IMUData_Packet.gyroscope_z = DATA_Trans(gyro_buff[15], gyro_buff[16], gyro_buff[17], gyro_buff[18]);
 
-            IMUData_Packet.accelerometer_x = DATA_Trans(gyro_instance->recv_buff[19], gyro_instance->recv_buff[20], gyro_instance->recv_buff[21], gyro_instance->recv_buff[22]); // 线加速度
-            IMUData_Packet.accelerometer_y = DATA_Trans(gyro_instance->recv_buff[23], gyro_instance->recv_buff[24], gyro_instance->recv_buff[25], gyro_instance->recv_buff[26]);
-            IMUData_Packet.accelerometer_z = DATA_Trans(gyro_instance->recv_buff[27], gyro_instance->recv_buff[28], gyro_instance->recv_buff[29], gyro_instance->recv_buff[30]);
+            IMUData_Packet.accelerometer_x = DATA_Trans(gyro_buff[19], gyro_buff[20], gyro_buff[21], gyro_buff[22]); // 线加速度
+            IMUData_Packet.accelerometer_y = DATA_Trans(gyro_buff[23], gyro_buff[24], gyro_buff[25], gyro_buff[26]);
+            IMUData_Packet.accelerometer_z = DATA_Trans(gyro_buff[27], gyro_buff[28], gyro_buff[29], gyro_buff[30]);
 
-            IMUData_Packet.magnetometer_x = DATA_Trans(gyro_instance->recv_buff[31], gyro_instance->recv_buff[32], gyro_instance->recv_buff[33], gyro_instance->recv_buff[34]); // 磁力计数据
-            IMUData_Packet.magnetometer_y = DATA_Trans(gyro_instance->recv_buff[35], gyro_instance->recv_buff[36], gyro_instance->recv_buff[37], gyro_instance->recv_buff[38]);
-            IMUData_Packet.magnetometer_z = DATA_Trans(gyro_instance->recv_buff[39], gyro_instance->recv_buff[40], gyro_instance->recv_buff[41], gyro_instance->recv_buff[42]);
+            IMUData_Packet.magnetometer_x = DATA_Trans(gyro_buff[31], gyro_buff[32], gyro_buff[33], gyro_buff[34]); // 磁力计数据
+            IMUData_Packet.magnetometer_y = DATA_Trans(gyro_buff[35], gyro_buff[36], gyro_buff[37], gyro_buff[38]);
+            IMUData_Packet.magnetometer_z = DATA_Trans(gyro_buff[39], gyro_buff[40], gyro_buff[41], gyro_buff[42]);
 
-            IMUData_Packet.Timestamp = timestamp(gyro_instance->recv_buff[55], gyro_instance->recv_buff[56], gyro_instance->recv_buff[57], gyro_instance->recv_buff[58]); // 时间戳
+            IMUData_Packet.Timestamp = timestamp(gyro_buff[55], gyro_buff[56], gyro_buff[57], gyro_buff[58]); // 时间戳
         }
 #endif
 #if defined(GYRO_RSAHRS) || defined(GYRO_RSIMU_AHRS)
-        if ((gyro_instance->recv_buff[1] == TYPE_AHRS) && (gyro_instance->recv_buff[2] == AHRS_LEN))
+        if ((gyro_buff[1] == TYPE_AHRS) && (gyro_buff[2] == AHRS_LEN))
         {
-            AHRSData_Packet.RollSpeed = DATA_Trans(gyro_instance->recv_buff[7], gyro_instance->recv_buff[8], gyro_instance->recv_buff[9], gyro_instance->recv_buff[10]);       // 横滚角速度
-            AHRSData_Packet.PitchSpeed = DATA_Trans(gyro_instance->recv_buff[11], gyro_instance->recv_buff[12], gyro_instance->recv_buff[13], gyro_instance->recv_buff[14]);   // 俯仰角速度
-            AHRSData_Packet.HeadingSpeed = DATA_Trans(gyro_instance->recv_buff[15], gyro_instance->recv_buff[16], gyro_instance->recv_buff[17], gyro_instance->recv_buff[18]); // 偏航角速度
-            AHRSData_Packet.Roll = DATA_Trans(gyro_instance->recv_buff[19], gyro_instance->recv_buff[20], gyro_instance->recv_buff[21], gyro_instance->recv_buff[22]);         // 横滚角
-            AHRSData_Packet.Pitch = DATA_Trans(gyro_instance->recv_buff[23], gyro_instance->recv_buff[24], gyro_instance->recv_buff[25], gyro_instance->recv_buff[26]);        // 俯仰角
-            AHRSData_Packet.Heading = DATA_Trans(gyro_instance->recv_buff[27], gyro_instance->recv_buff[28], gyro_instance->recv_buff[29], gyro_instance->recv_buff[30]);      // 偏航角
-            AHRSData_Packet.Qw = DATA_Trans(gyro_instance->recv_buff[31], gyro_instance->recv_buff[32], gyro_instance->recv_buff[33], gyro_instance->recv_buff[34]);           // 四元数
-            AHRSData_Packet.Qx = DATA_Trans(gyro_instance->recv_buff[35], gyro_instance->recv_buff[36], gyro_instance->recv_buff[37], gyro_instance->recv_buff[38]);
-            AHRSData_Packet.Qy = DATA_Trans(gyro_instance->recv_buff[39], gyro_instance->recv_buff[40], gyro_instance->recv_buff[41], gyro_instance->recv_buff[42]);
-            AHRSData_Packet.Qz = DATA_Trans(gyro_instance->recv_buff[43], gyro_instance->recv_buff[44], gyro_instance->recv_buff[45], gyro_instance->recv_buff[46]);
-            AHRSData_Packet.Timestamp = timestamp(gyro_instance->recv_buff[47], gyro_instance->recv_buff[48], gyro_instance->recv_buff[49], gyro_instance->recv_buff[50]); // 时间戳
+            AHRSData_Packet.RollSpeed = DATA_Trans(gyro_buff[7], gyro_buff[8], gyro_buff[9], gyro_buff[10]);       // 横滚角速度
+            AHRSData_Packet.PitchSpeed = DATA_Trans(gyro_buff[11], gyro_buff[12], gyro_buff[13], gyro_buff[14]);   // 俯仰角速度
+            AHRSData_Packet.HeadingSpeed = DATA_Trans(gyro_buff[15], gyro_buff[16], gyro_buff[17], gyro_buff[18]); // 偏航角速度
+            AHRSData_Packet.Roll = DATA_Trans(gyro_buff[19], gyro_buff[20], gyro_buff[21], gyro_buff[22]);         // 横滚角
+            AHRSData_Packet.Pitch = DATA_Trans(gyro_buff[23], gyro_buff[24], gyro_buff[25], gyro_buff[26]);        // 俯仰角
+            AHRSData_Packet.Heading = DATA_Trans(gyro_buff[27], gyro_buff[28], gyro_buff[29], gyro_buff[30]);      // 偏航角
+            AHRSData_Packet.Qw = DATA_Trans(gyro_buff[31], gyro_buff[32], gyro_buff[33], gyro_buff[34]);           // 四元数
+            AHRSData_Packet.Qx = DATA_Trans(gyro_buff[35], gyro_buff[36], gyro_buff[37], gyro_buff[38]);
+            AHRSData_Packet.Qy = DATA_Trans(gyro_buff[39], gyro_buff[40], gyro_buff[41], gyro_buff[42]);
+            AHRSData_Packet.Qz = DATA_Trans(gyro_buff[43], gyro_buff[44], gyro_buff[45], gyro_buff[46]);
+            AHRSData_Packet.Timestamp = timestamp(gyro_buff[47], gyro_buff[48], gyro_buff[49], gyro_buff[50]); // 时间戳
 
             gyro_data->Pitch = AHRSData_Packet.Pitch * 180.0 / PI;
             gyro_data->PitchSpeed = AHRSData_Packet.PitchSpeed * 180.0 / PI;
@@ -107,9 +107,8 @@ void GYRO_buff_to_data()
                 initialized = 1;
             }
         }
-
-#endif
     }
+#endif
 }
 #else
 static void GYRO_buff_to_data(const uint8_t *gyro_buff, uint16_t size)
@@ -178,12 +177,13 @@ static void GYRO_buff_to_data(const uint8_t *gyro_buff, uint16_t size)
  */
 static void GYRORxCallback(UART_HandleTypeDef *huart, uint16_t size) // 串口接收回调_
 {
-    DaemonReload(GYRO_daemon_instance); // 先喂狗
-#ifdef INFO_HANDLE_OUT
-    gyro_data_size = size;
-#else
-    GYRO_buff_to_data(gyro_instance->recv_buff, size);
-#endif // !INFO_HANDLE_OUT
+    DaemonReload(GYRO_daemon_instance);
+    if ((gyro_instance->recv_buff[0] == FRAME_HEAD) && (gyro_instance->recv_buff[size - 1] == FRAME_END))
+    {
+        gyro_data_size = size;
+        // memset(gyro_data, 0, GYRO_FRAME_SIZE);
+        memcpy(gyro_buff, gyro_instance->recv_buff, size);
+    }
 }
 
 /**
@@ -193,18 +193,6 @@ static void GYRORxCallback(UART_HandleTypeDef *huart, uint16_t size) // 串口�
  */
 static void GYROLostCallback(void *id) // id is corresponding usart handle
 {
-    // if (id == &huart2) // left lidar handle
-    // {
-    //     memset(gyro_data->lGYRO_distance, 0, sizeof(gyro_data->lGYRO_distance)); // 清空数据
-    //     USARTServiceInit(lGYRO_instance);                                      // 尝试重新启动接收
-    //     LOGWARNING("[lidar] right lidar lost");
-    // }
-    // else
-    // {
-    //     memset(gyro_data->rGYRO_distance, 0, sizeof(gyro_data->rGYRO_distance)); // 清空数据
-    //     USARTServiceInit(rGYRO_instance);                                      // 尝试重新启动接收
-    //     LOGWARNING("[lidar] left lidar lost");
-    // }
     memset(gyro_instance, 0, sizeof(gyro_instance));
     USARTServiceInit(gyro_instance);
 }

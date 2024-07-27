@@ -119,7 +119,7 @@ void ChassisInit() // 配置中所有pid参数都需要修改
  */
 static void HeadingTransfer(void)
 {
-    // GYRO_buff_to_data(); // 数据处理
+    GYRO_buff_to_data(); // 数据处理
     chassis_gyro_ctrl_data->target_yaw = gyro_data->ori_yaw + 90 * chassis_cmd_recv.clockwise_rotate_flag;
     while (chassis_gyro_ctrl_data->target_yaw > 360)
     {

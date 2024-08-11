@@ -26,7 +26,7 @@ void RobotInit()
     __disable_irq();
 
     BSPInit();
-
+    
 #if defined(ONE_BOARD)
     RobotCMDInit();
 #endif

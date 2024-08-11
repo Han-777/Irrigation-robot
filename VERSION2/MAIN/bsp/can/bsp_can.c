@@ -193,7 +193,7 @@ static void CANFIFOxCallback(FDCAN_HandleTypeDef *_hcan, uint32_t fifox)
  *
  * @param hcan CAN handle indicate which device the oddest mesg in FIFO_0 comes from
  */
-void HAL_FDCAN_RxFifo0MsgPendingCallback(FDCAN_HandleTypeDef *hcan)
+void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 {
     CANFIFOxCallback(hcan, FDCAN_RX_FIFO0); // 调用我们自己写的函数来处理消息
 }
@@ -203,7 +203,7 @@ void HAL_FDCAN_RxFifo0MsgPendingCallback(FDCAN_HandleTypeDef *hcan)
  *
  * @param hcan CAN handle indicate which device the oddest mesg in FIFO_1 comes from
  */
-void HAL_FDCAN_RxFifo1MsgPendingCallback(FDCAN_HandleTypeDef *hcan)
+void HAL_FDCAN_RxFifo1Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo1ITs)
 {
     CANFIFOxCallback(hcan, FDCAN_RX_FIFO1); // 调用我们自己写的函数来处理消息
 }

@@ -1,11 +1,10 @@
 #ifndef __WATER_H
 #define __WATER_H
+#include "main.h"
 
-typedef enum
-{
-    enable_water_flag = 0b100,
-    left_water_flag = 0b010,
-    right_water_flag = 0b001
-} Water_State_e;
+// 浇水
+#define watering_Plant HAL_GPIO_WritePin(RELAY_GPIO_GPIO_Port, RELAY_GPIO_Pin, GPIO_PIN_SET)
 
+void WaterInit(void);
+void WaterTask(void);
 #endif

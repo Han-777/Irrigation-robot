@@ -14,7 +14,7 @@ u8 Fd_data[64];	  // data receive buffer
 u8 Fd_rsimu[64];  // (Inertial Measurement Unit) data store buffer
 u8 Fd_rsahrs[56]; // (Attitude and Heading Reference System) data store buffer
 
-int rs_imutype = 0; // ½ÓÊÕÍê³É±êÖ¾Î»
+int rs_imutype = 0; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É±ï¿½Ö¾ï¿½?
 int rs_ahrstype = 0;
 extern int Time_count;
 void GYRO_Init(void)
@@ -33,18 +33,18 @@ void UART5_IRQHandler(void)
 	static u8 rs_count = 0;
 	static u8 last_rsnum = 0;
 	u8 Usart_Receive;
-	static u8 rsimu_flag = 0; // ½ÓÊÕ¿ªÊ¼±êÖ¾Î»
+	static u8 rsimu_flag = 0; // ï¿½ï¿½ï¿½Õ¿ï¿½Ê¼ï¿½ï¿½Ö¾Î»
 	static u8 rsacc_flag = 0;
 	RS485_RX_RE = 0;
 	RS485_RX_DE = 0;
 	ttl_receive = 1;
 
-	if (USART_GetITStatus(UART5, USART_IT_RXNE) == SET) // Check if data is received //ÅÐ¶ÏÊÇ·ñ½ÓÊÕµ½Êý¾Ý
+	if (USART_GetITStatus(UART5, USART_IT_RXNE) == SET) // Check if data is received //ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½?
 	{
 		USART_ClearITPendingBit(UART5, USART_IT_RXNE);
-		Usart_Receive = USART_ReceiveData(UART5);									   // Read the data //¶ÁÈ¡Êý¾Ý
-		Fd_data[Count] = Usart_Receive;												   // ´®¿ÚÊý¾ÝÌîÈëÊý×é
-		if (((last_rsnum == FRAME_END) && (Usart_Receive == FRAME_HEAD)) || Count > 0) // ÖØÐÂ¶ÔÖ¡
+		Usart_Receive = USART_ReceiveData(UART5);									   // Read the data //ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½
+		Fd_data[Count] = Usart_Receive;												   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		if (((last_rsnum == FRAME_END) && (Usart_Receive == FRAME_HEAD)) || Count > 0) // ï¿½ï¿½ï¿½Â¶ï¿½Ö¡
 		{
 			rs_count = 1;
 			Count++;
@@ -57,13 +57,13 @@ void UART5_IRQHandler(void)
 			Count = 0;
 		last_rsnum = Usart_Receive;
 
-		// ½ÓÊÕÍêÕûºó½øÈë
-		if (rsimu_flag == 1 && Count == IMU_RS) // ½«±¾Ö¡Êý¾Ý±£´æÖÁFd_rsimuÊý×éÖÐ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½?
+		if (rsimu_flag == 1 && Count == IMU_RS) // ï¿½ï¿½ï¿½ï¿½Ö¡ï¿½ï¿½ï¿½Ý±ï¿½ï¿½ï¿½ï¿½ï¿½Fd_rsimuï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		{
 			Count = 0;
 			rsimu_flag = 0;
 			rs_imutype = 1;						  // imu data available flag
-			if (Fd_data[IMU_RS - 1] == FRAME_END) // Ö¡Î²Ð£Ñé
+			if (Fd_data[IMU_RS - 1] == FRAME_END) // Ö¡Î²Ð£ï¿½ï¿½
 				memcpy(Fd_rsimu, Fd_data, sizeof(Fd_data));
 		}
 		if (rsacc_flag == 1 && Count == AHRS_RS)
@@ -106,7 +106,7 @@ void heading_Trans(void)
 }
 
 /*******************************
-16½øÖÆ×ª¸¡µãÐÍÊý¾Ý
+16ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 *******************************/
 int j, j1;
 float b[50];
@@ -123,13 +123,13 @@ u8 TTL_Hex2Dec(void)
 	{
 		if (Fd_rsahrs[1] == TYPE_AHRS && Fd_rsahrs[2] == AHRS_LEN)
 		{
-			AHRSData_Packet.RollSpeed = DATA_Trans(Fd_rsahrs[7], Fd_rsahrs[8], Fd_rsahrs[9], Fd_rsahrs[10]);	   // ºá¹ö½ÇËÙ¶È
-			AHRSData_Packet.PitchSpeed = DATA_Trans(Fd_rsahrs[11], Fd_rsahrs[12], Fd_rsahrs[13], Fd_rsahrs[14]);   // ¸©Ñö½ÇËÙ¶È
-			AHRSData_Packet.HeadingSpeed = DATA_Trans(Fd_rsahrs[15], Fd_rsahrs[16], Fd_rsahrs[17], Fd_rsahrs[18]); // Æ«º½½ÇËÙ¶È
+			AHRSData_Packet.RollSpeed = DATA_Trans(Fd_rsahrs[7], Fd_rsahrs[8], Fd_rsahrs[9], Fd_rsahrs[10]);	   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½?
+			AHRSData_Packet.PitchSpeed = DATA_Trans(Fd_rsahrs[11], Fd_rsahrs[12], Fd_rsahrs[13], Fd_rsahrs[14]);   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½
+			AHRSData_Packet.HeadingSpeed = DATA_Trans(Fd_rsahrs[15], Fd_rsahrs[16], Fd_rsahrs[17], Fd_rsahrs[18]); // Æ«ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½
 
-			AHRSData_Packet.Roll = DATA_Trans(Fd_rsahrs[19], Fd_rsahrs[20], Fd_rsahrs[21], Fd_rsahrs[22]);	  // ºá¹ö½Ç
-			AHRSData_Packet.Pitch = DATA_Trans(Fd_rsahrs[23], Fd_rsahrs[24], Fd_rsahrs[25], Fd_rsahrs[26]);	  // ¸©Ñö½Ç
-			AHRSData_Packet.Heading = DATA_Trans(Fd_rsahrs[27], Fd_rsahrs[28], Fd_rsahrs[29], Fd_rsahrs[30]); // Æ«º½½Ç
+			AHRSData_Packet.Roll = DATA_Trans(Fd_rsahrs[19], Fd_rsahrs[20], Fd_rsahrs[21], Fd_rsahrs[22]);	  // ï¿½ï¿½ï¿½ï¿½ï¿½?
+			AHRSData_Packet.Pitch = DATA_Trans(Fd_rsahrs[23], Fd_rsahrs[24], Fd_rsahrs[25], Fd_rsahrs[26]);	  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			AHRSData_Packet.Heading = DATA_Trans(Fd_rsahrs[27], Fd_rsahrs[28], Fd_rsahrs[29], Fd_rsahrs[30]); // Æ«ï¿½ï¿½ï¿½ï¿½
 
 			// heading_Trans();
 			// for (j = 0; j <= 3 && F == 0; j++)
@@ -171,11 +171,11 @@ u8 TTL_Hex2Dec(void)
 			// 	}
 			// 	F_L = 0;
 			// }
-			AHRSData_Packet.Qw = DATA_Trans(Fd_rsahrs[31], Fd_rsahrs[32], Fd_rsahrs[33], Fd_rsahrs[34]); // ËÄÔªÊý
+			AHRSData_Packet.Qw = DATA_Trans(Fd_rsahrs[31], Fd_rsahrs[32], Fd_rsahrs[33], Fd_rsahrs[34]); // ï¿½ï¿½Ôªï¿½ï¿½
 			AHRSData_Packet.Qx = DATA_Trans(Fd_rsahrs[35], Fd_rsahrs[36], Fd_rsahrs[37], Fd_rsahrs[38]);
 			AHRSData_Packet.Qy = DATA_Trans(Fd_rsahrs[39], Fd_rsahrs[40], Fd_rsahrs[41], Fd_rsahrs[42]);
 			AHRSData_Packet.Qz = DATA_Trans(Fd_rsahrs[43], Fd_rsahrs[44], Fd_rsahrs[45], Fd_rsahrs[46]);
-			AHRSData_Packet.Timestamp = timestamp(Fd_rsahrs[47], Fd_rsahrs[48], Fd_rsahrs[49], Fd_rsahrs[50]); // Ê±¼ä´Á
+			AHRSData_Packet.Timestamp = timestamp(Fd_rsahrs[47], Fd_rsahrs[48], Fd_rsahrs[49], Fd_rsahrs[50]); // Ê±ï¿½ï¿½ï¿½?
 			AHRSData2PC();
 		}
 		rs_ahrstype = 0;
@@ -184,19 +184,19 @@ u8 TTL_Hex2Dec(void)
 	{
 		if (Fd_rsimu[1] == TYPE_IMU && Fd_rsimu[2] == IMU_LEN)
 		{
-			IMUData_Packet.gyroscope_x = DATA_Trans(Fd_rsimu[7], Fd_rsimu[8], Fd_rsimu[9], Fd_rsimu[10]); // ½ÇËÙ¶È
+			IMUData_Packet.gyroscope_x = DATA_Trans(Fd_rsimu[7], Fd_rsimu[8], Fd_rsimu[9], Fd_rsimu[10]); // ï¿½ï¿½ï¿½Ù¶ï¿½
 			IMUData_Packet.gyroscope_y = DATA_Trans(Fd_rsimu[11], Fd_rsimu[12], Fd_rsimu[13], Fd_rsimu[14]);
 			IMUData_Packet.gyroscope_z = DATA_Trans(Fd_rsimu[15], Fd_rsimu[16], Fd_rsimu[17], Fd_rsimu[18]);
 
-			IMUData_Packet.accelerometer_x = DATA_Trans(Fd_rsimu[19], Fd_rsimu[20], Fd_rsimu[21], Fd_rsimu[22]); // Ïß¼ÓËÙ¶È
+			IMUData_Packet.accelerometer_x = DATA_Trans(Fd_rsimu[19], Fd_rsimu[20], Fd_rsimu[21], Fd_rsimu[22]); // ï¿½ß¼ï¿½ï¿½Ù¶ï¿½
 			IMUData_Packet.accelerometer_y = DATA_Trans(Fd_rsimu[23], Fd_rsimu[24], Fd_rsimu[25], Fd_rsimu[26]);
 			IMUData_Packet.accelerometer_z = DATA_Trans(Fd_rsimu[27], Fd_rsimu[28], Fd_rsimu[29], Fd_rsimu[30]);
 
-			IMUData_Packet.magnetometer_x = DATA_Trans(Fd_rsimu[31], Fd_rsimu[32], Fd_rsimu[33], Fd_rsimu[34]); // ´ÅÁ¦¼ÆÊý¾Ý
+			IMUData_Packet.magnetometer_x = DATA_Trans(Fd_rsimu[31], Fd_rsimu[32], Fd_rsimu[33], Fd_rsimu[34]); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			IMUData_Packet.magnetometer_y = DATA_Trans(Fd_rsimu[35], Fd_rsimu[36], Fd_rsimu[37], Fd_rsimu[38]);
 			IMUData_Packet.magnetometer_z = DATA_Trans(Fd_rsimu[39], Fd_rsimu[40], Fd_rsimu[41], Fd_rsimu[42]);
 
-			IMUData_Packet.Timestamp = timestamp(Fd_rsimu[55], Fd_rsimu[56], Fd_rsimu[57], Fd_rsimu[58]); // Ê±¼ä´Á
+			IMUData_Packet.Timestamp = timestamp(Fd_rsimu[55], Fd_rsimu[56], Fd_rsimu[57], Fd_rsimu[58]); // Ê±ï¿½ï¿½ï¿½?
 			IMUData2PC();
 		}
 		rs_imutype = 0;
@@ -205,8 +205,8 @@ u8 TTL_Hex2Dec(void)
 }
 
 /*************
-ÊµÏÖ16½øÖÆµÄcanÊý¾Ý×ª»»³É¸¡µãÐÍÊý¾Ý
-* brief£º transfer data from hexadecimaml to floating-point values
+Êµï¿½ï¿½16ï¿½ï¿½ï¿½Æµï¿½canï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½É¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+* briefï¿½ï¿½ transfer data from hexadecimaml to floating-point values
 ****************/
 float DATA_Trans(u8 Data_1, u8 Data_2, u8 Data_3, u8 Data_4)
 {
@@ -220,10 +220,10 @@ float DATA_Trans(u8 Data_1, u8 Data_2, u8 Data_3, u8 Data_4)
 	transition_32 |= Data_3 << 16;
 	transition_32 |= Data_2 << 8;
 	transition_32 |= Data_1;
-	sign = (transition_32 & 0x80000000) ? -1 : 1; // ·ûºÅÎ»
-	// ÏÈÓÒÒÆ²Ù×÷£¬ÔÙ°´Î»Óë¼ÆËã£¬³öÀ´½á¹ûÊÇ30µ½23Î»¶ÔÓ¦µÄe
+	sign = (transition_32 & 0x80000000) ? -1 : 1; // ï¿½ï¿½ï¿½ï¿½Î»
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Æ²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù°ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½?30ï¿½ï¿½23Î»ï¿½ï¿½Ó¦ï¿½ï¿½e
 	exponent = ((transition_32 >> 23) & 0xff) - 127;
-	// ½«22~0×ª»¯Îª10½øÖÆ£¬µÃµ½¶ÔÓ¦µÄxÏµÊý
+	// ï¿½ï¿½22~0×ªï¿½ï¿½Îª10ï¿½ï¿½ï¿½Æ£ï¿½ï¿½Ãµï¿½ï¿½ï¿½Ó¦ï¿½ï¿½xÏµï¿½ï¿½
 	mantissa = 1 + ((float)(transition_32 & 0x7fffff) / 0x7fffff);
 	tmp = sign * mantissa * pow(2, exponent);
 	return tmp;
@@ -348,7 +348,7 @@ float Change_Err(float bias)
 	return bias;
 }
 
-// float target_yaw_A; // Ê±ÖÓ·½ÏòµÄ¶Ô½Ç
+// float target_yaw_A; // Ê±ï¿½Ó·ï¿½ï¿½ï¿½Ä¶Ô½ï¿½?
 // float min;
 // float max;
 // float New_Yaw;
@@ -356,14 +356,14 @@ float Change_Err(float bias)
 // int PWM_Turn = 0;
 // float Err_L_Angle, Err_R_Angle;
 // float Err_L_Last_Angle, Err_R_Lats_Angle;
-// void N100N_Turn_90angles(int site, float kp, float ki, float kd) // site±íÊ¾×ªÍä·½Ïò£¬0Îª×ó£¬1ÎªÓÒ
+// void N100N_Turn_90angles(int site, float kp, float ki, float kd) // siteï¿½ï¿½Ê¾×ªï¿½ä·½ï¿½ï¿½0Îªï¿½ï¿½1Îªï¿½ï¿½
 //{
 //	//	if(site==1)
 //	//	{
 //	//		if(N_Flag==5)
 //	//		{
 //	//
-//	////			TIM7_Int_Init(1000-1,840-1);//10ms½øÈëÒ»´ÎÖÐ¶Ïs
+//	////			TIM7_Int_Init(1000-1,840-1);//10msï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ð¶ï¿½s
 //	////			delay_ms(100);
 //	////			site=0;
 //	////
@@ -372,7 +372,7 @@ float Change_Err(float bias)
 //	//		}
 //	//    else if(N_Flag==6)
 //	//		{
-//	////			TIM7_Int_Init(1000-1,840-1);//10ms½øÈëÒ»´ÎÖÐ¶Ïs
+//	////			TIM7_Int_Init(1000-1,840-1);//10msï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ð¶ï¿½s
 //	////			delay_ms(200);
 //	////			site=0;
 //	////
@@ -389,7 +389,7 @@ float Change_Err(float bias)
 //		//		printf("err_set=%f,k=%d\r\n",Err_Set,k);
 //		target_yaw = Target_Yaw;
 //		New_Yaw = Read_Yaw();
-//		if (site == 1) // ÓÒÆ«±ä´óÎªÕýÎª±ê×¼£¬Êµ¼ùÖµ±ÈÄ¿±êÖµ´óÎªÕý
+//		if (site == 1) // ï¿½ï¿½Æ«ï¿½ï¿½ï¿½ï¿½?ï¿½ï¿½Îªï¿½ï¿½×¼ï¿½ï¿½Êµï¿½ï¿½Öµï¿½ï¿½Ä¿ï¿½ï¿½Öµï¿½ï¿½Îªï¿½ï¿½
 //		{
 //			New_Yaw = Read_Yaw();
 //			Set_Yaw = target_yaw + 90;
@@ -502,12 +502,12 @@ float Change_Err(float bias)
 //			Err_Set = 0;
 //		}
 
-//		if (site == 0) // ×ó×ª
+//		if (site == 0) // ï¿½ï¿½×ª
 //		{
 //			if (Abs(Err_Set) <= 1)
 //			{
-//				//				F=0;//ÓÃÀ´¸üÐÂÍÓÂÝÒÇÊý¾Ý
-//				k = 0; // °ÑkÖÃ»Ø0£¬±ÜÃâÔÚÖ÷º¯ÊýºÍÖÐ¶ÏÒ»ÆðÖ´ÐÐ
+//				//				F=0;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//				k = 0; // ï¿½ï¿½kï¿½Ã»ï¿½0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½Ò»ï¿½ï¿½Ö´ï¿½ï¿½
 //				set = 1;
 //				Car_stop();
 
@@ -515,7 +515,7 @@ float Change_Err(float bias)
 //				delay_ms(200);
 //				F_L = 1;
 //				delay_ms(200);
-//				TIM7_Int_Init(1000 - 1, 840 - 1); // ´ò¿ª¶¨Ê±Æ÷
+//				TIM7_Int_Init(1000 - 1, 840 - 1); // ï¿½ò¿ª¶ï¿½Ê±ï¿½ï¿½
 //				delay_ms(1200);
 //				FLAG = 1;
 //				set = 0;
@@ -584,19 +584,19 @@ float Change_Err(float bias)
 //				{
 //					Err_R_Angle = -3;
 //				}
-//				PWM_Turn = (kp * Err_R_Angle) + (kd * (Err_R_Angle - Err_R_Lats_Angle)); // Ð§¹ûÈç¹û²»ºÃ¿ÉÒÔ»»³ÉÍÓÂÝÒÇËÙ¶È
+//				PWM_Turn = (kp * Err_R_Angle) + (kd * (Err_R_Angle - Err_R_Lats_Angle)); // Ð§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½Ô»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½?
 //				Err_R_Lats_Angle = Err_R_Angle;
 //				Limit(200, -200, &PWM_Turn, &PWM_Turn);
 //				Car_Load(-PWM_Turn, PWM_Turn);
 //				//				delay_ms(10);
 //			}
 //		}
-//		if (site == 1) // ÓÒ×ª
+//		if (site == 1) // ï¿½ï¿½×ª
 //		{
-//			if (Abs(Err_Set) <= 1.1) // ¿ÉÒÔ±ä
+//			if (Abs(Err_Set) <= 1.1) // ï¿½ï¿½ï¿½Ô±ï¿½
 //			{
 
-//				k = 0; // °ÑkÖÃ»Ø0£¬±ÜÃâÔÚÖ÷º¯ÊýºÍÖÐ¶ÏÒ»ÆðÖ´ÐÐ
+//				k = 0; // ï¿½ï¿½kï¿½Ã»ï¿½0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½Ò»ï¿½ï¿½Ö´ï¿½ï¿½
 //				set = 1;
 //				Car_stop();
 //				delay_ms(500);
@@ -604,7 +604,7 @@ float Change_Err(float bias)
 //				TTL_Hex2Dec();
 //				delay_ms(200);
 //				F_R = 1;
-//				TIM7_Int_Init(1000 - 1, 840 - 1); // ´ò¿ª¶¨Ê±Æ÷
+//				TIM7_Int_Init(1000 - 1, 840 - 1); // ï¿½ò¿ª¶ï¿½Ê±ï¿½ï¿½
 //				delay_ms(1200);
 //				FLAG = 1;
 //				set = 0;
@@ -673,7 +673,7 @@ float Change_Err(float bias)
 //				{
 //					Err_R_Angle = -3.0;
 //				}
-//				PWM_Turn = (kp * Err_R_Angle) + (kd * (Err_R_Angle - Err_R_Lats_Angle)); // Ð§¹ûÈç¹û²»ºÃ¿ÉÒÔ»»³ÉÍÓÂÝÒÇËÙ¶È
+//				PWM_Turn = (kp * Err_R_Angle) + (kd * (Err_R_Angle - Err_R_Lats_Angle)); // Ð§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½Ô»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½?
 //				Err_R_Lats_Angle = Err_R_Angle;
 //				Limit(200, -200, &PWM_Turn, &PWM_Turn);
 //				Car_Load(PWM_Turn, -PWM_Turn);

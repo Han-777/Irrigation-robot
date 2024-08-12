@@ -16,7 +16,7 @@
 #define GYRO_FRAME_SIZE 80 // gyro receive buffer size
 
 // 数据处理选择
-#define GYRO_INFO_HANDLE_OUT
+// #define GYRO_INFO_HANDLE_OUT
 // 接收处理宏
 #define FRAME_HEAD 0xfc
 #define FRAME_END 0xfd
@@ -51,6 +51,16 @@ typedef struct
     float ori_yaw;
     float ori_pitch;
     float ori_roll;
+    // uint8_t gyro_Init_Flag; // 每次开启陀螺仪任务时候设置
+    // 判断是否稳定
+    float last_Yaw;
+    float last_Roll;
+    float last_Pitch;
+    // 睿萱
+    // float target_yaw;
+    // float ring; // 圈数
+    // float lastyaw;
+    // float yaw;
 } GYRO_data_t; // 只对ahrsdata进行了封装
 
 //

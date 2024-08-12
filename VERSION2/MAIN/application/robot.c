@@ -2,7 +2,7 @@
 #include "robot.h"
 #include "robot_def.h"
 #include "robot_task.h"
-
+#include "gyro.h"
 // 编译warning,提醒开发者修改机器人参数
 #ifndef ROBOT_DEF_PARAM_WARNING
 #define ROBOT_DEF_PARAM_WARNING
@@ -11,10 +11,8 @@
 
 #if defined(ONE_BOARD) || defined(CHASSIS_BOARD)
 #include "chassis.h"
-#endif
-
-#if defined(ONE_BOARD) || defined(GIMBAL_BOARD)
 #include "robot_cmd.h"
+#include "water.h"
 #endif
 
 void RobotInit()
@@ -26,13 +24,14 @@ void RobotInit()
     __disable_irq();
 
     BSPInit();
-    
+
 #if defined(ONE_BOARD)
     RobotCMDInit();
 #endif
 
 #if defined(ONE_BOARD) || defined(CHASSIS_BOARD)
     ChassisInit();
+    WaterInit();
 #endif
     // // #if defined(ONE_BOARD) || defined(CHASSIS_BOARD)
     // //     ChassisInit();

@@ -19,6 +19,8 @@ typedef struct
 {
     uint16_t lld_distance;
     uint16_t rld_distance;
+    // uint16_t last_lld_distance;
+    // uint16_t last_rld_distance;
 } LD_data_t;
 
 /* ------------------------- Internal Data ----------------------------------- */

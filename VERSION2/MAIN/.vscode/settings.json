@@ -63,7 +63,14 @@
     "segger_rtt_conf.h": "c",
     "compare": "c",
     "robot_queen.h": "c",
-    "robot_queue.h": "c"
+    "*.tcc": "c",
+    "cmath": "c",
+    "numeric": "c",
+    "cinttypes": "c",
+    "cstdlib": "c",
+    "bluetooth.h": "c",
+    "cmsis_os.h": "c",
+    "freertos.h": "c"
   },
-  "C_Cpp.errorSquiggles": "disabled"
+  "C_Cpp.errorSquiggles": "enabled"
 }

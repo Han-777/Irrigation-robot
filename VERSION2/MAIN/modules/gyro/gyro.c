@@ -2,6 +2,8 @@
 #include "bsp_usart.h"
 #include "daemon.h"
 #include <string.h>
+#include "controller.h"
+#include "general_def.h"
 // 方便数据转化的结构体
 // static IMUData_Packet_t IMUData_Packet;
 static AHRSData_Packet_t AHRSData_Packet;
@@ -93,18 +95,35 @@ void GYRO_buff_to_data()
             AHRSData_Packet.Qz = DATA_Trans(gyro_buff[43], gyro_buff[44], gyro_buff[45], gyro_buff[46]);
             AHRSData_Packet.Timestamp = timestamp(gyro_buff[47], gyro_buff[48], gyro_buff[49], gyro_buff[50]); // 时间戳
 
+            // 稳定性判断
+            gyro_data->last_Pitch = gyro_data->Pitch;
+            gyro_data->last_Roll = gyro_data->Roll;
+
             gyro_data->Pitch = AHRSData_Packet.Pitch * 180.0 / PI;
             gyro_data->PitchSpeed = AHRSData_Packet.PitchSpeed * 180.0 / PI;
             gyro_data->Roll = AHRSData_Packet.Roll * 180.0 / PI;
             gyro_data->RollSpeed = AHRSData_Packet.RollSpeed * 180.0 / PI;
-            gyro_data->Yaw = AHRSData_Packet.Heading * 180.0 / PI;
-            gyro_data->YawSpeed = AHRSData_Packet.HeadingSpeed * 180.0 / PI;
+            if (AHRSData_Packet.Heading <= PI2)
+            {
+                gyro_data->last_Yaw = gyro_data->Yaw;
+                gyro_data->Yaw = AHRSData_Packet.Heading * 180.0 / PI;
+                gyro_data->YawSpeed = AHRSData_Packet.HeadingSpeed * 180.0 / PI;
+            }
+            // gyro_data->Yaw1 = AHRSData_Packet.Heading * 180.0 / PI;
+            // if (fabs(gyro_data->Yaw) < 360)
+            // {
+            //     gyro_data->Yaw = gyro_data->Yaw1;
+            // }
+
             if (!initialized)
             {
-                gyro_data->ori_yaw = gyro_data->Yaw; //  // 陀螺仪初始值不为0,记录初始值
-                gyro_data->ori_pitch = gyro_data->Pitch;
-                gyro_data->ori_roll = gyro_data->Roll;
-                initialized = 1;
+                if (abs(gyro_data->Yaw - gyro_data->last_Yaw) < 0.1 && abs(gyro_data->Pitch - gyro_data->last_Pitch) < 0.1 && abs(gyro_data->last_Roll - gyro_data->Roll) < 0.1)
+                {
+                    gyro_data->ori_yaw = gyro_data->Yaw; // 陀螺仪初始值不为0,记录初始值
+                    gyro_data->ori_pitch = gyro_data->Pitch;
+                    gyro_data->ori_roll = gyro_data->Roll;
+                    initialized = 1;
+                }
             }
         }
     }
@@ -137,30 +156,47 @@ static void GYRO_buff_to_data(const uint8_t *gyro_buff, uint16_t size)
 #if defined(GYRO_RSAHRS) || defined(GYRO_RSIMU_AHRS)
         if ((gyro_buff[1] == TYPE_AHRS) && (gyro_buff[2] == AHRS_LEN))
         {
-            AHRSData_Packet.RollSpeed = DATA_Trans(gyro_buff[7], gyro_buff[8], gyro_buff[9], gyro_buff[10]);       // 横滚角速度
-            AHRSData_Packet.PitchSpeed = DATA_Trans(gyro_buff[11], gyro_buff[12], gyro_buff[13], gyro_buff[14]);   // 俯仰角速度
-            AHRSData_Packet.HeadingSpeed = DATA_Trans(gyro_buff[15], gyro_buff[16], gyro_buff[17], gyro_buff[18]); // 偏航角速度
-            AHRSData_Packet.Roll = DATA_Trans(gyro_buff[19], gyro_buff[20], gyro_buff[21], gyro_buff[22]);         // 横滚角
-            AHRSData_Packet.Pitch = DATA_Trans(gyro_buff[23], gyro_buff[24], gyro_buff[25], gyro_buff[26]);        // 俯仰角
-            AHRSData_Packet.Heading = DATA_Trans(gyro_buff[27], gyro_buff[28], gyro_buff[29], gyro_buff[30]);      // 偏航角
-            AHRSData_Packet.Qw = DATA_Trans(gyro_buff[31], gyro_buff[32], gyro_buff[33], gyro_buff[34]);           // 四元数
-            AHRSData_Packet.Qx = DATA_Trans(gyro_buff[35], gyro_buff[36], gyro_buff[37], gyro_buff[38]);
-            AHRSData_Packet.Qy = DATA_Trans(gyro_buff[39], gyro_buff[40], gyro_buff[41], gyro_buff[42]);
-            AHRSData_Packet.Qz = DATA_Trans(gyro_buff[43], gyro_buff[44], gyro_buff[45], gyro_buff[46]);
+            // AHRSData_Packet.RollSpeed = DATA_Trans(gyro_buff[7], gyro_buff[8], gyro_buff[9], gyro_buff[10]);       // 横滚角速度
+            // AHRSData_Packet.PitchSpeed = DATA_Trans(gyro_buff[11], gyro_buff[12], gyro_buff[13], gyro_buff[14]);   // 俯仰角速度
+            // AHRSData_Packet.HeadingSpeed = DATA_Trans(gyro_buff[15], gyro_buff[16], gyro_buff[17], gyro_buff[18]); // 偏航角速度
+            AHRSData_Packet.Roll = DATA_Trans(gyro_buff[19], gyro_buff[20], gyro_buff[21], gyro_buff[22]); // 横滚角
+            // AHRSData_Packet.Pitch = DATA_Trans(gyro_buff[23], gyro_buff[24], gyro_buff[25], gyro_buff[26]);   // 俯仰角
+            AHRSData_Packet.Heading = DATA_Trans(gyro_buff[27], gyro_buff[28], gyro_buff[29], gyro_buff[30]); // 偏航角
+            // AHRSData_Packet.Qw = DATA_Trans(gyro_buff[31], gyro_buff[32], gyro_buff[33], gyro_buff[34]);           // 四元数
+            // AHRSData_Packet.Qx = DATA_Trans(gyro_buff[35], gyro_buff[36], gyro_buff[37], gyro_buff[38]);
+            // AHRSData_Packet.Qy = DATA_Trans(gyro_buff[39], gyro_buff[40], gyro_buff[41], gyro_buff[42]);
+            // AHRSData_Packet.Qz = DATA_Trans(gyro_buff[43], gyro_buff[44], gyro_buff[45], gyro_buff[46]);
             AHRSData_Packet.Timestamp = timestamp(gyro_buff[47], gyro_buff[48], gyro_buff[49], gyro_buff[50]); // 时间戳
 
-            gyro_data->Pitch = AHRSData_Packet.Pitch * 180.0 / PI;
-            gyro_data->PitchSpeed = AHRSData_Packet.PitchSpeed * 180.0 / PI;
+            // 稳定性判断
+            // gyro_data->last_Pitch = gyro_data->Pitch;
+            gyro_data->last_Roll = gyro_data->Roll;
+
+            // gyro_data->Pitch = AHRSData_Packet.Pitch * 180.0 / PI;
+            // gyro_data->PitchSpeed = AHRSData_Packet.PitchSpeed * 180.0 / PI;
             gyro_data->Roll = AHRSData_Packet.Roll * 180.0 / PI;
-            gyro_data->RollSpeed = AHRSData_Packet.RollSpeed * 180.0 / PI;
-            gyro_data->Yaw = AHRSData_Packet.Heading * 180.0 / PI;
-            gyro_data->YawSpeed = AHRSData_Packet.HeadingSpeed * 180.0 / PI;
+            // gyro_data->RollSpeed = AHRSData_Packet.RollSpeed * 180.0 / PI;
+            if (AHRSData_Packet.Heading <= PI2)
+            {
+                gyro_data->last_Yaw = gyro_data->Yaw;
+                gyro_data->Yaw = AHRSData_Packet.Heading * 180.0 / PI;
+                // gyro_data->YawSpeed = AHRSData_Packet.HeadingSpeed * 180.0 / PI;
+            }
+            // gyro_data->Yaw1 = AHRSData_Packet.Heading * 180.0 / PI;
+            // if (fabs(gyro_data->Yaw) < 360)
+            // {
+            //     gyro_data->Yaw = gyro_data->Yaw1;
+            // }
+
             if (!initialized)
             {
-                gyro_data->ori_yaw = gyro_data->Yaw; //  // 陀螺仪初始值不为0,记录初始值
-                gyro_data->ori_pitch = gyro_data->Pitch;
-                gyro_data->ori_roll = gyro_data->Roll;
-                initialized = 1;
+                if (abs(gyro_data->Yaw - gyro_data->last_Yaw) < 0.05 && abs(gyro_data->Pitch - gyro_data->last_Pitch) < 0.05 && abs(gyro_data->last_Roll - gyro_data->Roll) < 0.05)
+                {
+                    gyro_data->ori_yaw = gyro_data->Yaw; // 陀螺仪初始值不为0,记录初始值
+                    // gyro_data->ori_pitch = gyro_data->Pitch;
+                    gyro_data->ori_roll = gyro_data->Roll;
+                    initialized = 1;
+                }
             }
         }
 
@@ -178,12 +214,16 @@ static void GYRO_buff_to_data(const uint8_t *gyro_buff, uint16_t size)
 static void GYRORxCallback(UART_HandleTypeDef *huart, uint16_t size) // 串口接收回调_
 {
     DaemonReload(GYRO_daemon_instance);
+#ifdef GYRO_INFO_HANDLE_OUT
     if ((gyro_instance->recv_buff[0] == FRAME_HEAD) && (gyro_instance->recv_buff[size - 1] == FRAME_END))
     {
         gyro_data_size = size;
-        // memset(gyro_data, 0, GYRO_FRAME_SIZE);
+        memset(gyro_buff, 0, GYRO_FRAME_SIZE);
         memcpy(gyro_buff, gyro_instance->recv_buff, size);
     }
+#else
+    GYRO_buff_to_data(gyro_instance->recv_buff, size);
+#endif
 }
 
 /**

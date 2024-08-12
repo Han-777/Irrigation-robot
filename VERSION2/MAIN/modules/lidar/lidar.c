@@ -13,6 +13,7 @@ static uint8_t lidar_buff[LIDAR_FRAME_SIZE + 1]; // +1: for indentification of l
 
 void lidar_data_handle(uint8_t *buffer)
 {
+    uint8_t temp = 0;
     if ((buffer[0] == 0x59) && (buffer[1] == 0x59))
     {
         uint8_t checksum = 0;
@@ -91,7 +92,14 @@ static void LDRxCallback(UART_HandleTypeDef *huart, uint16_t Size) // 串口接�
     }
     portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 #else
-    ld_buff_to_data(huart, lld_instance->recv_buff);
+    if (huart == &huart2)
+    {
+        ld_buff_to_data(huart, lld_instance->recv_buff);
+    }
+    else if (huart == &huart4)
+    {
+        ld_buff_to_data(huart, rld_instance->recv_buff);
+    }
 #endif
 }
 

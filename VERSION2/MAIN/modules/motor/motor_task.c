@@ -1,12 +1,29 @@
 #include "motor_task.h"
 #include "dji_motor.h"
 #include "servo_motor.h"
-
+#include "chassis.h"
+// float current;
+// float speed;
 void MotorControlTask()
 {
     // static uint8_t cnt = 0; 设定不同电机的任务频率
     // if(cnt%5==0) //200hz
     // if(cnt%10==0) //100hz
+    chassis_gyro_ctrl_data.target_yaw = gyro_data->ori_yaw;
+    while (chassis_gyro_ctrl_data.target_yaw > 360)
+    {
+        chassis_gyro_ctrl_data.target_yaw -= 360;
+    }
+    while (chassis_gyro_ctrl_data.target_yaw < -360)
+    {
+        chassis_gyro_ctrl_data.target_yaw += 360;
+    }
+    // handling the difference
+    if (fabs(chassis_gyro_ctrl_data.target_yaw - gyro_data->Yaw) > 180)
+    {
+        gyro_data->Yaw += ((chassis_gyro_ctrl_data.target_yaw > gyro_data->Yaw) ? 360 : -360);
+    }
+
     DJIMotorControl();
 
     // legacy support

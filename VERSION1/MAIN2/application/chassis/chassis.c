@@ -103,7 +103,7 @@ void Car_stop(void);
 // }
 
 // int rotate_stable = 0;
-// void check_stable(void) // ¸ù¾ÝÎ»ÖÃµÄÎó²îÀ´ÅÐ¶ÏÎÈ¶¨ÐÔ
+// void check_stable(void) // ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½È¶ï¿½ï¿½ï¿½
 // {
 //     static float prev_heading;
 //     if (fabs(prev_heading - current_yaw) < 0.7)
@@ -114,15 +114,15 @@ void Car_stop(void);
 // }
 
 int rotate_arrive = 0, rotate_vague_arrive = 0;
-void check_arrive(void) // µ½´ïÅÐ¶Ï
+void check_arrive(void) // ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
 {
-    // ¾«È·µ½´ïÅÐ¶Ï
+    // ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
     if (fabs(heading_inc_PID.error) < 1)
         rotate_arrive = 1;
     else
         rotate_arrive = 0;
 
-    // Ä£ºýµ½´ïÅÐ¶Ï
+    // Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
     if (fabs(heading_inc_PID.error) < 2)
         rotate_vague_arrive = 1;
     else
@@ -130,7 +130,7 @@ void check_arrive(void) // µ½´ïÅÐ¶Ï
 }
 
 // the function should not be stopped until reaching the target
-// ???¡¤pid
+// ???ï¿½ï¿½pid
 int chassis_rotate(float target_yaw)
 {
     set_speed(0, 0);
@@ -160,27 +160,27 @@ int chassis_rotate(float target_yaw)
 //     heading_Trans();
 //     heading_speed_limit = 50;
 //     set_increment_pid(&heading_inc_PID, heading_kp, heading_ki, heading_kd, heading_speed_limit);
-//     increment_pid_calculate(&heading_inc_PID, target_heading, current_yaw);        // ½Ç¶ÈÍâ»·
-//     chassis_ahead(speed + heading_inc_PID.output, speed - heading_inc_PID.output); // ËÙ¶ÈÄÚ»·
+//     increment_pid_calculate(&heading_inc_PID, target_heading, current_yaw);        // ï¿½Ç¶ï¿½ï¿½â»·
+//     chassis_ahead(speed + heading_inc_PID.output, speed - heading_inc_PID.output); // ï¿½Ù¶ï¿½ï¿½Ú»ï¿½
 //     return 1;
 // }
 
-// ´®
+// ï¿½ï¿½
 // int chassis_run(int speed, float target_heading)
 //{
 //    heading_Trans();
 //    // heading_speed_limit = 50;
 //    // set_increment_pid(&heading_inc_PID, heading_kp, heading_ki, heading_kd, heading_speed_limit);
-//    increment_pid_calculate(&heading_inc_PID, target_heading, current_yaw);        // ½Ç¶ÈÍâ»·
-//    chassis_ahead(speed + heading_inc_PID.output, speed - heading_inc_PID.output); // ËÙ¶ÈÄÚ»·
+//    increment_pid_calculate(&heading_inc_PID, target_heading, current_yaw);        // ï¿½Ç¶ï¿½ï¿½â»·
+//    chassis_ahead(speed + heading_inc_PID.output, speed - heading_inc_PID.output); // ï¿½Ù¶ï¿½ï¿½Ú»ï¿½
 //    return 1;
 //}
-// ²¢¼¶
+// ï¿½ï¿½ï¿½ï¿½
 int chassis_run(void)
 {
     static int left_ff_speed = 0, right_ff_speed = 0;
     heading_Trans();
-    increment_pid_calculate(&heading_inc_PID, target_Yaw, current_yaw); // ½Ç¶ÈÍâ»·
+    increment_pid_calculate(&heading_inc_PID, target_Yaw, current_yaw); // ï¿½Ç¶ï¿½ï¿½â»·
     increment_pid_calculate(&left_inc_PID, left_target_speed, vec[0]);
     increment_pid_calculate(&right_inc_PID, right_target_speed, vec[1]);
     left_ff_speed = speed_Kv * left_target_speed;

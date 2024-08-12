@@ -10,7 +10,7 @@
 // #define CHASSIS_BOARD //底盘板
 // #define GIMBAL_BOARD  //云台板
 
-#define GRAY_THRESHOLD 4 // 测到十字的下限
+#define GRAY_THRESHOLD 10 // 测到十字的下限
 // 底盘模式设置
 /**
  * @brief 后续考虑修改为云台跟随底盘,而不是让底盘去追云台,云台的惯量比底盘小.
@@ -22,6 +22,18 @@ typedef enum
     CHASSIS_FORWARD = 1,    // 前进模式
     CHASSIS_ROTATE = 2,     // 旋转模式
 } chassis_mode_e;
+
+typedef enum
+{
+    // left_water_flag = 0b00000001,
+    // right_water_flag = 0b00000010,
+    none_water_flag = 0b00000000,
+    left_water_finish = 0b00000001,
+    right_water_finish = 0b00000010,
+
+    // left_water_finish = 0b11111110,
+    // right_water_finish = 0b11111101,
+} water_State_e;
 
 #pragma pack(1) // 压缩结构体,取消字节对齐,下面的数据都可能被传输
 /* -------------------------基本控制模式和数据类型定义-------------------------*/
@@ -38,6 +50,18 @@ typedef enum
 
 /* ----------------CMD应用发布的控制数据,应当由gimbal/chassis/shoot订阅---------------- */
 /**
+ * @brief 灌溉区域ENUN
+ */
+typedef enum
+{
+    A,
+    B,
+    C,
+    D,
+    home
+} regionEnum;
+
+/**
  * @brief 对于双板情况,遥控器和pc在云台,裁判系统在底盘
  *
  */
@@ -48,8 +72,14 @@ typedef struct
     // 控制部分
     chassis_mode_e chassis_mode; // ？
     uint8_t clockwise_rotate_flag;
-    uint8_t cross_cnt;
+    regionEnum region;
+    // uint8_t gray; // 处理为crosscnt之后删除
 } Chassis_Ctrl_Cmd_s;
+
+typedef struct
+{
+    uint8_t water_flag;
+} Water_Ctrl_Cmd_s;
 
 /* ----------------gimbal/shoot/chassis发布的反馈数据----------------*/
 /**
@@ -62,6 +92,12 @@ typedef struct
     uint8_t rotate_arrive;
     uint8_t rotate_vague_arrive;
 } Chassis_Upload_Data_s;
+
+typedef struct
+{
+    uint8_t water_finish_state; // water state (完成为1)
+    uint8_t plant_cnt;          // number of plant
+} Water_Upload_Data_s;
 
 #pragma pack() // 开启字节对齐,结束前面的#pragma pack(1)
 

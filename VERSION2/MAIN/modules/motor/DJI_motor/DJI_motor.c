@@ -2,7 +2,11 @@
 #include "general_def.h"
 #include "bsp_dwt.h"
 // #include "bsp_log.h"
-
+float speed_pid;
+float current_pid;
+float real_c;
+float real_s;
+float speed_err;
 static uint8_t idx = 0; // register idx,是该文件的全局电机索引,在注册时使用
 /* DJI电机的实例,此处仅保存指针,内存的分配将通过电机实例初始化时通过malloc()进行 */
 static DJIMotorInstance *dji_motor_instance[DJI_MOTOR_CNT] = {NULL}; // 会在control任务中遍历该指针数组进行pid计算
@@ -278,6 +282,9 @@ void DJIMotorControl()
                 pid_measure = measure->speed_aps;
             // Update pid_ref to enter the next loop
             pid_ref = PIDCalculate(&motor_controller->speed_PID, pid_measure, pid_ref);
+            speed_pid = pid_ref;
+            real_s = pid_measure;
+            speed_err = motor_controller->speed_PID.Err;
         }
 
         // Calculate current loop, currently calculated as long as the current loop is enabled, regardless of the outer closed loop, and current only has feedback from the motor's own sensor
@@ -286,8 +293,10 @@ void DJIMotorControl()
         if (motor_setting->close_loop_type & CURRENT_LOOP)
         {
             pid_ref = PIDCalculate(&motor_controller->current_PID, measure->real_current, pid_ref);
+            current_pid = pid_ref;
+            real_c = measure->real_current;
         }
-
+        //
         if (motor_setting->feedback_reverse_flag == FEEDBACK_DIRECTION_REVERSE)
             pid_ref *= -1;
 

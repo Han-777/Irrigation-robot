@@ -3,14 +3,22 @@
 
 #include "stdint.h"
 #include "controller.h"
+// typedef struct
+// {
+//     /*   parameters add reality    */
+//     // 目标角
+//     float target_yaw;
+//     float target_roll;
+//     uint8_t cross_cnt; // 用于目标角度计算
+
+// } chassis_gyro_data_t;
+
 typedef struct
 {
     /*   parameters add reality    */
+    PIDInstance angle_instance;
     // 目标角
     float target_yaw;
-    float target_roll;
-    uint8_t cross_cnt; // 用于目标角度计算
-    PIDInstance angle_instance;
 } chassis_gyro_data_t;
 
 /**
@@ -24,5 +32,8 @@ void ChassisInit();
  *
  */
 void ChassisTask();
+#include "gyro.h"
 
+extern chassis_gyro_data_t chassis_gyro_ctrl_data;
+extern GYRO_data_t *gyro_data;
 #endif // CHASSIS_H

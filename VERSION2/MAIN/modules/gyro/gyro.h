@@ -61,7 +61,9 @@ typedef struct
     // float ring; // 圈数
     // float lastyaw;
     // float yaw;
-} GYRO_data_t; // 只对ahrsdata进行了封装
+    float target_yaw;
+    float cal_yaw; // 经过转换后的参考值
+} GYRO_data_t;     // 只对ahrsdata进行了封装
 
 //
 typedef struct IMUData_Packet_t

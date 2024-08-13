@@ -92,7 +92,7 @@ static int _run_(void)
 {
     if (region_finish() && get_cross_flag())
     {
-        chassis_cmd_send.chassis_mode = CHASSIS_ROTATE; //
+        chassis_cmd_send.chassis_mode = CHASSIS_ZERO_FORCE; //
         return 1;
     }
     else
@@ -174,11 +174,6 @@ void RobotCMDInit()
     chassis_cmd_send.chassis_mode = CHASSIS_ZERO_FORCE; // 启动时机器人进入工作模式,后续加入所有应用初始化完成之后再进入
     chassis_cmd_send.region = home;
 }
-
-// static void CmdInfoHandle(void)
-// {
-//     if ()
-// }
 
 /* 机器人核心控制任务,200Hz频率运行(后续可调) */
 void RobotCMDTask()

@@ -190,7 +190,7 @@ static void GYRO_buff_to_data(const uint8_t *gyro_buff, uint16_t size)
 
             if (!initialized)
             {
-                if (abs(gyro_data->Yaw - gyro_data->last_Yaw) < 0.05 && abs(gyro_data->Pitch - gyro_data->last_Pitch) < 0.05 && abs(gyro_data->last_Roll - gyro_data->Roll) < 0.05)
+                if (abs(gyro_data->Yaw - gyro_data->last_Yaw) < 0.05 && abs(gyro_data->last_Roll - gyro_data->Roll) < 0.05)
                 {
                     gyro_data->ori_yaw = gyro_data->Yaw; // 陀螺仪初始值不为0,记录初始值
                     // gyro_data->ori_pitch = gyro_data->Pitch;

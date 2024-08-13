@@ -21,8 +21,7 @@
 #include "usart.h"
 // #include "gray.h"
 // #include "robot_cmd.h"
-GYRO_data_t *gyro_data;
-chassis_gyro_data_t chassis_gyro_ctrl_data;
+static GYRO_data_t *gyro_data;
 static DJIMotorInstance *motor_lf, *motor_rf, *motor_lb, *motor_rb; // left right forward back
 #ifdef ONE_BOARD
 static Subscriber_t *chassis_sub;
@@ -33,7 +32,7 @@ static Chassis_Upload_Data_s chassis_feedback_data; // 底盘回传的反馈数�
 
 /* 私有函数计算的中介变量,设为静态避免参数传递的开销 */
 static float left_target_vt, right_target_vt; // 左边速度一样，右边速度一样
-// static PIDInstance angle_instance;
+static PIDInstance angle_instance;
 
 void ChassisInit() // 配置中所有pid参数都需要修改
 {
@@ -43,12 +42,12 @@ void ChassisInit() // 配置中所有pid参数都需要修改
             .Kp = 50, // 200
             .Ki = 16, // 200
             .Kd = 10, // 100
-            .IntegralLimit = 1000,
+            .IntegralLimit = 200,
             .Improve = PID_Trapezoid_Intergral | PID_Integral_Limit | PID_Derivative_On_Measurement,
             .MaxOut = 3000, // 待测
         };
     // PIDInit(&angle_instance, &pid_init_config);
-    PIDInit(&chassis_gyro_ctrl_data.angle_instance, &pid_init_config);
+    PIDInit(&angle_instance, &pid_init_config);
     /*  gyro init    */
     gyro_data = Gyro_Init(&huart5); // 改到初始化之前
     /*  motor init  */
@@ -114,64 +113,40 @@ void ChassisInit() // 配置中所有pid参数都需要修改
  *
  * @attention 调用该函数前应该先对gyro数据进行处理，确保最新数据
  * @note 考虑直接创建一个task专门处理
- * chassis_gyro_ctrl_data.target_yaw : target yaw / ref
+ * gyro_data->target_yaw : target yaw / ref
  * gyro_data->Yaw : current_yaw / measure
  *
  */
 static void HeadingTransfer(void)
 {
-    //     chassis_gyro_ctrl_data.target_yaw = gyro_data->ori_yaw + 90 * chassis_cmd_recv.clockwise_rotate_flag;
-    //     while (chassis_gyro_ctrl_data.target_yaw > 360)
-    //     {
-    //         chassis_gyro_ctrl_data.target_yaw -= 360;
-    //     }
-    //     while (chassis_gyro_ctrl_data.target_yaw < -360)
-    //     {
-    //         chassis_gyro_ctrl_data.target_yaw += 360;
-    //     }
-    //     // handling the difference
-    //     if (fabs(chassis_gyro_ctrl_data.target_yaw - gyro_data->Yaw) > 180)
-    //     {
-    //         gyro_data->Yaw += ((chassis_gyro_ctrl_data.target_yaw > gyro_data->Yaw) ? 360 : -360);
-    //     }
-    //     //  睿萱写法
-    //     // // chassis_gyro_ctrl_data.target_yaw = gyro_data->ori_yaw + 90 * chassis_cmd_recv.clockwise_rotate_flag;
-
-    //     // gyro_data->target_yaw = gyro_data->ori_yaw + 90 * chassis_cmd_recv.clockwise_rotate_flag;
-
-    //     // // gyro_data->target_yaw = gyro_data->ori_yaw -90;
-
-    //     // static float ring = 0;
-    //     // if (gyro_data->lastyaw >= 270 && gyro_data->Yaw <= 90)
-    //     // {
-    //     //     ring++;
-    //     // }
-    //     // else if (gyro_data->lastyaw <= 90 && gyro_data->Yaw >= 270)
-    //     // {
-    //     //     ring--;
-    //     // }
-    //     // gyro_data->lastyaw = gyro_data->Yaw;
-    //     // gyro_data->yaw = gyro_data->Yaw + 360 * ring;
-    //     // 新写法
+    gyro_data->target_yaw = gyro_data->ori_yaw + 90 * chassis_cmd_recv.clockwise_rotate_flag;
+    while (gyro_data->target_yaw > 360)
+    {
+        gyro_data->target_yaw -= 360;
+    }
+    while (gyro_data->target_yaw < -360)
+    {
+        gyro_data->target_yaw += 360;
+    }
+    // handling the difference
+    if (fabs(gyro_data->target_yaw - gyro_data->Yaw) > 180)
+    {
+        gyro_data->cal_yaw += ((gyro_data->target_yaw > gyro_data->Yaw) ? 360 : -360);
+    }
+    else
+    {
+        gyro_data->cal_yaw = gyro_data->Yaw;
+    }
 }
 
 static void check_arrive(void)
 {
-    // if (fabs(angle_instance.Err) < 1)
-    //     chassis_feedback_data.rotate_arrive = 1;
-    // else
-    //     chassis_feedback_data.rotate_arrive = 0;
-
-    // if (fabs(angle_instance.Err) < 2)
-    //     chassis_feedback_data.rotate_vague_arrive = 1;
-    // else
-    //     chassis_feedback_data.rotate_vague_arrive = 0;
-    if (fabs(chassis_gyro_ctrl_data.angle_instance.Err) < 1)
+    if (fabs(angle_instance.Err) < 0.1)
         chassis_feedback_data.rotate_arrive = 1;
     else
         chassis_feedback_data.rotate_arrive = 0;
 
-    if (fabs(chassis_gyro_ctrl_data.angle_instance.Err) < 2)
+    if (fabs(angle_instance.Err) < 1)
         chassis_feedback_data.rotate_vague_arrive = 1;
     else
         chassis_feedback_data.rotate_vague_arrive = 0;
@@ -179,18 +154,10 @@ static void check_arrive(void)
 
 static void SpeedCalculate()
 {
-    // GYRO_buff_to_data(); // 数据处理
-    if (gyro_data->last_Yaw > 0 && gyro_data->last_Yaw <= 360 && gyro_data->Yaw > 0 && gyro_data->Yaw <= 360)
-    {
-        // HeadingTransfer();
-        // 睿萱
-        // PIDCalculate(&angle_instance, gyro_data->yaw, gyro_data->target_yaw);
-        // left_target_vt += angle_instance.Output * 1;  // 系数后面测
-        // right_target_vt -= angle_instance.Output * 1; // 系数后面测
-        PIDCalculate(&chassis_gyro_ctrl_data.angle_instance, gyro_data->Yaw, chassis_gyro_ctrl_data.target_yaw);
-        left_target_vt += chassis_gyro_ctrl_data.angle_instance.Output * 10;  // 系数后面测
-        right_target_vt -= chassis_gyro_ctrl_data.angle_instance.Output * 10; // 系数后面测
-    }
+    HeadingTransfer();
+    PIDCalculate(&angle_instance, gyro_data->cal_yaw, gyro_data->target_yaw);
+    left_target_vt += angle_instance.Output * 8;  // 系数后面测
+    right_target_vt -= angle_instance.Output * 8; // 系数后面测
 }
 
 /**
@@ -225,7 +192,7 @@ void ChassisTask()
 
     // }
 
-    // chassis_cmd_recv.chassis_mode = CHASSIS_FORWARD;
+    chassis_cmd_recv.chassis_mode = CHASSIS_ROTATE;
     if (chassis_cmd_recv.chassis_mode == CHASSIS_ZERO_FORCE)
     { // 如果出现重要模块离线或遥控器设置为急停,让电机停止
         DJIMotorStop(motor_lf);
@@ -261,10 +228,6 @@ void ChassisTask()
     SetChassisOutput();
 
     check_arrive();
-
-    // if (chassis_feedback_data.rotate_arrive && chassis_cmd_recv.chassis_mode == CHASSIS_ROTATE) {
-    //     chassis_cmd_recv.chassis_mode = CHASSIS_FORWARD;
-    // }
 
     // 推送反馈消息
 #ifdef ONE_BOARD

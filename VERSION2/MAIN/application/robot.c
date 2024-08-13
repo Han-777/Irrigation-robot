@@ -51,4 +51,5 @@ void RobotTask()
 {
     ChassisTask();
     RobotCMDTask();
+    WaterTask();
 }

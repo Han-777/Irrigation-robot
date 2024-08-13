@@ -141,7 +141,7 @@ static void HeadingTransfer(void)
 
 static void check_arrive(void)
 {
-    if (fabs(angle_instance.Err) < 0.1)
+    if (fabs(angle_instance.Err) < 0.5)
         chassis_feedback_data.rotate_arrive = 1;
     else
         chassis_feedback_data.rotate_arrive = 0;
@@ -192,7 +192,7 @@ void ChassisTask()
 
     // }
 
-    chassis_cmd_recv.chassis_mode = CHASSIS_ROTATE;
+    // chassis_cmd_recv.chassis_mode = CHASSIS_ROTATE;
     if (chassis_cmd_recv.chassis_mode == CHASSIS_ZERO_FORCE)
     { // 如果出现重要模块离线或遥控器设置为急停,让电机停止
         DJIMotorStop(motor_lf);
@@ -212,7 +212,7 @@ void ChassisTask()
     switch (chassis_cmd_recv.chassis_mode)
     {
     case CHASSIS_FORWARD:
-        left_target_vt = right_target_vt = 3000; // 3500
+        left_target_vt = right_target_vt = 0; // 3500
         break;
     case CHASSIS_ROTATE:
         left_target_vt = right_target_vt = 0; // 后面根据实际情况给速度值

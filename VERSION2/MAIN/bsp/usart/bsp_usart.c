@@ -12,6 +12,9 @@
 #include "stdlib.h"
 #include "memory.h"
 
+/*============for virtual usart====================*/
+#include "bsp_dwt.h"
+
 /* usart service instance, modules' info would be recoreded here using USARTRegister() */
 /* usart服务实例,所有注册了usart的模块信息会被保存在这里 */
 static uint8_t usart_instance_idx = 0;
@@ -224,9 +227,11 @@ void VirtualCOM_ByteSend(VIRTUALInstance *instance, uint8_t data)
         else
             HAL_GPIO_WritePin(instance->tx_port, instance->tx_pin, GPIO_PIN_RESET); // 0
         data >>= 1;
+        DWT_Delay_us(instance->trans_baud);
         // delay_us(instance->trans_baud); // after freertos
     }
     HAL_GPIO_WritePin(instance->tx_port, instance->tx_pin, GPIO_PIN_SET); // 发送结束位
+    DWT_Delay_us(instance->trans_baud);
     // delay_us(instance->trans_baud); // after freertos
 }
 

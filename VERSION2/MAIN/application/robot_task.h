@@ -20,6 +20,7 @@ osThreadId initTaskHandle;
 osThreadId robotTaskHandle;
 osThreadId motorTaskHandle;
 osThreadId daemonTaskHandle;
+osThreadId waterTaskHandle;
 // osThreadId uiTaskHandle;
 /*      中断处理任务       */
 osThreadId lidarTaskHandle;
@@ -33,7 +34,7 @@ void RobotInitTASK();
 void StartMOTORTASK(void const *argument);
 void StartDAEMONTASK(void const *argument);
 void StartROBOTTASK(void const *argument);
-// void StartUITASK(void const *argument);
+void StartWaterTASK(void const *argument);
 
 void StartLidarTask(void const *argument);
 // void StartGyroTask(void const *argument);
@@ -61,8 +62,11 @@ void OSTaskInit()
     osThreadDef(daemontask, StartDAEMONTASK, osPriorityNormal, 0, 128);
     daemonTaskHandle = osThreadCreate(osThread(daemontask), NULL);
 
-    osThreadDef(robottask, StartROBOTTASK, osPriorityAboveNormal, 0, 1024);
+    osThreadDef(robottask, StartROBOTTASK, osPriorityNormal, 0, 1024);
     robotTaskHandle = osThreadCreate(osThread(robottask), NULL);
+
+    osThreadDef(watertask, StartWaterTASK, osPriorityNormal, 0, 256);
+    waterTaskHandle = osThreadCreate(osThread(watertask), NULL);
 
     osThreadDef(lidartask, StartLidarTask, osPriorityHigh, 0, 128);
     lidarTaskHandle = osThreadCreate(osThread(lidartask), NULL);
@@ -182,14 +186,14 @@ __attribute__((noreturn)) void StartROBOTTASK(void const *argument)
     }
 }
 
-// __attribute__((noreturn)) void StartUITASK(void const *argument)
-// {
-//     MyUIInit();
-//     for (;;)
-//     {
-//         osDelay(1); // 即使没有任何UI需要刷新,也挂起一次,防止卡在UITask中无法切换
-//     }
-// }
+__attribute__((noreturn)) void StartWaterTASK(void const *argument)
+{
+    for (;;)
+    {
+        WaterTask();
+        osDelay(5); // 即使没有任何UI需要刷新,也挂起一次,防止卡在UITask中无法切换
+    }
+}
 
 /**
  * @brief

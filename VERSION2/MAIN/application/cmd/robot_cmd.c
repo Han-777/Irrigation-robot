@@ -27,41 +27,79 @@ static Water_Upload_Data_s water_feedback_data; //
 
 static LD_data_t *ld_data;
 #define LD_DIS_THRESHOLD 100
-static uint8_t *gray_cnt;
 static OPENMV_data_t *openmv_data;
 static uint8_t *pe_state;
 static uint8_t cross_cnt;
+static uint8_t itr;
+static regionEnum region;
 /*------------------water cmd handle---------------------*/
 /**
  * @brief 针对光电传感器的数据和浇水状态的反馈数据给出对应的浇水、运动命令
  *
  */
-static void waterFlagHandle(void)
+static int waterFlagHandle(void)
 {
-    chassis_cmd_send.chassis_mode = CHASSIS_ZERO_FORCE; // 看看能不能用，不能用的话再加一个类型
     /*--------------浇水任务完成，清除标志位-------------------*/
-    if (water_feedback_data.water_finish_state & left_water_finish)
+    // if (water_feedback_data.water_finish_state & left_water_finish)
+    // {
+    //     *pe_state &= ~LEFT_PE_FLAG; //
+    // }
+    // else if (water_feedback_data.water_finish_state & right_water_finish)
+    // {
+    //     *pe_state &= ~RIGHT_PE_FLAG; //
+    // }
+    // water_cmd_send.water_flag |= *pe_state;
+    // *pe_state &= ~water_feedback_data.water_finish_state;
+    // water_cmd_send.water_flag |= *pe_state;
+
+    /*============================================*/
+    switch (region)
     {
-        *pe_state &= ~LEFT_PE_FLAG; //
-        return;
+    case A:
+    case B:
+        if ((*pe_state & LEFT_PE_FLAG) && (ld_data->lld_distance < 100))
+        {
+            water_cmd_send.water_flag = pair_water_flag; // AB 看左浇两边
+            *pe_state &= NONE_PE_FLAG;
+            return 1;
+        }
+        if (water_cmd_send.water_flag == pair_water_flag && water_feedback_data.water_finish_state != water_finish_flag) // 浇水中
+            return 1;
+        else if (water_feedback_data.water_finish_state == water_finish_flag) // 浇水完成
+        {
+            water_cmd_send.water_flag &= none_water_flag;
+
+            return 0;
+        }
+        break;
+    case C:
+    case D:
+        if ((*pe_state & LEFT_PE_FLAG && ld_data->lld_distance < 30) || (*pe_state & RIGHT_PE_FLAG && ld_data->rld_distance < 30))
+        {
+            water_cmd_send.water_flag |= *pe_state; // |= 应该也同时处理了浇两边的情况
+            *pe_state &= NONE_PE_FLAG;
+            return 1;
+        }
+        if ((water_cmd_send.water_flag & pair_water_flag) && (water_feedback_data.water_finish_state != water_finish_flag)) // 浇水中
+            return 1;
+        else if (water_feedback_data.water_finish_state == water_finish_flag)
+        {
+            water_cmd_send.water_flag &= none_water_flag;
+            return 0;
+        }
+        break;
     }
-    else if (water_feedback_data.water_finish_state & right_water_finish)
-    {
-        *pe_state &= ~RIGHT_PE_FLAG; //
-        return;
-    }
-    else
-    {
-        water_cmd_send.water_flag |= *pe_state;
-    }
+
+    return 0;
 }
 
 static int region_finish(void)
 {
-    chassis_cmd_send.region = (cross_cnt < 2) ? A : ((cross_cnt < 4) ? B : ((cross_cnt < 6) ? C : D));
-    if (((water_feedback_data.plant_cnt >= 5 && water_feedback_data.plant_cnt < 9) && chassis_cmd_send.region == A) || ((water_feedback_data.plant_cnt > 10 && water_feedback_data.plant_cnt < 17) && chassis_cmd_send.region == B) || ((water_feedback_data.plant_cnt > 20 && water_feedback_data.plant_cnt < 29) && chassis_cmd_send.region == C) || (water_feedback_data.plant_cnt >= 28 && chassis_cmd_send.region == D)) // 21 in total
+    region = (cross_cnt < 2) ? A : ((cross_cnt < 4) ? B : ((cross_cnt < 6) ? C : D));
+    if (((water_feedback_data.plant_cnt >= 5 && water_feedback_data.plant_cnt < 9) && region == A) || ((water_feedback_data.plant_cnt >= 11 && water_feedback_data.plant_cnt < 17) && region == B) || ((water_feedback_data.plant_cnt >= 18 && water_feedback_data.plant_cnt < 29) && region == C) || (water_feedback_data.plant_cnt >= 28 && region == D)) // 21 in total
     {
-        water_feedback_data.plant_cnt = (chassis_cmd_send.region == A) ? 6 : ((chassis_cmd_send.region == B) ? 12 : 24);
+        water_cmd_send.set_plantCnt_flag = (region == A) ? 6 : ((region == B) ? 12 : 24);
+        // water_feedback_data.plant_cnt = (region == A) ? 6 : ((region == B) ? 12 : 24);
         return 1; // 2/4/6 -> 0
     }
     return 0;
@@ -69,7 +107,7 @@ static int region_finish(void)
 
 static int get_cross_flag(void)
 {
-    if (*gray_cnt > GRAY_THRESHOLD)
+    if (get_gray_cnt() > GRAY_THRESHOLD)
     {
         cross_cnt++;
         if (cross_cnt == 1 || cross_cnt == 2 || cross_cnt == 5 || cross_cnt == 6)
@@ -80,7 +118,9 @@ static int get_cross_flag(void)
         {
             chassis_cmd_send.clockwise_rotate_flag -= 1;
         }
+        return 1;
     }
+    return 0;
 }
 static int data_check(void)
 {
@@ -97,10 +137,13 @@ static int _run_(void)
     }
     else
     {
-        chassis_cmd_send.chassis_mode = CHASSIS_FORWARD;
-        if (*pe_state)
+        if (waterFlagHandle())
         {
-            waterFlagHandle();
+            chassis_cmd_send.chassis_mode = CHASSIS_ZERO_FORCE;
+        }
+        else
+        {
+            chassis_cmd_send.chassis_mode = CHASSIS_FORWARD;
         }
         return 0;
     }
@@ -114,11 +157,11 @@ static int cross_action(void)
     {
         if (cross_cnt % 2 == 0) // even cross open
         {
-            *pe_state |= none_water_flag;
+            *pe_state = none_water_flag;
         }
-        if (++forward_cnt % 500 == 0)
+        if (++forward_cnt % 1000 == 0)
         {
-            *pe_state |= none_water_flag;
+            // *pe_state = none_water_flag;
             forward_cnt = 0;
             return 1;
         }
@@ -152,27 +195,27 @@ static int end_return_home(void)
 
 static int (*operation_sequence[])(void) = {
     data_check,
-    _run_, cross_action, cross_to_cross, cross_action, // A��
-    _run_, cross_action, cross_to_cross, cross_action, // B��
-    _run_, cross_action, cross_to_cross, cross_action, // C��
-    _run_,                                             // D��
+    _run_, cross_action, cross_to_cross, cross_action, // A
+    _run_, cross_action, cross_to_cross, cross_action, // B
+    _run_, cross_action, cross_to_cross, cross_action, // C
+    _run_,                                             // D
     end_return_home};                                  // D finish and go home
-static uint8_t max_run_itr = 3;
+static uint8_t max_run_itr = 15;
 /*====================================================================*/
 void RobotCMDInit()
 {
-    gray_cnt = Gray_Init();
     ld_data = Lidar_Init(&huart2);
     ld_data = Lidar_Init(&huart4);
     // openmv_data = OPENMV_Init(&huart3);
     pe_state = PE_Init(LEFT_PE_Pin);
     pe_state = PE_Init(RIGHT_PE_Pin);
+    *pe_state = NONE_PE_FLAG;
     chassis_cmd_pub = PubRegister("chassis_cmd", sizeof(Chassis_Ctrl_Cmd_s)); // 注册发布
     chassis_feed_sub = SubRegister("chassis_feed", sizeof(Chassis_Upload_Data_s));
     water_cmd_pub = PubRegister("water_cmd", sizeof(Water_Ctrl_Cmd_s)); //
     water_feed_sub = SubRegister("water_feed", sizeof(Water_Upload_Data_s));
     chassis_cmd_send.chassis_mode = CHASSIS_ZERO_FORCE; // 启动时机器人进入工作模式,后续加入所有应用初始化完成之后再进入
-    chassis_cmd_send.region = home;
+    region = home;
 }
 
 /* 机器人核心控制任务,200Hz频率运行(后续可调) */
@@ -183,7 +226,6 @@ void RobotCMDTask()
     SubGetMessage(chassis_feed_sub, (void *)&chassis_fetch_data); // chassis 反馈数据
     SubGetMessage(water_feed_sub, (void *)&water_feedback_data);  // water
 #endif
-    static uint8_t itr = 0;
     if (operation_sequence[itr]())
         itr++;
     if (itr >= max_run_itr)

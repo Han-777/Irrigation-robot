@@ -29,7 +29,6 @@
 #define OUT12 HAL_GPIO_ReadPin(GRAY12_GPIO_GPIO_Port, GRAY12_GPIO_Pin)
 #define OUT13 HAL_GPIO_ReadPin(GRAY13_GPIO_GPIO_Port, GRAY13_GPIO_Pin)
 
-void get_gray_cnt(void);
-uint8_t *Gray_Init(void);
+uint8_t get_gray_cnt(void);
 
 #endif

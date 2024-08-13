@@ -75,7 +75,7 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOI, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PIPin PIPin */
-  GPIO_InitStruct.Pin = LEFT_PE_Pin|RIGHT_PE_Pin;
+  GPIO_InitStruct.Pin = RIGHT_PE_Pin|LEFT_PE_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOI, &GPIO_InitStruct);

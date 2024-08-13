@@ -31,18 +31,17 @@ void RobotInit()
 
 #if defined(ONE_BOARD) || defined(CHASSIS_BOARD)
     ChassisInit();
+#endif
+
+#if defined(ONE_BOARD) || defined(CHASSIS_BOARD)
     WaterInit();
 #endif
-    // // #if defined(ONE_BOARD) || defined(CHASSIS_BOARD)
-    // //     ChassisInit();
-    // // #endif
 
     // // #ifdef BALANCE_BAORD
     // //     BalanceInit();
     // // #endif // BALANCE_BA
 
     OSTaskInit(); // 创建基础任务
-
     // // 初始化完成,开启中断
     __enable_irq();
 }
@@ -51,5 +50,4 @@ void RobotTask()
 {
     ChassisTask();
     RobotCMDTask();
-    WaterTask();
 }

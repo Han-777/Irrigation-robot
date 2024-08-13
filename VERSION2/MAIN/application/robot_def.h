@@ -10,7 +10,7 @@
 // #define CHASSIS_BOARD //底盘板
 // #define GIMBAL_BOARD  //云台板
 
-#define GRAY_THRESHOLD 10 // 测到十字的下限
+#define GRAY_THRESHOLD 6 // 测到十字的下限
 // 底盘模式设置
 /**
  * @brief 后续考虑修改为云台跟随底盘,而不是让底盘去追云台,云台的惯量比底盘小.
@@ -25,12 +25,11 @@ typedef enum
 
 typedef enum
 {
-    // left_water_flag = 0b00000001,
-    // right_water_flag = 0b00000010,
+    left_water_flag = 0b00000001,
+    right_water_flag = 0b00000010,
     none_water_flag = 0b00000000,
-    left_water_finish = 0b00000001,
-    right_water_finish = 0b00000010,
-
+    water_finish_flag = 0b00000011,
+    pair_water_flag = 0b00000011
     // left_water_finish = 0b11111110,
     // right_water_finish = 0b11111101,
 } water_State_e;
@@ -58,6 +57,7 @@ typedef enum
     B,
     C,
     D,
+    C2C, // cross to cross
     home
 } regionEnum;
 
@@ -72,13 +72,14 @@ typedef struct
     // 控制部分
     chassis_mode_e chassis_mode; // ？
     uint8_t clockwise_rotate_flag;
-    regionEnum region;
+    // regionEnum region;
     // uint8_t gray; // 处理为crosscnt之后删除
 } Chassis_Ctrl_Cmd_s;
 
 typedef struct
 {
     uint8_t water_flag;
+    uint8_t set_plantCnt_flag; // 1: 6, 2: 12, 3: 18, 4: 24
 } Water_Ctrl_Cmd_s;
 
 /* ----------------gimbal/shoot/chassis发布的反馈数据----------------*/

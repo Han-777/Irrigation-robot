@@ -5,7 +5,7 @@ typedef enum
 {
     SLIGHT = 1,
     GENERAL = 2, // Corrected typo from "GENERAl" to "GENERAL"
-    SERIOUS = 4,
+    SERIOUS = 3,
 } MP3_broadcast_type;
 void MP3_Init(void);
 

@@ -70,7 +70,9 @@
     "cstdlib": "c",
     "bluetooth.h": "c",
     "cmsis_os.h": "c",
-    "freertos.h": "c"
+    "freertos.h": "c",
+    "semphr.h": "c",
+    "task.h": "c"
   },
   "C_Cpp.errorSquiggles": "enabled"
 }

@@ -6,6 +6,7 @@
 
 typedef enum
 {
+    NONE_PE_FLAG = 0b00000000,
     LEFT_PE_FLAG = 0b00000001,
     RIGHT_PE_FLAG = 0b00000010
 } PE_FLAG_e;

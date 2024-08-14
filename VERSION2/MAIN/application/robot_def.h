@@ -10,7 +10,6 @@
 // #define CHASSIS_BOARD //底盘板
 // #define GIMBAL_BOARD  //云台板
 
-#define GRAY_THRESHOLD 6 // 测到十字的下限
 // 底盘模式设置
 /**
  * @brief 后续考虑修改为云台跟随底盘,而不是让底盘去追云台,云台的惯量比底盘小.
@@ -72,6 +71,8 @@ typedef struct
     // 控制部分
     chassis_mode_e chassis_mode; // ？
     uint8_t clockwise_rotate_flag;
+    uint8_t *pe_state;
+    float speed;
     // regionEnum region;
     // uint8_t gray; // 处理为crosscnt之后删除
 } Chassis_Ctrl_Cmd_s;
@@ -80,6 +81,7 @@ typedef struct
 {
     uint8_t water_flag;
     uint8_t set_plantCnt_flag; // 1: 6, 2: 12, 3: 18, 4: 24
+    regionEnum region;
 } Water_Ctrl_Cmd_s;
 
 /* ----------------gimbal/shoot/chassis发布的反馈数据----------------*/

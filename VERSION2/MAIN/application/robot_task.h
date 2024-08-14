@@ -168,20 +168,20 @@ __attribute__((noreturn)) void StartDAEMONTASK(void const *argument)
 
 __attribute__((noreturn)) void StartROBOTTASK(void const *argument)
 {
-    static float robot_dt;
-    static float robot_start;
+    // static float robot_dt;
+    // static float robot_start;
     // LOGINFO("[freeRTOS] ROBOT core Task Start");
     // 200Hz-500Hz,若有额外的控制任务如平衡步兵可能需要提升至1kHz
     for (;;)
     {
-        robot_start = DWT_GetTimeline_ms();
+        // robot_start = DWT_GetTimeline_ms();
         // GYRO_buff_to_data();
         RobotTask();
-        robot_dt = DWT_GetTimeline_ms() - robot_start;
-        if (robot_dt > 5)
-        {
-            // LOGERROR("[freeRTOS] ROBOT core Task is being DELAY! dt = [%f]", &robot_dt);
-        }
+        // robot_dt = DWT_GetTimeline_ms() - robot_start;
+        // if (robot_dt > 5)
+        // {
+        // LOGERROR("[freeRTOS] ROBOT core Task is being DELAY! dt = [%f]", &robot_dt);
+        // }
         osDelay(5);
     }
 }
@@ -214,7 +214,7 @@ __attribute__((noreturn)) void StartLidarTask(void const *argument)
             taskEXIT_CRITICAL(); // 启用中断
             xTaskResumeAll();    // 启用调度器
         }
-        osDelay(10); // 增加延时
+        // osDelay(2); // 增加延时
     }
 }
 

@@ -171,17 +171,14 @@ static void GYRO_buff_to_data(const uint8_t *gyro_buff, uint16_t size)
             // 稳定性判断
             // gyro_data->last_Pitch = gyro_data->Pitch;
             gyro_data->last_Roll = gyro_data->Roll;
+            gyro_data->last_Yaw = gyro_data->Yaw;
 
             // gyro_data->Pitch = AHRSData_Packet.Pitch * 180.0 / PI;
             // gyro_data->PitchSpeed = AHRSData_Packet.PitchSpeed * 180.0 / PI;
             gyro_data->Roll = AHRSData_Packet.Roll * 180.0 / PI;
             // gyro_data->RollSpeed = AHRSData_Packet.RollSpeed * 180.0 / PI;
-            if (AHRSData_Packet.Heading <= PI2)
-            {
-                gyro_data->last_Yaw = gyro_data->Yaw;
-                gyro_data->Yaw = AHRSData_Packet.Heading * 180.0 / PI;
-                // gyro_data->YawSpeed = AHRSData_Packet.HeadingSpeed * 180.0 / PI;
-            }
+            gyro_data->Yaw = AHRSData_Packet.Heading * 180.0 / PI;
+            // gyro_data->YawSpeed = AHRSData_Packet.HeadingSpeed * 180.0 / PI;
             // gyro_data->Yaw1 = AHRSData_Packet.Heading * 180.0 / PI;
             // if (fabs(gyro_data->Yaw) < 360)
             // {
@@ -190,12 +187,13 @@ static void GYRO_buff_to_data(const uint8_t *gyro_buff, uint16_t size)
 
             if (!initialized)
             {
-                if (abs(gyro_data->Yaw - gyro_data->last_Yaw) < 0.05 && abs(gyro_data->last_Roll - gyro_data->Roll) < 0.05)
+                if (abs(gyro_data->Yaw - gyro_data->last_Yaw) < 0.02 && abs(gyro_data->last_Roll - gyro_data->Roll) < 0.02)
                 {
                     gyro_data->ori_yaw = gyro_data->Yaw; // 陀螺仪初始值不为0,记录初始值
                     // gyro_data->ori_pitch = gyro_data->Pitch;
                     gyro_data->ori_roll = gyro_data->Roll;
                     initialized = 1;
+                    gyro_data->gyro_Init_Flag = 1;
                 }
             }
         }

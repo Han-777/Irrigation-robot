@@ -42,7 +42,7 @@ void ChassisInit() // 配置中所有pid参数都需要修改
             .Kp = 50, // 200
             .Ki = 16, // 200
             .Kd = 10, // 100
-            .IntegralLimit = 200,
+            .IntegralLimit = 300,
             .Improve = PID_Trapezoid_Intergral | PID_Integral_Limit | PID_Derivative_On_Measurement,
             .MaxOut = 3000, // 待测
         };
@@ -81,7 +81,7 @@ void ChassisInit() // 配置中所有pid参数都需要修改
                         .Kd = 0,
                         .IntegralLimit = 3000,
                         .Improve = PID_Trapezoid_Intergral | PID_Integral_Limit | PID_Derivative_On_Measurement,
-                        .MaxOut = 3000,
+                        .MaxOut = 7000,
                     },
 
             },
@@ -192,7 +192,10 @@ void ChassisTask()
 
     // }
 
-    // chassis_cmd_recv.chassis_mode = CHASSIS_ROTATE;
+    if (gyro_data->gyro_Init_Flag != 1)
+    {
+        chassis_cmd_recv.chassis_mode = CHASSIS_ZERO_FORCE;
+    }
     if (chassis_cmd_recv.chassis_mode == CHASSIS_ZERO_FORCE)
     { // 如果出现重要模块离线或遥控器设置为急停,让电机停止
         DJIMotorStop(motor_lf);
@@ -212,7 +215,7 @@ void ChassisTask()
     switch (chassis_cmd_recv.chassis_mode)
     {
     case CHASSIS_FORWARD:
-        left_target_vt = right_target_vt = 0; // 3500
+        left_target_vt = right_target_vt = chassis_cmd_recv.speed; // 3500
         break;
     case CHASSIS_ROTATE:
         left_target_vt = right_target_vt = 0; // 后面根据实际情况给速度值

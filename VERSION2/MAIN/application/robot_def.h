@@ -5,6 +5,19 @@
 // #include "master_process.h"
 #include "stdint.h"
 #define ROBOT_DEF_PARAM_WARNING
+#define A_speed 6000
+#define C_speed 5000
+#define BD_speed 8500
+#define LD_DIS_A_MIN_THRESHOLD 13 // 正中心对应雷达距离
+#define LD_DIS_A_MAX_THRESHOLD 19
+#define LD_DIS_B_MIN_THRESHOLD 20 // 正中心对应雷达距离
+#define LD_DIS_B_MAX_THRESHOLD 24
+#define LD_DIS_C_MIN_THRESHOLD 24 // 正中心对应雷达距离 中心：24
+#define LD_DIS_C_MAX_THRESHOLD 30
+#define LD_DIS_D_MIN_THRESHOLD 20 // 正中心对应雷达距离
+#define LD_DIS_D_MAX_THRESHOLD 26
+#define COM_PARAMETER 250
+#define COM_C_PARAMETER 300
 
 #define ONE_BOARD // 单板控制整车
 // #define CHASSIS_BOARD //底盘板
@@ -20,6 +33,7 @@ typedef enum
     CHASSIS_ZERO_FORCE = 0, // 电流零输入
     CHASSIS_FORWARD = 1,    // 前进模式
     CHASSIS_ROTATE = 2,     // 旋转模式
+    CHASSIS_C2C
 } chassis_mode_e;
 
 typedef enum
@@ -56,7 +70,7 @@ typedef enum
     B,
     C,
     D,
-    C2C, // cross to cross
+    // C2C,
     home
 } regionEnum;
 
@@ -73,6 +87,7 @@ typedef struct
     uint8_t clockwise_rotate_flag;
     uint8_t *pe_state;
     float speed;
+    float lidar_com_speed; // 雷达补偿速度
     // regionEnum region;
     // uint8_t gray; // 处理为crosscnt之后删除
 } Chassis_Ctrl_Cmd_s;

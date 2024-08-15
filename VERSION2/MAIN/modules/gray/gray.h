@@ -2,7 +2,7 @@
 #define __GRAY_H__
 
 #include "main.h"
-#define GRAY_THRESHOLD 6 // 测到十字的下限
+#define GRAY_THRESHOLD 3 // 测到十字的下限
 
 /*** @note later it should be put to application layer*/
 /*--------------------------------------------------------------*/

@@ -182,7 +182,7 @@ __attribute__((noreturn)) void StartROBOTTASK(void const *argument)
         // {
         // LOGERROR("[freeRTOS] ROBOT core Task is being DELAY! dt = [%f]", &robot_dt);
         // }
-        osDelay(5);
+        osDelay(3);
     }
 }
 
@@ -191,7 +191,7 @@ __attribute__((noreturn)) void StartWaterTASK(void const *argument)
     for (;;)
     {
         WaterTask();
-        osDelay(5); // 即使没有任何UI需要刷新,也挂起一次,防止卡在UITask中无法切换
+        osDelay(3); // 即使没有任何UI需要刷新,也挂起一次,防止卡在UITask中无法切换
     }
 }
 
@@ -208,11 +208,11 @@ __attribute__((noreturn)) void StartLidarTask(void const *argument)
     {
         if (xQueueReceive(lidarQueue, &buffer, portMAX_DELAY) == pdPASS)
         {
-            vTaskSuspendAll();    // 禁用调度器
-            taskENTER_CRITICAL(); // 禁用中断
+            // vTaskSuspendAll();    // 禁用调度器
+            // taskENTER_CRITICAL(); // 禁用中断
             lidar_data_handle(buffer);
-            taskEXIT_CRITICAL(); // 启用中断
-            xTaskResumeAll();    // 启用调度器
+            // taskEXIT_CRITICAL(); // 启用中断
+            // xTaskResumeAll();    // 启用调度器
         }
         // osDelay(2); // 增加延时
     }

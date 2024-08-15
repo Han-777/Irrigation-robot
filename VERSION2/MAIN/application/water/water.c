@@ -10,6 +10,8 @@ static Publisher_t *water_pub;
 static Subscriber_t *water_sub;
 static Water_Ctrl_Cmd_s water_recv_data;
 static Water_Upload_Data_s water_feedback_data;
+
+// static ServoInstance *pitchServoMotor, *yawServoMotor;
 static uint8_t info_buff[18] = {1, 2, 3, 1, 2, 3,
                                 1, 2, 3, 1, 2, 3,
                                 1, 2, 3, 1, 2, 3,
@@ -19,6 +21,14 @@ void WaterInit(void)
 {
     MP3_Init();
     // 舵机初始化
+    // ServoInstance servo_init_config;
+    // servo_init_config.Channel = TIM_CHANNEL_1;
+    // servo_init_config.Servo_Angle_Type = Start_mode;
+    // servo_init_config.Servo_type = Servo270;
+    // servo_init_config.htim = &htim13;
+    // pitchServoMotor = ServoInit(&servo_init_config);
+    // servo_init_config.htim = &htim14;
+    // pitchServoMotor = ServoInit(&servo_init_config);
     // Servo_Init_Config_s *config = (Servo_Init_Config_s
     // ServoInit();
     water_sub = SubRegister("water_cmd", sizeof(Water_Ctrl_Cmd_s));
@@ -118,6 +128,27 @@ void water_flag_handle(void)
         switch (water_recv_data.region)
         {
         case A:
+            if ((water_recv_data.water_flag & left_water_flag) && !(water_feedback_data.water_finish_state & left_water_flag))
+            {
+                // 左边浇水过程
+                if (++cnt % 2000 == 0)
+                {
+                    cnt = 0;
+                    water_feedback_data.water_finish_state |= left_water_flag;
+                    // MP3_broadcast(info_buff[water_feedback_data.plant_cnt]);
+                }
+            }
+            else if ((water_recv_data.water_flag & right_water_flag) && !(water_feedback_data.water_finish_state & right_water_flag))
+            {
+                // 右边浇水
+                if (++cnt % 2000 == 0)
+                {
+                    cnt = 0;
+                    water_feedback_data.water_finish_state |= right_water_flag;
+                    water_feedback_data.plant_cnt++;
+                    // MP3_broadcast(info_buff[water_feedback_data.plant_cnt]);
+                }
+            }
         case B:
             if ((water_recv_data.water_flag & left_water_flag) && !(water_feedback_data.water_finish_state & left_water_flag))
             {
@@ -136,13 +167,14 @@ void water_flag_handle(void)
                 {
                     cnt = 0;
                     water_feedback_data.water_finish_state |= right_water_flag;
+                    water_feedback_data.plant_cnt++;
                     // MP3_broadcast(info_buff[water_feedback_data.plant_cnt]);
                 }
             }
-            if (water_feedback_data.water_finish_state == water_finish_flag)
-            {
-                water_feedback_data.plant_cnt++;
-            }
+            // if (water_feedback_data.water_finish_state == water_finish_flag && water_recv_data.water_flag == none_water_flag)
+            // {
+            //     water_feedback_data.plant_cnt++;
+            // }
             break;
         case C:
         case D:

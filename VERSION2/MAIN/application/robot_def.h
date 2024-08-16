@@ -5,17 +5,33 @@
 // #include "master_process.h"
 #include "stdint.h"
 #define ROBOT_DEF_PARAM_WARNING
-#define A_speed 6000
-#define C_speed 5000
-#define BD_speed 8500
-#define LD_DIS_A_MIN_THRESHOLD 13 // 正中心对应雷达距离
-#define LD_DIS_A_MAX_THRESHOLD 19
-#define LD_DIS_B_MIN_THRESHOLD 20 // 正中心对应雷达距离
-#define LD_DIS_B_MAX_THRESHOLD 24
-#define LD_DIS_C_MIN_THRESHOLD 24 // 正中心对应雷达距离 中心：24
-#define LD_DIS_C_MAX_THRESHOLD 30
-#define LD_DIS_D_MIN_THRESHOLD 20 // 正中心对应雷达距离
-#define LD_DIS_D_MAX_THRESHOLD 26
+#define A_speed 7500
+#define C_speed 6000
+#define BD_speed 9000
+/*=====================A===========================*/
+#define LD_A_DIS_THRESHOLD 27
+#define LD_A_DIS_MIN_THRESHOLD 14 // 正中心对应雷达距离 中心：14
+#define LD_A_DIS_MAX_THRESHOLD 14
+/*=====================B===========================*/
+#define LD_B_DIS_THRESHOLD 40
+
+#define LD_B_DIS_MIN_THRESHOLD 15.5 // 正中心对应雷达距离 中心：22
+#define LD_B_DIS_MAX_THRESHOLD 15.5 // 防掉坡：加强远端修复能力（可以偏右）
+/*=====================C===========================*/
+// C理想位置左：31 右：17
+// #define LD_C_DIS_MIN_THRESHOLD 15 // 正中心对应雷达距离 中心：24
+// #define LD_C_DIS_MAX_THRESHOLD 30 // 防掉坡：加强近端修复能力（可以偏右）
+#define LD_C_LEFT_DIS_THRESHOLD 42
+#define LD_C_LEFT_DIS_MIN_THRESHOLD 20
+#define LD_C_LEFT_DIS_MAX_THRESHOLD 20
+#define LD_C_RIGHT_DIS_THRESHOLD 33
+#define LD_C_RIGHT_DIS_MIN_THRESHOLD 28
+#define LD_C_RIGHT_DIS_MAX_THRESHOLD 28
+/*=====================D===========================*/
+#define LD_D_DIS_THRESHOLD 33
+#define LD_D_DIS_MIN_THRESHOLD 22 // 正中心对应雷达距离 中心：22
+#define LD_D_DIS_MAX_THRESHOLD 22
+/*====================补偿=========================*/
 #define COM_PARAMETER 250
 #define COM_C_PARAMETER 300
 

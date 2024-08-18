@@ -1,191 +1,189 @@
-#ifndef  __LCD_RGB_H
-#define	__LCD_RGB_H
+#ifndef __LCD_RGB_H
+#define __LCD_RGB_H
 
 #include "stm32h7xx_hal.h"
 #include "usart.h"
-#include "sdram.h"  
+#include "sdram.h"
 #include "lcd_fonts.h"
 #include <stdio.h>
 
-// 1. LTDCÊ±ÖÓÔÚ main.c ÎÄ¼þÖÐ SystemClock_Config() º¯ÊýÉèÖÃ£¬Àý³ÌÄ¬ÈÏÎª33MHz£¬
-//    ¼´Ë¢ÐÂÂÊÔÚ60Ö¡×óÓÒ£¬¹ý¸ßµÄÊ±ÖÓ»á¼Ó´ó¶ÔSDRAMµÄÕ¼ÓÃ£¬ÈÝÒ×Ôì³É»¨ÆÁ£¬²¢ÇÒÆÁ
-//    Ä»±¾Éí²»Ö§³ÖÕâÃ´¸ßµÄË¢ÐÂÂÊ£¬»¹»áµ¼ÖÂÆÁÄ»ÉÁË¸ÏÔÊ¾Òì³£µÈ£¬¹ýµÍµÄÊ±ÖÓ»áµ¼
-//    ÖÂË¢ÐÂÂÊÌ«µÍ£¬ÆÁÄ»»áÓÐÃ÷ÏÔµÄÉÁË¸
-// 
-// 2. Ö»¿ªµ¥²ãÏÔÊ¾£¬16Î»É«¡¢RGB888ÒÔ¼°ARGB8888Ä£Ê½ÏÂ£¬LTDCÊ±ÖÓ¿ÉÒÔÉèÖÃÎª33M
+// 1. LTDCÊ±ï¿½ï¿½ï¿½ï¿½ main.c ï¿½Ä¼ï¿½ï¿½ï¿½ SystemClock_Config() ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½Îª33MHzï¿½ï¿½
+//    ï¿½ï¿½Ë¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½60Ö¡ï¿½ï¿½ï¿½Ò£ï¿½ï¿½ï¿½ï¿½ßµï¿½Ê±ï¿½Ó»ï¿½Ó´ï¿½ï¿½SDRAMï¿½ï¿½Õ¼ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//    Ä»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö§ï¿½ï¿½ï¿½ï¿½Ã´ï¿½ßµï¿½Ë¢ï¿½ï¿½ï¿½Ê£ï¿½ï¿½ï¿½ï¿½áµ¼ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½Ë¸ï¿½ï¿½Ê¾ï¿½ì³£ï¿½È£ï¿½ï¿½ï¿½ï¿½Íµï¿½Ê±ï¿½Ó»áµ¼
+//    ï¿½ï¿½Ë¢ï¿½ï¿½ï¿½ï¿½Ì«ï¿½Í£ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôµï¿½ï¿½ï¿½Ë¸
 //
-// 3. ¿ªË«²ãÏÔÊ¾£¬RGB565ºÍARGB1555Ä£Ê½ÏÂ£¬LTDCÊ±ÖÓ¿ÉÒÔÉèÖÃÎª33M
-// 4. ¿ªË«²ãÏÔÊ¾£¬RGB565ºÍARGB8888Ä£Ê½ÏÂ£¬LTDCÊ±ÖÓ×î´óÖ»ÄÜÉèÖÃÎª28M£¨²»Í¬µÄÃæ°å»áÓÐËù²îÒì£¬ÐèÒª¸ù¾ÝÊµ¼ÊÇé¿öµ÷Õû£©
-// 5. ¿ªË«²ãÏÔÊ¾£¬RGB888ºÍARGB1555Ä£Ê½ÏÂ£¬LTDCÊ±ÖÓ×î´óÖ»ÄÜÉèÖÃÎª33M£¨²»Í¬µÄÃæ°å»áÓÐËù²îÒì£¬ÐèÒª¸ù¾ÝÊµ¼ÊÇé¿öµ÷Õû£©
-// 6. ¿ªË«²ãÏÔÊ¾£¬RGB888ºÍARGB8888Ä£Ê½ÏÂ£¬LTDCÊ±ÖÓ×î´óÖ»ÄÜÉèÖÃÎª24M£¨²»Í¬µÄÃæ°å»áÓÐËù²îÒì£¬ÐèÒª¸ù¾ÝÊµ¼ÊÇé¿öµ÷Õû£©
+// 2. Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½16Î»É«ï¿½ï¿½RGB888ï¿½Ô¼ï¿½ARGB8888Ä£Ê½ï¿½Â£ï¿½LTDCÊ±ï¿½Ó¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª33M
 //
-// 7. ×ÛÉÏ£¬·´¿ÍSTM32H750XBH6ºËÐÄ°å¿ªÆôË«²ãÊ±£¬ÍÆ¼öÊ¹ÓÃ 16Î»É«+16Î»É« »òÕß 24Î»É«+16Î»É« µÄ×éºÏ£¬ÕâÑù¿ÉÒÔÈ·±£ÆÁÄ»¹¤×÷ÔÚ×î¼ÑµÄË¢ÐÂÂÊ
+// 3. ï¿½ï¿½Ë«ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½RGB565ï¿½ï¿½ARGB1555Ä£Ê½ï¿½Â£ï¿½LTDCÊ±ï¿½Ó¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª33M
+// 4. ï¿½ï¿½Ë«ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½RGB565ï¿½ï¿½ARGB8888Ä£Ê½ï¿½Â£ï¿½LTDCÊ±ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª28Mï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì£¬ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// 5. ï¿½ï¿½Ë«ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½RGB888ï¿½ï¿½ARGB1555Ä£Ê½ï¿½Â£ï¿½LTDCÊ±ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª33Mï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì£¬ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// 6. ï¿½ï¿½Ë«ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½RGB888ï¿½ï¿½ARGB8888Ä£Ê½ï¿½Â£ï¿½LTDCÊ±ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îª24Mï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì£¬ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//
+// 7. ï¿½ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½ï¿½STM32H750XBH6ï¿½ï¿½ï¿½Ä°å¿ªï¿½ï¿½Ë«ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Æ¼ï¿½Ê¹ï¿½ï¿½ 16Î»É«+16Î»É« ï¿½ï¿½ï¿½ï¿½ 24Î»É«+16Î»É« ï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñµï¿½Ë¢ï¿½ï¿½ï¿½ï¿½
 
-#define 	LCD_NUM_LAYERS  2	//	¶¨ÒåÏÔÊ¾µÄ²ãÊý£¬750¿ÉÇý¶¯Á½²ãÏÔÊ¾
+#define LCD_NUM_LAYERS 2 //	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½750ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
 
-#define	ColorMode_0   LTDC_PIXEL_FORMAT_RGB565   		//¶¨Òå layer0 µÄÑÕÉ«¸ñÊ½
-//#define	ColorMode_0   LTDC_PIXEL_FORMAT_ARGB1555  
-//#define	ColorMode_0    LTDC_PIXEL_FORMAT_ARGB4444  
-//#define	ColorMode_0   LTDC_PIXEL_FORMAT_RGB888
-//#define	ColorMode_0   LTDC_PIXEL_FORMAT_ARGB8888   
+#define ColorMode_0 LTDC_PIXEL_FORMAT_RGB565 // ï¿½ï¿½ï¿½ï¿½ layer0 ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½Ê½
+// #define	ColorMode_0   LTDC_PIXEL_FORMAT_ARGB1555
+// #define	ColorMode_0    LTDC_PIXEL_FORMAT_ARGB4444
+// #define	ColorMode_0   LTDC_PIXEL_FORMAT_RGB888
+// #define	ColorMode_0   LTDC_PIXEL_FORMAT_ARGB8888
 
+#if LCD_NUM_LAYERS == 2 // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë«ï¿½ã£¬ï¿½ï¿½ï¿½Ú´Ë´ï¿½ï¿½ï¿½ï¿½ï¿½ layer1 ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½Ê½
 
-#if  LCD_NUM_LAYERS == 2	// Èç¹û¿ªÆôÁËË«²ã£¬ÔòÔÚ´Ë´¦¶¨Òå layer1 µÄÑÕÉ«¸ñÊ½			
-
-//	#define	ColorMode_1   LTDC_PIXEL_FORMAT_RGB565   	
-	#define	ColorMode_1   LTDC_PIXEL_FORMAT_ARGB1555  // ARGB1555½öÖ§³ÖÒ»Î»Í¸Ã÷É«£¬¼´½öÓÐÍ¸Ã÷ºÍ²»Í¸Ã÷Á½ÖÖ×´Ì¬
-//	#define	ColorMode_1   LTDC_PIXEL_FORMAT_ARGB4444  // ARGB4444Ö§³Ö4Î»Í¸Ã÷É«£¬ÓÐ16ÖÖÍ¸Ã÷×´Ì¬
-// #define	ColorMode_1   LTDC_PIXEL_FORMAT_RGB888   
-//	#define	ColorMode_1   LTDC_PIXEL_FORMAT_ARGB8888   // ARGB8888Ö§³Ö8Î»Í¸Ã÷É«£¬ÓÐ256ÖÖÍ¸Ã÷×´Ì¬	
+//	#define	ColorMode_1   LTDC_PIXEL_FORMAT_RGB565
+#define ColorMode_1 LTDC_PIXEL_FORMAT_ARGB1555 // ARGB1555ï¿½ï¿½Ö§ï¿½ï¿½Ò»Î»Í¸ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ï¿½ï¿½Í²ï¿½Í¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬
+//	#define	ColorMode_1   LTDC_PIXEL_FORMAT_ARGB4444  // ARGB4444Ö§ï¿½ï¿½4Î»Í¸ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½16ï¿½ï¿½Í¸ï¿½ï¿½×´Ì¬
+// #define	ColorMode_1   LTDC_PIXEL_FORMAT_RGB888
+//	#define	ColorMode_1   LTDC_PIXEL_FORMAT_ARGB8888   // ARGB8888Ö§ï¿½ï¿½8Î»Í¸ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½256ï¿½ï¿½Í¸ï¿½ï¿½×´Ì¬
 
 #endif
 
+// ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// Ê¹ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½LCD_DisplayDirection(Direction_H) ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
+// Ê¹ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½LCD_DisplayDirection(Direction_V) ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½Ö±ï¿½ï¿½Ê¾
 
-// ÏÔÊ¾·½Ïò²ÎÊý
-// Ê¹ÓÃÊ¾Àý£ºLCD_DisplayDirection(Direction_H) £¬ÉèÖÃÆÁÄ»ºáÆÁÏÔÊ¾
-// Ê¹ÓÃÊ¾Àý£ºLCD_DisplayDirection(Direction_V) £¬ÉèÖÃÆÁÄ»ÊúÖ±ÏÔÊ¾
+#define Direction_H 0 // LCDï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
+#define Direction_V 1 // LCDï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
 
-#define	Direction_H	0		//LCDºáÆÁÏÔÊ¾
-#define	Direction_V	1		//LCDÊúÆÁÏÔÊ¾
-
-// ÉèÖÃ±äÁ¿ÏÔÊ¾Ê±¶àÓàÎ»²¹0»¹ÊÇ²¹¿Õ¸ñ
-// Ö»ÓÐ LCD_DisplayNumber() ÏÔÊ¾ÕûÊý ºÍ LCD_DisplayDecimals()ÏÔÊ¾Ð¡Êý ÕâÁ½¸öº¯ÊýÓÃµ½
-// Ê¹ÓÃÊ¾Àý£º LCD_ShowNumMode(Fill_Zero) ÉèÖÃ¶àÓàÎ»Ìî³ä0£¬ÀýÈç 123 ¿ÉÒÔÏÔÊ¾Îª 000123
+// ï¿½ï¿½ï¿½Ã±ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾Ê±ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½0ï¿½ï¿½ï¿½Ç²ï¿½ï¿½Õ¸ï¿½
+// Ö»ï¿½ï¿½ LCD_DisplayNumber() ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ LCD_DisplayDecimals()ï¿½ï¿½Ê¾Ð¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½
+// Ê¹ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ LCD_ShowNumMode(Fill_Zero) ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 123 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾Îª 000123
 //
-#define  Fill_Zero  0		//Ìî³ä0
-#define  Fill_Space 1		//Ìî³ä¿Õ¸ñ
+#define Fill_Zero 0	 // ï¿½ï¿½ï¿½0
+#define Fill_Space 1 // ï¿½ï¿½ï¿½Õ¸ï¿½
 
+/*---------------------------------------- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É« ------------------------------------------------------
 
-/*---------------------------------------- ³£ÓÃÑÕÉ« ------------------------------------------------------
+ 1. ï¿½ï¿½ï¿½ï¿½Îªï¿½Ë·ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ê¹ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½32Î»ï¿½ï¿½É«ï¿½ï¿½È»ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½×ªï¿½ï¿½ï¿½É¶ï¿½Ó¦ï¿½ï¿½É«ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½Òªï¿½Äµï¿½ï¿½ï¿½É«
+ 2. 32Î»ï¿½ï¿½ï¿½ï¿½É«ï¿½Ð£ï¿½ï¿½Ó¸ï¿½Î»ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ö±ï¿½ï¿½Ó¦ Aï¿½ï¿½Rï¿½ï¿½Gï¿½ï¿½B  4ï¿½ï¿½ï¿½ï¿½É«Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½ï¿½Ê¾Í¸ï¿½ï¿½Í¨ï¿½ï¿½
+ 3. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½255ï¿½ï¿½Í¸ï¿½ï¿½É«ï¿½ï¿½ffï¿½ï¿½Ê¾ï¿½ï¿½Í¸ï¿½ï¿½ï¿½ï¿½0ï¿½ï¿½Ê¾ï¿½ï¿½È«Í¸ï¿½ï¿½
+ 4. ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ARGB1555ï¿½ï¿½ARGB8888ï¿½ï¿½Ö§ï¿½ï¿½Í¸ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½È»Í¸ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ARGB1555ï¿½ï¿½Ö§ï¿½ï¿½Ò»Î»
+	 Í¸ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ï¿½ï¿½Í²ï¿½Í¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ARGB4444ï¿½ï¿½16ï¿½ï¿½Í¸ï¿½ï¿½ï¿½È£ï¿½ARGB8888Ö§ï¿½ï¿½255ï¿½ï¿½Í¸ï¿½ï¿½ï¿½ï¿½
+ 5. ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½Ãµï¿½É«ï¿½ï¿½ï¿½È¡24Î»RGBï¿½ï¿½É«ï¿½ï¿½È»ï¿½ï¿½ï¿½Ù²ï¿½ï¿½ï¿½Í¸ï¿½ï¿½Í¨ï¿½ï¿½ï¿½Ãµï¿½32Î»ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½Ù½ï¿½ï¿½ï¿½32Î»ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½
+	 LCD_SetColor()ï¿½ï¿½LCD_SetBackColor()ï¿½Í¿ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½
+ 6. Ê¹ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½RGBÖµÎª0x0000FFï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÍ¸ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½32Î»ï¿½ï¿½É«ÖµÎª 0xff0000FF
+ 7. ï¿½ï¿½ï¿½Â¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Í¸ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½É¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½É«								*/
 
- 1. ÕâÀïÎªÁË·½±ãÓÃ»§Ê¹ÓÃ£¬¶¨ÒåµÄÊÇ32Î»ÑÕÉ«£¬È»ºóÔÙÍ¨¹ý´úÂë×Ô¶¯×ª»»³É¶ÔÓ¦ÑÕÉ«¸ñÊ½ËùÐèÒªµÄµÄÑÕÉ«
- 2. 32Î»µÄÑÕÉ«ÖÐ£¬´Ó¸ßÎ»µ½µÍÎ»·Ö±ð¶ÔÓ¦ A¡¢R¡¢G¡¢B  4¸öÑÕÉ«Í¨µÀ£¬ÆäÖÐA±íÊ¾Í¸Ã÷Í¨µÀ
- 3. ×î¶à¿ÉÉèÖÃ255¼¶Í¸Ã÷É«£¬ff±íÊ¾²»Í¸Ã÷£¬0±íÊ¾ÍêÈ«Í¸Ã÷
- 4. ³ý·ÇÊ¹ÓÃARGB1555ºÍARGB8888µÈÖ§³ÖÍ¸Ã÷É«µÄÑÕÉ«¸ñÊ½£¬²»È»Í¸Ã÷É«²»Æð×÷ÓÃ£¬ÆäÖÐARGB1555½öÖ§³ÖÒ»Î»
-	 Í¸Ã÷É«£¬¼´½öÓÐÍ¸Ã÷ºÍ²»Í¸Ã÷Á½ÖÖ×´Ì¬£¬ARGB4444ÓÐ16¼¶Í¸Ã÷¶È£¬ARGB8888Ö§³Ö255¼¶Í¸Ã÷¶È
- 5. ÓÃ»§¿ÉÒÔÔÚµçÄÔÓÃµ÷É«°å»ñÈ¡24Î»RGBÑÕÉ«£¬È»ºóÔÙ²¹³äÍ¸Ã÷Í¨µÀµÃµ½32Î»µÄÑÕÉ«£¬ÔÙ½«´Ë32Î»ÑÕÉ«ÊäÈë
-	 LCD_SetColor()»òLCD_SetBackColor()¾Í¿ÉÒÔÏÔÊ¾³öÏàÓ¦µÄÑÕÉ«¡£ 
- 6. Ê¹ÓÃÊ¾Àý£º´¿À¶É«µÄRGBÖµÎª0x0000FF£¬Èç¹û²»ÐèÒªÍ¸Ã÷É«£¬Ôò¶ÔÓ¦µÄ32Î»ÑÕÉ«ÖµÎª 0xff0000FF
- 7. ÒÔÏÂ¶¨ÒåµÄÑÕÉ«¶¼ÉèÖÃÎª²»Í¸Ã÷£¬ÓÃ»§¿É¸ù¾ÝÐèÇó×ÔÐÐ¶¨Òå¶ÔÓ¦µÄÑÕÉ«								*/
+#define LCD_WHITE 0xffFFFFFF // ï¿½ï¿½ï¿½ï¿½É«
+#define LCD_BLACK 0xff000000 // ï¿½ï¿½ï¿½ï¿½É«
 
-#define 	LCD_WHITE       0xffFFFFFF		// ´¿°×É«
-#define 	LCD_BLACK       0xff000000		// ´¿ºÚÉ«
-                           
-#define 	LCD_BLUE        0xff0000FF		//	´¿À¶É«
-#define 	LCD_GREEN       0xff00FF00    //	´¿ÂÌÉ«
-#define 	LCD_RED         0xffFF0000    //	´¿ºìÉ«
-#define 	LCD_CYAN        0xff00FFFF    //	À¶ÂÌÉ«
-#define 	LCD_MAGENTA     0xffFF00FF    //	×ÏºìÉ«
-#define 	LCD_YELLOW      0xffFFFF00    //	»ÆÉ«
-#define 	LCD_GREY        0xff2C2C2C    //	»ÒÉ«
-													
-#define 	LIGHT_BLUE      0xff8080FF    //	ÁÁÀ¶É«
-#define 	LIGHT_GREEN     0xff80FF80    //	ÁÁÂÌÉ«
-#define 	LIGHT_RED       0xffFF8080    //	ÁÁºìÉ«
-#define 	LIGHT_CYAN      0xff80FFFF    //	ÁÁÀ¶ÂÌÉ«
-#define 	LIGHT_MAGENTA   0xffFF80FF    //	ÁÁ×ÏºìÉ«
-#define 	LIGHT_YELLOW    0xffFFFF80    //	ÁÁ»ÆÉ«
-#define 	LIGHT_GREY      0xffA3A3A3    //	ÁÁ»ÒÉ«
-													
-#define 	DARK_BLUE       0xff000080    //	°µÀ¶É«
-#define 	DARK_GREEN      0xff008000    //	°µÂÌÉ«
-#define 	DARK_RED        0xff800000    //	°µºìÉ«
-#define 	DARK_CYAN       0xff008080    //	°µÀ¶ÂÌÉ«
-#define 	DARK_MAGENTA    0xff800080    //	°µ×ÏºìÉ«
-#define 	DARK_YELLOW     0xff808000    //	°µ»ÆÉ«
-#define 	DARK_GREY       0xff404040    //	°µ»ÒÉ«
+#define LCD_BLUE 0xff0000FF	   //	ï¿½ï¿½ï¿½ï¿½É«
+#define LCD_GREEN 0xff00FF00   //	ï¿½ï¿½ï¿½ï¿½É«
+#define LCD_RED 0xffFF0000	   //	ï¿½ï¿½ï¿½ï¿½É«
+#define LCD_CYAN 0xff00FFFF	   //	ï¿½ï¿½ï¿½ï¿½É«
+#define LCD_MAGENTA 0xffFF00FF //	ï¿½Ïºï¿½É«
+#define LCD_YELLOW 0xffFFFF00  //	ï¿½ï¿½É«
+#define LCD_GREY 0xff2C2C2C	   //	ï¿½ï¿½É«
 
-/*---------------------------------------------------------- º¯ÊýÉùÃ÷ -------------------------------------------------------*/
-	
-void 	LCD_RGB_Init(void);		// ³õÊ¼»¯ÆÁÄ»
-void 	LCD_Clear(void);			// ÇåÆÁº¯Êý
-void 	LCD_ClearRect(uint16_t x, uint16_t y, uint16_t width, uint16_t height);	// ¾Ö²¿ÇåÆÁº¯Êý
+#define LIGHT_BLUE 0xff8080FF	 //	ï¿½ï¿½ï¿½ï¿½É«
+#define LIGHT_GREEN 0xff80FF80	 //	ï¿½ï¿½ï¿½ï¿½É«
+#define LIGHT_RED 0xffFF8080	 //	ï¿½ï¿½ï¿½ï¿½É«
+#define LIGHT_CYAN 0xff80FFFF	 //	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
+#define LIGHT_MAGENTA 0xffFF80FF //	ï¿½ï¿½ï¿½Ïºï¿½É«
+#define LIGHT_YELLOW 0xffFFFF80	 //	ï¿½ï¿½ï¿½ï¿½É«
+#define LIGHT_GREY 0xffA3A3A3	 //	ï¿½ï¿½ï¿½ï¿½É«
 
-void  LCD_SetLayer(uint8_t Layerx); 					//	ÉèÖÃ²ã
-void  LCD_SetColor(uint32_t Color); 				   //	ÉèÖÃ»­±ÊÑÕÉ«
-void  LCD_SetBackColor(uint32_t Color);  				//	ÉèÖÃ±³¾°ÑÕÉ«
-void  LCD_DisplayDirection(uint8_t direction);  	//	ÉèÖÃÏÔÊ¾·½Ïò
+#define DARK_BLUE 0xff000080	//	ï¿½ï¿½ï¿½ï¿½É«
+#define DARK_GREEN 0xff008000	//	ï¿½ï¿½ï¿½ï¿½É«
+#define DARK_RED 0xff800000		//	ï¿½ï¿½ï¿½ï¿½É«
+#define DARK_CYAN 0xff008080	//	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
+#define DARK_MAGENTA 0xff800080 //	ï¿½ï¿½ï¿½Ïºï¿½É«
+#define DARK_YELLOW 0xff808000	//	ï¿½ï¿½ï¿½ï¿½É«
+#define DARK_GREY 0xff404040	//	ï¿½ï¿½ï¿½ï¿½É«
 
-//>>>>>	ÏÔÊ¾ASCII×Ö·û
-void  LCD_SetFont(pFONT *fonts);												//	ÉèÖÃASCII×ÖÌå
-void 	LCD_DisplayChar(uint16_t x, uint16_t y,uint8_t c);				//	ÏÔÊ¾µ¥¸öASCII×Ö·û
-void 	LCD_DisplayString( uint16_t x, uint16_t y, char *p);	 		//	ÏÔÊ¾ASCII×Ö·û´®
+/*---------------------------------------------------------- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -------------------------------------------------------*/
 
-//>>>>>	ÏÔÊ¾ÖÐÎÄ×Ö·û£¬°üÀ¨ASCIIÂë
-void 	LCD_SetTextFont(pFONT *fonts);										// ÉèÖÃÎÄ±¾×ÖÌå£¬°üÀ¨ÖÐÎÄºÍASCII×ÖÌå
-void 	LCD_DisplayChinese(uint16_t x, uint16_t y, char *pText);		// ÏÔÊ¾µ¥¸öºº×Ö
-void 	LCD_DisplayText(uint16_t x, uint16_t y, char *pText) ;		// ÏÔÊ¾×Ö·û´®£¬°üÀ¨ÖÐÎÄºÍASCII×Ö·û
+void LCD_RGB_Init(void);													 // ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Ä»
+void LCD_Clear(void);														 // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+void LCD_ClearRect(uint16_t x, uint16_t y, uint16_t width, uint16_t height); // ï¿½Ö²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-//>>>>>	ÏÔÊ¾ÕûÊý»òÐ¡Êý
-void  LCD_ShowNumMode(uint8_t mode);		// ÉèÖÃÏÔÊ¾Ä£Ê½£¬¶àÓàÎ»Ìî³ä¿Õ¸ñ»¹ÊÇÌî³ä0
-void  LCD_DisplayNumber( uint16_t x, uint16_t y, int32_t number,uint8_t len) ;					// ÏÔÊ¾ÕûÊý
-void  LCD_DisplayDecimals( uint16_t x, uint16_t y, double number,uint8_t len,uint8_t decs);	// ÏÔÊ¾Ð¡Êý
+void LCD_SetLayer(uint8_t Layerx);			  //	ï¿½ï¿½ï¿½Ã²ï¿½
+void LCD_SetColor(uint32_t Color);			  //	ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½É«
+void LCD_SetBackColor(uint32_t Color);		  //	ï¿½ï¿½ï¿½Ã±ï¿½ï¿½ï¿½ï¿½ï¿½É«
+void LCD_DisplayDirection(uint8_t direction); //	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
 
-//>>>>>	»æÖÆÍ¼Æ¬
+//>>>>>	ï¿½ï¿½Ê¾ASCIIï¿½Ö·ï¿½
+void LCD_SetFont(pFONT *fonts);							 //	ï¿½ï¿½ï¿½ï¿½ASCIIï¿½ï¿½ï¿½ï¿½
+void LCD_DisplayChar(uint16_t x, uint16_t y, uint8_t c); //	ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ASCIIï¿½Ö·ï¿½
+void LCD_DisplayString(uint16_t x, uint16_t y, char *p); //	ï¿½ï¿½Ê¾ASCIIï¿½Ö·ï¿½ï¿½ï¿½
 
-void 	LCD_DrawImage(uint16_t x,uint16_t y,uint16_t width,uint16_t height,const uint8_t *pImage)  ;
+//>>>>>	ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ASCIIï¿½ï¿½
+void LCD_SetTextFont(pFONT *fonts);							  // ï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½å£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äºï¿½ASCIIï¿½ï¿½ï¿½ï¿½
+void LCD_DisplayChinese(uint16_t x, uint16_t y, char *pText); // ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+void LCD_DisplayText(uint16_t x, uint16_t y, char *pText);	  // ï¿½ï¿½Ê¾ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äºï¿½ASCIIï¿½Ö·ï¿½
 
-//>>>>>	2DÍ¼ÐÎ»æÖÆº¯Êý
+//>>>>>	ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½
+void LCD_ShowNumMode(uint8_t mode);															// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾Ä£Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½Õ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½0
+void LCD_DisplayNumber(uint16_t x, uint16_t y, int32_t number, uint8_t len);				// ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
+void LCD_DisplayDecimals(uint16_t x, uint16_t y, double number, uint8_t len, uint8_t decs); // ï¿½ï¿½Ê¾Ð¡ï¿½ï¿½
 
-void  LCD_DrawPoint(uint16_t x,uint16_t y,uint32_t color);   								//»­µã
-uint32_t 	LCD_ReadPoint(uint16_t x,uint16_t y);												//¶Áµã
-void  LCD_DrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);					//»­Ïß
-void  LCD_DrawRect(uint16_t x, uint16_t y, uint16_t width, uint16_t height);			//»­¾ØÐÎ
-void  LCD_DrawCircle(uint16_t x, uint16_t y, uint16_t r);									//»­Ô²
-void  LCD_DrawEllipse(int x, int y, int r1, int r2);											//»­ÍÖÔ²
+//>>>>>	ï¿½ï¿½ï¿½ï¿½Í¼Æ¬
 
-//>>>>>	ÇøÓòÌî³äº¯Êý
+void LCD_DrawImage(uint16_t x, uint16_t y, uint16_t width, uint16_t height, const uint8_t *pImage);
 
-void  LCD_FillRect(uint16_t x, uint16_t y, uint16_t width, uint16_t height);			//Ìî³ä¾ØÐÎ
-void  LCD_FillCircle(uint16_t x, uint16_t y, uint16_t r);									//Ìî³äÔ²
+//>>>>>	2DÍ¼ï¿½Î»ï¿½ï¿½Æºï¿½ï¿½ï¿½
 
-#define HBP  80	// ¸ù¾ÝÆÁÄ»µÄÊÖ²á½øÐÐÉèÖÃ
-#define VBP  40
-#define HSW  1
-#define VSW  1
-#define HFP  200
-#define VFP  22
+void LCD_DrawPoint(uint16_t x, uint16_t y, uint32_t color);					// ï¿½ï¿½ï¿½ï¿½
+uint32_t LCD_ReadPoint(uint16_t x, uint16_t y);								// ï¿½ï¿½ï¿½ï¿½
+void LCD_DrawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);		// ï¿½ï¿½ï¿½ï¿½
+void LCD_DrawRect(uint16_t x, uint16_t y, uint16_t width, uint16_t height); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+void LCD_DrawCircle(uint16_t x, uint16_t y, uint16_t r);					// ï¿½ï¿½Ô²
+void LCD_DrawEllipse(int x, int y, int r1, int r2);							// ï¿½ï¿½ï¿½ï¿½Ô²
 
+//>>>>>	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½äº¯ï¿½ï¿½
 
-// FK750M5-XBH6 ºËÐÄ°å Ê¹ÓÃµÄÊÇÍâ²¿SDRAM×÷ÎªÏÔ´æ£¬ÆðÊ¼µØÖ·0xC0000000
-// ÏÔ´æËùÐè¿Õ¼ä = ·Ö±æÂÊ * Ã¿¸öÏñËØËùÕ¼×Ö½ÚÊý£¬ÀýÈç 800*480µÄÆÁ£¬Ê¹ÓÃ16Î»É«£¨RGB565»òÕßAEGB1555£©£¬ÐèÒªÏÔ´æ 800*480*2 = 768000 ×Ö½Ú
+void LCD_FillRect(uint16_t x, uint16_t y, uint16_t width, uint16_t height); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+void LCD_FillCircle(uint16_t x, uint16_t y, uint16_t r);					// ï¿½ï¿½ï¿½Ô²
 
-#define LCD_Width     		800						//	LCDµÄÏñËØ³¤¶È
-#define LCD_Height    		480						//	LCDµÄÏñËØ¿í¶È
-#define LCD_MemoryAdd   	SDRAM_BANK_ADDR 		//	ÏÔ´æµÄÆðÊ¼µØÖ·  
+#define HBP 80 // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½Ö²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+#define VBP 40
+#define HSW 1
+#define VSW 1
+#define HFP 200
+#define VFP 22
 
-	
-#if ( ColorMode_0 == LTDC_PIXEL_FORMAT_RGB565 || ColorMode_0 == LTDC_PIXEL_FORMAT_ARGB1555 || ColorMode_0 ==LTDC_PIXEL_FORMAT_ARGB4444 )
-	#define BytesPerPixel_0		2		//16Î»É«Ä£Ê½Ã¿¸öÏñËØÕ¼2×Ö½Ú
+// FK750M5-XBH6 ï¿½ï¿½ï¿½Ä°ï¿½ Ê¹ï¿½Ãµï¿½ï¿½ï¿½ï¿½â²¿SDRAMï¿½ï¿½Îªï¿½Ô´æ£¬ï¿½ï¿½Ê¼ï¿½ï¿½Ö·0xC0000000
+// ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½ = ï¿½Ö±ï¿½ï¿½ï¿½ * Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 800*480ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½16Î»É«ï¿½ï¿½RGB565ï¿½ï¿½ï¿½ï¿½AEGB1555ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½Ô´ï¿½ 800*480*2 = 768000 ï¿½Ö½ï¿½
+
+#define LCD_Width 800				  //	LCDï¿½ï¿½ï¿½ï¿½ï¿½Ø³ï¿½ï¿½ï¿½
+#define LCD_Height 480				  //	LCDï¿½ï¿½ï¿½ï¿½ï¿½Ø¿ï¿½ï¿½ï¿½
+#define LCD_MemoryAdd SDRAM_BANK_ADDR //	ï¿½Ô´ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½Ö·
+
+#if (ColorMode_0 == LTDC_PIXEL_FORMAT_RGB565 || ColorMode_0 == LTDC_PIXEL_FORMAT_ARGB1555 || ColorMode_0 == LTDC_PIXEL_FORMAT_ARGB4444)
+#define BytesPerPixel_0 2 // 16Î»É«Ä£Ê½Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼2ï¿½Ö½ï¿½
 #elif ColorMode_0 == LTDC_PIXEL_FORMAT_RGB888
-	#define BytesPerPixel_0		3		//24Î»É«Ä£Ê½Ã¿¸öÏñËØÕ¼3×Ö½Ú
+#define BytesPerPixel_0 3 // 24Î»É«Ä£Ê½Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼3ï¿½Ö½ï¿½
 #else
-	#define BytesPerPixel_0		4		//32Î»É«Ä£Ê½Ã¿¸öÏñËØÕ¼4×Ö½Ú
-#endif	
+#define BytesPerPixel_0 4 // 32Î»É«Ä£Ê½Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼4ï¿½Ö½ï¿½
+#endif
 
 #if LCD_NUM_LAYERS == 2
 
-	#if ( ColorMode_1 == LTDC_PIXEL_FORMAT_RGB565 || ColorMode_1 == LTDC_PIXEL_FORMAT_ARGB1555 || ColorMode_1 == LTDC_PIXEL_FORMAT_ARGB4444 )
-		#define BytesPerPixel_1		2	//16Î»É«Ä£Ê½Ã¿¸öÏñËØÕ¼2×Ö½Ú
-	#elif ColorMode_1 == LTDC_PIXEL_FORMAT_RGB888	
-		#define BytesPerPixel_1		3	//24Î»É«Ä£Ê½Ã¿¸öÏñËØÕ¼3×Ö½Ú
-	#else	
-		#define BytesPerPixel_1		4	//32Î»É«Ä£Ê½Ã¿¸öÏñËØÕ¼4×Ö½Ú
-	#endif	
+#if (ColorMode_1 == LTDC_PIXEL_FORMAT_RGB565 || ColorMode_1 == LTDC_PIXEL_FORMAT_ARGB1555 || ColorMode_1 == LTDC_PIXEL_FORMAT_ARGB4444)
+#define BytesPerPixel_1 2 // 16Î»É«Ä£Ê½Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼2ï¿½Ö½ï¿½
+#elif ColorMode_1 == LTDC_PIXEL_FORMAT_RGB888
+#define BytesPerPixel_1 3 // 24Î»É«Ä£Ê½Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼3ï¿½Ö½ï¿½
+#else
+#define BytesPerPixel_1 4 // 32Î»É«Ä£Ê½Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼4ï¿½Ö½ï¿½
+#endif
 
-	#define LCD_MemoryAdd_OFFSET   LCD_Width * LCD_Height * BytesPerPixel_0 	 //µÚ¶þ²ãµÄÏÔ´æµÄÆ«ÒÆµØÖ· 
+#define LCD_MemoryAdd_OFFSET LCD_Width *LCD_Height *BytesPerPixel_0 // ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½Æ«ï¿½Æµï¿½Ö·
 
 #endif
-/*-------------------------------------------------------- LCD±³¹âÒý½Å -------------------------------------------------------*/
+/*-------------------------------------------------------- LCDï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -------------------------------------------------------*/
 
-#define  LCD_Backlight_PIN								GPIO_PIN_6								
-#define	LCD_Backlight_PORT							GPIOH									
-#define 	GPIO_LDC_Backlight_CLK_ENABLE        	__HAL_RCC_GPIOH_CLK_ENABLE()	 	
+#define LCD_Backlight_PIN GPIO_PIN_6
+#define LCD_Backlight_PORT GPIOH
+#define GPIO_LDC_Backlight_CLK_ENABLE __HAL_RCC_GPIOH_CLK_ENABLE()
 
-#define	LCD_Backlight_OFF		HAL_GPIO_WritePin(LCD_Backlight_PORT, LCD_Backlight_PIN, GPIO_PIN_RESET);	// ¹Ø±Õ±³¹â
-#define 	LCD_Backlight_ON		HAL_GPIO_WritePin(LCD_Backlight_PORT, LCD_Backlight_PIN, GPIO_PIN_SET);		// ¿ªÆô±³¹â
+#define LCD_Backlight_OFF HAL_GPIO_WritePin(LCD_Backlight_PORT, LCD_Backlight_PIN, GPIO_PIN_RESET); // ï¿½Ø±Õ±ï¿½ï¿½ï¿½
+#define LCD_Backlight_ON HAL_GPIO_WritePin(LCD_Backlight_PORT, LCD_Backlight_PIN, GPIO_PIN_SET);	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
+void Qinwei(int flower);
+void Yiban(int flower);
+void Yanzhong(int flower);
+void LCD_hanqing(uint8_t drought_info, uint8_t flower_Cnt);
+void screenTask();
 
-	 
 #endif //__LCD_RGB_H
-

@@ -59,12 +59,12 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define BLUETOOTH_RX_Pin GPIO_PIN_9
 #define BLUETOOTH_RX_GPIO_Port GPIOG
-#define GYRO_UART5_TX_Pin GPIO_PIN_12
-#define GYRO_UART5_TX_GPIO_Port GPIOC
+#define MP3_UART5_TX_Pin GPIO_PIN_12
+#define MP3_UART5_TX_GPIO_Port GPIOC
 #define BLUETOOTH_TX_Pin GPIO_PIN_14
 #define BLUETOOTH_TX_GPIO_Port GPIOG
-#define GYRO_UART5_RX_Pin GPIO_PIN_2
-#define GYRO_UART5_RX_GPIO_Port GPIOD
+#define MP3_UART5_RX_Pin GPIO_PIN_2
+#define MP3_UART5_RX_GPIO_Port GPIOD
 
 /* USER CODE BEGIN Private defines */
 

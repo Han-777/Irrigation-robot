@@ -8,9 +8,8 @@
 #warning check if you have configured the parameters in robot_def.h, IF NOT, please refer to the comments AND DO IT, otherwise the robot will have FATAL ERRORS!!!
 #endif // !ROBOT_DEF_PARAM_WARNING
 
-#if defined(ONE_BOARD) || defined(CHASSIS_BOARD)
 #include "robot_cmd.h"
-#endif
+#include "water.h"
 
 void RobotInit()
 {
@@ -22,19 +21,8 @@ void RobotInit()
 
     BSPInit();
 
-#if defined(ONE_BOARD)
     RobotCMDInit();
-#endif
-
-#if defined(ONE_BOARD) || defined(CHASSIS_BOARD)
-#endif
-
-#if defined(ONE_BOARD) || defined(CHASSIS_BOARD)
-#endif
-
-    // // #ifdef BALANCE_BAORD
-    // //     BalanceInit();
-    // // #endif // BALANCE_BA
+    WaterInit();
 
     OSTaskInit(); // 创建基础任务
     // // 初始化完成,开启中断

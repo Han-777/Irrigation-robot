@@ -11,7 +11,6 @@
 #include "daemon.h"
 // #include "buzzer.h"
 #include <memory.h>
-#include "robot_queue.h"
 // osThreadId insTaskHandle;
 osThreadId initTaskHandle;
 osThreadId robotTaskHandle;
@@ -43,82 +42,11 @@ void StartLidarTask(void const *argument);
  */
 void OSTaskInit()
 {
-#define ROBOTSTART
-#ifdef ROBOTSTART
-    // 创建队列
+    osThreadDef(robottask, StartROBOTTASK, osPriorityNormal, 0, 1024);
+    robotTaskHandle = osThreadCreate(osThread(robottask), NULL);
 
-    // osThreadDef(gyrotask, StartGyroTask, osPriorityHigh, 0, 256);
-    // gyroTaskHandle = osThreadCreate(osThread(gyrotask), NULL);
-
-    // osThreadDef(isrtask, StartISRTASK, osPriorityHigh, 0, 256);
-    // isrTaskHandle = osThreadCreate(osThread(isrtask), NULL);
-// osThreadDef(uitask, StartUITASK, osPriorityNormal, 0, 512);
-// uiTaskHandle = osThreadCreate(osThread(uitask), NULL);
-#else
-    osThreadDef(inittask, StartInitTASK, osPriorityNormal, 0, 128);
-    initTaskHandle = osThreadCreate(osThread(inittask), NULL);
-#endif
-}
-
-/**
- * @brief 机器人初始化任务,用于确认机器人满足初始化条件并激活其他任务
- *      初始化条件(可添加):
- *      1. gyro
- *      2. bluetooth接收到干旱信息
-//  */
-// __attribute__((noreturn)) void StartInitTASK(void const *argument)
-// {
-//     static float robot_init_dt;
-//     static float robot_start;
-//     // 初始化标志位
-//     static uint8_t gyro_Init_flag = 0;
-//     static uint8_t bluetooth_Init_flag = 0;
-//     // 模块数据
-//     static GYRO_data_t *gyro_data;
-//     gyro_data = Gyro_Init(&huart5); // (待测:)这里的初始化只是判断是否稳定,应该不会影响后面的重新初始化判断吧
-//     for (;;)
-//     {
-//         robot_start = DWT_GetTimeline_ms();
-//         RobotInitTASK();
-//         robot_init_dt = DWT_GetTimeline_ms() - robot_start;
-//         if (robot_init_dt >= 1) // 任务超时判断(暂时没用)
-//         {
-//         }
-//         GYRO_buff_to_data();
-//         if (fabs(gyro_data->last_Pitch - gyro_data->Pitch) < 2 && fabs(gyro_data->last_Yaw - gyro_data->Yaw) < 2 && fabs(gyro_data->last_Roll - gyro_data->Roll) < 2) // 陀螺仪初始化完成判断
-//         {
-//             gyro_Init_flag = 1;
-//         }
-//         if (bluetooth_Init_flag == 0)
-//         {
-//             bluetooth_Init_flag = 1;
-//         }
-//         if (gyro_Init_flag && bluetooth_Init_flag)
-//         {
-// #ifndef ROBOTSTART
-// #define ROBOTSTART
-//             OSTaskInit();
-// #endif
-//             vTaskDelete(initTaskHandle);
-//         }
-//     }
-// }
-
-__attribute__((noreturn)) void StartMOTORTASK(void const *argument)
-{
-    static float motor_dt;
-    static float motor_start;
-    for (;;)
-    {
-        motor_start = DWT_GetTimeline_ms();
-        MotorControlTask();
-        motor_dt = DWT_GetTimeline_ms() - motor_start;
-        if (motor_dt > 1)
-        {
-            // LOGERROR("[freeRTOS] MOTOR Task is being DELAY! dt = [%f]", &motor_dt);
-        }
-        osDelay(1);
-    }
+    osThreadDef(watertask, StartWaterTASK, osPriorityNormal, 0, 1024);
+    waterTaskHandle = osThreadCreate(osThread(watertask), NULL);
 }
 
 __attribute__((noreturn)) void StartDAEMONTASK(void const *argument)
@@ -167,7 +95,7 @@ __attribute__((noreturn)) void StartWaterTASK(void const *argument)
     for (;;)
     {
         WaterTask();
-        osDelay(5); // 即使没有任何UI需要刷新,也挂起一次,防止卡在UITask中无法切换
+        // osDelay(5); // 即使没有任何UI需要刷新,也挂起一次,防止卡在UITask中无法切换
     }
 }
 

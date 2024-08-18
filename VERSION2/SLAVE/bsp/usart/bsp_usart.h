@@ -57,7 +57,7 @@ typedef struct
  */
 USARTInstance *USARTRegister(USART_Init_Config_s *init_config);
 
-/**
+/** 
  * @brief 启动串口服务,需要传入一个usart实例.一般用于lost callback的情况(使用串口的模块daemon)
  *
  * @param _instance

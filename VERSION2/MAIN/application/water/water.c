@@ -11,7 +11,7 @@
 #include "FreeRTOS.h"
 #include "cmsis_os.h"
 #include "task.h"
-/*================message cente============*/
+/*================message center============*/
 static Publisher_t *water_pub;
 static Subscriber_t *water_sub;
 static Water_Ctrl_Cmd_s water_recv_data;
@@ -39,7 +39,6 @@ static uint8_t D_max_run_itr = 3;
 /*============================private=================================*/
 static void water_flag_handle(void)
 {
-    static uint8_t cnt = 0;
     if (water_recv_data.water_flag == none_water_flag)
     {
         water_feedback_data.water_finish_state = none_water_flag;
@@ -68,12 +67,6 @@ static void water_flag_handle(void)
             if ((water_recv_data.water_flag & left_water_flag) && !(water_feedback_data.water_finish_state & left_water_flag))
             {
                 // 左边浇水过程
-                // if (++cnt % 2000 == 0)
-                // {
-                //     cnt = 0;
-                //     water_feedback_data.water_finish_state |= left_water_flag;
-                //     // MP3_broadcast(info_buff[water_feedback_data.plant_cnt]);
-                // }
                 if (water_action_idx > max_run_itr)
                 {
                     water_action_idx = 0;
@@ -88,14 +81,6 @@ static void water_flag_handle(void)
             else if ((water_recv_data.water_flag & right_water_flag) && !(water_feedback_data.water_finish_state & right_water_flag))
             {
                 // 右边浇水
-
-                // if (++cnt % 2000 == 0)
-                // {
-                //     cnt = 0;
-                //     water_feedback_data.water_finish_state |= right_water_flag;
-                //     water_feedback_data.plant_cnt++;
-                //     // MP3_broadcast(info_buff[water_feedback_data.plant_cnt]);
-                // }
                 if (water_action_idx > max_run_itr)
                 {
                     water_action_idx = 0;
@@ -123,14 +108,6 @@ static void water_flag_handle(void)
                     if (operation_sequence[water_action_idx](left_water_flag))
                         water_action_idx++;
                 }
-
-                // if (++cnt % 2000 == 0)
-                // {
-                //     cnt = 0;
-                //     water_feedback_data.water_finish_state |= left_water_flag;
-                //     water_feedback_data.plant_cnt++;
-                //     // MP3_broadcast(info_buff[water_feedback_data.plant_cnt]);
-                // }
             }
             else if ((water_recv_data.water_flag & right_water_flag) && !(water_feedback_data.water_finish_state & right_water_flag))
             {
@@ -146,18 +123,7 @@ static void water_flag_handle(void)
                     if (operation_sequence[water_action_idx](right_water_flag))
                         water_action_idx++;
                 }
-                // if (++cnt % 2000 == 0)
-                // {
-                //     cnt = 0;
-                //     water_feedback_data.water_finish_state |= right_water_flag;
-                //     // MP3_broadcast(info_buff[water_feedback_data.plant_cnt]);
-                // }
             }
-
-            // if (water_feedback_data.water_finish_state == water_finish_flag && water_recv_data.water_flag == none_water_flag)
-            // {
-            //     water_feedback_data.plant_cnt++;
-            // }
             break;
         case C:
             if ((water_recv_data.water_flag & left_water_flag) && !(water_feedback_data.water_finish_state & left_water_flag))
@@ -173,14 +139,6 @@ static void water_flag_handle(void)
                     if (operation_sequence[water_action_idx](left_water_flag))
                         water_action_idx++;
                 }
-                // if (++cnt % 2000 == 0)
-                // {
-                //     cnt = 0;
-                //     water_feedback_data.water_finish_state |= left_water_flag;
-                //     water_feedback_data.plant_cnt++;
-
-                //     // MP3_broadcast(info_buff[water_feedback_data.plant_cnt]);
-                // }
             }
             else if ((water_recv_data.water_flag & right_water_flag) && !(water_feedback_data.water_finish_state & right_water_flag))
             {
@@ -196,15 +154,6 @@ static void water_flag_handle(void)
                     if (operation_sequence[water_action_idx](right_water_flag))
                         water_action_idx++;
                 }
-
-                // if (++cnt % 2000 == 0)
-                // {
-                //     cnt = 0;
-                //     water_feedback_data.water_finish_state |= right_water_flag;
-                //     water_feedback_data.plant_cnt++;
-
-                //     // MP3_broadcast(info_buff[water_feedback_data.plant_cnt]);
-                // }
             }
             break;
         case D:
@@ -221,15 +170,6 @@ static void water_flag_handle(void)
                     if (D_operation_sequence[water_action_idx](left_water_flag))
                         water_action_idx++;
                 }
-
-                // if (++cnt % 2000 == 0)
-                // {
-                //     cnt = 0;
-                //     water_feedback_data.water_finish_state |= left_water_flag;
-                //     water_feedback_data.plant_cnt++;
-
-                //     // MP3_broadcast(info_buff[water_feedback_data.plant_cnt]);
-                // }
             }
             else if ((water_recv_data.water_flag & right_water_flag) && !(water_feedback_data.water_finish_state & right_water_flag))
             {
@@ -245,15 +185,6 @@ static void water_flag_handle(void)
                     if (D_operation_sequence[water_action_idx](right_water_flag))
                         water_action_idx++;
                 }
-
-                // if (++cnt % 2000 == 0)
-                // {
-                //     cnt = 0;
-                //     water_feedback_data.water_finish_state |= right_water_flag;
-                //     water_feedback_data.plant_cnt++;
-
-                //     // MP3_broadcast(info_buff[water_feedback_data.plant_cnt]);
-                // }
             }
             break;
         case home:
@@ -436,57 +367,6 @@ static int servo_water_ready(water_State_e water_flag)
     return 0;
 }
 
-// static int servo_water_action(water_State_e water_flag)
-// {
-//     static uint64_t delay_Cnt = 0, stop_Cnt = 0;
-//     static uint8_t water_cnt = 0;
-//     if (water_flag == left_water_flag)
-//         pitch_target_angle = pitch_water_left_angle(water_recv_data.lidar_left_dis);
-//     else
-//         pitch_target_angle = pitch_water_right_angle(water_recv_data.lidar_right_dis);
-//     pitch_target_angle = (pitch_target_angle < pitch_water_min) ? pitch_water_min : pitch_target_angle;
-//     if (yaw_water_angle != 0)
-//     {
-//         yaw_target_angle = yaw_water_angle;
-//         yaw_water_angle = 0;
-//     }
-//     if (yaw_angle_index == yaw_target_angle && pitch_angle_index == pitch_target_angle) // 到达浇水位置
-//     {
-//         if (water_cnt == info_buff[water_feedback_data.plant_cnt])
-//         {
-//             stop_watering_Plant;
-//             if (++stop_Cnt % 400 == 0)
-//             {
-//                 stop_Cnt = 0;
-//                 delay_Cnt = 0;
-//                 water_cnt = 0;
-//                 // yaw_target_angle = 0;
-//                 return 1;
-//             }
-//         }
-//         else
-//         {
-//             if (++delay_Cnt % 5 == 0) // 0-10
-//             {
-//                 if (delay_Cnt < 20)
-//                 {
-//                     watering_Plant;
-//                 }
-//                 else
-//                 {
-//                     stop_watering_Plant;
-//                     if (delay_Cnt > 299)
-//                     {
-//                         delay_Cnt = 0;
-//                         water_cnt++;
-//                     }
-//                 }
-//             }
-//         }
-//     }
-//     return 0;
-// }
-
 static int servo_water_action(water_State_e water_flag)
 {
     if (water_flag == left_water_flag)
@@ -511,66 +391,54 @@ static int servo_water_action(water_State_e water_flag)
 
 static int relay_water_action(water_State_e water_flag)
 {
-    static uint16_t delay_Cnt = 0, stop_Cnt = 0;
+    // static uint16_t delay_Cnt = 0, stop_Cnt = 0;
     static uint8_t water_cnt = 0;
-    if (water_cnt < info_buff[water_feedback_data.plant_cnt])
-    {
-        if (++delay_Cnt < 100)
-        {
-            watering_Plant;
-        }
-        else if (delay_Cnt == 800)
-        {
-            delay_Cnt = 0;
-            water_cnt++;
-        }
-        else
-        {
-            if (delay_Cnt > 800)
-            {
-                delay_Cnt = 0;
-            }
-            stop_watering_Plant;
-        }
-        // else if (delay_Cnt >= 10 && delay_Cnt <= 399)
-        // {
-        //     stop_watering_Plant;
-        // }
-        // else if (delay_Cnt == 400)
-        // {
-        //     water_cnt++;
-        // }
-        // else
-        // {
-        //     delay_Cnt = 0;
-        // }
-        return 0;
-    }
-    else
-    { // water_cnt 已经达到植物数量
-        stop_watering_Plant;
-        // if (++stop_Cnt > 400)
-        // {
-        stop_Cnt = 0;
-        delay_Cnt = 0;
-        water_cnt = 0; // 重置浇水计数器
-        return 1;      // 完成浇水，返回 1
-        // }
-    }
     // if (water_cnt < info_buff[water_feedback_data.plant_cnt])
     // {
-    //     watering_Plant;
-    //     osDelay(100);
-    //     stop_watering_Plant;
-    //     osDelay(1000);
-    //     water_cnt++;
+    //     if (++delay_Cnt < 100)
+    //     {
+    //         watering_Plant;
+    //     }
+    //     else if (delay_Cnt == 800)
+    //     {
+    //         delay_Cnt = 0;
+    //         water_cnt++;
+    //     }
+    //     else
+    //     {
+    //         if (delay_Cnt > 800)
+    //         {
+    //             delay_Cnt = 0;
+    //         }
+    //         stop_watering_Plant;
+    //     }
+    //     return 0;
     // }
     // else
-    // {
+    // { // water_cnt 已经达到植物数量
     //     stop_watering_Plant;
-    //     water_cnt = 0;
-    //     return 1;
+    //     // if (++stop_Cnt > 400)
+    //     // {
+    //     stop_Cnt = 0;
+    //     delay_Cnt = 0;
+    //     water_cnt = 0; // 重置浇水计数器
+    //     return 1;      // 完成浇水，返回 1
+    //     // }
     // }
+    if (water_cnt < info_buff[water_feedback_data.plant_cnt])
+    {
+        watering_Plant;
+        osDelay(100);
+        stop_watering_Plant;
+        osDelay(1000);
+        water_cnt++;
+    }
+    else
+    {
+        stop_watering_Plant;
+        water_cnt = 0;
+        return 1;
+    }
     return 0;
 }
 static int water_D_scan_action(water_State_e water_flag)

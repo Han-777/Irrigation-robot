@@ -100,6 +100,26 @@ typedef struct
     uint8_t plant_cnt;          // number of plant
 } Water_Upload_Data_s;
 
+/*=================双板通信================*/
+typedef enum
+{
+    SLIGHT = 0x01,
+    GENERAL = 0x02, // Corrected typo from "GENERAl" to "GENERAL"
+    SERIOUS = 0x03,
+} Drought_Info_e;
+
+typedef struct
+{
+    Drought_Info_e drought_info;
+    uint8_t recv_feedback_flag; // 接收到正确数据返回1
+} Comm_Send_Data_s;             // 板间通信结构体
+
+typedef struct
+{
+    uint8_t drought_info[18];
+    uint8_t recv_feedback_flag; // 接收到正确数据返回1
+} Comm_Recv_Data_s;
+
 #pragma pack() // 开启字节对齐,结束前面的#pragma pack(1)
 
 #endif // !ROBOT_DEF_H

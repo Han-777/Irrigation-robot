@@ -72,7 +72,12 @@
     "cmsis_os.h": "c",
     "freertos.h": "c",
     "semphr.h": "c",
-    "task.h": "c"
+    "task.h": "c",
+    "can_comm.h": "c",
+    "ltdc.h": "c",
+    "lcd_test.h": "c",
+    "lcd_rgb.h": "c",
+    "crc8.h": "c"
   },
-  "C_Cpp.errorSquiggles": "enabled"
+  "C_Cpp.errorSquiggles": "disabled"
 }

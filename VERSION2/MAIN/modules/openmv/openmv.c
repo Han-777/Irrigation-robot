@@ -4,8 +4,8 @@
 #include "daemon.h"
 
 #define OPENMV_FRAME_SIZE 5
-#define OPENMV_FRAME_HEAD 0x7E7F
-#define OPENMV_FRAME_TAIL 0xAA55
+#define OPENMV_FRAME_HEAD 0x7EAA
+#define OPENMV_FRAME_TAIL 0x7F55
 static OPENMV_data_t *openmv_data;
 static USARTInstance *openmv_instance; // left lidar
 

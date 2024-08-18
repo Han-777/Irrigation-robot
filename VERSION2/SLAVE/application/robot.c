@@ -2,7 +2,6 @@
 #include "robot.h"
 #include "robot_def.h"
 #include "robot_task.h"
-#include "gyro.h"
 // 编译warning,提醒开发者修改机器人参数
 #ifndef ROBOT_DEF_PARAM_WARNING
 #define ROBOT_DEF_PARAM_WARNING
@@ -10,9 +9,7 @@
 #endif // !ROBOT_DEF_PARAM_WARNING
 
 #if defined(ONE_BOARD) || defined(CHASSIS_BOARD)
-#include "chassis.h"
 #include "robot_cmd.h"
-#include "water.h"
 #endif
 
 void RobotInit()
@@ -30,11 +27,9 @@ void RobotInit()
 #endif
 
 #if defined(ONE_BOARD) || defined(CHASSIS_BOARD)
-    ChassisInit();
 #endif
 
 #if defined(ONE_BOARD) || defined(CHASSIS_BOARD)
-    WaterInit();
 #endif
 
     // // #ifdef BALANCE_BAORD
@@ -48,6 +43,5 @@ void RobotInit()
 
 void RobotTask()
 {
-    ChassisTask();
     RobotCMDTask();
 }

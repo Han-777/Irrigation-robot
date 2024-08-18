@@ -59,8 +59,8 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define RELAY_GPIO_Pin GPIO_PIN_6
 #define RELAY_GPIO_GPIO_Port GPIOI
-#define PE_HEAD_Pin GPIO_PIN_5
-#define PE_HEAD_GPIO_Port GPIOI
+#define HEAD_PE_Pin GPIO_PIN_5
+#define HEAD_PE_GPIO_Port GPIOI
 #define RIGHT_PE_Pin GPIO_PIN_4
 #define RIGHT_PE_GPIO_Port GPIOI
 #define RIGHT_PE_EXTI_IRQn EXTI4_IRQn

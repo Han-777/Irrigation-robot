@@ -180,7 +180,7 @@ static void SpeedCalculate()
         }
         if (fabs(gyro_data->Roll - gyro_data->ori_roll) > 0.5)
         {
-            left_target_vt += 1000;
+            left_target_vt += 500;
             right_target_vt += 1000;
             angle_instance.Output *= 8;
         }

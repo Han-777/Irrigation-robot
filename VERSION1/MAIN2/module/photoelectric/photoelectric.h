@@ -6,6 +6,6 @@
 
 #define PE_LEFT GPIO_ReadInputDataBit(GPIOG, GPIO_Pin_10)
 #define PE_RIGHT GPIO_ReadInputDataBit(GPIOG, GPIO_Pin_11)
-#define PE_NOZZLE GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_3) // // ÅçÍ·¹âµç
+#define PE_NOZZLE GPIO_ReadInputDataBit(GPIOD, GPIO_Pin_3) // // ï¿½ï¿½Í·ï¿½ï¿½ï¿½
 
 #endif

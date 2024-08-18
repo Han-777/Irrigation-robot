@@ -20,7 +20,7 @@ void MP3_Init(void)
     mp3_instance = VIRTUAL_USARTRegister(&conf);
 }
 // 语音播报
-void MP3_broadcast(MP3_broadcast_type info)
+void MP3_broadcast(Drought_Info_e info)
 {
     if (info == SLIGHT)
     {

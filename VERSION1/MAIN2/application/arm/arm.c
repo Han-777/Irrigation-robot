@@ -48,7 +48,7 @@ int water_finish(void)
         // gyro_USART_Init(921600);
     }
     set_speed(0, 0);
-    if (left_water_flag || right_water_flag) // ×ó²à¸ü¸ßÓÅÏÈ¼¶
+    if (left_water_flag || right_water_flag) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¼ï¿½
     {
         left_lidar_state(left_water_flag ? ENABLE : DISABLE);
         right_lidar_state(left_water_flag && right_water_flag ? DISABLE : ENABLE);
@@ -67,7 +67,7 @@ void water(colorIdx waterTimes)
     static int water_cnt = 0;
     if (waterTimes == INFO_DROUGHT)
     {
-        for (int times = 0; times < drought_buff[plant_cnt]; ++times) // ºóÃæ¼ÓÉÏif buff = 0
+        for (int times = 0; times < drought_buff[plant_cnt]; ++times) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½if buff = 0
         {
             open_pump;
             delay_ms(WATER_TIME);
@@ -190,7 +190,7 @@ void get_water_direction(void)
         Servo_Yaw_Control(angle);
         delay_ms(YAW_TRANSFER_TIME);
     }
-    else if (region == D) // else Ò²¿É£¿
+    else if (region == D) // else Ò²ï¿½É£ï¿½
     {
         if (left_water_flag)
         {
@@ -208,8 +208,8 @@ void water_task(void)
 {
     if (region != D)
     {
-        ServoControl(pitch_servo, pitch_scan_angle, left_water_flag ? (lidar_left * 0.7 + 110) : (lidar_right * 0.7 + 110), PITCH_TRANSFER_TIME); // ½½Ë®½Ç¶ÈÐèÒªºóÃæ²âÁ¿
-        water(INFO_DROUGHT);                                                                                                                      // ·ÇDÌØÊâ±êÖ¾Î»
+        ServoControl(pitch_servo, pitch_scan_angle, left_water_flag ? (lidar_left * 0.7 + 110) : (lidar_right * 0.7 + 110), PITCH_TRANSFER_TIME); // ï¿½ï¿½Ë®ï¿½Ç¶ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        water(INFO_DROUGHT);                                                                                                                      // ï¿½ï¿½Dï¿½ï¿½ï¿½ï¿½ï¿½Ö¾Î»
     }
     else if (region == D)
     {
@@ -237,7 +237,7 @@ int B_add = 0;
 void arm_water_task(void)
 {
     get_region();
-    while (!water_finish() && lidar_water_confirm()) // Ò»´ÎÇåÒ»¸ö±êÖ¾Î»
+    while (!water_finish() && lidar_water_confirm()) // Ò»ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ö¾Î»
     {
         get_water_direction();
         water_task();
@@ -282,8 +282,8 @@ void arm_water_task(void)
 
 //	for (i = 0; i < 6; i++)
 //	{
-//		Rotation(1, 0); // ×ó±ßË®¹ÜÒÆ¶¯²¢½½Ë®
-//		Rotation(1, 1); // ÓÒ±ßË®¹ÜÒÆ¶¯²¢½½Ë®
+//		Rotation(1, 0); // ï¿½ï¿½ï¿½Ë®ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½Ë®
+//		Rotation(1, 1); // ï¿½Ò±ï¿½Ë®ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½Ë®
 //	}
 //}
 
@@ -292,7 +292,7 @@ void arm_water_task(void)
 //	char i = 0;
 
 //	//	delay_init(168);
-//	//	TIM_SetCompare4(TIM8,Balance_angle);	//Æ½ºâ½Ç¶È
+//	//	TIM_SetCompare4(TIM8,Balance_angle);	//Æ½ï¿½ï¿½Ç¶ï¿½
 //	//	delay_ms(1000);
 
 //	for (i = 0; i < 6; i++)
@@ -325,12 +325,12 @@ void arm_water_task(void)
 //	if (Flag_R == 1)
 //	{
 //		TTL_Hex2Dec();
-//		R_r = 1; // ÓÃÀ´¼¤¹âÅÐ¶ÏµÄ
+//		R_r = 1; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶Ïµï¿½
 //		//		Flower_Count++;
-//		//		printf("distance_r=%d\r\n",lidar_right);//²âÊÔ¼¤¹âÄÜ²»ÄÜÕý³£¹¤×÷
+//		//		printf("distance_r=%d\r\n",lidar_right);//ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½Ü²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //		//		printf("Flower_Count=%d, N_Flag=%d/r/n",Flower_Count,N_Flag);
 //		delay_ms(500);
-//		if (N_Flag == 0) // Ë«ÖØ±£ÏÕ
+//		if (N_Flag == 0) // Ë«ï¿½Ø±ï¿½ï¿½ï¿½
 //		{
 //			Rotation(1, 1);
 //		}
@@ -355,10 +355,10 @@ void arm_water_task(void)
 //		TTL_Hex2Dec();
 //		L_l = 1;
 //		//		Flower_Count++;
-//		//		printf("distance_l=%d\r\n",lidar_left);//²âÊÔ¼¤¹âÄÜ²»ÄÜÕý³£¹¤×÷
+//		//		printf("distance_l=%d\r\n",lidar_left);//ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½Ü²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //		//		printf("Flower_Count=%d,N_Flag=%d/r/n",Flower_Count,N_Flag);
 //		delay_ms(500);
-//		if (N_Flag == 0) // Ë«ÖØ±£ÏÕ
+//		if (N_Flag == 0) // Ë«ï¿½Ø±ï¿½ï¿½ï¿½
 //		{
 //			Rotation(1, 0);
 //		}
@@ -383,7 +383,7 @@ void arm_water_task(void)
 
 //	EXTInterruppt_Mode();
 //	NVIC_Configuration();
-//	set = 1;	  // ÐÂ¼ÓµÄ£¬ÈÃÐ¡³µ¸Õ¿ªÊ¼ÓÐÒ»¶¨ËÙ¶È
+//	set = 1;	  // ï¿½Â¼ÓµÄ£ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½Õ¿ï¿½Ê¼ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ù¶ï¿½
 //	delay_ms(20); //
 //	TIM7_Int_Init(1000 - 1, 840 - 1);
 //	delay_ms(80); //

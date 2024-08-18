@@ -2,6 +2,7 @@
 #include "dji_motor.h"
 #include "servo_motor.h"
 #include "chassis.h"
+#include "water.h"
 // float current;
 // float speed;
 void MotorControlTask()
@@ -17,6 +18,8 @@ void MotorControlTask()
     // 为了保证高频率控制,HTMotor中提供了以任务方式启动控制的接口,可通过宏定义切换
     // HTMotorControl();
     // 将所有的CAN设备集中在一处发送,最高反馈频率仅能达到500Hz,为了更好的控制效果,应使用新的HTMotorControlInit()接口
-
+#ifdef water
+    servo_action();
+#endif
     ServeoMotorControl();
 }

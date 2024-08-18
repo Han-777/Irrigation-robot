@@ -8,11 +8,8 @@
 #include "cmsis_os.h"
 
 #include "robot.h"
-#include "motor_task.h"
 #include "daemon.h"
 // #include "buzzer.h"
-#include "lidar.h"
-#include "gyro.h"
 #include <memory.h>
 #include "robot_queue.h"
 // osThreadId insTaskHandle;
@@ -49,27 +46,6 @@ void OSTaskInit()
 #define ROBOTSTART
 #ifdef ROBOTSTART
     // 创建队列
-    lidarQueue = xQueueCreate(10, sizeof(uint8_t) * (LIDAR_FRAME_SIZE + 1));
-    // gyroQueue = xQueueCreate(10, sizeof(uint8_t) * GYRO_FRAME_SIZE);
-
-    // osThreadDef(instask, StartINSTASK, osPriorityAboveNormal, 0, 1024);
-    // insTaskHandle = osThreadCreate(osThread(instask), NULL); // 由于是阻塞读取传感器,为姿态解算设置较高优先级,确保以1khz的频率执行
-    // // 后续修改为读取传感器数据准备好的中断处理,
-
-    osThreadDef(motortask, StartMOTORTASK, osPriorityNormal, 0, 256);
-    motorTaskHandle = osThreadCreate(osThread(motortask), NULL);
-
-    osThreadDef(daemontask, StartDAEMONTASK, osPriorityNormal, 0, 128);
-    daemonTaskHandle = osThreadCreate(osThread(daemontask), NULL);
-
-    osThreadDef(robottask, StartROBOTTASK, osPriorityNormal, 0, 1024);
-    robotTaskHandle = osThreadCreate(osThread(robottask), NULL);
-
-    osThreadDef(watertask, StartWaterTASK, osPriorityNormal, 0, 256);
-    waterTaskHandle = osThreadCreate(osThread(watertask), NULL);
-
-    osThreadDef(lidartask, StartLidarTask, osPriorityHigh, 0, 128);
-    lidarTaskHandle = osThreadCreate(osThread(lidartask), NULL);
 
     // osThreadDef(gyrotask, StartGyroTask, osPriorityHigh, 0, 256);
     // gyroTaskHandle = osThreadCreate(osThread(gyrotask), NULL);
@@ -194,58 +170,5 @@ __attribute__((noreturn)) void StartWaterTASK(void const *argument)
         osDelay(5); // 即使没有任何UI需要刷新,也挂起一次,防止卡在UITask中无法切换
     }
 }
-
-/**
- * @brief
- *
- * @note 经过测试,激光雷达的时候最好在chassis task suspend 时候再进行,后续需要加上浇水标志位调用vTaskResume此函数的代码
- * chassis task 和 lidar task一次只能有一个运行,除非找到更好的办法
- */
-__attribute__((noreturn)) void StartLidarTask(void const *argument)
-{
-    uint8_t buffer[LIDAR_FRAME_SIZE + 1];
-    for (;;)
-    {
-        if (xQueueReceive(lidarQueue, &buffer, portMAX_DELAY) == pdPASS)
-        {
-            vTaskSuspendAll();    // 禁用调度器
-            taskENTER_CRITICAL(); // 禁用中断
-            lidar_data_handle(buffer);
-            taskEXIT_CRITICAL(); // 启用中断
-            xTaskResumeAll();    // 启用调度器
-        }
-        osDelay(10); // 增加延时
-    }
-}
-
-// __attribute__((noreturn)) void StartGyroTask(void const *argument)
-// {
-//     uint8_t buffer[GYRO_FRAME_SIZE];
-//     for (;;)
-//     {
-//         if (xQueueReceive(gyroQueue, &buffer, portMAX_DELAY) == pdPASS)
-//         {
-//             GYRO_buff_to_data(buffer);
-//         }
-//         osDelay(10); // 增加延时
-//     }
-// }
-
-// __attribute__((noreturn)) void StartISRTASK(void const *argument)
-// {
-//     uint8_t buffer[(LIDAR_FRAME_SIZE + 1) > GYRO_FRAME_SIZE ? (LIDAR_FRAME_SIZE + 1) : GYRO_FRAME_SIZE];
-//     for (;;)
-//     {
-//         if (xQueueReceive(lidarQueue, &buffer, portMAX_DELAY) == pdPASS)
-//         {
-//             lidar_data_handle(buffer);
-//         }
-//         else if (xQueueReceive(gyroQueue, &buffer, portMAX_DELAY) == pdPASS)
-//         {
-//             GYRO_buff_to_data(buffer);
-//         }
-//         osDelay(1); // 增加延时
-//     }
-// }
 
 void RobotInitTASK() {}

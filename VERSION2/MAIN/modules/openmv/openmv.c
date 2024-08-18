@@ -3,18 +3,22 @@
 #include <string.h>
 #include "daemon.h"
 
-#define OPENMV_FRAME_SZIE 10
-#define OPENMV_FRAME_HEAD 0x2C2D
-#define OPENMV_FRAME_TAIL 0x5B5A
+#define OPENMV_FRAME_SIZE 5
+#define OPENMV_FRAME_HEAD 0x7E7F
+#define OPENMV_FRAME_TAIL 0xAA55
 static OPENMV_data_t *openmv_data;
 static USARTInstance *openmv_instance; // left lidar
 
-static void openmv_buff_to_data(void)
+static void openmv_buff_to_data(uint16_t size)
 {
-    if (openmv_instance->recv_buff[0] == (OPENMV_FRAME_HEAD >> 8) && openmv_instance->recv_buff[1] == (OPENMV_FRAME_HEAD & 0x00ff) && openmv_instance->recv_buff[OPENMV_FRAME_SZIE - 2] == (OPENMV_FRAME_TAIL >> 8) && openmv_instance->recv_buff[OPENMV_FRAME_SZIE - 1] == (OPENMV_FRAME_TAIL & 0x00ff))
+    if (size == openmv_instance->recv_buff_size)
     {
-        memcpy(openmv_data, openmv_instance->recv_buff + sizeof(OPENMV_FRAME_HEAD) * 8, OPENMV_FRAME_SZIE - sizeof(OPENMV_FRAME_HEAD) - sizeof(OPENMV_FRAME_TAIL)); // 去除头尾
-        return;
+        if ((openmv_instance->recv_buff[0] == (uint8_t)(OPENMV_FRAME_HEAD >> 8) && openmv_instance->recv_buff[1] == (uint8_t)(OPENMV_FRAME_HEAD & 0xFF)) &&
+            (openmv_instance->recv_buff[OPENMV_FRAME_SIZE - 2] == (uint8_t)(OPENMV_FRAME_TAIL >> 8) && openmv_instance->recv_buff[OPENMV_FRAME_SIZE - 1] == (uint8_t)(OPENMV_FRAME_TAIL & 0xFF)))
+        {
+            memcpy(openmv_data, openmv_instance->recv_buff[2], 1);
+            return;
+        }
     }
 }
 
@@ -24,9 +28,9 @@ static void openmv_buff_to_data(void)
  * @note huart2: the address of left lidar usart handle
  *       huart4: the address of right lidar usart handle
  */
-static void MVRxCallback(UART_HandleTypeDef *huart, uint16_t Size) // 串口接收回调_
+static void MVRxCallback(UART_HandleTypeDef *huart, uint16_t size) // 串口接收回调_
 {
-    openmv_buff_to_data();
+    openmv_buff_to_data(size);
 }
 
 /**
@@ -45,8 +49,7 @@ OPENMV_data_t *OPENMV_Init(UART_HandleTypeDef *openmv_usart_handle)
     USART_Init_Config_s conf;
     conf.module_callback = MVRxCallback;
     conf.usart_handle = openmv_usart_handle;
-    conf.recv_buff_size = OPENMV_FRAME_SZIE;
+    conf.recv_buff_size = OPENMV_FRAME_SIZE;
     openmv_instance = USARTRegister(&conf);
-
     return openmv_data;
 }

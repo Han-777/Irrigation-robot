@@ -10,11 +10,11 @@
 #include "robot.h"
 #include "motor_task.h"
 #include "daemon.h"
-// #include "buzzer.h"
 #include "lidar.h"
 #include "gyro.h"
 #include <memory.h>
 #include "robot_queue.h"
+
 // osThreadId insTaskHandle;
 osThreadId initTaskHandle;
 osThreadId robotTaskHandle;
@@ -65,7 +65,7 @@ void OSTaskInit()
     osThreadDef(robottask, StartROBOTTASK, osPriorityNormal, 0, 1024);
     robotTaskHandle = osThreadCreate(osThread(robottask), NULL);
 
-    osThreadDef(watertask, StartWaterTASK, osPriorityNormal, 0, 256);
+    osThreadDef(watertask, StartWaterTASK, osPriorityNormal, 0, 2048);
     waterTaskHandle = osThreadCreate(osThread(watertask), NULL);
 
     osThreadDef(lidartask, StartLidarTask, osPriorityHigh, 0, 128);
@@ -191,7 +191,7 @@ __attribute__((noreturn)) void StartWaterTASK(void const *argument)
     for (;;)
     {
         WaterTask();
-        osDelay(3); // 即使没有任何UI需要刷新,也挂起一次,防止卡在UITask中无法切换
+        osDelay(1); // 即使没有任何UI需要刷新,也挂起一次,防止卡在UITask中无法切换
     }
 }
 

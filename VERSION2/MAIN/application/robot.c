@@ -12,7 +12,6 @@
 #if defined(ONE_BOARD) || defined(CHASSIS_BOARD)
 #include "chassis.h"
 #include "robot_cmd.h"
-#include "water.h"
 #endif
 
 void RobotInit()

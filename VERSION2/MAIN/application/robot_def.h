@@ -5,18 +5,18 @@
 // #include "master_process.h"
 #include "stdint.h"
 #define ROBOT_DEF_PARAM_WARNING
-#define A_speed 7500
+#define A_speed 7000
 #define C_speed 6000
 #define BD_speed 9000
 /*=====================A===========================*/
 #define LD_A_DIS_THRESHOLD 27
-#define LD_A_DIS_MIN_THRESHOLD 14 // 正中心对应雷达距离 中心：14
-#define LD_A_DIS_MAX_THRESHOLD 14
+#define LD_A_DIS_MIN_THRESHOLD 10 // 正中心对应雷达距离 中心：14
+#define LD_A_DIS_MAX_THRESHOLD 18
 /*=====================B===========================*/
 #define LD_B_DIS_THRESHOLD 40
 
-#define LD_B_DIS_MIN_THRESHOLD 15.5 // 正中心对应雷达距离 中心：22
-#define LD_B_DIS_MAX_THRESHOLD 15.5 // 防掉坡：加强远端修复能力（可以偏右）
+#define LD_B_DIS_MIN_THRESHOLD 15 // 正中心对应雷达距离 中心：22
+#define LD_B_DIS_MAX_THRESHOLD 16 // 防掉坡：加强远端修复能力（可以偏右）
 /*=====================C===========================*/
 // C理想位置左：31 右：17
 // #define LD_C_DIS_MIN_THRESHOLD 15 // 正中心对应雷达距离 中心：24
@@ -32,10 +32,11 @@
 #define LD_D_DIS_MIN_THRESHOLD 22 // 正中心对应雷达距离 中心：22
 #define LD_D_DIS_MAX_THRESHOLD 22
 /*====================补偿=========================*/
+#define COM_PARAMETER_A 200
 #define COM_PARAMETER 250
 #define COM_C_PARAMETER 300
 
-#define ONE_BOARD // 单板控制整车
+#define ONE_BOARD // 单板控制整车 (实际上是双板，没有完善代码)
 // #define CHASSIS_BOARD //底盘板
 // #define GIMBAL_BOARD  //云台板
 
@@ -112,6 +113,8 @@ typedef struct
 {
     uint8_t water_flag;
     uint8_t set_plantCnt_flag; // 1: 6, 2: 12, 3: 18, 4: 24
+    uint16_t lidar_left_dis;
+    uint16_t lidar_right_dis;
     regionEnum region;
 } Water_Ctrl_Cmd_s;
 
@@ -131,8 +134,28 @@ typedef struct
 {
     uint8_t water_finish_state; // water state (完成为1)
     uint8_t plant_cnt;          // number of plant
+    uint8_t drought_info_ready_flag;
 } Water_Upload_Data_s;
 
+/*=================双板通信================*/
+typedef enum
+{
+    SLIGHT = 0x01,
+    GENERAL = 0x02, // Corrected typo from "GENERAl" to "GENERAL"
+    SERIOUS = 0x03,
+} Drought_Info_e;
+
+typedef struct
+{
+    Drought_Info_e drought_info;
+    uint8_t recv_feedback_flag; // 接收到正确数据返回1
+} Comm_Send_Data_s;             // 板间通信结构体
+
+typedef struct
+{
+    uint8_t drought_info[18];
+    uint8_t recv_feedback_flag; // 接收到正确数据返回1
+} Comm_Recv_Data_s;
 #pragma pack() // 开启字节对齐,结束前面的#pragma pack(1)
 
 #endif // !ROBOT_DEF_H

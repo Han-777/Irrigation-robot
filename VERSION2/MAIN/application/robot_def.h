@@ -5,18 +5,18 @@
 // #include "master_process.h"
 #include "stdint.h"
 #define ROBOT_DEF_PARAM_WARNING
-#define A_speed 7000
+#define A_speed 6500
 #define C_speed 6000
 #define BD_speed 9000
 /*=====================A===========================*/
 #define LD_A_DIS_THRESHOLD 27
 #define LD_A_DIS_MIN_THRESHOLD 10 // 正中心对应雷达距离 中心：14
-#define LD_A_DIS_MAX_THRESHOLD 18
+#define LD_A_DIS_MAX_THRESHOLD 26
 /*=====================B===========================*/
 #define LD_B_DIS_THRESHOLD 40
 
 #define LD_B_DIS_MIN_THRESHOLD 15 // 正中心对应雷达距离 中心：22
-#define LD_B_DIS_MAX_THRESHOLD 16 // 防掉坡：加强远端修复能力（可以偏右）
+#define LD_B_DIS_MAX_THRESHOLD 15 // 防掉坡：加强远端修复能力（可以偏右）
 /*=====================C===========================*/
 // C理想位置左：31 右：17
 // #define LD_C_DIS_MIN_THRESHOLD 15 // 正中心对应雷达距离 中心：24
@@ -32,7 +32,7 @@
 #define LD_D_DIS_MIN_THRESHOLD 22 // 正中心对应雷达距离 中心：22
 #define LD_D_DIS_MAX_THRESHOLD 22
 /*====================补偿=========================*/
-#define COM_PARAMETER_A 200
+#define COM_PARAMETER_A 150
 #define COM_PARAMETER 250
 #define COM_C_PARAMETER 300
 

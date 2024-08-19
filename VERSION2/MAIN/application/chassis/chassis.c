@@ -82,7 +82,7 @@ void ChassisInit() // 配置中所有pid参数都需要修改
                         .Kd = 0,
                         .IntegralLimit = 3000,
                         .Improve = PID_Trapezoid_Intergral | PID_Integral_Limit | PID_Derivative_On_Measurement,
-                        .MaxOut = 12000, // 1200
+                        .MaxOut = 0, // 1200
                     },
 
             },
@@ -167,9 +167,9 @@ static void SpeedCalculate()
     if (chassis_cmd_recv.chassis_mode != CHASSIS_ROTATE && chassis_cmd_recv.lidar_com_speed != 0)
     {
 
-        if (fabs(chassis_cmd_recv.lidar_com_speed) > 3000 && angle_instance.Err > 45)
+        if (fabs(chassis_cmd_recv.lidar_com_speed) > 2500 && angle_instance.Err > 45)
         {
-            chassis_cmd_recv.lidar_com_speed = (chassis_cmd_recv.lidar_com_speed > 0) ? 3000 : -3000;
+            chassis_cmd_recv.lidar_com_speed = (chassis_cmd_recv.lidar_com_speed > 0) ? 2500 : -2500;
             left_target_vt += chassis_cmd_recv.lidar_com_speed;
             right_target_vt -= chassis_cmd_recv.lidar_com_speed;
         }

@@ -110,7 +110,7 @@ typedef enum
 
 typedef struct
 {
-    Drought_Info_e drought_info;
+    uint8_t drought_info[18];
     uint8_t recv_feedback_flag; // 接收到正确数据返回1
 } Comm_Send_Data_s;             // 板间通信结构体
 

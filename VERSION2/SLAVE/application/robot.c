@@ -24,7 +24,7 @@ void RobotInit()
     RobotCMDInit();
     WaterInit();
 
-    OSTaskInit(); // 创建基础任务
+    // OSTaskInit(); // 创建基础任务
     // // 初始化完成,开启中断
     __enable_irq();
 }

@@ -95,7 +95,7 @@ __attribute__((noreturn)) void StartWaterTASK(void const *argument)
     for (;;)
     {
         WaterTask();
-        // osDelay(5); // 即使没有任何UI需要刷新,也挂起一次,防止卡在UITask中无法切换
+        osDelay(1); // 即使没有任何UI需要刷新,也挂起一次,防止卡在UITask中无法切换
     }
 }
 

@@ -36,6 +36,7 @@ static int (*operation_sequence[])(water_State_e water_flag);
 static int (*D_operation_sequence[])(water_State_e water_flag);
 static uint8_t max_run_itr = 4;
 static uint8_t D_max_run_itr = 3;
+static uint16_t angle_buffer[50] = {0};
 /*============================private=================================*/
 static void water_flag_handle(void)
 {
@@ -243,12 +244,60 @@ void WaterInit(void)
  *
  * @return 0: 未到达， 1：到达
  */
+// int servo_action(void)
+// {
+//     static uint16_t pitch_delay_Cnt = 0;
+//     static uint16_t yaw_delay_Cnt = 0;
+//     static uint16_t pitch_temp_target = 0;
+//     static uint16_t yaw_temp_target = 0;
+//     static uint16_t delay_time;
+//     if (pitch_angle_index == pitch_target_angle && yaw_angle_index == yaw_target_angle)
+//         return 1;
+//     if (pitch_angle_index != pitch_target_angle)
+//     {
+//         if (water_action_idx == 1)
+//         {
+//             delay_time = fabs(pitch_target_angle - pitch_angle_index) * scan_delay_param;
+//         }
+//         else
+//         {
+//             delay_time = 15;
+//         }
+//         if (++pitch_delay_Cnt % delay_time == 0)
+//         {
+//             pitch_delay_Cnt = 0;
+//             if (pitch_angle_index < pitch_target_angle)
+//                 pitch_angle_index++;
+//             else
+//                 pitch_angle_index--;
+//             Servo_Motor_FreeAngle_Set(pitchServoMotor, pitch_angle_index);
+//         }
+//     }
+//     if (yaw_angle_index != yaw_target_angle)
+//     {
+//         if (water_action_idx == 1)
+//         {
+//             delay_time = fabs(yaw_target_angle - yaw_angle_index) * scan_delay_param;
+//         }
+//         else
+//         {
+//             delay_time = 15;
+//         }
+//         if (++yaw_delay_Cnt % delay_time == 0)
+//         {
+//             yaw_delay_Cnt = 0;
+//             if (yaw_angle_index < yaw_target_angle)
+//                 yaw_angle_index++;
+//             else
+//                 yaw_angle_index--;
+//             Servo_Motor_FreeAngle_Set(yawServoMotor, yaw_angle_index);
+//         }
+//     }
+//     return 0;
+// }
+
 int servo_action(void)
 {
-    static uint16_t pitch_delay_Cnt = 0;
-    static uint16_t yaw_delay_Cnt = 0;
-    static uint16_t pitch_temp_target = 0;
-    static uint16_t yaw_temp_target = 0;
     static uint16_t delay_time;
     if (pitch_angle_index == pitch_target_angle && yaw_angle_index == yaw_target_angle)
         return 1;
@@ -256,41 +305,38 @@ int servo_action(void)
     {
         if (water_action_idx == 1)
         {
-            delay_time = fabs(pitch_target_angle - pitch_angle_index) * scan_delay_param;
+            delay_time = scan_delay_time;
         }
         else
         {
-            delay_time = 20;
+            delay_time = water_delay_time;
         }
-        if (++pitch_delay_Cnt % delay_time == 0)
-        {
-            pitch_delay_Cnt = 0;
-            if (pitch_angle_index < pitch_target_angle)
-                pitch_angle_index++;
-            else
-                pitch_angle_index--;
-            Servo_Motor_FreeAngle_Set(pitchServoMotor, pitch_angle_index);
-        }
+        if (pitch_angle_index < pitch_target_angle)
+            pitch_angle_index++;
+        else
+            pitch_angle_index--;
+        Servo_Motor_FreeAngle_Set(pitchServoMotor, pitch_angle_index);
+        // delay_time /= fabs(pitch_target_angle - pitch_angle_index);
+        osDelay(delay_time);
     }
     if (yaw_angle_index != yaw_target_angle)
     {
         if (water_action_idx == 1)
         {
-            delay_time = fabs(yaw_target_angle - yaw_angle_index) * scan_delay_param;
+            delay_time = scan_delay_time;
         }
         else
         {
-            delay_time = 20;
+            delay_time = water_delay_time;
         }
-        if (++yaw_delay_Cnt % delay_time == 0)
-        {
-            yaw_delay_Cnt = 0;
-            if (yaw_angle_index < yaw_target_angle)
-                yaw_angle_index++;
-            else
-                yaw_angle_index--;
-            Servo_Motor_FreeAngle_Set(yawServoMotor, yaw_angle_index);
-        }
+
+        if (yaw_angle_index < yaw_target_angle)
+            yaw_angle_index++;
+        else
+            yaw_angle_index--;
+        Servo_Motor_FreeAngle_Set(yawServoMotor, yaw_angle_index);
+        // delay_time /= fabs(yaw_target_angle - yaw_angle_index);
+        osDelay(delay_time);
     }
     return 0;
 }
@@ -327,7 +373,7 @@ static int servo_scan_ready(water_State_e water_flag)
 static int servo_water_ready(water_State_e water_flag)
 {
     static uint16_t last_last_found = 0, last_found = 0, current_found = 0, buffer_idx = 0;
-    static uint16_t angle_buffer[100] = {0};
+
     static uint8_t cal_idx = 0;
     static uint16_t last_yaw_idx = 0;
     if (yaw_angle_index == yaw_scan_left_end_angle || yaw_angle_index == yaw_scan_right_end_angle)
@@ -383,6 +429,7 @@ static int servo_water_action(water_State_e water_flag)
     // 检查是否到达目标位置
     if (yaw_angle_index == yaw_target_angle && pitch_angle_index == pitch_target_angle)
     {
+        memset(angle_buffer, 0, sizeof(angle_buffer));
         return 1;
     }
 
@@ -430,7 +477,7 @@ static int relay_water_action(water_State_e water_flag)
         watering_Plant;
         osDelay(100);
         stop_watering_Plant;
-        osDelay(1000);
+        osDelay(800);
         water_cnt++;
     }
     else
@@ -499,15 +546,18 @@ void WaterTask(void)
 {
     SubGetMessage(water_sub, (void *)&water_recv_data);
     water_flag_handle(); // 赋值给浇水标志位
+#ifdef water
+    servo_action();
+#endif
     // /*** @todo: 根据处理得到的浇水标志位执行浇水动作*/
-
+    // comm_recv_data = CANCommGet(&comm_recv_data);
     PubPushMessage(water_pub, (void *)&water_feedback_data);
 }
 
 #else
 
 #include "mp3.h"
-#include "water.h"
+// #include "water.h"
 #include "message_center.h"
 #include "servo_motor.h"
 #include "photoelectric.h"

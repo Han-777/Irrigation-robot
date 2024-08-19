@@ -22,13 +22,13 @@ void MP3_broadcast(Drought_Info_e info)
     switch (info)
     {
     case SLIGHT:
-        USARTSend(mp3_instance, slight, DROUGHT_BUFF_LEN, USART_TRANSFER_DMA);
+        USARTSend(mp3_instance, slight, DROUGHT_BUFF_LEN, USART_TRANSFER_IT);
         break;
     case GENERAL:
-        USARTSend(mp3_instance, general, DROUGHT_BUFF_LEN, USART_TRANSFER_DMA);
+        USARTSend(mp3_instance, general, DROUGHT_BUFF_LEN, USART_TRANSFER_IT);
         break;
     case SERIOUS:
-        USARTSend(mp3_instance, serious, DROUGHT_BUFF_LEN, USART_TRANSFER_DMA);
+        USARTSend(mp3_instance, serious, DROUGHT_BUFF_LEN, USART_TRANSFER_IT);
         break;
     default:
         break;

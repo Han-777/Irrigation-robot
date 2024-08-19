@@ -1280,25 +1280,25 @@ void Qinwei(int flower) //	��΢�ɺ� flower������
 	if (S == 'A')
 	{
 		LCD_SetTextFont(&CH_Font32);
-		LCD_DisplayText(10, 10 + 60 * (flower), "��ȸɺ�");
+		LCD_DisplayText(10, 10 + 60 * (flower), "轻度干旱");
 	}
 	if (S == 'B')
 	{
 		LCD_SetTextFont(&CH_Font32);
-		LCD_DisplayText(200, 10 + 60 * (flower - 6), "��ȸɺ�");
+		LCD_DisplayText(200, 10 + 60 * (flower - 6), "轻度干旱");
 	}
 	if (S == 'C')
 	{
 		LCD_SetTextFont(&CH_Font32);
-		LCD_DisplayText(390, 10 + 60 * (flower - 12), "��ȸɺ�");
+		LCD_DisplayText(390, 10 + 60 * (flower - 12), "轻度干旱");
 	}
 	if (S == 'D')
 	{
 		LCD_SetTextFont(&CH_Font32);
-		LCD_DisplayText(580, 10 + 60 * (flower - 18), "��ȸɺ�");
+		LCD_DisplayText(580, 10 + 60 * (flower - 18), "轻度干旱");
 	}
 }
-void Yiban(int flower) // һ��ɺ�
+void Yiban(int flower) // 一般干旱
 {
 	char S;
 	if (flower >= 0 && flower <= 5)
@@ -1320,22 +1320,22 @@ void Yiban(int flower) // һ��ɺ�
 	if (S == 'A')
 	{
 		LCD_SetTextFont(&CH_Font32);
-		LCD_DisplayText(10, 10 + 60 * (flower), "һ��ɺ�");
+		LCD_DisplayText(10, 10 + 60 * (flower), "一般干旱");
 	}
 	if (S == 'B')
 	{
 		LCD_SetTextFont(&CH_Font32);
-		LCD_DisplayText(200, 10 + 60 * (flower - 6), "һ��ɺ�");
+		LCD_DisplayText(200, 10 + 60 * (flower - 6), "一般干旱");
 	}
 	if (S == 'C')
 	{
 		LCD_SetTextFont(&CH_Font32);
-		LCD_DisplayText(390, 10 + 60 * (flower - 12), "һ��ɺ�");
+		LCD_DisplayText(390, 10 + 60 * (flower - 12), "一般干旱");
 	}
 	if (S == 'D')
 	{
 		LCD_SetTextFont(&CH_Font32);
-		LCD_DisplayText(580, 10 + 60 * (flower - 18), "һ��ɺ�");
+		LCD_DisplayText(580, 10 + 60 * (flower - 18), "一般干旱");
 	}
 }
 void Yanzhong(int flower)
@@ -1360,22 +1360,22 @@ void Yanzhong(int flower)
 	if (S == 'A')
 	{
 		LCD_SetTextFont(&CH_Font32);
-		LCD_DisplayText(10, 10 + 60 * (flower), "���ظɺ�");
+		LCD_DisplayText(10, 10 + 60 * (flower), "严重干旱");
 	}
 	if (S == 'B')
 	{
 		LCD_SetTextFont(&CH_Font32);
-		LCD_DisplayText(200, 10 + 60 * (flower - 6), "���ظɺ�");
+		LCD_DisplayText(200, 10 + 60 * (flower - 6), "严重干旱");
 	}
 	if (S == 'C')
 	{
 		LCD_SetTextFont(&CH_Font32);
-		LCD_DisplayText(390, 10 + 60 * (flower - 12), "���ظɺ�");
+		LCD_DisplayText(390, 10 + 60 * (flower - 12), "严重干旱");
 	}
 	if (S == 'D')
 	{
 		LCD_SetTextFont(&CH_Font32);
-		LCD_DisplayText(580, 10 + 60 * (flower - 18), "���ظɺ�");
+		LCD_DisplayText(580, 10 + 60 * (flower - 18), "严重干旱");
 	}
 }
 
@@ -1392,7 +1392,7 @@ void LCD_hanqing(uint8_t drought_info, uint8_t flower_Cnt)
 void screenTask(void)
 {
 	//    LCD_SetTextFont(&CH_Font32);
-	//    LCD_DisplayText(200, 10,"���ظɺ�");
+	//    LCD_DisplayText(200, 10,"严重干旱");
 	LCD_hanqing(0x02, 4);
 	LCD_hanqing(0x01, 8);
 	LCD_hanqing(0x03, 17);

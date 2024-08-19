@@ -86,7 +86,7 @@ __attribute__((noreturn)) void StartROBOTTASK(void const *argument)
         // {
         // LOGERROR("[freeRTOS] ROBOT core Task is being DELAY! dt = [%f]", &robot_dt);
         // }
-        osDelay(5);
+        osDelay(1);
     }
 }
 

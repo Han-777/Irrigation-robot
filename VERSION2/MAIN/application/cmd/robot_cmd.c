@@ -70,13 +70,28 @@ static int waterFlagHandle(void)
         chassis_cmd_send.speed = BD_speed;
         if ((*pe_state & RIGHT_PE_FLAG) && (ld_data->rld_distance < LD_B_DIS_THRESHOLD))
         {
-            if (ld_data->rld_distance < LD_B_DIS_MIN_THRESHOLD)
+            if (water_feedback_data.plant_cnt >= 11)
             {
-                chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_B_DIS_MIN_THRESHOLD) * COM_PARAMETER;
+                chassis_cmd_send.speed = 7000;
+                if (ld_data->rld_distance < LD_B_DIS_MIN_THRESHOLD)
+                {
+                    chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_B_DIS_MIN_THRESHOLD) * (COM_PARAMETER_B + 250);
+                }
+                else if (ld_data->rld_distance > LD_B_DIS_MAX_THRESHOLD)
+                {
+                    chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_B_DIS_MAX_THRESHOLD) * COM_PARAMETER_B;
+                }
             }
-            else if (ld_data->rld_distance > LD_B_DIS_MAX_THRESHOLD)
+            else
             {
-                chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_B_DIS_MAX_THRESHOLD) * COM_PARAMETER;
+                if (ld_data->rld_distance < LD_B_DIS_MIN_THRESHOLD)
+                {
+                    chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_B_DIS_MIN_THRESHOLD) * COM_PARAMETER_B;
+                }
+                else if (ld_data->rld_distance > LD_B_DIS_MAX_THRESHOLD)
+                {
+                    chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_B_DIS_MAX_THRESHOLD) * COM_PARAMETER_B;
+                }
             }
             water_cmd_send.water_flag = pair_water_flag;            // B 看右浇两边
             water_cmd_send.lidar_left_dis = ld_data->lld_distance;  // help to judge the water distance
@@ -155,8 +170,12 @@ static int waterFlagHandle(void)
         else if (water_feedback_data.water_finish_state == water_finish_flag)
         {
             water_cmd_send.water_flag &= none_water_flag;
+            return 0;
         }
-        return 0;
+        else
+        {
+            return 0;
+        }
         break;
     case D:
         chassis_cmd_send.speed = BD_speed;
@@ -210,21 +229,21 @@ static int waterFlagHandle(void)
         }
         break;
     }
-    return 0;
+    // return 0;
 }
 
 static int region_finish(void)
 {
     water_cmd_send.region = (cross_cnt < 2) ? A : ((cross_cnt < 4) ? B : ((cross_cnt < 6) ? C : D));
-    if ((water_feedback_data.plant_cnt >= 5 && water_cmd_send.region == A) || (water_feedback_data.plant_cnt >= 10 && water_cmd_send.region == B) || (water_feedback_data.plant_cnt >= 18 && water_cmd_send.region == C) || (water_feedback_data.plant_cnt > 20 && water_cmd_send.region == D)) // 21 in total
+    chassis_cmd_send.region = water_cmd_send.region;
+    if ((water_feedback_data.plant_cnt >= 5 && water_cmd_send.region == A) || (water_feedback_data.plant_cnt >= 10 && water_cmd_send.region == B) || (water_feedback_data.plant_cnt >= 16 && water_cmd_send.region == C) || (water_feedback_data.plant_cnt > 22 && water_cmd_send.region == D)) // 21 in total
     {
-        if ((water_feedback_data.plant_cnt >= 6 && water_cmd_send.region == A) || (water_feedback_data.plant_cnt >= 12 && water_cmd_send.region == B) || (water_feedback_data.plant_cnt >= 18 && water_cmd_send.region == C) || water_cmd_send.region == D) // 21 in total
+        if ((water_feedback_data.plant_cnt >= 6 && water_cmd_send.region == A) || (water_feedback_data.plant_cnt >= 12 && water_cmd_send.region == B) || (water_feedback_data.plant_cnt >= 18 && water_cmd_send.region == C) || (water_feedback_data.plant_cnt > 23 && water_cmd_send.region == D)) // 21 in total
         {
             water_cmd_send.set_plantCnt_flag = (water_cmd_send.region == A) ? 6 : ((water_cmd_send.region == B) ? 12 : 18);
         }
         return 1; // 2/4/6 -> 0
     }
-
     return 0;
 }
 
@@ -285,6 +304,7 @@ static int cross_action(void)
     water_cmd_send.set_plantCnt_flag = 0; // 不干扰标志位
     water_cmd_send.water_flag = none_water_flag;
     *pe_state = none_water_flag;
+    chassis_cmd_send.lidar_com_speed = 0;
     if (chassis_fetch_data.rotate_arrive) // 可能条件不够多
     {
         if (cross_cnt % 2 == 0) // even cross open
@@ -292,9 +312,8 @@ static int cross_action(void)
             *pe_state &= none_water_flag;
         }
         chassis_cmd_send.chassis_mode = CHASSIS_FORWARD;
-        chassis_cmd_send.lidar_com_speed = (cross_cnt == 3) ? -500 : 500;
+        // chassis_cmd_send.lidar_com_speed = (cross_cnt == 3) ? -500 : 500;
 
-        // chassis_cmd_send.lidar_com_speed = 0;
         return 1;
     }
     return 0;
@@ -302,14 +321,14 @@ static int cross_action(void)
 
 static int cross_to_cross(void)
 {
-    static uint16_t forward_cnt = 0;
-    chassis_cmd_send.lidar_com_speed = (cross_cnt == 3) ? -1000 : 1000;
+    static uint8_t forward_cnt = 0;
+    // chassis_cmd_send.lidar_com_speed = (cross_cnt == 3) ? -1000 : 1000;
     chassis_cmd_send.chassis_mode = CHASSIS_C2C;
-    chassis_cmd_send.speed = 8000;
-    if (++forward_cnt % 255 == 0)
+    // chassis_cmd_send.speed = 8000;
+    if (++forward_cnt % 200 == 0)
     {
-        forward_cnt = 254; // 后面需要打断点判断一下时间
-        // chassis_cmd_send.lidar_com_speed = 0;
+        forward_cnt = 199; // 后面需要打断点判断一下时间
+        chassis_cmd_send.lidar_com_speed = 0;
         chassis_cmd_send.chassis_mode = CHASSIS_FORWARD;
         if (get_cross_flag())
         {

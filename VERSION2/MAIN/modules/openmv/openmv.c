@@ -16,7 +16,7 @@ static void openmv_buff_to_data(uint16_t size)
         if ((openmv_instance->recv_buff[0] == (uint8_t)(OPENMV_FRAME_HEAD >> 8) && openmv_instance->recv_buff[1] == (uint8_t)(OPENMV_FRAME_HEAD & 0xFF)) &&
             (openmv_instance->recv_buff[OPENMV_FRAME_SIZE - 2] == (uint8_t)(OPENMV_FRAME_TAIL >> 8) && openmv_instance->recv_buff[OPENMV_FRAME_SIZE - 1] == (uint8_t)(OPENMV_FRAME_TAIL & 0xFF)))
         {
-            memcpy(openmv_data, openmv_instance->recv_buff[2], 1);
+            memcpy(openmv_data, &openmv_instance->recv_buff[2], 1);
             return;
         }
     }

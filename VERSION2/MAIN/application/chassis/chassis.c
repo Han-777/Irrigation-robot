@@ -30,11 +30,10 @@ static Publisher_t *chassis_pub;
 #endif
 static Chassis_Ctrl_Cmd_s chassis_cmd_recv;         // 底盘接收到的控制命令
 static Chassis_Upload_Data_s chassis_feedback_data; // 底盘回传的反馈数据
-static uint8_t cross_forward_flag = 0;              // 防止误触
 /* 私有函数计算的中介变量,设为静态避免参数传递的开销 */
 static float left_target_vt, right_target_vt; // 左边速度一样，右边速度一样
 static PIDInstance angle_instance;
-
+#define speedComLimit 2500
 void ChassisInit() // 配置中所有pid参数都需要修改
 {
     /*  最外层角度环参数   */
@@ -43,7 +42,7 @@ void ChassisInit() // 配置中所有pid参数都需要修改
             .Kp = 50, // 200
             .Ki = 16, // 200
             .Kd = 10, // 100
-            .IntegralLimit = 250,
+            .IntegralLimit = 500,
             .Improve = PID_Trapezoid_Intergral | PID_Integral_Limit | PID_Derivative_On_Measurement,
             .MaxOut = 2500, // 待测
         };
@@ -82,7 +81,7 @@ void ChassisInit() // 配置中所有pid参数都需要修改
                         .Kd = 0,
                         .IntegralLimit = 3000,
                         .Improve = PID_Trapezoid_Intergral | PID_Integral_Limit | PID_Derivative_On_Measurement,
-                        .MaxOut = 0, // 1200
+                        .MaxOut = 20000, // 1200
                     },
 
             },
@@ -162,11 +161,32 @@ static void check_arrive(void)
 
 static void SpeedCalculate()
 {
+    static uint16_t speed_com_limit = 0;
+    uint8_t roll_err = 0;
     HeadingTransfer();
     PIDCalculate(&angle_instance, gyro_data->cal_yaw, gyro_data->target_yaw);
     if (chassis_cmd_recv.chassis_mode != CHASSIS_ROTATE && chassis_cmd_recv.lidar_com_speed != 0)
     {
-
+        roll_err = fabs(gyro_data->Roll - gyro_data->ori_roll);
+        if (roll_err > 0.5)
+        {
+            left_target_vt += 500;
+            right_target_vt += 1000;
+            angle_instance.Output *= 8;
+            if (roll_err > 1)
+            {
+                chassis_cmd_recv.lidar_com_speed = (chassis_cmd_recv.lidar_com_speed > 1500) ? 1500 : -1500;
+            }
+        }
+        else
+        {
+            if (chassis_cmd_recv.region == A)
+                angle_instance.Output *= 7;
+            else
+                angle_instance.Output *= 5;
+        }
+        left_target_vt += angle_instance.Output;  // 系数后面测
+        right_target_vt -= angle_instance.Output; // 系数后面测
         if (fabs(chassis_cmd_recv.lidar_com_speed) > 2500 && angle_instance.Err > 45)
         {
             chassis_cmd_recv.lidar_com_speed = (chassis_cmd_recv.lidar_com_speed > 0) ? 2500 : -2500;
@@ -178,18 +198,6 @@ static void SpeedCalculate()
             left_target_vt += chassis_cmd_recv.lidar_com_speed;
             right_target_vt -= chassis_cmd_recv.lidar_com_speed;
         }
-        if (fabs(gyro_data->Roll - gyro_data->ori_roll) > 0.5)
-        {
-            left_target_vt += 500;
-            right_target_vt += 1000;
-            angle_instance.Output *= 8;
-        }
-        else
-        {
-            angle_instance.Output *= 5;
-        }
-        left_target_vt += angle_instance.Output;  // 系数后面测
-        right_target_vt -= angle_instance.Output; // 系数后面测
     }
     else
     {
@@ -261,12 +269,37 @@ void ChassisTask()
     switch (chassis_cmd_recv.chassis_mode)
     {
     case CHASSIS_FORWARD:
+        left_target_vt = right_target_vt = chassis_cmd_recv.speed; // 3500
+        angle_instance.MaxOut = 2500;
+        angle_instance.IntegralLimit = 250;
+        break;
     case CHASSIS_C2C:
         left_target_vt = right_target_vt = chassis_cmd_recv.speed; // 3500
+        angle_instance.MaxOut = 2500;
+        angle_instance.IntegralLimit = 250;
         // left_target_vt = right_target_vt = 0; // 3500
         break;
     case CHASSIS_ROTATE:
         left_target_vt = right_target_vt = 0; // 后面根据实际情况给速度值
+        angle_instance.IntegralLimit = 300;
+        if (angle_instance.Err > 45)
+        {
+            angle_instance.MaxOut = 1500;
+        }
+        else if (angle_instance.Err > 30)
+        {
+            angle_instance.MaxOut = 800;
+        }
+        else if (angle_instance.Err > 15)
+        {
+            angle_instance.MaxOut = 500;
+            angle_instance.IntegralLimit = 300;
+        }
+        else if (angle_instance.Err > 7)
+        {
+            angle_instance.MaxOut = 100;
+            angle_instance.IntegralLimit = 400;
+        }
         break;
     default:
         break;

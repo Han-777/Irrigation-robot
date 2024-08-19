@@ -25,10 +25,11 @@ void WaterTask(void)
     // LCD_hanqing(SLIGHT, 8);
     // LCD_hanqing(SERIOUS, 17);
     static uint16_t cnt = 0;
-    if (++cnt % 1000)
-    {
-        cnt = 0;
-        MP3_broadcast(GENERAL);
-    }
+    // if (++cnt % 1000)
+    // {
+    //     cnt = 0;
+    //     MP3_broadcast(GENERAL);
+    // }
+
     PubPushMessage(water_pub, (void *)&water_feedback_data);
 }

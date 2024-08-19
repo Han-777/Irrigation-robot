@@ -23,15 +23,15 @@ static CANCommInstance *CANComm_ins;
 static Comm_Send_Data_s *comm_send_data;
 static Comm_Recv_Data_s *comm_recv_data;
 static BLUETOOTH_data_t *bluetooth_data;
-// static uint8_t test[19] = {3, 2, 3, 1, 2, 3,
-//                            1, 2, 3, 1, 2, 3,
-//                            1, 2, 3, 1, 2, 3, 7};
+static uint8_t test[19] = {3, 2, 3, 1, 2, 3,
+                           1, 2, 3, 1, 2, 3,
+                           1, 2, 3, 1, 2, 3, 7};
 void RobotCMDInit()
 {
     bluetooth_data = Bluetooth_Init(&huart6);
     /*------------------------Can communication Init---------------------
     send:  CANCommSend(CANComm_ins, comm_send_data);
-    recv:  (Comm_Recv_Data_s *) comm_recv_data = CANCommGet(&comm_recv_data);
+    recv:  (Comm_Recv_Data_s *) comm_recv_data = CANCommGet(&CANComm_ins);
     */
     CANComm_Init_Config_s can_comm_config =
         {
@@ -57,7 +57,11 @@ static int drought_info_ready(void)
 void RobotCMDTask()
 {
     SubGetMessage(water_feed_sub, (void *)&water_feedback_data);
-    // memcpy(comm_send_data, test, 19);
-    // CANCommSend(CANComm_ins, comm_send_data);
+    if (bluetooth_data->drought_buff[17] != 0)
+    {
+        memcpy(comm_send_data->drought_info, bluetooth_data->drought_buff, 18);
+    }
+    comm_send_data->recv_feedback_flag = 1;
+    CANCommSend(CANComm_ins, (uint8_t *)comm_send_data);
     PubPushMessage(water_cmd_pub, (void *)&water_cmd_send);
 }

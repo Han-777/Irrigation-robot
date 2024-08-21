@@ -88,7 +88,7 @@ static int waterFlagHandle(void)
             {
                 if (ld_data->rld_distance < LD_B_DIS_MIN_THRESHOLD)
                 {
-                    chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_B_DIS_MIN_THRESHOLD) * COM_PARAMETER_B;
+                    chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_B_DIS_MIN_THRESHOLD) * (COM_PARAMETER_B - 50);
                 }
                 else if (ld_data->rld_distance > LD_B_DIS_MAX_THRESHOLD)
                 {
@@ -110,64 +110,133 @@ static int waterFlagHandle(void)
         }
         break;
     case C:
+        // chassis_cmd_send.speed = C_speed;
+        // if ((*pe_state & LEFT_PE_FLAG && ld_data->lld_distance < LD_C_LEFT_DIS_THRESHOLD) || (*pe_state & RIGHT_PE_FLAG && ld_data->rld_distance < LD_C_RIGHT_DIS_THRESHOLD))
+        // {
+        //     if (*pe_state == pair_water_flag && ld_data->lld_distance < LD_C_LEFT_DIS_THRESHOLD && ld_data->rld_distance < LD_C_RIGHT_DIS_THRESHOLD)
+        //     {
+        //         if (ld_data->rld_distance < LD_C_RIGHT_DIS_MIN_THRESHOLD)
+        //         {
+        //             if (ld_data->rld_distance > 5)
+        //                 chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_C_RIGHT_DIS_MIN_THRESHOLD) * COM_C_PARAMETER;
+        //         }
+        //         else if (ld_data->rld_distance > LD_C_RIGHT_DIS_MAX_THRESHOLD)
+        //         {
+        //             chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_C_RIGHT_DIS_MAX_THRESHOLD) * COM_C_PARAMETER;
+        //         }
+        //         water_cmd_send.lidar_left_dis = ld_data->lld_distance;  // help to judge the water distance
+        //         water_cmd_send.lidar_right_dis = ld_data->rld_distance; // help to judge the water distance
+        //         water_cmd_send.water_flag = pair_water_flag;
+        //         *pe_state &= NONE_PE_FLAG;
+        //         return 1;
+        //     }
+        //     if (*pe_state & LEFT_PE_FLAG)
+        //     {
+        //         if (ld_data->lld_distance < LD_C_LEFT_DIS_MIN_THRESHOLD)
+        //         {
+        //             chassis_cmd_send.lidar_com_speed = (LD_C_LEFT_DIS_MIN_THRESHOLD - ld_data->lld_distance) * COM_C_PARAMETER;
+        //         }
+        //         else if (ld_data->lld_distance > LD_C_LEFT_DIS_MAX_THRESHOLD)
+        //         {
+        //             chassis_cmd_send.lidar_com_speed = (LD_C_LEFT_DIS_MAX_THRESHOLD - ld_data->lld_distance) * COM_C_PARAMETER;
+        //         }
+        //         if (ld_data->lld_distance < LD_C_LEFT_DIS_THRESHOLD)
+        //         {
+        //             water_cmd_send.lidar_left_dis = ld_data->lld_distance; // help to judge the water distance
+        //             water_cmd_send.water_flag = left_water_flag;
+        //             *pe_state &= ~LEFT_PE_FLAG;
+        //             return 1;
+        //         }
+        //     }
+        //     if (*pe_state & RIGHT_PE_FLAG)
+        //     {
+        //         if (ld_data->rld_distance < LD_C_RIGHT_DIS_MIN_THRESHOLD)
+        //         {
+        //             if (ld_data->rld_distance > 5)
+        //                 chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_C_RIGHT_DIS_MIN_THRESHOLD) * COM_C_PARAMETER;
+        //         }
+        //         else if (ld_data->rld_distance > LD_C_RIGHT_DIS_MAX_THRESHOLD)
+        //         {
+        //             chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_C_RIGHT_DIS_MAX_THRESHOLD) * COM_C_PARAMETER;
+        //         }
+        //         if (ld_data->rld_distance < LD_C_RIGHT_DIS_THRESHOLD)
+        //         {
+        //             water_cmd_send.lidar_right_dis = ld_data->rld_distance; // help to judge the water distance
+        //             water_cmd_send.water_flag = right_water_flag;
+        //             *pe_state &= ~RIGHT_PE_FLAG;
+        //             return 1;
+        //         }
+        //     }
+        //     // *pe_state &= NONE_PE_FLAG;
+        // }
+        // if ((water_cmd_send.water_flag & left_water_flag && !(water_feedback_data.water_finish_state & left_water_flag)) || (water_cmd_send.water_flag & right_water_flag && !(water_feedback_data.water_finish_state & right_water_flag)))
+        //     return 1;
+        // else if (water_cmd_send.water_flag & left_water_flag && water_feedback_data.water_finish_state & left_water_flag)
+        // {
+        //     water_cmd_send.water_flag &= ~left_water_flag;
+        //     return 0;
+        // }
+        // else if (water_cmd_send.water_flag & right_water_flag && water_feedback_data.water_finish_state & right_water_flag)
+        // {
+        //     water_cmd_send.water_flag &= ~right_water_flag;
+        //     return 0;
+        // }
+        // else if (water_feedback_data.water_finish_state == water_finish_flag)
+        // {
+        //     water_cmd_send.water_flag &= none_water_flag;
+        //     return 0;
+        // }
         chassis_cmd_send.speed = C_speed;
-        if ((*pe_state & LEFT_PE_FLAG && ld_data->lld_distance < LD_C_LEFT_DIS_THRESHOLD) || (*pe_state & RIGHT_PE_FLAG && ld_data->rld_distance < LD_C_RIGHT_DIS_THRESHOLD))
+        if ((*pe_state == pair_water_flag && ld_data->lld_distance < LD_C_LEFT_DIS_THRESHOLD) && (ld_data->rld_distance < LD_C_RIGHT_DIS_THRESHOLD))
         {
-            if (*pe_state == pair_water_flag && ld_data->lld_distance < LD_C_LEFT_DIS_THRESHOLD && ld_data->rld_distance < LD_C_RIGHT_DIS_THRESHOLD)
+            if (ld_data->rld_distance < LD_C_RIGHT_DIS_MIN_THRESHOLD)
             {
-                if (ld_data->rld_distance < LD_C_RIGHT_DIS_MIN_THRESHOLD)
-                {
-                    if (ld_data->rld_distance > 5)
-                        chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_C_RIGHT_DIS_MIN_THRESHOLD) * COM_C_PARAMETER;
-                }
-                else if (ld_data->rld_distance > LD_C_RIGHT_DIS_MAX_THRESHOLD)
-                {
-                    chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_C_RIGHT_DIS_MAX_THRESHOLD) * COM_C_PARAMETER;
-                }
-                water_cmd_send.lidar_left_dis = ld_data->lld_distance;  // help to judge the water distance
+                if (ld_data->rld_distance > 5)
+                    chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_C_RIGHT_DIS_MIN_THRESHOLD) * COM_C_PARAMETER;
+            }
+            else if (ld_data->rld_distance > LD_C_RIGHT_DIS_MAX_THRESHOLD)
+            {
+                chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_C_RIGHT_DIS_MAX_THRESHOLD) * COM_C_PARAMETER;
+            }
+            water_cmd_send.lidar_left_dis = ld_data->lld_distance;  // help to judge the water distance
+            water_cmd_send.lidar_right_dis = ld_data->rld_distance; // help to judge the water distance
+            water_cmd_send.water_flag = pair_water_flag;
+            *pe_state &= NONE_PE_FLAG;
+            return 1;
+        }
+        if (*pe_state & LEFT_PE_FLAG && ld_data->lld_distance < LD_C_LEFT_DIS_THRESHOLD)
+        {
+            if (ld_data->lld_distance < LD_C_LEFT_DIS_MIN_THRESHOLD)
+            {
+                chassis_cmd_send.lidar_com_speed = (LD_C_LEFT_DIS_MIN_THRESHOLD - ld_data->lld_distance) * COM_C_PARAMETER;
+            }
+            else if (ld_data->lld_distance > LD_C_LEFT_DIS_MAX_THRESHOLD)
+            {
+                chassis_cmd_send.lidar_com_speed = (LD_C_LEFT_DIS_MAX_THRESHOLD - ld_data->lld_distance) * COM_C_PARAMETER;
+            }
+            water_cmd_send.lidar_left_dis = ld_data->lld_distance; // help to judge the water distance
+            water_cmd_send.water_flag = left_water_flag;
+            *pe_state &= ~LEFT_PE_FLAG;
+            return 1;
+        }
+        if (*pe_state & RIGHT_PE_FLAG && ld_data->rld_distance < LD_C_RIGHT_DIS_THRESHOLD)
+        {
+            if (ld_data->rld_distance < LD_C_RIGHT_DIS_MIN_THRESHOLD)
+            {
+                if (ld_data->rld_distance > 5)
+                    chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_C_RIGHT_DIS_MIN_THRESHOLD) * COM_C_PARAMETER;
+            }
+            else if (ld_data->rld_distance > LD_C_RIGHT_DIS_MAX_THRESHOLD)
+            {
+                chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_C_RIGHT_DIS_MAX_THRESHOLD) * COM_C_PARAMETER;
+            }
+            if (ld_data->rld_distance < LD_C_RIGHT_DIS_THRESHOLD)
+            {
                 water_cmd_send.lidar_right_dis = ld_data->rld_distance; // help to judge the water distance
-                water_cmd_send.water_flag = pair_water_flag;
-                *pe_state &= NONE_PE_FLAG;
+                water_cmd_send.water_flag = right_water_flag;
+                *pe_state &= ~RIGHT_PE_FLAG;
                 return 1;
             }
-            if (*pe_state & LEFT_PE_FLAG)
-            {
-                if (ld_data->lld_distance < LD_C_LEFT_DIS_MIN_THRESHOLD)
-                {
-                    chassis_cmd_send.lidar_com_speed = (LD_C_LEFT_DIS_MIN_THRESHOLD - ld_data->lld_distance) * COM_C_PARAMETER;
-                }
-                else if (ld_data->lld_distance > LD_C_LEFT_DIS_MAX_THRESHOLD)
-                {
-                    chassis_cmd_send.lidar_com_speed = (LD_C_LEFT_DIS_MAX_THRESHOLD - ld_data->lld_distance) * COM_C_PARAMETER;
-                }
-                if (ld_data->lld_distance < LD_C_LEFT_DIS_THRESHOLD)
-                {
-                    water_cmd_send.lidar_left_dis = ld_data->lld_distance; // help to judge the water distance
-                    water_cmd_send.water_flag = left_water_flag;
-                    *pe_state &= ~LEFT_PE_FLAG;
-                    return 1;
-                }
-            }
-            if (*pe_state & RIGHT_PE_FLAG)
-            {
-                if (ld_data->rld_distance < LD_C_RIGHT_DIS_MIN_THRESHOLD)
-                {
-                    if (ld_data->rld_distance > 5)
-                        chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_C_RIGHT_DIS_MIN_THRESHOLD) * COM_C_PARAMETER;
-                }
-                else if (ld_data->rld_distance > LD_C_RIGHT_DIS_MAX_THRESHOLD)
-                {
-                    chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_C_RIGHT_DIS_MAX_THRESHOLD) * COM_C_PARAMETER;
-                }
-                if (ld_data->rld_distance < LD_C_RIGHT_DIS_THRESHOLD)
-                {
-                    water_cmd_send.lidar_right_dis = ld_data->rld_distance; // help to judge the water distance
-                    water_cmd_send.water_flag = right_water_flag;
-                    *pe_state &= ~RIGHT_PE_FLAG;
-                    return 1;
-                }
-            }
-            // *pe_state &= NONE_PE_FLAG;
         }
         if ((water_cmd_send.water_flag & left_water_flag && !(water_feedback_data.water_finish_state & left_water_flag)) || (water_cmd_send.water_flag & right_water_flag && !(water_feedback_data.water_finish_state & right_water_flag)))
             return 1;
@@ -192,86 +261,159 @@ static int waterFlagHandle(void)
         // }
         break;
     case D:
+        // chassis_cmd_send.speed = D_speed;
+        // if ((*pe_state & LEFT_PE_FLAG && ld_data->lld_distance < LD_D_DIS_THRESHOLD) || (*pe_state & RIGHT_PE_FLAG && ld_data->rld_distance < LD_D_DIS_THRESHOLD))
+        // {
+        //     if (*pe_state == pair_water_flag && ld_data->lld_distance < LD_D_DIS_THRESHOLD && ld_data->rld_distance < LD_D_DIS_THRESHOLD)
+        //     {
+        //         if (ld_data->lld_distance < LD_D_DIS_MIN_THRESHOLD)
+        //         {
+        //             chassis_cmd_send.lidar_com_speed = (ld_data->lld_distance - LD_D_DIS_MIN_THRESHOLD) * COM_PARAMETER_D;
+        //         }
+        //         else if (ld_data->lld_distance > LD_D_DIS_MAX_THRESHOLD)
+        //         {
+        //             chassis_cmd_send.lidar_com_speed = (ld_data->lld_distance - LD_D_DIS_MAX_THRESHOLD) * COM_PARAMETER_D;
+        //         }
+        //         water_cmd_send.lidar_left_dis = ld_data->lld_distance;  // help to judge the water distance
+        //         water_cmd_send.lidar_right_dis = ld_data->rld_distance; // help to judge the water distance
+
+        //         vTaskSuspendAll();    // 禁用调度器
+        //         taskENTER_CRITICAL(); // 禁用中断
+        //         Lidar_Close();
+        //         taskEXIT_CRITICAL(); // 启用中断
+        //         xTaskResumeAll();    // 启用调度器
+
+        //         water_cmd_send.water_flag = pair_water_flag;
+        //         *pe_state &= NONE_PE_FLAG;
+        //         return 1;
+        //     }
+        //     if (*pe_state & LEFT_PE_FLAG)
+        //     {
+        //         if (ld_data->lld_distance < LD_D_DIS_MIN_THRESHOLD)
+        //         {
+        //             chassis_cmd_send.lidar_com_speed = (LD_D_DIS_MIN_THRESHOLD - ld_data->lld_distance) * COM_PARAMETER_D;
+        //         }
+        //         else if (ld_data->lld_distance > LD_D_DIS_MAX_THRESHOLD)
+        //         {
+        //             chassis_cmd_send.lidar_com_speed = (LD_D_DIS_MAX_THRESHOLD - ld_data->lld_distance) * COM_PARAMETER_D;
+        //         }
+        //         if (ld_data->lld_distance < LD_D_DIS_THRESHOLD)
+        //         {
+        //             water_cmd_send.lidar_left_dis = ld_data->lld_distance; // help to judge the water distance
+
+        //             vTaskSuspendAll();    // 禁用调度器
+        //             taskENTER_CRITICAL(); // 禁用中断
+        //             Lidar_Close();
+        //             taskEXIT_CRITICAL(); // 启用中断
+        //             xTaskResumeAll();    // 启用调度器
+
+        //             water_cmd_send.water_flag |= left_water_flag;
+        //             *pe_state &= ~LEFT_PE_FLAG;
+        //             return 1;
+        //         }
+        //     }
+        //     if (*pe_state & RIGHT_PE_FLAG)
+        //     {
+        //         if (ld_data->rld_distance < LD_D_DIS_MIN_THRESHOLD)
+        //         {
+        //             if (ld_data->rld_distance > 5)
+        //                 chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_D_DIS_MIN_THRESHOLD) * COM_PARAMETER_D;
+        //         }
+        //         else if (ld_data->rld_distance > LD_D_DIS_MAX_THRESHOLD)
+        //         {
+        //             chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_D_DIS_MAX_THRESHOLD) * COM_PARAMETER_D;
+        //         }
+        //         if (ld_data->rld_distance < LD_D_DIS_THRESHOLD)
+        //         {
+        //             water_cmd_send.lidar_right_dis = ld_data->rld_distance; // help to judge the water distance
+
+        //             vTaskSuspendAll();    // 禁用调度器
+        //             taskENTER_CRITICAL(); // 禁用中断
+        //             Lidar_Close();
+        //             taskEXIT_CRITICAL(); // 启用中断
+        //             xTaskResumeAll();    // 启用调度器
+
+        //             water_cmd_send.water_flag |= right_water_flag;
+        //             *pe_state &= ~RIGHT_PE_FLAG;
+        //             return 1;
+        //         }
+        //     }
+        // water_cmd_send.water_flag |= *pe_state; // |= 应该也同时处理了浇两边的情况
+        // *pe_state &= NONE_PE_FLAG;
+        // }
+
         chassis_cmd_send.speed = D_speed;
-        if ((*pe_state & LEFT_PE_FLAG && ld_data->lld_distance < LD_D_DIS_THRESHOLD) || (*pe_state & RIGHT_PE_FLAG && ld_data->rld_distance < LD_D_DIS_THRESHOLD))
+        if ((*pe_state & LEFT_PE_FLAG && ld_data->lld_distance < LD_D_DIS_THRESHOLD) && (*pe_state & RIGHT_PE_FLAG && ld_data->rld_distance < LD_D_DIS_THRESHOLD))
         {
-            if (*pe_state == pair_water_flag && ld_data->lld_distance < LD_D_DIS_THRESHOLD && ld_data->rld_distance < LD_D_DIS_THRESHOLD)
+            if (ld_data->lld_distance < LD_D_DIS_MIN_THRESHOLD)
             {
-                if (ld_data->lld_distance < LD_D_DIS_MIN_THRESHOLD)
-                {
-                    chassis_cmd_send.lidar_com_speed = (ld_data->lld_distance - LD_D_DIS_MIN_THRESHOLD) * COM_PARAMETER_D;
-                }
-                else if (ld_data->lld_distance > LD_D_DIS_MAX_THRESHOLD)
-                {
-                    chassis_cmd_send.lidar_com_speed = (ld_data->lld_distance - LD_D_DIS_MAX_THRESHOLD) * COM_PARAMETER_D;
-                }
-                water_cmd_send.lidar_left_dis = ld_data->lld_distance;  // help to judge the water distance
-                water_cmd_send.lidar_right_dis = ld_data->rld_distance; // help to judge the water distance
-
-                vTaskSuspendAll();    // 禁用调度器
-                taskENTER_CRITICAL(); // 禁用中断
-                Lidar_Close();
-                taskEXIT_CRITICAL(); // 启用中断
-                xTaskResumeAll();    // 启用调度器
-
-                water_cmd_send.water_flag = pair_water_flag;
-                *pe_state &= NONE_PE_FLAG;
-                return 1;
+                chassis_cmd_send.lidar_com_speed = (ld_data->lld_distance - LD_D_DIS_MIN_THRESHOLD) * COM_PARAMETER_D;
             }
-            if (*pe_state & LEFT_PE_FLAG)
+            else if (ld_data->lld_distance > LD_D_DIS_MAX_THRESHOLD)
             {
-                if (ld_data->lld_distance < LD_D_DIS_MIN_THRESHOLD)
-                {
-                    chassis_cmd_send.lidar_com_speed = (LD_D_DIS_MIN_THRESHOLD - ld_data->lld_distance) * COM_PARAMETER_D;
-                }
-                else if (ld_data->lld_distance > LD_D_DIS_MAX_THRESHOLD)
-                {
-                    chassis_cmd_send.lidar_com_speed = (LD_D_DIS_MAX_THRESHOLD - ld_data->lld_distance) * COM_PARAMETER_D;
-                }
-                if (ld_data->lld_distance < LD_D_DIS_THRESHOLD)
-                {
-                    water_cmd_send.lidar_left_dis = ld_data->lld_distance; // help to judge the water distance
-
-                    vTaskSuspendAll();    // 禁用调度器
-                    taskENTER_CRITICAL(); // 禁用中断
-                    Lidar_Close();
-                    taskEXIT_CRITICAL(); // 启用中断
-                    xTaskResumeAll();    // 启用调度器
-
-                    water_cmd_send.water_flag |= left_water_flag;
-                    *pe_state &= ~LEFT_PE_FLAG;
-                    return 1;
-                }
+                chassis_cmd_send.lidar_com_speed = (ld_data->lld_distance - LD_D_DIS_MAX_THRESHOLD) * COM_PARAMETER_D;
             }
-            if (*pe_state & RIGHT_PE_FLAG)
-            {
-                if (ld_data->rld_distance < LD_D_DIS_MIN_THRESHOLD)
-                {
-                    if (ld_data->rld_distance > 5)
-                        chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_D_DIS_MIN_THRESHOLD) * COM_PARAMETER_D;
-                }
-                else if (ld_data->rld_distance > LD_D_DIS_MAX_THRESHOLD)
-                {
-                    chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_D_DIS_MAX_THRESHOLD) * COM_PARAMETER_D;
-                }
-                if (ld_data->rld_distance < LD_D_DIS_THRESHOLD)
-                {
-                    water_cmd_send.lidar_right_dis = ld_data->rld_distance; // help to judge the water distance
+            water_cmd_send.lidar_left_dis = ld_data->lld_distance;  // help to judge the water distance
+            water_cmd_send.lidar_right_dis = ld_data->rld_distance; // help to judge the water distance
 
-                    vTaskSuspendAll();    // 禁用调度器
-                    taskENTER_CRITICAL(); // 禁用中断
-                    Lidar_Close();
-                    taskEXIT_CRITICAL(); // 启用中断
-                    xTaskResumeAll();    // 启用调度器
+            vTaskSuspendAll();    // 禁用调度器
+            taskENTER_CRITICAL(); // 禁用中断
+            Lidar_Close();
+            taskEXIT_CRITICAL(); // 启用中断
+            xTaskResumeAll();    // 启用调度器
 
-                    water_cmd_send.water_flag |= right_water_flag;
-                    *pe_state &= ~RIGHT_PE_FLAG;
-                    return 1;
-                }
-            }
-            // water_cmd_send.water_flag |= *pe_state; // |= 应该也同时处理了浇两边的情况
-            // *pe_state &= NONE_PE_FLAG;
+            water_cmd_send.water_flag = pair_water_flag;
+            *pe_state &= NONE_PE_FLAG;
+            return 1;
         }
+        if (*pe_state & LEFT_PE_FLAG && ld_data->lld_distance < LD_D_DIS_THRESHOLD)
+        {
+            if (ld_data->lld_distance < LD_D_DIS_MIN_THRESHOLD)
+            {
+                chassis_cmd_send.lidar_com_speed = (LD_D_DIS_MIN_THRESHOLD - ld_data->lld_distance) * COM_PARAMETER_D;
+            }
+            else if (ld_data->lld_distance > LD_D_DIS_MAX_THRESHOLD)
+            {
+                chassis_cmd_send.lidar_com_speed = (LD_D_DIS_MAX_THRESHOLD - ld_data->lld_distance) * COM_PARAMETER_D;
+            }
+
+            water_cmd_send.lidar_left_dis = ld_data->lld_distance; // help to judge the water distance
+
+            vTaskSuspendAll();    // 禁用调度器
+            taskENTER_CRITICAL(); // 禁用中断
+            Lidar_Close();
+            taskEXIT_CRITICAL(); // 启用中断
+            xTaskResumeAll();    // 启用调度器
+
+            water_cmd_send.water_flag |= left_water_flag;
+            *pe_state &= ~LEFT_PE_FLAG;
+            return 1;
+        }
+        if (*pe_state & RIGHT_PE_FLAG && ld_data->rld_distance < LD_D_DIS_THRESHOLD)
+        {
+            if (ld_data->rld_distance < LD_D_DIS_MIN_THRESHOLD)
+            {
+                if (ld_data->rld_distance > 5)
+                    chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_D_DIS_MIN_THRESHOLD) * COM_PARAMETER_D;
+            }
+            else if (ld_data->rld_distance > LD_D_DIS_MAX_THRESHOLD)
+            {
+                chassis_cmd_send.lidar_com_speed = (ld_data->rld_distance - LD_D_DIS_MAX_THRESHOLD) * COM_PARAMETER_D;
+            }
+
+            water_cmd_send.lidar_right_dis = ld_data->rld_distance; // help to judge the water distance
+
+            vTaskSuspendAll();    // 禁用调度器
+            taskENTER_CRITICAL(); // 禁用中断
+            Lidar_Close();
+            taskEXIT_CRITICAL(); // 启用中断
+            xTaskResumeAll();    // 启用调度器
+
+            water_cmd_send.water_flag |= right_water_flag;
+            *pe_state &= ~RIGHT_PE_FLAG;
+            return 1;
+        }
+
         if ((water_cmd_send.water_flag & left_water_flag && !(water_feedback_data.water_finish_state & left_water_flag)) || (water_cmd_send.water_flag & right_water_flag && !(water_feedback_data.water_finish_state & right_water_flag)))
         {
             return 1;

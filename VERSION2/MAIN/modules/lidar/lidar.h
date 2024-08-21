@@ -37,4 +37,7 @@ void lidar_data_handle(uint8_t *buffer);
  */
 LD_data_t *Lidar_Init(UART_HandleTypeDef *ld_usart_handle);
 
+void Lidar_Close(void);
+void Lidar_Open(void);
+
 #endif

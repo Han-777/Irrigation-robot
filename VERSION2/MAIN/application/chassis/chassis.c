@@ -33,7 +33,7 @@ static Chassis_Upload_Data_s chassis_feedback_data; // 底盘回传的反馈数�
 /* 私有函数计算的中介变量,设为静态避免参数传递的开销 */
 static float left_target_vt, right_target_vt; // 左边速度一样，右边速度一样
 static PIDInstance angle_instance;
-#define speedComLimit 2500
+#define speedComLimit 3000
 void ChassisInit() // 配置中所有pid参数都需要修改
 {
     /*  最外层角度环参数   */
@@ -81,7 +81,7 @@ void ChassisInit() // 配置中所有pid参数都需要修改
                         .Kd = 0,
                         .IntegralLimit = 3000,
                         .Improve = PID_Trapezoid_Intergral | PID_Integral_Limit | PID_Derivative_On_Measurement,
-                        .MaxOut = 20000, // 1200
+                        .MaxOut = 0, // 1200
                     },
 
             },
@@ -161,7 +161,6 @@ static void check_arrive(void)
 
 static void SpeedCalculate()
 {
-    static uint16_t speed_com_limit = 0;
     uint8_t roll_err = 0;
     HeadingTransfer();
     PIDCalculate(&angle_instance, gyro_data->cal_yaw, gyro_data->target_yaw);
@@ -170,26 +169,51 @@ static void SpeedCalculate()
         roll_err = fabs(gyro_data->Roll - gyro_data->ori_roll);
         if (roll_err > 0.5)
         {
-            left_target_vt += 500;
-            right_target_vt += 1000;
-            angle_instance.Output *= 8;
+            if (chassis_cmd_recv.region != C)
+            {
+                left_target_vt += 800;
+                right_target_vt += 1500;
+                angle_instance.Output *= 8;
+            }
+            else
+            {
+                // left_target_vt -= 1000;
+                // right_target_vt -= 1000;
+                angle_instance.Output *= 6;
+            }
             if (roll_err > 1)
             {
-                chassis_cmd_recv.lidar_com_speed = (chassis_cmd_recv.lidar_com_speed > 1500) ? 1500 : -1500;
+                chassis_cmd_recv.lidar_com_speed = (chassis_cmd_recv.lidar_com_speed > 2000) ? 2000 : -2000;
             }
         }
         else
         {
-            if (chassis_cmd_recv.region == A)
+            // if (chassis_cmd_recv.region == A || chassis_cmd_recv.region == C)
+            //     angle_instance.Output *= 6;
+            // else
+            //     angle_instance.Output *= 5;
+            switch (chassis_cmd_recv.region)
+            {
+            case A:
                 angle_instance.Output *= 7;
-            else
-                angle_instance.Output *= 5;
+                break;
+            case B:
+            case D:
+                angle_instance.Output *= 4;
+                break;
+            case C:
+                angle_instance.Output *= 4;
+                break;
+            default:
+                break;
+            }
         }
         left_target_vt += angle_instance.Output;  // 系数后面测
         right_target_vt -= angle_instance.Output; // 系数后面测
-        if (fabs(chassis_cmd_recv.lidar_com_speed) > 2500 && angle_instance.Err > 45)
+        if (fabs(chassis_cmd_recv.lidar_com_speed) > speedComLimit && angle_instance.Err > 30)
+
         {
-            chassis_cmd_recv.lidar_com_speed = (chassis_cmd_recv.lidar_com_speed > 0) ? 2500 : -2500;
+            chassis_cmd_recv.lidar_com_speed = (chassis_cmd_recv.lidar_com_speed > 0) ? speedComLimit : -speedComLimit;
             left_target_vt += chassis_cmd_recv.lidar_com_speed;
             right_target_vt -= chassis_cmd_recv.lidar_com_speed;
         }
@@ -197,6 +221,13 @@ static void SpeedCalculate()
         {
             left_target_vt += chassis_cmd_recv.lidar_com_speed;
             right_target_vt -= chassis_cmd_recv.lidar_com_speed;
+        }
+
+        // 防止卡车
+        if (left_target_vt < 1500 && right_target_vt < 1500)
+        {
+            left_target_vt = 6000;
+            right_target_vt = 6000;
         }
     }
     else
@@ -270,35 +301,49 @@ void ChassisTask()
     {
     case CHASSIS_FORWARD:
         left_target_vt = right_target_vt = chassis_cmd_recv.speed; // 3500
-        angle_instance.MaxOut = 2500;
-        angle_instance.IntegralLimit = 250;
+        if (chassis_cmd_recv.region == A)
+        {
+            angle_instance.IntegralLimit = 500;
+            angle_instance.MaxOut = 2500;
+        }
+        else
+        {
+            angle_instance.IntegralLimit = 200;
+            angle_instance.MaxOut = 2000;
+        }
         break;
     case CHASSIS_C2C:
         left_target_vt = right_target_vt = chassis_cmd_recv.speed; // 3500
-        angle_instance.MaxOut = 2500;
-        angle_instance.IntegralLimit = 250;
+        angle_instance.MaxOut = 4000;
+        angle_instance.IntegralLimit = 1000;
         // left_target_vt = right_target_vt = 0; // 3500
         break;
     case CHASSIS_ROTATE:
         left_target_vt = right_target_vt = 0; // 后面根据实际情况给速度值
         angle_instance.IntegralLimit = 300;
-        if (angle_instance.Err > 45)
+        if (fabs(angle_instance.Err) > 45)
+        {
+            angle_instance.MaxOut = 2000;
+        }
+        else if (fabs(angle_instance.Err) > 30)
         {
             angle_instance.MaxOut = 1500;
         }
-        else if (angle_instance.Err > 30)
+        else if (fabs(angle_instance.Err) > 15)
         {
-            angle_instance.MaxOut = 800;
+            angle_instance.MaxOut = 700;
         }
-        else if (angle_instance.Err > 15)
+        else if (fabs(angle_instance.Err) > 10)
         {
-            angle_instance.MaxOut = 500;
-            angle_instance.IntegralLimit = 300;
+            angle_instance.MaxOut = 300;
         }
-        else if (angle_instance.Err > 7)
+        else if (fabs(angle_instance.Err) > 5)
+        {
+            angle_instance.MaxOut = 200;
+        }
+        else if (fabs(angle_instance.Err) > 2.5)
         {
             angle_instance.MaxOut = 100;
-            angle_instance.IntegralLimit = 400;
         }
         break;
     default:

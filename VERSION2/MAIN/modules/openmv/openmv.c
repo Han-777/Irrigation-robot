@@ -3,23 +3,45 @@
 #include <string.h>
 #include "daemon.h"
 
-#define OPENMV_FRAME_SIZE 5
+#define OPENMV_FRAME_SIZE 20
 #define OPENMV_FRAME_HEAD 0x7EAA
-#define OPENMV_FRAME_TAIL 0x7F55
+#define OPENMV_FRAME_TAIL 0xBB55
 static OPENMV_data_t *openmv_data;
 static USARTInstance *openmv_instance; // left lidar
 
+void Mv_Close(void)
+{
+    HAL_UART_Abort_IT(&huart3);
+}
+
+void Mv_Open(void)
+{
+    HAL_UART_Receive_IT(&huart3, openmv_instance->recv_buff, openmv_instance->recv_buff_size);
+}
+
 static void openmv_buff_to_data(uint16_t size)
 {
-    if (size == openmv_instance->recv_buff_size)
+    for (int i = 0; i < OPENMV_FRAME_SIZE - 5; ++i)
     {
-        if ((openmv_instance->recv_buff[0] == (uint8_t)(OPENMV_FRAME_HEAD >> 8) && openmv_instance->recv_buff[1] == (uint8_t)(OPENMV_FRAME_HEAD & 0xFF)) &&
-            (openmv_instance->recv_buff[OPENMV_FRAME_SIZE - 2] == (uint8_t)(OPENMV_FRAME_TAIL >> 8) && openmv_instance->recv_buff[OPENMV_FRAME_SIZE - 1] == (uint8_t)(OPENMV_FRAME_TAIL & 0xFF)))
+        if ((openmv_instance->recv_buff[i] == (uint8_t)(OPENMV_FRAME_HEAD >> 8) && openmv_instance->recv_buff[i + 1] == (uint8_t)(OPENMV_FRAME_HEAD & 0xFF)) && (openmv_instance->recv_buff[i + 3] == (uint8_t)(OPENMV_FRAME_TAIL >> 8) && openmv_instance->recv_buff[i + 4] == (uint8_t)(OPENMV_FRAME_TAIL & 0xFF)))
         {
-            memcpy(openmv_data, &openmv_instance->recv_buff[2], 1);
+            openmv_data->color = openmv_instance->recv_buff[i + 2];
+            // memcpy(bluetoothata->drought_buff, &bluetooth_instance->recv_buff[i + 2], 18);
+            // for (int i = 0; i < 18; ++i)
+            // {
+            //     bluetooth_data->drought_buff[i] = bluetooth_instance->recv_buff[i + 2];
+            // }
             return;
         }
     }
+
+    // if ((openmv_instance->recv_buff[0] == (uint8_t)(OPENMV_FRAME_HEAD >> 8) && openmv_instance->recv_buff[1] == (uint8_t)(OPENMV_FRAME_HEAD & 0xFF)) &&
+    //     (openmv_instance->recv_buff[OPENMV_FRAME_SIZE - 2] == (uint8_t)(OPENMV_FRAME_TAIL >> 8) && openmv_instance->recv_buff[OPENMV_FRAME_SIZE - 1] == (uint8_t)(OPENMV_FRAME_TAIL & 0xFF)))
+    // {
+    //     // memcpy(openmv_data, &openmv_instance->recv_buff[2], 1);
+    //     openmv_data->color = openmv_instance->recv_buff[2];
+    //     return;
+    // }
 }
 
 /**
@@ -40,7 +62,7 @@ static void MVRxCallback(UART_HandleTypeDef *huart, uint16_t size) // 串口接�
  */
 static void MVLostCallback(void *id) // id is corresponding usart handle
 {
-    memset(openmv_instance, 0, sizeof(openmv_instance));
+    // memset(openmv_instance, 0, sizeof(openmv_instance));
     USARTServiceInit(openmv_instance);
 }
 
@@ -51,5 +73,6 @@ OPENMV_data_t *OPENMV_Init(UART_HandleTypeDef *openmv_usart_handle)
     conf.usart_handle = openmv_usart_handle;
     conf.recv_buff_size = OPENMV_FRAME_SIZE;
     openmv_instance = USARTRegister(&conf);
+    openmv_data->color = NONE;
     return openmv_data;
 }

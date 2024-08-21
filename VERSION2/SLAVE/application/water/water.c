@@ -1,8 +1,7 @@
 #include "water.h"
 #include "robot_def.h"
 #include "message_center.h"
-#include "usart.h"
-#include "mp3.h"
+
 /*================message center============*/
 static Publisher_t *water_pub;
 static Subscriber_t *water_sub;
@@ -11,7 +10,6 @@ static Water_Upload_Data_s water_feedback_data;
 
 void WaterInit(void)
 {
-    MP3_Init(&huart5);
 
     /*-----------------------message center-------------------------*/
     water_sub = SubRegister("water_cmd", sizeof(Water_Ctrl_Cmd_s));

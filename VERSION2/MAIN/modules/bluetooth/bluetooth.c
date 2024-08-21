@@ -3,7 +3,7 @@
 #include <string.h>
 #include "daemon.h"
 
-#define bluetooth_FRAME_SIZE 70
+#define bluetooth_FRAME_SIZE 100
 #define bluetooth_FRAME_HEAD 0x7EAA
 #define bluetooth_FRAME_TAIL 0x7F55
 static BLUETOOTH_data_t *bluetooth_data;
@@ -12,15 +12,22 @@ void bluetooth_buff_to_data(void)
 {
     for (int i = 0; i < bluetooth_FRAME_SIZE - 22; ++i)
     {
-        if ((bluetooth_instance->recv_buff[i] == (uint8_t)(bluetooth_FRAME_HEAD >> 8) && bluetooth_instance->recv_buff[i + 1] == (uint8_t)(bluetooth_FRAME_HEAD & 0xFF)) && (bluetooth_instance->recv_buff[i + 20] == (uint8_t)(bluetooth_FRAME_TAIL >> 8) && bluetooth_instance->recv_buff[i + 21] == (uint8_t)(bluetooth_FRAME_TAIL & 0xFF)))
+        if (bluetooth_instance->recv_buff[i] == 0x7E && bluetooth_instance->recv_buff[i + 1] == 0xAA && bluetooth_instance->recv_buff[i + 20] == 0x7F && bluetooth_instance->recv_buff[i + 21] == 0x55)
         {
-            memcpy(bluetooth_data->drought_buff, &bluetooth_instance->recv_buff[i + 2], 18);
-            // for (int i = 0; i < 18; ++i)
-            // {
-            //     bluetooth_data->drought_buff[i] = bluetooth_instance->recv_buff[i + 2];
-            // }
-            // return;
+            for (size_t j = 0; j < 18; ++j)
+            {
+                bluetooth_data->drought_buff[j] = bluetooth_instance->recv_buff[i + 2 + j];
+            }
         }
+        // if ((bluetooth_instance->recv_buff[i] == (uint8_t)(bluetooth_FRAME_HEAD >> 8) && bluetooth_instance->recv_buff[i + 1] == (uint8_t)(bluetooth_FRAME_HEAD & 0xFF)) && (bluetooth_instance->recv_buff[i + 20] == (uint8_t)(bluetooth_FRAME_TAIL >> 8) && bluetooth_instance->recv_buff[i + 21] == (uint8_t)(bluetooth_FRAME_TAIL & 0xFF)))
+        // {
+        //     memcpy(bluetooth_data->drought_buff, &bluetooth_instance->recv_buff[i + 2], 18);
+        //     // for (int i = 0; i < 18; ++i)
+        //     // {
+        //     //     bluetooth_data->drought_buff[i] = bluetooth_instance->recv_buff[i + 2];
+        //     // }
+        //     // return;
+        // }
     }
     // if ((bluetooth_instance->recv_buff[0] == (uint8_t)(bluetooth_FRAME_HEAD >> 8) && bluetooth_instance->recv_buff[1] == (uint8_t)(bluetooth_FRAME_HEAD & 0xFF)) &&
     //     (bluetooth_instance->recv_buff[bluetooth_FRAME_SIZE - 2] == (uint8_t)(bluetooth_FRAME_TAIL >> 8) && bluetooth_instance->recv_buff[bluetooth_FRAME_SIZE - 1] == (uint8_t)(bluetooth_FRAME_TAIL & 0xFF)))
@@ -51,7 +58,7 @@ static void BTRxCallback(UART_HandleTypeDef *huart, uint16_t size) // 串口接�
  */
 static void MVLostCallback(void *id) // id is corresponding usart handle
 {
-    // memset(bluetooth_instance, 0, sizeof(bluetooth_instance));
+    memset(bluetooth_instance, 0, sizeof(bluetooth_instance));
     USARTServiceInit(bluetooth_instance);
 }
 

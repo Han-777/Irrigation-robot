@@ -117,6 +117,7 @@ typedef struct
 typedef struct
 {
     uint8_t plant_Cnt;
+    uint8_t D_Drougnt_info;
     uint8_t recv_feedback_flag; // 接收到正确数据返回1
 } Comm_Recv_Data_s;
 

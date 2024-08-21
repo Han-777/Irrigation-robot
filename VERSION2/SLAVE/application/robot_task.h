@@ -12,7 +12,6 @@
 // #include "buzzer.h"
 #include <memory.h>
 // osThreadId insTaskHandle;
-osThreadId initTaskHandle;
 osThreadId robotTaskHandle;
 osThreadId motorTaskHandle;
 osThreadId daemonTaskHandle;
@@ -25,8 +24,6 @@ osThreadId lidarTaskHandle;
 
 // void StartINSTASK(void const *argument);
 // void RobotInitTASK(void const *argument); // 用于陀螺仪以及蓝牙数据处理,此任务完成之后可以激活其他任务
-void StartInitTASK(void const *argument); // 用于陀螺仪以及蓝牙数据处理,此任务完成之后可以激活其他任务
-void RobotInitTASK();
 void StartMOTORTASK(void const *argument);
 void StartDAEMONTASK(void const *argument);
 void StartROBOTTASK(void const *argument);
@@ -42,11 +39,14 @@ void StartLidarTask(void const *argument);
  */
 void OSTaskInit()
 {
+    osThreadDef(daemontask, StartDAEMONTASK, osPriorityNormal, 0, 128);
+    daemonTaskHandle = osThreadCreate(osThread(daemontask), NULL);
+
     osThreadDef(robottask, StartROBOTTASK, osPriorityNormal, 0, 1024);
     robotTaskHandle = osThreadCreate(osThread(robottask), NULL);
 
-    osThreadDef(watertask, StartWaterTASK, osPriorityNormal, 0, 1024);
-    waterTaskHandle = osThreadCreate(osThread(watertask), NULL);
+    // osThreadDef(watertask, StartWaterTASK, osPriorityNormal, 0, 1024);
+    // waterTaskHandle = osThreadCreate(osThread(watertask), NULL);
 }
 
 __attribute__((noreturn)) void StartDAEMONTASK(void const *argument)
@@ -86,7 +86,7 @@ __attribute__((noreturn)) void StartROBOTTASK(void const *argument)
         // {
         // LOGERROR("[freeRTOS] ROBOT core Task is being DELAY! dt = [%f]", &robot_dt);
         // }
-        osDelay(1);
+        osDelay(3);
     }
 }
 

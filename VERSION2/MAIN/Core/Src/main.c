@@ -32,6 +32,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "robot.h"
+// static BLUETOOTH_data_t *bluetooth_data;
 
 /* USER CODE END Includes */
 
@@ -122,8 +123,14 @@ int main(void)
   MX_RTC_Init();
   MX_TIM8_Init();
   MX_FDCAN2_Init();
+  MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
+  // bluetooth_data = Bluetooth_Init(&huart6);
+  // while (1)
+  //   ;
+  // HAL_UART_Abort_IT(&huart6);
   RobotInit();
+
   /*       for testing       */
 
   /* USER CODE END 2 */

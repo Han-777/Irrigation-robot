@@ -7,6 +7,18 @@ static LD_data_t *ld_data;
 static DaemonInstance *ld_daemon_instance;
 static USARTInstance *lld_instance; // left lidar
 static USARTInstance *rld_instance; // right lidar
+
+void Lidar_Close(void)
+{
+    HAL_UART_Abort_IT(&huart2);
+    HAL_UART_Abort_IT(&huart4);
+}
+
+void Lidar_Open(void)
+{
+    HAL_UART_Receive_IT(&huart2, lld_instance->recv_buff, lld_instance->recv_buff_size);
+    HAL_UART_Receive_IT(&huart4, rld_instance->recv_buff, rld_instance->recv_buff_size);
+}
 #ifdef LIDAR_INFO_HANDLE_OUT
 
 static uint8_t lidar_buff[LIDAR_FRAME_SIZE + 1]; // +1: for indentification of left and right

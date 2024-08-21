@@ -5,37 +5,38 @@
 // #include "master_process.h"
 #include "stdint.h"
 #define ROBOT_DEF_PARAM_WARNING
-#define A_speed 7000
-#define C_speed 6000
-#define BD_speed 9000
+#define A_speed 6500
+#define C_speed 5000
+#define B_speed 9000
+#define D_speed 8000
 /*=====================A===========================*/
 #define LD_A_DIS_THRESHOLD 27
-#define LD_A_DIS_MIN_THRESHOLD 10 // 正中心对应雷达距离 中心：14
-#define LD_A_DIS_MAX_THRESHOLD 18
+#define LD_A_DIS_MIN_THRESHOLD 12 // 正中心对应雷达距离 中心：14
+#define LD_A_DIS_MAX_THRESHOLD 21
 /*=====================B===========================*/
 #define LD_B_DIS_THRESHOLD 40
 
 #define LD_B_DIS_MIN_THRESHOLD 17 // 正中心对应雷达距离 中心：22
-#define LD_B_DIS_MAX_THRESHOLD 15 // 防掉坡：加强远端修复能力（可以偏右）
+#define LD_B_DIS_MAX_THRESHOLD 16 // 防掉坡：加强远端修复能力（可以偏右）
 /*=====================C===========================*/
 // C理想位置左：31 右：17
 // #define LD_C_DIS_MIN_THRESHOLD 15 // 正中心对应雷达距离 中心：24
 // #define LD_C_DIS_MAX_THRESHOLD 30 // 防掉坡：加强近端修复能力（可以偏右）
-#define LD_C_LEFT_DIS_THRESHOLD 42
-#define LD_C_LEFT_DIS_MIN_THRESHOLD 22
-#define LD_C_LEFT_DIS_MAX_THRESHOLD 22 // mid : 19
-#define LD_C_RIGHT_DIS_THRESHOLD 33
-#define LD_C_RIGHT_DIS_MIN_THRESHOLD 26
-#define LD_C_RIGHT_DIS_MAX_THRESHOLD 26 // mid:
+#define LD_C_LEFT_DIS_THRESHOLD 38
+#define LD_C_LEFT_DIS_MIN_THRESHOLD 26
+#define LD_C_LEFT_DIS_MAX_THRESHOLD 33 // mid : 19
+#define LD_C_RIGHT_DIS_THRESHOLD 35
+#define LD_C_RIGHT_DIS_MIN_THRESHOLD 17
+#define LD_C_RIGHT_DIS_MAX_THRESHOLD 20 // mid:
 /*=====================D===========================*/
 #define LD_D_DIS_THRESHOLD 33
-#define LD_D_DIS_MIN_THRESHOLD 20 // 正中心对应雷达距离 中心：22
-#define LD_D_DIS_MAX_THRESHOLD 24
+#define LD_D_DIS_MIN_THRESHOLD 18 // 正中心对应雷达距离 中心：22
+#define LD_D_DIS_MAX_THRESHOLD 28
 /*====================补偿=========================*/
-#define COM_PARAMETER_A 100
+#define COM_PARAMETER_A 120
 #define COM_PARAMETER_B 250
-#define COM_PARAMETER 250
-#define COM_C_PARAMETER 250
+#define COM_PARAMETER_D 300
+#define COM_C_PARAMETER 300
 
 #define ONE_BOARD // 单板控制整车 (实际上是双板，没有完善代码)
 // #define CHASSIS_BOARD //底盘板
@@ -135,7 +136,6 @@ typedef struct
 {
     uint8_t water_finish_state; // water state (完成为1)
     uint8_t plant_cnt;          // number of plant
-    uint8_t drought_info_ready_flag;
 } Water_Upload_Data_s;
 
 /*=================双板通信================*/
@@ -148,7 +148,8 @@ typedef enum
 
 typedef struct
 {
-    Drought_Info_e drought_info;
+    uint8_t plant_Cnt;
+    uint8_t D_Drougnt_info;
     uint8_t recv_feedback_flag; // 接收到正确数据返回1
 } Comm_Send_Data_s;             // 板间通信结构体
 

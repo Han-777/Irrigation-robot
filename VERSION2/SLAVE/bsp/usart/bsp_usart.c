@@ -21,7 +21,7 @@ static uint8_t usart_instance_idx = 0;
 static USARTInstance *usart_instance[DEVICE_USART_CNT] = {NULL};
 
 // 内存处理
-#define MY_SECTION_SIZE_LIMIT 2 * 1024 // 2KB(for memory protection unit), ram size
+#define MY_SECTION_SIZE_LIMIT 4 * 1024 // 2KB(for memory protection unit), ram size
 __attribute__((section(".my_section"))) static uint8_t my_section[MY_SECTION_SIZE_LIMIT];
 static size_t my_section_offset = 0;
 void *my_malloc(size_t size)
@@ -50,7 +50,7 @@ void USARTServiceInit(USARTInstance *_instance)
     // 关闭dma half transfer中断防止两次进入HAL_UARTEx_RxEventCallback()
     // 这是HAL库的一个设计失误,发生DMA传输完成/半完成以及串口IDLE中断都会触发HAL_UARTEx_RxEventCallback()
     // 我们只希望处理第一种和第三种情况,因此直接关闭DMA半传输中断
-    __HAL_DMA_DISABLE_IT(_instance->usart_handle->hdmarx, DMA_IT_HT);
+    // __HAL_DMA_DISABLE_IT(_instance->usart_handle->hdmarx, DMA_IT_HT);
 }
 
 USARTInstance *USARTRegister(USART_Init_Config_s *init_config)
@@ -136,11 +136,11 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
                 // SCB_InvalidateDCache(); // [cache<-sram]稍微高一些(SCB_CleanDCache[cache->sram])
                 // SCB_InvalidateDCache_by_Addr((uint32_t *)usart_instance[i]->recv_buff, (usart_instance[i]->recv_buff_size + 31) / 32); // 前面加1是因为HAL库);
                 usart_instance[i]->module_callback(huart, Size);
-                memset(usart_instance[i]->recv_buff, 0, Size); // 接收结束后清空buffer,对于变长数据是必要的
+                // memset(usart_instance[i]->recv_buff, 0, Size); // 接收结束后清空buffer,对于变长数据是必要的
             }
             HAL_UARTEx_ReceiveToIdle_DMA(usart_instance[i]->usart_handle, usart_instance[i]->recv_buff, usart_instance[i]->recv_buff_size);
             // HAL_UARTEx_Receiv eToIdle_IT(usart_instance[i]->usart_handle, usart_instance[i]->recv_buff, usart_instance[i]->recv_buff_size);
-            __HAL_DMA_DISABLE_IT(usart_instance[i]->usart_handle->hdmarx, DMA_IT_HT);
+            // __HAL_DMA_DISABLE_IT(usart_instance[i]->usart_handle->hdmarx, DMA_IT_HT);
             return; // break the loop
         }
     }
@@ -181,7 +181,7 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
 
             // HAL_UARTEx_ReceiveToIdle_IT(usart_instance[i]->usart_handle, usart_instance[i]->recv_buff, usart_instance[i]->recv_buff_size);
             HAL_UARTEx_ReceiveToIdle_DMA(usart_instance[i]->usart_handle, usart_instance[i]->recv_buff, usart_instance[i]->recv_buff_size);
-            __HAL_DMA_DISABLE_IT(usart_instance[i]->usart_handle->hdmarx, DMA_IT_HT);
+            // __HAL_DMA_DISABLE_IT(usart_instance[i]->usart_handle->hdmarx, DMA_IT_HT);
             return;
         }
     }

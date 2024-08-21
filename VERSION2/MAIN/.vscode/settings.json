@@ -74,7 +74,10 @@
     "task.h": "c",
     "can_command.h": "c",
     "can_comm.h": "c",
-    "robot_queue.h": "c"
+    "robot_queue.h": "c",
+    "crc8.h": "c",
+    "rng.h": "c",
+    "motor_def.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

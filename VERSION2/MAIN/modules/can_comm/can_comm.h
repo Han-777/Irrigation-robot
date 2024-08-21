@@ -88,5 +88,6 @@ void *CANCommGet(CANCommInstance *instance);
  * @return uint8_t
  */
 uint8_t CANCommIsOnline(CANCommInstance *instance);
+void CANCommRxCallback(CANInstance *_instance);
 
 #endif // !CAN_COMM_H

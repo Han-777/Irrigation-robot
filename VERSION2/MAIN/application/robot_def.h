@@ -6,13 +6,13 @@
 #include "stdint.h"
 #define ROBOT_DEF_PARAM_WARNING
 #define A_speed 6500
-#define C_speed 5000
+#define C_speed 6500
 #define B_speed 9000
 #define D_speed 8000
 /*=====================A===========================*/
 #define LD_A_DIS_THRESHOLD 27
-#define LD_A_DIS_MIN_THRESHOLD 12 // 正中心对应雷达距离 中心：14
-#define LD_A_DIS_MAX_THRESHOLD 21
+#define LD_A_DIS_MIN_THRESHOLD 10 // 正中心对应雷达距离 中心：14
+#define LD_A_DIS_MAX_THRESHOLD 26
 /*=====================B===========================*/
 #define LD_B_DIS_THRESHOLD 40
 
@@ -22,21 +22,21 @@
 // C理想位置左：31 右：17
 // #define LD_C_DIS_MIN_THRESHOLD 15 // 正中心对应雷达距离 中心：24
 // #define LD_C_DIS_MAX_THRESHOLD 30 // 防掉坡：加强近端修复能力（可以偏右）
-#define LD_C_LEFT_DIS_THRESHOLD 38
-#define LD_C_LEFT_DIS_MIN_THRESHOLD 26
+#define LD_C_LEFT_DIS_THRESHOLD 40
+#define LD_C_LEFT_DIS_MIN_THRESHOLD 28
 #define LD_C_LEFT_DIS_MAX_THRESHOLD 33 // mid : 19
 #define LD_C_RIGHT_DIS_THRESHOLD 35
-#define LD_C_RIGHT_DIS_MIN_THRESHOLD 17
+#define LD_C_RIGHT_DIS_MIN_THRESHOLD 14
 #define LD_C_RIGHT_DIS_MAX_THRESHOLD 20 // mid:
 /*=====================D===========================*/
 #define LD_D_DIS_THRESHOLD 33
-#define LD_D_DIS_MIN_THRESHOLD 18 // 正中心对应雷达距离 中心：22
-#define LD_D_DIS_MAX_THRESHOLD 28
+#define LD_D_DIS_MIN_THRESHOLD 14 // 正中心对应雷达距离 中心：22
+#define LD_D_DIS_MAX_THRESHOLD 32
 /*====================补偿=========================*/
-#define COM_PARAMETER_A 120
+#define COM_PARAMETER_A 100
 #define COM_PARAMETER_B 250
-#define COM_PARAMETER_D 300
-#define COM_C_PARAMETER 300
+#define COM_PARAMETER_D 100
+#define COM_C_PARAMETER 250
 
 #define ONE_BOARD // 单板控制整车 (实际上是双板，没有完善代码)
 // #define CHASSIS_BOARD //底盘板

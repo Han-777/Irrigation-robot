@@ -11,7 +11,9 @@
 #include "bsp_usart.h"
 #include "stdlib.h"
 #include "memory.h"
-
+#include "FreeRTOS.h"
+#include "cmsis_os.h"
+#include "task.h"
 /*============for virtual usart====================*/
 #include "bsp_dwt.h"
 
@@ -227,11 +229,13 @@ void VirtualCOM_ByteSend(VIRTUALInstance *instance, uint8_t data)
         else
             HAL_GPIO_WritePin(instance->tx_port, instance->tx_pin, GPIO_PIN_RESET); // 0
         data >>= 1;
-        DWT_Delay_us(instance->trans_baud);
+        osDelay(instance->trans_baud);
+        // DWT_Delay_us(instance->trans_baud);
         // delay_us(instance->trans_baud); // after freertos
     }
     HAL_GPIO_WritePin(instance->tx_port, instance->tx_pin, GPIO_PIN_SET); // 发送结束位
-    DWT_Delay_us(instance->trans_baud);
+    osDelay(instance->trans_baud);
+    // DWT_Delay_us(instance->trans_baud);
     // delay_us(instance->trans_baud); // after freertos
 }
 

@@ -10,14 +10,28 @@ static USARTInstance *rld_instance; // right lidar
 
 void Lidar_Close(void)
 {
-    HAL_UART_Abort_IT(&huart2);
-    HAL_UART_Abort_IT(&huart4);
+    // HAL_UART_Abort_IT(&huart2);
+    // HAL_UART_Abort_IT(&huart4);
+    // 中止当前的 UART 接收操作
+    HAL_UART_AbortReceive_IT(lld_instance->usart_handle);
+    // HAL_UART_AbortReceive_IT(rld_instance->usart_handle);
+
+    // 清空接收缓冲区
+    memset(lld_instance->recv_buff, 0, lld_instance->recv_buff_size);
+    // memset(rld_instance->recv_buff, 0, rld_instance->recv_buff_size);
 }
 
 void Lidar_Open(void)
 {
-    HAL_UART_Receive_IT(&huart2, lld_instance->recv_buff, lld_instance->recv_buff_size);
-    HAL_UART_Receive_IT(&huart4, rld_instance->recv_buff, rld_instance->recv_buff_size);
+    // HAL_UART_Receive_IT(&huart2, lld_instance->recv_buff, lld_instance->recv_buff_size);
+    // HAL_UART_Receive_IT(&huart4, rld_instance->recv_buff, rld_instance->recv_buff_size);
+    // 启动 UART 接收
+    HAL_UARTEx_ReceiveToIdle_DMA(lld_instance->usart_handle, lld_instance->recv_buff, lld_instance->recv_buff_size);
+    HAL_UARTEx_ReceiveToIdle_DMA(rld_instance->usart_handle, rld_instance->recv_buff, rld_instance->recv_buff_size);
+
+    // 关闭 DMA 半传输中断
+    __HAL_DMA_DISABLE_IT(lld_instance->usart_handle->hdmarx, DMA_IT_HT);
+    __HAL_DMA_DISABLE_IT(rld_instance->usart_handle->hdmarx, DMA_IT_HT);
 }
 #ifdef LIDAR_INFO_HANDLE_OUT
 

@@ -16,20 +16,20 @@
 #define scan_delay_time 40 // 30
 #define water_delay_time 8 // 12
 #define water_angle_offset 5
-#define pitch_scan_angle 175
-#define pitch_scan_D_angle 180
+#define pitch_scan_angle 180
+#define pitch_scan_D_angle 160
 #define yaw_scan_left_begin_angle 200
 #define yaw_scan_left_end_angle 250
 #define yaw_scan_right_begin_angle 65
 #define yaw_scan_right_end_angle 15
-#define yaw_scan_left_D_angle 230
-#define yaw_scan_right_D_angle 45
+#define yaw_scan_left_D_angle 210
+#define yaw_scan_right_D_angle 50
 /*---------------water angle-----------------*/
 #define pitch_water_left_angle(lidar_left_dis) (170 - lidar_left_dis * 0.7)
 #define pitch_water_right_angle(lidar_right_dis) (170 - lidar_right_dis * 0.7)
 #define pitch_water_min 150
-#define pitch_water_D_left_angle(lidar_left_dis) (180 - lidar_left_dis * 0.2)
-#define pitch_water_D_right_angle(lidar_right_dis) (180 - lidar_right_dis * 0.2)
+#define pitch_water_D_left_angle(lidar_left_dis) (170 - lidar_left_dis * 0.5)
+#define pitch_water_D_right_angle(lidar_right_dis) (170 - lidar_right_dis * 0.5)
 
 #ifdef water
 #endif

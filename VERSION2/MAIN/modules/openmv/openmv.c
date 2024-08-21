@@ -11,12 +11,21 @@ static USARTInstance *openmv_instance; // left lidar
 
 void Mv_Close(void)
 {
-    HAL_UART_Abort_IT(&huart3);
+    // HAL_UART_Abort_IT(&huart3);
+    HAL_UART_AbortReceive_IT(openmv_instance->usart_handle);
+
+    // 清空接收缓冲区
+    memset(openmv_instance->recv_buff, 0, openmv_instance->recv_buff_size);
 }
 
 void Mv_Open(void)
 {
-    HAL_UART_Receive_IT(&huart3, openmv_instance->recv_buff, openmv_instance->recv_buff_size);
+    // HAL_UART_Receive_IT(&huart3, openmv_instance->recv_buff, openmv_instance->recv_buff_size);
+    // 启动 UART 接收
+    HAL_UARTEx_ReceiveToIdle_DMA(openmv_instance->usart_handle, openmv_instance->recv_buff, openmv_instance->recv_buff_size);
+
+    // 关闭 DMA 半传输中断
+    __HAL_DMA_DISABLE_IT(openmv_instance->usart_handle->hdmarx, DMA_IT_HT);
 }
 
 static void openmv_buff_to_data(uint16_t size)

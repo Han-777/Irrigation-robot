@@ -33,7 +33,7 @@ static Chassis_Upload_Data_s chassis_feedback_data; // 底盘回传的反馈数�
 /* 私有函数计算的中介变量,设为静态避免参数传递的开销 */
 static float left_target_vt, right_target_vt; // 左边速度一样，右边速度一样
 static PIDInstance angle_instance;
-#define speedComLimit 3000
+#define speedComLimit 2500
 void ChassisInit() // 配置中所有pid参数都需要修改
 {
     /*  最外层角度环参数   */
@@ -81,7 +81,7 @@ void ChassisInit() // 配置中所有pid参数都需要修改
                         .Kd = 0,
                         .IntegralLimit = 3000,
                         .Improve = PID_Trapezoid_Intergral | PID_Integral_Limit | PID_Derivative_On_Measurement,
-                        .MaxOut = 0, // 1200
+                        .MaxOut = 15000, // 1200
                     },
 
             },
@@ -195,15 +195,18 @@ static void SpeedCalculate()
             switch (chassis_cmd_recv.region)
             {
             case A:
-                angle_instance.Output *= 7;
+                angle_instance.Output *= 6;
                 break;
             case B:
-            case D:
                 angle_instance.Output *= 4;
                 break;
             case C:
-                angle_instance.Output *= 4;
+                angle_instance.Output *= 5;
                 break;
+            case D:
+                angle_instance.Output *= 8;
+                break;
+
             default:
                 break;
             }
@@ -211,7 +214,6 @@ static void SpeedCalculate()
         left_target_vt += angle_instance.Output;  // 系数后面测
         right_target_vt -= angle_instance.Output; // 系数后面测
         if (fabs(chassis_cmd_recv.lidar_com_speed) > speedComLimit && angle_instance.Err > 30)
-
         {
             chassis_cmd_recv.lidar_com_speed = (chassis_cmd_recv.lidar_com_speed > 0) ? speedComLimit : -speedComLimit;
             left_target_vt += chassis_cmd_recv.lidar_com_speed;
@@ -303,13 +305,13 @@ void ChassisTask()
         left_target_vt = right_target_vt = chassis_cmd_recv.speed; // 3500
         if (chassis_cmd_recv.region == A)
         {
-            angle_instance.IntegralLimit = 500;
-            angle_instance.MaxOut = 2500;
+            angle_instance.IntegralLimit = 200;
+            angle_instance.MaxOut = 1500;
         }
         else
         {
-            angle_instance.IntegralLimit = 200;
-            angle_instance.MaxOut = 2000;
+            angle_instance.IntegralLimit = 250;
+            angle_instance.MaxOut = 2500;
         }
         break;
     case CHASSIS_C2C:

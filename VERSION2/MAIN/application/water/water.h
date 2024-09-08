@@ -12,9 +12,11 @@
 /*---------------standby angle---------------*/
 #define pitch_standby_angle 130 // pitch mid angle 140
 #define yaw_standby_angle 130   // yaw mid angle 135
-/*---------------scan angle------------------*/
-#define scan_delay_time 40 // 30
-#define water_delay_time 8 // 12
+/*---------------scan angle----------------- -*/
+#define scan_delay_time 30 // 30
+#define water_delay_time 5 // 12
+// #define scan_delay_time 0  // 30
+// #define water_delay_time 0 // 12
 #define water_angle_offset 5
 #define pitch_scan_angle 180
 #define pitch_scan_D_angle 160

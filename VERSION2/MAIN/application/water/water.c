@@ -25,11 +25,12 @@ static CANCommInstance *CANComm_ins;
 static Comm_Send_Data_s *comm_send_data;
 static Comm_Recv_Data_s *comm_recv_data;
 static ServoInstance *pitchServoMotor, *yawServoMotor;
-static Drought_Info_e default_info_buff[24] = {1, 2, 3, 1, 2, 3,
-                                               1, 2, 3, 1, 2, 3,
-                                               1, 2, 3, 1, 2, 3,
+static Drought_Info_e default_info_buff[30] = {3, 3, 2, 2, 1, 1,
+                                               3, 1, 3, 1, 2, 2,
+                                               3, 2, 1, 1, 2, 3,
+                                               3, 2, 2, 1, 1, 3,
                                                2, 2, 2, 2, 2, 2};
-static Drought_Info_e drought_info_buff[24] = {0};
+static Drought_Info_e drought_info_buff[30] = {0};
 static uint8_t pitch_angle_index = pitch_standby_angle;
 static uint16_t yaw_angle_index = yaw_standby_angle;
 static uint8_t pitch_target_angle = pitch_standby_angle;
@@ -150,14 +151,14 @@ static int servo_scan_ready(water_State_e water_flag)
     pitch_target_angle = pitch_scan_angle;
     if (water_flag == left_water_flag)
         yaw_target_angle = yaw_scan_left_begin_angle;
-    else
+    else if (water_flag == right_water_flag || water_flag == pair_water_flag)
         yaw_target_angle = yaw_scan_right_begin_angle;
 
     if (servo_action())
     {
         if (water_flag == left_water_flag)
             yaw_target_angle = yaw_scan_left_end_angle;
-        else
+        else if (water_flag == right_water_flag || water_flag == pair_water_flag)
             yaw_target_angle = yaw_scan_right_end_angle;
         comm_send_data->plant_Cnt = water_feedback_data.plant_cnt + 1;
         // comm_send_data->recv_feedback_flag = 0;
@@ -212,7 +213,7 @@ static int servo_water_action(water_State_e water_flag)
 {
     if (water_flag == left_water_flag)
         pitch_target_angle = pitch_water_left_angle(water_recv_data.lidar_left_dis);
-    else
+    else if (water_flag == right_water_flag || water_flag == pair_water_flag)
         pitch_target_angle = pitch_water_right_angle(water_recv_data.lidar_right_dis);
     pitch_target_angle = (pitch_target_angle < pitch_water_min) ? pitch_water_min : pitch_target_angle;
     if (yaw_water_angle != 0)
@@ -259,20 +260,20 @@ static int water_D_scan_action(water_State_e water_flag)
     {
         yaw_target_angle = yaw_scan_left_D_angle;
     }
-    else
+    else if (water_flag == right_water_flag || water_flag == pair_water_flag)
     {
         yaw_target_angle = yaw_scan_right_D_angle;
     }
     if (servo_action())
     {
         mv_data->color = 0;
-        memset(comm_recv_data, 0, sizeof(Comm_Recv_Data_s));
-        comm_send_data->plant_Cnt = water_feedback_data.plant_cnt + 1;
-        // vTaskSuspendAll();    // 禁用调度器
-        // taskENTER_CRITICAL(); // 禁用中断
+        // memset(comm_recv_data, 0, sizeof(Comm_Recv_Data_s));
+        // comm_send_data->plant_Cnt = water_feedback_data.plant_cnt + 1;
+        vTaskSuspendAll();    // 禁用调度器
+        taskENTER_CRITICAL(); // 禁用中断
         Mv_Open();
-        // taskEXIT_CRITICAL(); // 启用中断
-        // xTaskResumeAll();    // 启用调度器
+        taskEXIT_CRITICAL(); // 启用中断
+        xTaskResumeAll();    // 启用调度器
         return 1;
     }
     return 0;
@@ -283,24 +284,28 @@ static int water_D_get_info(water_State_e water_flag)
     static uint8_t cnt = 0;
     if ((mv_data->color == GREEN || mv_data->color == BLUE || mv_data->color == RED) || (cnt > 10 && (mv_data->color != GREEN && mv_data->color != BLUE && mv_data->color != RED)))
     {
+        Mv_Close();
         cnt = 0;
-        if (mv_data->color)
+        if (mv_data->color > RED)
+        {
+            drought_info_buff[water_feedback_data.plant_cnt] = BLUE;
+        }
+        else
         {
             drought_info_buff[water_feedback_data.plant_cnt] = mv_data->color;
         }
-        comm_send_data->D_Drougnt_info = drought_info_buff[water_feedback_data.plant_cnt];
-        MP3_broadcast(comm_send_data->D_Drougnt_info);
+        // comm_send_data->D_Drougnt_info = drought_info_buff[water_feedback_data.plant_cnt];
+        MP3_broadcast(drought_info_buff[water_feedback_data.plant_cnt]);
         if (water_flag == left_water_flag)
         {
             pitch_target_angle = pitch_water_D_left_angle(water_recv_data.lidar_left_dis);
         }
-        else
+        else if (water_flag == right_water_flag || water_flag == pair_water_flag)
         {
             pitch_target_angle = pitch_water_D_right_angle(water_recv_data.lidar_right_dis);
         }
         // vTaskSuspendAll();    // 禁用调度器
         // taskENTER_CRITICAL(); // 禁用中断
-        Mv_Close();
         // taskEXIT_CRITICAL(); // 启用中断
         // xTaskResumeAll();    // 启用调度器
 
@@ -336,44 +341,59 @@ static int water_standby_action(water_State_e water_flag)
 /*** @todo 待测试 */
 static int Data_Check(void)
 {
-    comm_recv_data = (Comm_Recv_Data_s *)CANCommGet(CANComm_ins);
+    // comm_recv_data = (Comm_Recv_Data_s *)CANCommGet(CANComm_ins);
 
-    if (comm_recv_data->drought_info[17] != 0)
-    {
-        memcpy(drought_info_buff, comm_recv_data->drought_info, sizeof(comm_recv_data->drought_info));
-        return 1;
-    }
-    else
-    {
-        if (water_recv_data.water_flag != none_water_flag)
-        {
-            memcpy(drought_info_buff, default_info_buff, 24);
-            return 1;
-        }
-    }
-    if (water_recv_data.water_flag == none_water_flag)
-    {
-        if (comm_recv_data->drought_info[17] != 0)
-        {
-            memcpy(drought_info_buff, comm_recv_data->drought_info, sizeof(comm_recv_data->drought_info));
-        }
-        else
-        {
-            memcpy(drought_info_buff, default_info_buff, 18);
-        }
-        memcpy(&drought_info_buff[18], &comm_recv_data->drought_info[18], 6);
-        comm_send_data->recv_feedback_flag = 1;
-        if (comm_recv_data->recv_feedback_flag == 1)
-        {
-            return 1;
-        }
-    }
-    return 0;
-    // return 1;
+    // if (comm_recv_data->drought_info[17] != 0)
+    // {
+    //     memcpy(drought_info_buff, comm_recv_data->drought_info, sizeof(comm_recv_data->drought_info));
+    //     return 1;
+    // }
+    // else
+    // {
+    //     if (water_recv_data.water_flag != none_water_flag)
+    //     {
+    //         memcpy(drought_info_buff, default_info_buff, 24);
+    //         return 1;
+    //     }
+    // }
+    // if (water_recv_data.water_flag == none_water_flag)
+    // {
+    //     if (comm_recv_data->drought_info[17] != 0)
+    //     {
+    //         memcpy(drought_info_buff, comm_recv_data->drought_info, sizeof(comm_recv_data->drought_info));
+    //     }
+    //     else
+    //     {
+    //         memcpy(drought_info_buff, default_info_buff, 18);
+    //     }
+    //     memcpy(&drought_info_buff[18], &comm_recv_data->drought_info[18], 6);
+    //     comm_send_data->recv_feedback_flag = 1;
+    //     if (comm_recv_data->recv_feedback_flag == 1)
+    //     {
+    //         return 1;
+    //     }
+    // }
+    // return 0;
+
+    memcpy(drought_info_buff, default_info_buff, 30);
+    return 1;
 }
 
 static int water_flag_handle(void)
 {
+    if (water_feedback_data.water_finish_state & pair_water_flag && (water_recv_data.region == C || water_recv_data.region == D)) // 任意左右
+    {
+        water_action_idx = 0;
+        if ((water_feedback_data.water_finish_state & left_water_flag) && !(water_recv_data.water_flag & left_water_flag))
+        {
+            water_feedback_data.water_finish_state &= ~left_water_flag;
+        }
+        if (water_feedback_data.water_finish_state & right_water_flag && !(water_recv_data.water_flag & right_water_flag))
+        {
+            water_feedback_data.water_finish_state &= ~right_water_flag;
+        }
+    }
+
     if (water_recv_data.water_flag == none_water_flag)
     {
         water_feedback_data.water_finish_state = none_water_flag;
@@ -479,6 +499,7 @@ static int water_flag_handle(void)
                     if (operation_sequence[water_action_idx](left_water_flag))
                         water_action_idx++;
                 }
+                return 0;
             }
             else if ((water_recv_data.water_flag & right_water_flag) && !(water_feedback_data.water_finish_state & right_water_flag))
             {
@@ -495,6 +516,7 @@ static int water_flag_handle(void)
                     if (operation_sequence[water_action_idx](right_water_flag))
                         water_action_idx++;
                 }
+                return 0;
             }
             break;
         case D:
@@ -505,12 +527,14 @@ static int water_flag_handle(void)
                 {
                     water_action_idx = 0;
                     water_feedback_data.water_finish_state |= left_water_flag;
+                    water_feedback_data.plant_cnt++;
                 }
                 else
                 {
                     if (D_operation_sequence[water_action_idx](left_water_flag))
                         water_action_idx++;
                 }
+                return 0;
             }
             else if ((water_recv_data.water_flag & right_water_flag) && !(water_feedback_data.water_finish_state & right_water_flag))
             {
@@ -530,6 +554,7 @@ static int water_flag_handle(void)
                     if (D_operation_sequence[water_action_idx](right_water_flag))
                         water_action_idx++;
                 }
+                return 0;
             }
             break;
         case home:

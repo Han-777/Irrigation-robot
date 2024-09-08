@@ -20,7 +20,6 @@
 #include "main.h"
 #include "cmsis_os.h"
 #include "crc.h"
-#include "dma.h"
 #include "dma2d.h"
 #include "fdcan.h"
 #include "ltdc.h"
@@ -113,7 +112,6 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_DMA_Init();
   MX_UART5_Init();
   MX_CRC_Init();
   MX_FDCAN1_Init();

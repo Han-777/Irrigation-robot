@@ -20,9 +20,11 @@
 #include "bsp_dwt.h"
 #include "usart.h"
 #include "math.h"
+#include "cmsis_os.h"
 // #include "gray.h"
 // #include "robot_cmd.h"
 static GYRO_data_t *gyro_data;
+static GYRO_Ctrl_Data_t gyro_ctrl_data;
 static DJIMotorInstance *motor_lf, *motor_rf, *motor_lb, *motor_rb; // left right forward back
 #ifdef ONE_BOARD
 static Subscriber_t *chassis_sub;
@@ -81,7 +83,7 @@ void ChassisInit() // 配置中所有pid参数都需要修改
                         .Kd = 0,
                         .IntegralLimit = 3000,
                         .Improve = PID_Trapezoid_Intergral | PID_Integral_Limit | PID_Derivative_On_Measurement,
-                        .MaxOut = 15000, // 1200
+                        .MaxOut = 0, // 1200
                     },
 
             },
@@ -117,25 +119,40 @@ void ChassisInit() // 配置中所有pid参数都需要修改
  * gyro_data->Yaw : current_yaw / measure
  *
  */
+// static void HeadingTransfer(void)
+// {
+//     gyro_data->target_yaw = gyro_data->ori_yaw + 90 * chassis_cmd_recv.clockwise_rotate_flag;
+//     while (gyro_data->target_yaw > 360)
+//     {
+//         gyro_data->target_yaw -= 360;
+//     }
+//     while (gyro_data->target_yaw < -360)
+//     {
+//         gyro_data->target_yaw += 360;
+//     }
+//     // handling the difference
+//     gyro_data->cal_yaw = gyro_data->Yaw;
+//     if (fabs(gyro_data->target_yaw - gyro_data->cal_yaw) > 180)
+//     {
+//         gyro_data->cal_yaw += ((gyro_data->target_yaw > gyro_data->Yaw) ? 360 : -360);
+//     }
+// }
 static void HeadingTransfer(void)
 {
-    gyro_data->target_yaw = gyro_data->ori_yaw + 90 * chassis_cmd_recv.clockwise_rotate_flag;
-    while (gyro_data->target_yaw > 360)
+    gyro_ctrl_data.target_yaw = gyro_ctrl_data.ori_yaw + 90 * chassis_cmd_recv.clockwise_rotate_flag;
+    while (gyro_ctrl_data.target_yaw > 360)
     {
-        gyro_data->target_yaw -= 360;
+        gyro_ctrl_data.target_yaw -= 360;
     }
-    while (gyro_data->target_yaw < -360)
+    while (gyro_ctrl_data.target_yaw < -360)
     {
-        gyro_data->target_yaw += 360;
+        gyro_ctrl_data.target_yaw += 360;
     }
     // handling the difference
-    if (fabs(gyro_data->target_yaw - gyro_data->Yaw) > 180)
+    gyro_ctrl_data.cal_yaw = gyro_data->Yaw;
+    if (fabs(gyro_ctrl_data.target_yaw - gyro_ctrl_data.cal_yaw) > 180)
     {
-        gyro_data->cal_yaw += ((gyro_data->target_yaw > gyro_data->Yaw) ? 360 : -360);
-    }
-    else
-    {
-        gyro_data->cal_yaw = gyro_data->Yaw;
+        gyro_ctrl_data.cal_yaw += ((gyro_ctrl_data.target_yaw > gyro_data->Yaw) ? 360 : -360);
     }
 }
 
@@ -163,26 +180,39 @@ static void SpeedCalculate()
 {
     uint8_t roll_err = 0;
     HeadingTransfer();
-    PIDCalculate(&angle_instance, gyro_data->cal_yaw, gyro_data->target_yaw);
+    PIDCalculate(&angle_instance, gyro_ctrl_data.cal_yaw, gyro_ctrl_data.target_yaw);
     if (chassis_cmd_recv.chassis_mode != CHASSIS_ROTATE && chassis_cmd_recv.lidar_com_speed != 0)
     {
-        roll_err = fabs(gyro_data->Roll - gyro_data->ori_roll);
-        if (roll_err > 0.5)
+        roll_err = fabs(gyro_data->Roll - gyro_ctrl_data.ori_roll);
+        if (roll_err > 0.3)
         {
-            if (chassis_cmd_recv.region != C)
+            // if (chassis_cmd_recv.region != C)
+            // {
+            //     left_target_vt += 1500;s
+            //     right_target_vt += 1000;
+            //     angle_instance.Output *= 8;
+            // }
+            // else
+            // {
+            //     // left_target_vt -= 1000;
+            //     // right_target_vt -= 1000;
+            //     angle_instance.Output *= 6;
+            // }
+            // if (chassis_cmd_recv.region != C)
+            // {
+            if (roll_err < 2)
             {
-                left_target_vt += 800;
-                right_target_vt += 1500;
+                left_target_vt += 2500;
+                right_target_vt += 2500;
                 angle_instance.Output *= 8;
             }
+
+            // }
             else
             {
-                // left_target_vt -= 1000;
-                // right_target_vt -= 1000;
+                left_target_vt -= 1000;
+                right_target_vt -= 1000;
                 angle_instance.Output *= 6;
-            }
-            if (roll_err > 1)
-            {
                 chassis_cmd_recv.lidar_com_speed = (chassis_cmd_recv.lidar_com_speed > 2000) ? 2000 : -2000;
             }
         }
@@ -198,13 +228,13 @@ static void SpeedCalculate()
                 angle_instance.Output *= 6;
                 break;
             case B:
-                angle_instance.Output *= 4;
+                angle_instance.Output *= 5;
                 break;
             case C:
                 angle_instance.Output *= 5;
                 break;
             case D:
-                angle_instance.Output *= 8;
+                angle_instance.Output *= 6;
                 break;
 
             default:
@@ -279,9 +309,17 @@ void ChassisTask()
 
     // }
 
-    if (gyro_data->gyro_Init_Flag != 1)
+    if (gyro_ctrl_data.init_flag != 1)
     {
         chassis_cmd_recv.chassis_mode = CHASSIS_ZERO_FORCE;
+        osDelay(5000);
+        if (fabs(gyro_data->Yaw - gyro_data->last_Yaw) < 0.02 && fabs(gyro_data->last_Roll - gyro_data->Roll) < 0.02)
+        {
+            gyro_ctrl_data.ori_yaw = gyro_data->Yaw; // 陀螺仪初始值不为0,记录初始值
+            // gyro_data->ori_pitch = gyro_data->Pitch;
+            gyro_ctrl_data.ori_roll = gyro_data->Roll;
+            gyro_ctrl_data.init_flag = 1;
+        }
     }
     if (chassis_cmd_recv.chassis_mode == CHASSIS_ZERO_FORCE)
     { // 如果出现重要模块离线或遥控器设置为急停,让电机停止
@@ -325,11 +363,11 @@ void ChassisTask()
         angle_instance.IntegralLimit = 300;
         if (fabs(angle_instance.Err) > 45)
         {
-            angle_instance.MaxOut = 2000;
+            angle_instance.MaxOut = 1500;
         }
         else if (fabs(angle_instance.Err) > 30)
         {
-            angle_instance.MaxOut = 1500;
+            angle_instance.MaxOut = 1000;
         }
         else if (fabs(angle_instance.Err) > 15)
         {

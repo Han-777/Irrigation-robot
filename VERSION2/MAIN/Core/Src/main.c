@@ -31,6 +31,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "bsp_usart.h"
 #include "robot.h"
 // static BLUETOOTH_data_t *bluetooth_data;
 
@@ -130,7 +131,7 @@ int main(void)
   //   ;
   // HAL_UART_Abort_IT(&huart6);
   RobotInit();
-
+  init_my_section();
   /*       for testing       */
 
   /* USER CODE END 2 */
@@ -239,7 +240,7 @@ void MPU_Config(void)
   MPU_InitStruct.Enable = MPU_REGION_ENABLE;
   MPU_InitStruct.Number = MPU_REGION_NUMBER0;
   MPU_InitStruct.BaseAddress = 0x24000000;
-  MPU_InitStruct.Size = MPU_REGION_SIZE_16KB;
+  MPU_InitStruct.Size = MPU_REGION_SIZE_2KB;
   MPU_InitStruct.SubRegionDisable = 0x0;
   MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL1;
   MPU_InitStruct.AccessPermission = MPU_REGION_FULL_ACCESS;

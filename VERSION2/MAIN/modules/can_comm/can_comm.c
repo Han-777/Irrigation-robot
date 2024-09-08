@@ -10,7 +10,8 @@
  *
  * @param ins 需要重置的实例
  */
-static void CANCommResetRx(CANCommInstance *ins)
+static void
+CANCommResetRx(CANCommInstance *ins)
 {
     // 当前已经收到的buffer清零
     memset(ins->raw_recvbuf, 0, ins->cur_recv_len);

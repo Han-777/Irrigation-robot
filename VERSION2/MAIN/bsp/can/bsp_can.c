@@ -224,7 +224,7 @@ void HAL_FDCAN_RxFifo1Callback(FDCAN_HandleTypeDef *hcan, uint32_t RxFifo1ITs)
         {
             if (hcan == &hfdcan1)
             {
-                CANFIFOxCallback(hcan, FDCAN_RX_FIFO0); // 调用我们自己写的函数来处理消息
+                CANFIFOxCallback(hcan, FDCAN_RX_FIFO1); // 调用我们自己写的函数来处理消息
             }
             else if (hcan == &hfdcan2)
             {

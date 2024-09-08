@@ -48,22 +48,18 @@ typedef struct
     float Pitch;      // unit: degrees
     float Yaw;        // unit: degrees
     // 上电角
-    float ori_yaw;
-    float ori_pitch;
-    float ori_roll;
-    uint8_t gyro_Init_Flag; // 每次开启陀螺仪任务时候设置
+    // float ori_yaw;
+    // float ori_pitch;
+    // float ori_roll;
+    // uint8_t gyro_Init_Flag; // 每次开启陀螺仪任务时候设置
     // 判断是否稳定
     float last_Yaw;
     float last_Roll;
     float last_Pitch;
-    // 睿萱
+
     // float target_yaw;
-    // float ring; // 圈数
-    // float lastyaw;
-    // float yaw;
-    float target_yaw;
-    float cal_yaw; // 经过转换后的参考值
-} GYRO_data_t;     // 只对ahrsdata进行了封装
+    // float cal_yaw; // 经过转换后的参考值
+} GYRO_data_t; // 只对ahrsdata进行了封装
 
 //
 typedef struct IMUData_Packet_t

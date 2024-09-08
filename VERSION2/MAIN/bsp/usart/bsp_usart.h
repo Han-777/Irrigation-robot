@@ -127,4 +127,6 @@ VIRTUALInstance *VIRTUAL_USARTRegister(VIRTUAL_Init_Config_s *init_config);
 void VirtualCOM_ByteSend(VIRTUALInstance *instance, uint8_t data);
 void VirtualCOM_SendArr(VIRTUALInstance *instance, uint8_t *arr, size_t arr_len);
 
+void init_my_section(void);
+
 #endif

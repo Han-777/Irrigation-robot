@@ -291,22 +291,22 @@ void Qinwei(int flower) //	?????? flower??????
 	if (S == 'A')
 	{
 		LCD_SetTextFont(&CH_Font32);
-		LCD_DisplayText(10, 10 + 60 * (flower), "«·∂»∏…∫µ");
+		LCD_DisplayText(10, 10 + 60 * (flower), "«·Œ¢∏…∫µ");
 	}
 	if (S == 'B')
 	{
 		LCD_SetTextFont(&CH_Font32);
-		LCD_DisplayText(200, 10 + 60 * (flower - 6), "«·∂»∏…∫µ");
+		LCD_DisplayText(200, 10 + 60 * (flower - 6), "«·Œ¢∏…∫µ");
 	}
 	if (S == 'C')
 	{
 		LCD_SetTextFont(&CH_Font32);
-		LCD_DisplayText(390, 10 + 60 * (flower - 12), "«·∂»∏…∫µ");
+		LCD_DisplayText(390, 10 + 60 * (flower - 12), "«·Œ¢∏…∫µ");
 	}
 	if (S == 'D')
 	{
 		LCD_SetTextFont(&CH_Font32);
-		LCD_DisplayText(580, 10 + 60 * (flower - 18), "«·∂»∏…∫µ");
+		LCD_DisplayText(580, 10 + 60 * (flower - 18), "«·Œ¢∏…∫µ");
 	}
 }
 void Yiban(int flower) // “ª∞„∏…∫µ

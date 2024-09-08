@@ -23,7 +23,7 @@ static uint8_t usart_instance_idx = 0;
 static USARTInstance *usart_instance[DEVICE_USART_CNT] = {NULL};
 
 // // 内存处理
-#define MY_SECTION_SIZE_LIMIT 16 * 1024 // 2KB(for memory protection unit), ram size
+#define MY_SECTION_SIZE_LIMIT 2 * 1024 // 2KB(for memory protection unit), ram size
 __attribute__((section(".my_section"))) static uint8_t my_section[MY_SECTION_SIZE_LIMIT];
 static size_t my_section_offset = 0;
 void *my_malloc(size_t size)
@@ -36,6 +36,11 @@ void *my_malloc(size_t size)
     return ptr;
 }
 
+void init_my_section(void)
+{
+    memset(my_section, 0, MY_SECTION_SIZE_LIMIT);
+    my_section_offset = 0;
+}
 /**
  * @brief 启动串口服务,会在每个实例注册之后自动启用接收,当前实现为DMA接收,后续可能添加IT和BLOCKING接收
  *
@@ -67,13 +72,14 @@ USARTInstance *USARTRegister(USART_Init_Config_s *init_config)
                 // LOGERROR("[bsp_usart]: USART instance %d is already registered!\n", i);
                 ;
     }
-    USARTInstance *instance = (USARTInstance *)my_malloc(sizeof(USARTInstance));
+    USARTInstance *instance = (USARTInstance *)malloc(sizeof(USARTInstance));
     memset(instance, 0, sizeof(USARTInstance));
 
     instance->usart_handle = init_config->usart_handle;
     instance->recv_buff_size = init_config->recv_buff_size;
     instance->module_callback = init_config->module_callback;
     instance->recv_buff = (uint8_t *)my_malloc(init_config->recv_buff_size);
+    // memset(instance->recv_buff, 0, init_config->recv_buff_size);
 
     usart_instance[usart_instance_idx++] = instance;
     USARTServiceInit(instance);

@@ -132,7 +132,7 @@ void GYRO_buff_to_data()
 #else
 static void GYRO_buff_to_data(const uint8_t *gyro_buff, uint16_t size)
 {
-    static uint8_t initialized = 0;
+    // static uint8_t initialized = 0;
     if ((gyro_buff[0] == FRAME_HEAD) && (gyro_buff[size - 1] == FRAME_END))
     {
 #if defined(GYRO_RSIMU) || defined(GYRO_RSIMU_AHRS)
@@ -171,35 +171,32 @@ static void GYRO_buff_to_data(const uint8_t *gyro_buff, uint16_t size)
             // 稳定性判断
             // gyro_data->last_Pitch = gyro_data->Pitch;
             gyro_data->last_Roll = gyro_data->Roll;
+            gyro_data->last_Yaw = gyro_data->Yaw;
 
             // gyro_data->Pitch = AHRSData_Packet.Pitch * 180.0 / PI;
             // gyro_data->PitchSpeed = AHRSData_Packet.PitchSpeed * 180.0 / PI;
             gyro_data->Roll = AHRSData_Packet.Roll * 180.0 / PI;
             // gyro_data->RollSpeed = AHRSData_Packet.RollSpeed * 180.0 / PI;
-            if (AHRSData_Packet.Heading <= PI2)
-            {
-                gyro_data->last_Yaw = gyro_data->Yaw;
-                gyro_data->Yaw = AHRSData_Packet.Heading * 180.0 / PI;
-                // gyro_data->YawSpeed = AHRSData_Packet.HeadingSpeed * 180.0 / PI;
-            }
+            gyro_data->Yaw = AHRSData_Packet.Heading * 180.0 / PI;
+            // gyro_data->YawSpeed = AHRSData_Packet.HeadingSpeed * 180.0 / PI;
             // gyro_data->Yaw1 = AHRSData_Packet.Heading * 180.0 / PI;
             // if (fabs(gyro_data->Yaw) < 360)
             // {
             //     gyro_data->Yaw = gyro_data->Yaw1;
             // }
 
-            if (!initialized)
-            {
-                if (abs(gyro_data->Yaw - gyro_data->last_Yaw) < 0.05 && abs(gyro_data->last_Roll - gyro_data->Roll) < 0.05)
-                {
-                    gyro_data->ori_yaw = gyro_data->Yaw; // 陀螺仪初始值不为0,记录初始值
-                    // gyro_data->ori_pitch = gyro_data->Pitch;
-                    gyro_data->ori_roll = gyro_data->Roll;
-                    initialized = 1;
-                }
-            }
+            // if (!initialized)
+            // {
+            //     if (fabs(gyro_data->Yaw - gyro_data->last_Yaw) < 0.02 && fabs(gyro_data->last_Roll - gyro_data->Roll) < 0.02)
+            //     {
+            //         gyro_data->ori_yaw = gyro_data->Yaw; // 陀螺仪初始值不为0,记录初始值
+            //         // gyro_data->ori_pitch = gyro_data->Pitch;
+            //         gyro_data->ori_roll = gyro_data->Roll;
+            //         initialized = 1;
+            //         gyro_data->gyro_Init_Flag = 1;
+            //     }
+            // }
         }
-
 #endif
     }
 }
@@ -233,8 +230,9 @@ static void GYRORxCallback(UART_HandleTypeDef *huart, uint16_t size) // 串口�
  */
 static void GYROLostCallback(void *id) // id is corresponding usart handle
 {
-    memset(gyro_instance, 0, sizeof(gyro_instance));
+    // memset(gyro_instance, 0, sizeof(gyro_instance));
     USARTServiceInit(gyro_instance);
+    memset(gyro_instance->recv_buff, 0, gyro_instance->recv_buff_size);
 }
 
 GYRO_data_t *Gyro_Init(UART_HandleTypeDef *gyro_usart_handle)

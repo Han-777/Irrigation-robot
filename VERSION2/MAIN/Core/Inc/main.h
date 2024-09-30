@@ -1,21 +1,21 @@
 /* USER CODE BEGIN Header */
 /**
-  ******************************************************************************
-  * @file           : main.h
-  * @brief          : Header for main.c file.
-  *                   This file contains the common defines of the application.
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2024 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file           : main.h
+ * @brief          : Header for main.c file.
+ *                   This file contains the common defines of the application.
+ ******************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2024 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
+ */
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
@@ -59,11 +59,11 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define RELAY_GPIO_Pin GPIO_PIN_6
 #define RELAY_GPIO_GPIO_Port GPIOI
-#define PE_HEAD_Pin GPIO_PIN_5
-#define PE_HEAD_GPIO_Port GPIOI
-#define LEFT_PE_Pin GPIO_PIN_4
-#define LEFT_PE_GPIO_Port GPIOI
-#define LEFT_PE_EXTI_IRQn EXTI4_IRQn
+#define HEAD_PE_Pin GPIO_PIN_5
+#define HEAD_PE_GPIO_Port GPIOI
+#define RIGHT_PE_Pin GPIO_PIN_4
+#define RIGHT_PE_GPIO_Port GPIOI
+#define RIGHT_PE_EXTI_IRQn EXTI4_IRQn
 #define GRAY11_GPIO_Pin GPIO_PIN_5
 #define GRAY11_GPIO_GPIO_Port GPIOD
 #define GRAY10_GPIO_Pin GPIO_PIN_4
@@ -82,15 +82,11 @@ void Error_Handler(void);
 #define GRAY13_GPIO_GPIO_Port GPIOD
 #define GYRO_UART5_TX_Pin GPIO_PIN_12
 #define GYRO_UART5_TX_GPIO_Port GPIOC
-#define RIGHT_PE_Pin GPIO_PIN_3
-#define RIGHT_PE_GPIO_Port GPIOI
-#define RIGHT_PE_EXTI_IRQn EXTI3_IRQn
+#define LEFT_PE_Pin GPIO_PIN_3
+#define LEFT_PE_GPIO_Port GPIOI
+#define LEFT_PE_EXTI_IRQn EXTI3_IRQn
 #define GYRO_UART5_RX_Pin GPIO_PIN_2
 #define GYRO_UART5_RX_GPIO_Port GPIOD
-#define BTH_USART1_RX_Pin GPIO_PIN_10
-#define BTH_USART1_RX_GPIO_Port GPIOA
-#define BTH_USART1_TX_Pin GPIO_PIN_9
-#define BTH_USART1_TX_GPIO_Port GPIOA
 #define MP3_VIRTUAL_UART_RX_Pin GPIO_PIN_9
 #define MP3_VIRTUAL_UART_RX_GPIO_Port GPIOI
 #define MP3_VIRTUAL_UART_TX_Pin GPIO_PIN_8

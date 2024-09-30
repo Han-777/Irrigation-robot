@@ -11,6 +11,7 @@
         "${workspaceFolder}/Drivers/CMSIS/Include",
         "${workspaceFolder}/application/chassis",
         "${workspaceFolder}/application/water",
+        "${workspaceFolder}/application/cmd",
         "${workspaceFolder}/application",
         "${workspaceFolder}/modules/lidar",
         "${workspaceFolder}/modules/daemon",
@@ -22,6 +23,7 @@
         "${workspaceFolder}/modules/motor",
         "${workspaceFolder}/modules/motor/DJI_motor",
         "${workspaceFolder}/modules/algorithm",
+        "${workspaceFolder}/modules/can_comm",
         "${workspaceFolder}/bsp/can",
         "${workspaceFolder}/bsp/dwt",
         "${workspaceFolder}/bsp/exti",
@@ -29,7 +31,8 @@
         "${workspaceFolder}/bsp/pwm",
         "${workspaceFolder}/bsp/tools",
         "${workspaceFolder}/bsp/usart",
-        "${workspaceFolder}/bsp"
+        "${workspaceFolder}/bsp",
+        "${workspaceFolder}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS"
       ],
       "defines": [
         "_DEBUG",

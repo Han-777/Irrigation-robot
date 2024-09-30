@@ -1,5 +1,5 @@
 {
-  "cortex-debug.variableUseNaturalFormat": false,
+  "cortex-debug.variableUseNaturalFormat": true,
   "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
   // "C_Cpp.default.compilerPath": "D:\\Msys2\\mingw64\\bin\\arm-none-eabi-gcc.exe"
   "makefile.compileCommandsPath": "build/compile_commands.json",
@@ -20,7 +20,6 @@
     "bsp_pwm.h": "c",
     "bsp_usart.h": "c",
     "bsp_gpio.h": "c",
-    "robot_def.h": "c",
     "daemon.h": "c",
     "lidar.h": "c",
     "dji_motor.h": "c",
@@ -48,6 +47,7 @@
     "gray.h": "c",
     "openmv.h": "c",
     "robot.h": "c",
+    "robot_def.h": "c",
     "stm32h7xx_hal_def.h": "c",
     "memorymap.h": "c",
     "cstdint": "c",
@@ -68,9 +68,16 @@
     "numeric": "c",
     "cinttypes": "c",
     "cstdlib": "c",
-    "bluetooth.h": "c",
     "cmsis_os.h": "c",
-    "freertos.h": "c"
+    "freertos.h": "c",
+    "semphr.h": "c",
+    "task.h": "c",
+    "can_command.h": "c",
+    "can_comm.h": "c",
+    "robot_queue.h": "c",
+    "crc8.h": "c",
+    "rng.h": "c",
+    "motor_def.h": "c"
   },
-  "C_Cpp.errorSquiggles": "enabled"
+  "C_Cpp.errorSquiggles": "disabled"
 }

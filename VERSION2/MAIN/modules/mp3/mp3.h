@@ -1,14 +1,16 @@
 #ifndef __MP3_H
 #define __MP3_H
 
-typedef enum
-{
-    SLIGHT = 1,
-    GENERAL = 2, // Corrected typo from "GENERAl" to "GENERAL"
-    SERIOUS = 4,
-} MP3_broadcast_type;
-void MP3_Init(void);
+#include <stdint.h>
+#include "main.h"
+#include "robot_def.h"
 
-void MP3_broadcast(MP3_broadcast_type info);
+void MP3_Init(UART_HandleTypeDef *mp3_usart_handle);
+
+void MP3_broadcast(Drought_Info_e info);
+
+// void MP3_Init(void);
+
+// void MP3_broadcast(Drought_Info_e info);
 
 #endif

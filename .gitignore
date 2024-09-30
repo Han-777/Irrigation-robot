@@ -17,5 +17,8 @@ build/
 OBJ/
 Objects/
 
-./VERSION2/.md
-./VERSION2/MAIN/.assets/
+# Ignore the entire "整体方案" folder under VERSION2
+VERSION2/整体方案.md
+VERSION2/.assets
+# Ignore the .assets folder under VERSION2/MAIN
+VERSION2/MAIN/.assets/

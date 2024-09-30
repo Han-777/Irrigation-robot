@@ -16,5 +16,8 @@ build/
 # ignore all files under OBJ directory
 OBJ/
 Objects/
+
+
 VERSION2/整体方案.md
 VERSION2/MAIN/.assets/
+VERSION2/MAIN/.vscode/

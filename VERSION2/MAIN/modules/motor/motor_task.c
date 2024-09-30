@@ -2,6 +2,7 @@
 #include "dji_motor.h"
 #include "servo_motor.h"
 #include "chassis.h"
+#include "water.h"
 // float current;
 // float speed;
 void MotorControlTask()

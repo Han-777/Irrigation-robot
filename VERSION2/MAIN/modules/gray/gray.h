@@ -3,6 +3,8 @@
 
 #include "main.h"
 
+#define GRAY_THRESHOLD 4 // 测到十字的下限
+
 /*** @note later it should be put to application layer*/
 /*--------------------------------------------------------------*/
 // OUT1 -> OUT12 from left to right
@@ -29,7 +31,7 @@
 #define OUT12 HAL_GPIO_ReadPin(GRAY12_GPIO_GPIO_Port, GRAY12_GPIO_Pin)
 #define OUT13 HAL_GPIO_ReadPin(GRAY13_GPIO_GPIO_Port, GRAY13_GPIO_Pin)
 
-void get_gray_cnt(void);
-uint8_t *Gray_Init(void);
+extern uint8_t gray_Cnt;
+uint8_t get_gray(void);
 
 #endif

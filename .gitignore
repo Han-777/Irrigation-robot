@@ -16,3 +16,6 @@ build/
 # ignore all files under OBJ directory
 OBJ/
 Objects/
+
+./VERSION2/.md
+./VERSION2/MAIN/.assets/

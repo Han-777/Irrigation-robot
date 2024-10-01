@@ -9,6 +9,8 @@ This repository provides 2 versions codes for irrigation-robot. `Version1` is fo
 - [ ] Dual-board communication
 - [ ] Road identification scheme
 - [ ] System stability
+- [ ] The degree of code coupling at the application layer。
+- [ ] ....
 
 ## Acknowledgments
 
